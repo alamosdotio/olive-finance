@@ -99,7 +99,7 @@ export default function NavBar(){
 
                             </DropdownMenu> */}
                             <Switch 
-                                checked={theme === 'light'}
+                                checked={theme === 'dark'}
                                 onCheckedChange={toggleTheme}
                                 className="data-[state=checked]:bg-[#3B1E54] data-[state=unchecked]:bg-[3B1E5480]"
                             />

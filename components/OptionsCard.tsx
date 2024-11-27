@@ -45,7 +45,7 @@ export default function OptionsCard(){
             <Card className="w-full max-w-[600px] mx-auto flex flex-col py-10 px-4">
                 <CardContent className="space-y-6 flex-grow overflow-auto">
                     <Tabs 
-                        defaultValue="long"
+                        defaultValue="American"
                         className="w-full"
                         onValueChange={(value)=>setPosition(value)}
                     >
@@ -77,7 +77,7 @@ export default function OptionsCard(){
                                 size='icon' 
                                 className="h-8 w-8 rounded-md bg-secondary p-0"
                             >
-                                <History className="text-primary text-sm"/>
+                                <History className="text-dark text-sm"/>
                                 <span className="sr-only">History</span>
                             </Button>
                             <Button 
@@ -94,7 +94,7 @@ export default function OptionsCard(){
                                     })
                                 }}
                             >
-                                <RefreshCcw className="text-primary text-sm"/>
+                                <RefreshCcw className="text-dark text-sm"/>
                                 <span className="sr-only">Reset</span>
                             </Button>
                         </div>
@@ -165,7 +165,7 @@ export default function OptionsCard(){
                                         )}
                                     >
                                         {formValues.expiryDate ? format(formValues.expiryDate, "MM/dd/yyyy") : <span className="font-normal">Enter Expiry Date</span>}
-                                        <CalendarIcon className="ml-2 h-4 w-4 text-dark" />
+                                        <CalendarIcon className="ml-2 h-4 w-4 text-iconBright" />
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0" align="end">
