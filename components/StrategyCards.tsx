@@ -201,7 +201,7 @@ export default function StrategyCards(){
                         e.preventDefault();
                         if (currentPage > 1) paginate(currentPage - 1);
                     }}
-                    className="bg-[#F3EDF7] text-[#9B7EBD] hover:bg-[#CCBEDD] hover:text-[#9B7EBD]" 
+                    className="bg-secondary" 
                     />
                 </PaginationItem>
                 <div className="flex">
@@ -227,7 +227,7 @@ export default function StrategyCards(){
                         e.preventDefault();
                         if (currentPage < totalPages) paginate(currentPage + 1);
                     }}
-                     
+                    className="bg-secondary" 
                     />
                 </PaginationItem>
                 </PaginationContent>

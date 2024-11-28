@@ -12,6 +12,7 @@ import { RefreshCcw, History} from 'lucide-react';
 
 import Image from "next/image";
 import swapIcon from "@/public/svgs/swapdark.svg"
+import swapLight from "@/public/svgs/swap.svg"
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
@@ -20,10 +21,12 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import WalletModal from "./WalletModal";
 import { useWallet } from "@/contexts/walletprovider";
+import { useTheme } from "next-themes";
 
 
 export default function OptionsCard(){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
+    const { theme } = useTheme()
     const [position, setPosition] = useState<string>("long");
     const [date, setDate] = useState<Date>();
     const [formValues, setFormValues] = useState<{
@@ -128,7 +131,13 @@ export default function OptionsCard(){
                         <div className="flex items-center justify-center relative">
                             <div className="border-t border-input w-full absolute"></div>
                             <Button variant="ghostPink" className="h-12 w-12 rounded-md bg-secondary z-10 p-2">
-                                <Image src={swapIcon} alt="swap" width={32} height={32}/>
+                                {theme === 'dark' && (
+                                    <Image src={swapIcon} alt="swap" width={32} height={32}/>
+                                )}
+                                {theme === 'light' && (
+                                    <Image src={swapLight} alt="swap" width={32} height={32}/>
+                                )}
+                                
                             </Button>
                         </div>
                         <div className="space-y-0">

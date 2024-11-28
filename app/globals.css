@@ -15,13 +15,13 @@ body {
     --popover: #ffffff;
     --popover-foreground: #333333;
     --primary: #DDD1E8; 
-    --primary-foreground: #FDFDFD; 
+    --primary-foreground: #9B7EBD; 
     --secondary: #F3EDF7; 
-    --secondary-foreground: #DDD1E8;
+    --secondary-foreground: #18181B;
     --muted: #F3EDF7;
     --muted-foreground: #858585; 
     --accent: #F3EDF7;
-    --accent-foreground: #DDD1E8;
+    --accent-foreground: #333333;
     --destructive: #ff5733;
     --destructive-foreground: #FDFDFD;
     --border: #d1d8df;
@@ -38,7 +38,7 @@ body {
     --gradient: linear-gradient(to left, var(--gradient-start), var(--gradient-end));
     --text-dark: #9B7EBD;
     --text-light: #FDFDFD;
-    --text-hover: #9B7EBD;
+    --text-hover: #D4BEE4;
     --icon-bright: #9B7EBD;
   }
   .dark {
@@ -49,12 +49,12 @@ body {
     --popover: #1A1A19;
     --popover-foreground: #FDFDFD;
     --primary: #222E1B;
-    --primary-foreground: #3c2b22; 
+    --primary-foreground: #F6FCDF; 
     --secondary: #2F3520; 
     --secondary-foreground: #FDFDFD;
     --muted: #4d3e2b;
     --muted-foreground: #B9B9B9; 
-    --accent: #4d3e2b;
+    --accent: #859F3D;
     --accent-foreground: #FDFDFD;
     --destructive: #f04e23; 
     --destructive-foreground: #FDFDFD;
@@ -93,4 +93,26 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.button-inactive {
+  position: relative;
+  overflow: hidden;
+  border-bottom: transparent;
+}
+
+.button-inactive::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 4px;
+  background-color: var(--secondary-foreground);
+  transition: all 0.5s ease;
+  transform: translateX(-50%);
+}
+
+.button-inactive:hover::after {
+  width: 100%;
 }

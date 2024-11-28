@@ -23,8 +23,12 @@ const buttonVariants = cva(
         unselected: "hover:bg-primary hover:textHover text-dark shadow-sm bg-secondary",
         ghostPink: "hover:bg-primary hover:text-dark",
         calendar: " bg-background ",
-        paginationGhost: "text-[#CCBEDD] hover:bg-[#DDD1E8] hover:text-[#9B7EBD]",
-        paginationOutline: "border border-[#F3EDF7] bg-background shadow-sm text-[#9B7EBD]"
+        paginationGhost: "text-dark hover:bg-secondary hover:text-dark",
+        paginationOutline: "border border-primary bg-background shadow-sm text-dark",
+        active: 'text-dark border-b-4 border-dark rounded-none bg-secondary',
+        inactive: 'text-textHover rounded-none hover:text-secondary-foreground button-inactive hover:bg-secondary'
+
+      
       },
       size: {
         default: "h-9 px-4 py-2",
