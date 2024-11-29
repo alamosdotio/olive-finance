@@ -25,8 +25,8 @@ const buttonVariants = cva(
         calendar: " bg-background ",
         paginationGhost: "text-dark hover:bg-secondary hover:text-dark",
         paginationOutline: "border border-primary bg-background shadow-sm text-dark",
-        active: 'text-dark border-b-4 border-dark rounded-none bg-secondary',
-        inactive: 'text-textHover rounded-none hover:text-secondary-foreground button-inactive hover:bg-secondary'
+        active: 'text-dark border-b-4 border-dark rounded-none bg-secondary box-border',
+        inactive: 'text-textHover rounded-none hover:text-secondary-foreground button-inactive hover:bg-secondary box-border'
 
       
       },

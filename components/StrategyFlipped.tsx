@@ -136,7 +136,8 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                     {isPreview && (
                         <div className="flex-shrink-0 pb-4 w-full">
                             <Button
-                                className="w-full bg-gradient text-light"
+                                variant='outline'
+                                className="w-full text-dark border-dark hover:text-primary-foreground"
                                 onClick={handlePreviewClick}
                             >
                                 {activeTab === "deposit" ? "Deposit" : "Withdraw"} Now
@@ -147,7 +148,8 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                     {!isPreview &&(
                         <div className="flex-shrink-0 pb-4 w-full">
                             <Button
-                                className="w-full bg-gradient text-light"
+                                variant='outline'
+                                className="w-full text-dark border-dark hover:text-primary-foreground"
                                 onClick={handlePreviewClick}
                             >
                                 Preview {activeTab === "deposit" ? "Deposit" : "Withdrawal"}

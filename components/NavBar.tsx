@@ -11,7 +11,7 @@ import WalletModal from "./WalletModal";
 import { useWallet } from "@/contexts/walletprovider";
 import WalletSideBar from "./WalletSidebar";
 import { useTheme } from "next-themes";
-import { Settings } from 'lucide-react';
+import { Settings, Star, Bell } from 'lucide-react';
 import x from '@/public/svgs/x.svg';
 import discord from '@/public/svgs/discord.svg'
 import telegram from '@/public/svgs/telegram.svg'
@@ -36,9 +36,9 @@ export default function NavBar(){
     return <>
        
             <header>
-                <div className="flex h-16 items-center mx-auto justify-between border-b">
-                    <nav className="flex h-full w-auto items-center space-x-0 shadow-none">
-                        <div className={cn(buttonVariants({variant: active === "Options" ? "active" : 'inactive'}), 'w-1/2 h-full p-2')}>
+                <div className="flex h-16 items-center mx-auto justify-between border-b box-border">
+                    <nav className="flex h-full w-auto items-center space-x-0 shadow-none box-border">
+                        <div className={cn(buttonVariants({variant: active === "Options" ? "active" : 'inactive'}), 'w-1/2 h-full')}>
                             <Link href='/' 
                                 className="flex items-center justify-between gap-2"
                                 onClick={() => handleClick('Options')}
@@ -49,7 +49,7 @@ export default function NavBar(){
                                 </span>
                             </Link>
                         </div>
-                        <div className={cn(buttonVariants({variant: active === "Earn" ? "active" : 'inactive'}), 'h-full')}>
+                        <div className={cn(buttonVariants({variant: active === "Earn" ? "active" : 'inactive'}), 'h-full box-border')}>
                             <Link href='/earn'
                                 className="flex items-center"
                                 onClick={() => handleClick('Earn')}
@@ -105,15 +105,15 @@ export default function NavBar(){
                                     ))}
                                     <DropdownMenuSeparator />
                                     <div className="flex justify-start px-4 py-2 gap-3">
-                                        <Link href='#'>
+                                        <a href='https://x.com/_olivefinance' target="_blank">
                                             <Image src={x} alt="x link"/>
-                                        </Link>
-                                        <Link href='#'>
+                                        </a>
+                                        <a href='https://t.me/olive_financee' target="_blank">
                                             <Image src={telegram} alt="telegram link"/>
-                                        </Link>
-                                        <Link href='#'>
+                                        </a>
+                                        <a href='https://discord.gg/u6pq5yNj' target="_blank">
                                             <Image src={discord} alt="discord link" />
-                                        </Link>
+                                        </a>
                                     </div>
                                 </DropdownMenuContent>
                             </DropdownMenu>
@@ -122,7 +122,7 @@ export default function NavBar(){
                         
                         
                     </nav>
-                    <div className="w-auto h-[40px] flex items-center space-x-4">
+                    <div className="w-auto h-[40px] flex items-center space-x-3">
                         <div className={cn(buttonVariants({variant: theme === 'dark' ? 'selected' : 'unselected'}),"flex items-center")}>
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
@@ -148,6 +148,54 @@ export default function NavBar(){
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
+                        {isConnected && (
+                            <>
+                                <div className={cn(buttonVariants({variant: theme === 'dark' ? 'selected' : 'unselected'}),"flex items-center p-2")}>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <div className="flex justify-center items-center gap-3">
+                                                <Star className="h-[24px] w-[24px] text-primary-foreground"/>
+                                                <h1>21.59M</h1>
+                                            </div>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="start" className="min-w-56 max-w-56">
+                                            <DropdownMenuLabel className="text-sm font-semibold">Your Points</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <div className="flex flex-col space-y-3 p-2">
+                                                <div className="flex justify-between">
+                                                    <span className="text-sm font-normal">Total Points:</span>
+                                                    <span className="text-sm font-semibold">1000</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="text-sm font-normal">Rank:</span>
+                                                    <span className="text-sm font-semibold">5</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="text-sm font-normal">Points/Day:</span>
+                                                    <span className="text-sm font-semibold">50</span>
+                                                </div>
+                                            </div>
+                                            <DropdownMenuSeparator />
+                                            <div className="p-2">
+                                                <Button variant='selected' className="w-full p-2">
+                                                    Go to Points Hub
+                                                </Button>
+                                            </div>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+                                <div className={cn(buttonVariants({variant: theme === 'dark' ? 'selected' : 'unselected'}),"flex items-center")}>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <div className="flex items-center justify-center">
+                                                <Bell className="h-[24px] w-[24px] text-primary-foreground"/>
+                                            </div>
+                                        </DropdownMenuTrigger>
+                                    </DropdownMenu>
+                                </div>
+                            </>
+                        )}
+                        
                         {isConnected ? (
                             <WalletSideBar></WalletSideBar>
                         ) : (

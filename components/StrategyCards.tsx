@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import StrategyFilters from "./StrategyFilters";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./ui/pagination";
 import { Badge } from "./ui/badge";
 import StrategyFlipped from "./StrategyFlipped";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Strategy {
     type: "DC" | "O" | "B+O"| "SF"
@@ -71,12 +74,12 @@ export default function StrategyCards(){
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4 justify-items-center">
                 {currentCards.map((strategy, index) => (
-                    <div key={index} onClick={() => setSelectedStrategyCard(index)} className="w-full space-x-2">
+                    <div key={index} className="w-full space-x-2">
                     {selectedStrategyCard === index ? (
                         <StrategyFlipped onClose={() => setSelectedStrategyCard(null)} strategy={{name:"Strategy", apy: strategy.apy}}/>
                     ) : (
                         <Card className="w-full h-[384px] space-x-2">
-                            <CardHeader className="border-b-2 cursor-pointer">
+                            <CardHeader className="border-b-2 cursor-pointer" onClick={() => setSelectedStrategyCard(index)}>
                                 <div className="flex items-start justify-between">
                                     <div className="flex items-start gap-2"> 
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -102,8 +105,8 @@ export default function StrategyCards(){
                                 </div>
                             </CardHeader>
 
-                            <CardContent className="p-6">
-                                <div className="space-y-2">
+                            <CardContent className="flex flex-col flex-grow py-6">
+                                <div className="space-y-2 flex flex-col h-full">
                                     <div className="flex flex-col justify-center gap-1">
                                         <div className="flex items-center space-x-2 font-medium">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -184,6 +187,15 @@ export default function StrategyCards(){
                                             <span className="text-sm">Underlying Asset: </span>
                                         </div>
                                         <span className="text-sm">{strategy.underlyingAsset}</span>
+                                    </div>
+
+                                    <div className="flex-shrink-0 pt-2.5 w-full">
+                                        <Link
+                                            href='/earn/pool'
+                                            className={cn(buttonVariants({variant: 'outline'}),"w-full text-dark border-dark hover:text-primary-foreground")}
+                                        >
+                                            Go to Pool
+                                        </Link>
                                     </div>
                                 </div>
                             </CardContent>

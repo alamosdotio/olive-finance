@@ -9,6 +9,8 @@ import ProtectedRoute from "@/components/ProtectedRoute"
 import { Card, CardContent } from "@/components/ui/card"
 import { useWallet } from "@/contexts/walletprovider"
 import WalletModal from "@/components/WalletModal"
+import { Input } from "@/components/ui/input"
+import { Search } from "lucide-react"
 
 
 
@@ -56,7 +58,17 @@ export default function PortfolioPage(){
                 <div className="flex flex-col space-y-6">
                     <div className="flex justify-between items-center">
                         <h1 className="font-semibold text-3xl">Open Positions</h1>
-                        <Button variant='unselected'>Add New Position</Button>
+                        <div className="flex gap-4 items-center">
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                <Input
+                                    type="text" 
+                                    placeholder="Search..." 
+                                    className="w-auto rounded-md border border-border bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground"
+                                />
+                            </div>
+                            <Button variant='unselected'>Add</Button>
+                        </div>
                     </div>
                     <PortfolioCards />
                 </div>

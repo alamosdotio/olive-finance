@@ -52,21 +52,21 @@ export default function OptionsCard(){
                         className="w-full"
                         onValueChange={(value)=>setPosition(value)}
                     >
-                        <TabsList className="grid w-full h-[56px] grid-cols-4 bg-secondary text-dark p-2">
+                        <TabsList className="grid w-full h-[56px] grid-cols-4 bg-secondary text-dark p-2 rounded-full">
                             <TabsTrigger value="American" 
-                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px]")}>
+                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px] rounded-full")}>
                                 American
                             </TabsTrigger>
                             <TabsTrigger value="European" 
-                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px]")}>
+                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px] rounded-full")}>
                                 European
                             </TabsTrigger>
                             <TabsTrigger value="Asian" disabled
-                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px]")}>
+                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px] rounded-full")}>
                                 Asian
                             </TabsTrigger>
                             <TabsTrigger value="Rainbow" disabled
-                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px]")}>
+                                className={cn("data-[state=active]:bg-gradient data-[state=active]:text-light h-[40px] rounded-full")}>
                                 Rainbow
                             </TabsTrigger>
                         </TabsList>
