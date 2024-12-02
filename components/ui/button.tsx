@@ -19,15 +19,15 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        selected: "text-light bg-gradient",
-        unselected: "hover:bg-primary hover:textHover text-dark shadow-sm bg-secondary",
+        selected: "text-backgroundSecondary bg-primary",
+        unselected: "text-iconBright shadow-sm bg-backgroundSecondary",
         ghostPink: "hover:bg-primary hover:text-dark",
         calendar: " bg-background ",
         paginationGhost: "text-dark hover:bg-secondary hover:text-dark",
         paginationOutline: "border border-primary bg-background shadow-sm text-dark",
-        active: 'text-dark border-b-4 border-dark rounded-none bg-secondary box-border',
-        inactive: 'text-textHover rounded-none hover:text-secondary-foreground button-inactive hover:bg-secondary box-border'
-
+        active: 'text-primary border-b-4 border-dark rounded-none box-border',
+        inactive: 'text-secondary-foreground',
+        navBarIcons: "text-iconBright bg-foreground",
       
       },
       size: {

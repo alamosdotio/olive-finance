@@ -1,4 +1,7 @@
+import LiquidityTable from "@/components/LiquidityTable";
+import PoolBuy from "@/components/PoolBuy";
 import PoolChart from "@/components/PoolChart";
+import PoolInfo from "@/components/PoolInfo";
 
 export default function Pool(){
     return (
@@ -20,10 +23,14 @@ export default function Pool(){
                                     AUM Limit: $1,500,000,000
                                 </div>
                             </div>
-                            
-
-
+                            <LiquidityTable />
                         </div>
+                        <div className="rounded-lg border bg-card p-6">
+                            <PoolInfo />
+                        </div>
+                    </div>
+                    <div className="h-fit rounded-lg border bg-card">
+                        <PoolBuy />
                     </div>
                 </div>
             </div>

@@ -33,13 +33,13 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-            defaultTheme="light"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
         >
           <WalletProvider>
+            <NavBar></NavBar>
             <div className="px-10 pb-10 space-y-6 max-w-screen-2xl min-h-fit mx-auto">
-              <NavBar></NavBar>
               {children}
             </div>
           </WalletProvider>

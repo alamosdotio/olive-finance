@@ -8,7 +8,7 @@ body {
 
 @layer base {
   :root {
-    --background: #ffffff; 
+    --background: #ffffff;
     --foreground: #333333; 
     --card: #ffffff;
     --card-foreground: #333333;
@@ -42,23 +42,24 @@ body {
     --icon-bright: #9B7EBD;
   }
   .dark {
-    --background: #1A1A19;
-    --foreground: #FDFDFD;
-    --card: #1A1A19;
+    --background: #333333;
+    --background-secondary: #282828;
+    --foreground: #474747;
+    --card: #333333;
     --card-foreground: #FDFDFD;
-    --popover: #1A1A19;
+    --popover: #333333;
     --popover-foreground: #FDFDFD;
-    --primary: #222E1B;
+    --primary: #D7FE63;
     --primary-foreground: #F6FCDF; 
-    --secondary: #2F3520; 
-    --secondary-foreground: #FDFDFD;
+    --secondary: #6D7751; 
+    --secondary-foreground: #949494;
     --muted: #4d3e2b;
     --muted-foreground: #B9B9B9; 
     --accent: #859F3D;
     --accent-foreground: #FDFDFD;
     --destructive: #f04e23; 
     --destructive-foreground: #FDFDFD;
-    --border: #383838; 
+    --border: #474747; 
     --input: #314020; 
     --ring: #3b3b3b;
     --chart-1: #539fdd;
@@ -69,10 +70,10 @@ body {
     --gradient-start: #859F3D;
     --gradient-end: #31511E;
     --gradient: linear-gradient(to left, var(--gradient-start), var(--gradient-end));
-    --text-dark: #859F3D; 
-    --text-light: #F6FCDF;
+    --text-dark: #809346; 
+    --text-light: #FFFFFF80;
     --text-hover: #607C2F;
-    --icon-bright: #859F3D;
+    --icon-bright: #FFFFFF;
   }
 }
 
@@ -108,7 +109,7 @@ input[type="number"] {
   left: 50%;
   width: 0%;
   height: 4px;
-  background-color: var(--secondary-foreground);
+  background-color: var(--primary);
   transition: all 0.5s ease;
   transform: translateX(-50%);
 }
