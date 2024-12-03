@@ -45,7 +45,7 @@ export default function OptionsCard(){
  
     return (
         <>
-            <Card className="w-full max-w-[600px] mx-auto flex flex-col py-10 px-4 border-none shadow-none">
+            <Card className="w-full max-w-[600px] mx-auto flex flex-col py-10 px-0 border-none shadow-none">
                 <CardContent className="space-y-6 flex-grow overflow-auto">
                     <Tabs 
                         defaultValue="American"

@@ -13,10 +13,10 @@ export default function PoolInfo(){
             </div>
             <div className='space-y-4 text-sm'>
                 <p>The Olive Finance Liquidity Provider (OFLP) Pool is a liquidity pool where it acts as a counterparty to traders — when traders seek to open leverage positions, they borrow tokens from the pool.</p>
-                <p>The OFLP token is the liquidity provider token where it's value is derived from:</p>
+                <p>The OFLP token is the liquidity provider token where it&apos;s value is derived from:</p>
                 <ul className='ml-6 list-disc space-y-2'>
                     <li>An index fund of SOL, ETH, WBTC, USDC, USDT.</li>
-                    <li>Trader's profit and loss</li>
+                    <li>Trader&apos;s profit and loss</li>
                     <li>75% of the generated fees from opening and closing fees, price impact, borrowing fees, and trading fees of the pool</li>
                 </ul>
                 <p>
