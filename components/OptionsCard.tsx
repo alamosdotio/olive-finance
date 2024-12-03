@@ -22,6 +22,7 @@ import { Calendar } from "./ui/calendar";
 import WalletModal from "./WalletModal";
 import { useWallet } from "@/contexts/walletprovider";
 import { useTheme } from "next-themes";
+import { DropdownMenu, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 
 export default function OptionsCard(){
@@ -45,7 +46,7 @@ export default function OptionsCard(){
  
     return (
         <>
-            <Card className="w-full max-w-[600px] mx-auto flex flex-col py-10 px-0 border-none shadow-none">
+            <Card className="w-full max-w-[600px] mx-auto flex flex-col px-0 border-none shadow-none">
                 <CardContent className="space-y-6 flex-grow overflow-auto">
                     <Tabs 
                         defaultValue="American"
@@ -54,26 +55,26 @@ export default function OptionsCard(){
                     >
                         <TabsList className="grid w-full h-[56px] grid-cols-4 bg-backgroundSecondary text-dark p-2 rounded-full">
                             <TabsTrigger value="American" 
-                                className={cn("data-[state=active]:bg-secondary data-[state=active]:text-primary h-[40px] rounded-full")}>
+                                className={cn("data-[state=active]:bg-primary-foreground data-[state=active]:text-primary h-[40px] rounded-full")}>
                                 American
                             </TabsTrigger>
                             <TabsTrigger value="European" 
-                                className={cn("data-[state=active]:bg-secondary data-[state=active]:text-primary h-[40px] rounded-full")}>
+                                className={cn("data-[state=active]:bg-primary-foreground data-[state=active]:text-primary h-[40px] rounded-full")}>
                                 European
                             </TabsTrigger>
                             <TabsTrigger value="Asian" disabled
-                                className={cn("data-[state=active]:bg-secondary data-[state=active]:text-primary h-[40px] rounded-full")}>
+                                className={cn("data-[state=active]:bg-primary-foreground data-[state=active]:text-primary h-[40px] rounded-full")}>
                                 Asian
                             </TabsTrigger>
                             <TabsTrigger value="Rainbow" disabled
-                                className={cn("data-[state=active]:bg-secondary data-[state=active]:text-primary h-[40px] rounded-full")}>
+                                className={cn("data-[state=active]:bg-primary-foreground data-[state=active]:text-primary h-[40px] rounded-full")}>
                                 Rainbow
                             </TabsTrigger>
                         </TabsList>
                     </Tabs>
 
-                    <div className="space-y-2">
-                        <div className="flex justify-end mb-1 gap-1">
+                    <div className="space-y-10">
+                        {/* <div className="flex justify-end mb-1 gap-1">
                             <Button 
                                 type="button" 
                                 size='icon' 
@@ -98,7 +99,7 @@ export default function OptionsCard(){
                                 <RefreshCcw className="text-iconBright text-sm"/>
                                 <span className="sr-only">Reset</span>
                             </Button>
-                        </div>
+                        </div> */}
                         <div className="space-y-0">
                             <div className="flex relative">
                                 <div className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 p-2">
@@ -161,7 +162,7 @@ export default function OptionsCard(){
                                 />
                             </div>
                         </div>
-                        <div className="border-none border-input rounded-md p-2 space-y-0 h-[80px] flex flex-col justify-center bg-backgroundSecondary">
+                        {/* <div className="border-none border-input rounded-md p-2 space-y-0 h-[80px] flex flex-col justify-center bg-backgroundSecondary">
                             <Label className="font-medium pl-2">Expiry Date</Label>
                             <Popover>
                                 <PopoverTrigger asChild>
@@ -186,28 +187,47 @@ export default function OptionsCard(){
                                     />
                                 </PopoverContent>
                             </Popover>
-                        </div>
-                        <div className="border-none border-input rounded-md p-2 space-y-0 h-[80px] flex flex-col justify-center bg-backgroundSecondary">
-                            <Label className="font-medium p-2">Strike Price</Label>
-                            <Input
-                                type="number"
-                                placeholder="Enter Strike Price"
-                                value={formValues.strikePrice}
-                                onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
-                                className="h-[56px] text-base border-none shadow-none p-2"
-                            />
+                        </div> */}
+                        <div className="grid grid-cols-2 gap-3 w-full">
+                            <div className="bg-backgroundSecondary rounded-md flex flex-col justify-between items-start p-4">
+                                <Label>Strike Price</Label>
+                                <Input
+                                    type="number"
+                                    placeholder="0.00"
+                                    value={formValues.strikePrice}
+                                    onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
+                                    className="text-base border-none shadow-none p-0"
+                                />
+                            </div>
+                            <div className="bg-backgroundSecondary rounded-md flex flex-col justify-between items-start p-4">
+                                <Label>Expiry</Label>
+                                <Select>
+                                    <SelectTrigger className="w-full bg-transparent p-0">
+                                    <SelectValue placeholder="Never" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                    <SelectItem value="never">Never</SelectItem>
+                                    <SelectItem value="1">1 day</SelectItem>
+                                    <SelectItem value="2">2 days</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </div>
                     </div>
                 </CardContent>
-                <div className="w-full flex justify-center items-center h-[56px] px-[24px]">
-                    <Button variant={'selected'} className="w-full flex " onClick={() => isConnected ? console.log('Initiate Trade') : setIsWalletModalOpen(true)}>
-                        {isConnected && walletName ? `Trade With ${walletName}` : 'Connect Wallet to Trade'}
-                    </Button>
-                    <WalletModal 
-                        isOpen={isWalletModalOpen} 
-                        onClose={() => setIsWalletModalOpen(false)}
-                    />
+                <div className="space-y-4 px-6">
+                    <div className="w-full flex justify-center items-center h-[56px]">
+                        <Button variant={'selected'} className="w-full flex " onClick={() => isConnected ? console.log('Initiate Trade') : setIsWalletModalOpen(true)}>
+                            {isConnected && walletName ? `Trade` : 'Connect Wallet to Trade'}
+                        </Button>
+                        <WalletModal 
+                            isOpen={isWalletModalOpen} 
+                            onClose={() => setIsWalletModalOpen(false)}
+                        />
+                    </div>
+                    
                 </div>
+                
             </Card>
         </>
     )

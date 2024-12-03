@@ -36,7 +36,7 @@ export default function NavBar(){
     return <>
        
             <header className="bg-backgroundSecondary">
-                <div className="px-10 max-w-screen-2xl mx-auto">
+                <div className="px-5 max-w-screen-2xl mx-auto">
 
                 
                     <div className="flex h-16 items-center mx-auto justify-between">
@@ -54,10 +54,13 @@ export default function NavBar(){
                             </div>
                             <div className={cn(buttonVariants({variant: active === "Earn" ? "active" : 'inactive'}), 'h-full box-border')}>
                                 <Link href='/earn'
-                                    className="flex items-center"
+                                    className="flex items-center justify-between gap-2"
                                     onClick={() => handleClick('Earn')}
                                 >
                                     Earn
+                                    <span className={ cn((active === "Earn" ? "border-dark" : 'hover:border-secondary-foreground'),'rounded text-[8px] w-11 h-5 bg-secondary flex justify-center items-center text-primary')}>
+                                        48% APR
+                                    </span>
                                 </Link>
                             </div>
                             <div className={cn(buttonVariants({variant: active === "Portfolio" ? "active" : 'inactive'}), 'h-full')}>
@@ -126,13 +129,13 @@ export default function NavBar(){
                             
                         </nav>
                         <div className="w-auto h-[40px] flex items-center space-x-3">
-                        {isConnected && (
+                        {/* {isConnected && (
                                 <>
                                     <div className={cn(buttonVariants({variant: theme === 'dark' ? 'navBarIcons' : 'navBarIcons'}),"flex items-center p-2")}>
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
                                                 <div className="flex justify-center items-center gap-3">
-                                                    <Star className="h-[24px] w-[24px] text-primary-foreground"/>
+                                                    <Star className="h-[24px] w-[24px] text-iconBright"/>
                                                     <h1>21.59M</h1>
                                                 </div>
                                             </DropdownMenuTrigger>
@@ -163,11 +166,11 @@ export default function NavBar(){
                                         </DropdownMenu>
                                     </div>
                                 </>
-                            )}
+                            )} */}
                             <div className={cn(buttonVariants({variant: theme === 'dark' ? 'navBarIcons' : 'navBarIcons'}),"flex items-center")}>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger>
-                                        <Settings className="h-[24px] w-[24px] text-primary-foreground"/>
+                                        <Settings className="h-[24px] w-[24px] text-iconBright"/>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end" className="min-w-72 max-w-72">
                                         <DropdownMenuLabel className="text-sm font-semibold">Settings</DropdownMenuLabel>
@@ -194,7 +197,7 @@ export default function NavBar(){
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
                                                 <div className="flex items-center justify-center">
-                                                    <Bell className="h-[24px] w-[24px] text-primary-foreground"/>
+                                                    <Bell className="h-[24px] w-[24px] text-iconBright"/>
                                                 </div>
                                             </DropdownMenuTrigger>
                                         </DropdownMenu>

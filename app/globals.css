@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    font-family: var(--font-lufga), system-ui, sans-serif;
+  }
 }
 
 @layer base {
@@ -50,7 +52,7 @@ body {
     --popover: #333333;
     --popover-foreground: #FDFDFD;
     --primary: #D7FE63;
-    --primary-foreground: #F6FCDF; 
+    --primary-foreground: #31332B; 
     --secondary: #6D7751; 
     --secondary-foreground: #949494;
     --muted: #4d3e2b;
@@ -74,6 +76,7 @@ body {
     --text-light: #FFFFFF80;
     --text-hover: #607C2F;
     --icon-bright: #FFFFFF;
+    --textprimary: #FDFDFD;
   }
 }
 

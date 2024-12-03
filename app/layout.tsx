@@ -5,15 +5,25 @@ import NavBar from "@/components/NavBar";
 import { WalletProvider } from "@/contexts/walletprovider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const lufga = localFont({
+  src: [
+    {
+      path: './fonts/LufgaRegular.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/LufgaMedium.woff',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './fonts/LufgaBold.woff',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-lufga',
 });
 
 export const metadata: Metadata = {
@@ -29,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${lufga.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -39,7 +49,7 @@ export default function RootLayout({
         >
           <WalletProvider>
             <NavBar></NavBar>
-            <div className="px-10 pb-10 space-y-6 max-w-screen-2xl min-h-fit mx-auto">
+            <div className="px-0 pb-10 space-y-6 max-w-screen-2xl min-h-screen mx-auto">
               {children}
             </div>
           </WalletProvider>

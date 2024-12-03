@@ -64,6 +64,9 @@ export default {
       backgroundImage: {
         gradient: 'var(--gradient)',
       },
+      fontFamily: {
+        sans: ['var(--font-lufga)', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

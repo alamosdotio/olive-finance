@@ -26,7 +26,7 @@ const buttonVariants = cva(
         paginationGhost: "text-dark hover:bg-secondary hover:text-dark",
         paginationOutline: "border border-primary bg-background shadow-sm text-dark",
         active: 'text-primary border-b-4 border-dark rounded-none box-border',
-        inactive: 'text-secondary-foreground',
+        inactive: 'text-secondary-foreground border-b-4 border-transparent',
         navBarIcons: "text-iconBright bg-foreground",
       
       },
