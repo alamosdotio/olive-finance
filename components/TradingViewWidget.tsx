@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
-    TradingView: any;
+    TradingView: unknown;
   }
 }
 
