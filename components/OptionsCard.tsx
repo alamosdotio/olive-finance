@@ -100,7 +100,7 @@ export default function OptionsCard(){
                     <div className="space-y-3 p-0 w-full">
                         <div className="rounded-2xl bg-backgroundSecondary p-6 space-y-4">
                             <div className="flex justify-between items-center">
-                                <Label className="text-sm font-medium">You're Selling</Label>
+                                <Label className="text-sm font-medium">You&apos;re Selling</Label>
                                 <div className="flex justify-between gap-2">
                                     <div className="flex justify-between items-center gap-1">
                                         <Wallet className="w-3 h-3 text-accent"/>
@@ -159,7 +159,7 @@ export default function OptionsCard(){
 
                         <div className="rounded-2xl bg-backgroundSecondary p-6 space-y-4">
                             <div className="flex justify-between items-center">
-                                <Label className="text-sm font-medium">You're Buying</Label>
+                                <Label className="text-sm font-medium">You&apos;re Buying</Label>
                                 <div className="flex justify-between items-center gap-1">
                                     <Wallet className="w-3 h-3 text-accent"/>
                                     <span className="text-xs font-normal text-accent">0.004185199 BTC</span>
