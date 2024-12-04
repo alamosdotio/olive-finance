@@ -11,11 +11,11 @@ export default function Home() {
   const { isConnected } = useWallet();
   return (
     <div className="flex flex-col">
-          <div className="px-5">
+          <div>
           <CryptoNav />
           </div>
-          <div className="flex flex-col lg:flex-row py-10 2xl:px-10 ">
-            <div className="w-screen lg:w-2/3 px-4 space-y-6">
+          <div className="flex flex-col lg:flex-row p-10 gap-10">
+            <div className="w-screen lg:w-2/3 space-y-6">
               <TradingViewWidget />
               { isConnected && (
                 <TradingPositions />

@@ -48,8 +48,8 @@ export default function RootLayout({
             disableTransitionOnChange
         >
           <WalletProvider>
-            <NavBar></NavBar>
-            <div className="px-0 pb-10 space-y-6 max-w-screen-2xl min-h-screen mx-auto">
+            <div className="px-3 max-w-screen-2xl min-h-screen mx-auto">
+              <NavBar></NavBar>
               {children}
             </div>
           </WalletProvider>

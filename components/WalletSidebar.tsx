@@ -55,7 +55,7 @@ export default function WalletSideBar() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="selected">
+                <Button variant="selected" className="w-full h-full">
                     {address ? truncateAddress(address) : 'Connected'}
                 </Button>
             </SheetTrigger>

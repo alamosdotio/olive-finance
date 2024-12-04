@@ -19,14 +19,14 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        selected: "text-backgroundSecondary bg-primary",
-        unselected: "text-iconBright shadow-sm bg-backgroundSecondary",
+        selected: "text-backgroundSecondary bg-primary rounded-full",
+        unselected: "text-iconBright shadow-sm bg-secondary",
         ghostPink: "hover:bg-primary hover:text-dark",
         calendar: " bg-background ",
         paginationGhost: "text-dark hover:bg-secondary hover:text-dark",
         paginationOutline: "border border-primary bg-background shadow-sm text-dark",
-        active: 'text-primary border-b-4 border-dark rounded-none box-border',
-        inactive: 'text-secondary-foreground border-b-4 border-transparent',
+        active: 'bg-foreground text-black',
+        inactive: 'bg-inherit text-white',
         navBarIcons: "text-iconBright bg-foreground",
       
       },
@@ -35,6 +35,8 @@ const buttonVariants = cva(
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
+        xs: 'h-6 w-6',
+        xsicon: 'w-6'
       },
     },
     defaultVariants: {
