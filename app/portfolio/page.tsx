@@ -43,7 +43,7 @@ export default function PortfolioPage(){
     return (
         <div className="space-y-6">
             <ProtectedRoute fallback={<ConnectWalletFallback />}>
-                <h1 className="text-3xl font-semibold">Portfolio Dashboard</h1>
+                {/* <h1 className="text-3xl font-semibold">Portfolio Dashboard</h1> */}
                 <PortfolioStat />
                 <div className="flex justify-start gap-3">
                     <Button
@@ -56,8 +56,8 @@ export default function PortfolioPage(){
                     >Transaction History</Button>
                 </div>
                 <div className="flex flex-col space-y-6">
-                    <div className="flex justify-between items-center">
-                        <h1 className="font-semibold text-3xl">Open Positions</h1>
+                    <div className="flex justify-end items-center">
+                        {/* <h1 className="font-semibold text-3xl">Open Positions</h1> */}
                         <div className="flex gap-4 items-center">
                             <div className="relative">
                                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />

@@ -76,7 +76,7 @@ export default function NavBar(){
                     </Link>
                 </nav>
             </div>
-            <div className="flex justify-between py-4 gap-4 items-center">
+            <div className="flex justify-between py-4 gap-3 items-center">
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
                         <div className="bg-secondary rounded-full p-3">

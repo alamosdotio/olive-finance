@@ -7,7 +7,7 @@ export default function PortfolioStat(){
     return (
         <div className="flex gap-10">
             <div className="grid grid-cols-3 gap-4 mb-6 w-5/6">
-                <Card className="gap-6 flex flex-col justify-center items-start">
+                <Card className="gap-6 flex flex-col justify-center items-start pt-3">
                     <CardContent className="space-y-3">
                         <div className="text-2xl font-normal">
                             Net Value
@@ -20,7 +20,7 @@ export default function PortfolioStat(){
                         </div>
                     </CardContent>
                 </Card>
-                <Card className="gap-6 flex flex-col justify-center items-start">
+                <Card className="gap-6 flex flex-col justify-center items-start pt-3">
                     <CardContent className="space-y-3">
                         <div className="text-2xl font-normal">
                             Profits and Loss
@@ -33,7 +33,7 @@ export default function PortfolioStat(){
                         </div>
                     </CardContent>
                 </Card>
-                <Card className="gap-6 flex flex-col justify-center items-start">
+                <Card className="gap-6 flex flex-col justify-center items-start pt-3">
                     <CardContent className="space-y-3">
                         <div className="text-2xl font-normal">
                             Points
@@ -47,11 +47,11 @@ export default function PortfolioStat(){
                     </CardContent>
                 </Card>
             </div>
-            <Card className="border-none shadow-none">
+            {/* <Card className="border-none shadow-none">
                 <CardContent>
                     <Image src={positionSvg} alt="positions" width={200} height={200}/>
                 </CardContent>
-            </Card>
+            </Card> */}
         </div>
     )
 }

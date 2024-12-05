@@ -46,7 +46,7 @@ export default function TradingViewWidget() {
   }, []);
 
   return (
-    <div className="tradingview-widget-container rounded-[15px] overflow-hidden" ref={container} style={{ height: "100%", width: "100%" }}>
+    <div className="tradingview-widget-container rounded-[15px] rounded-t-none overflow-hidden" ref={container} style={{ height: "100%", width: "100%" }}>
       <div className="tradingview-widget-container__widget " style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
     </div>
   );
