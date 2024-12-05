@@ -38,23 +38,23 @@ export default function NavBar(){
     }
 
     return (
-        <header className="flex justify-between h-20">
+        <header className="flex justify-between h-[72px]">
             <div className="flex justify-between py-4 gap-4">
                 <div className="flex items-center justify-center">
                     <Image src={logo} alt="logo pic" />
                 </div>
-                <nav className="flex justify-evenly items-center rounded-full bg-secondary gap-0">
+                <nav className="flex justify-evenly items-center gap-0">
                     <Link 
                         href='/'
-                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'px-3 py-3 h-full flex justify-between gap-2 rounded-full')}
+                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-4 w-auto h-auto flex justify-between gap-[10px]')}
                         onClick={() => handleClick('Options')}
                     > 
                          <h1 className="text-sm font-medium">Options</h1>
-                         <Badge variant='outline' className={cn((active === 'Options' ? 'border-black text-black' : 'border-primary text-primary'),"border-2 text-[8px] w-11 h-5")}>BETA</Badge>
+                         <Badge variant='outline' className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-2 text-[8px] w-11 h-5")}>BETA</Badge>
                     </Link>
                     <Link 
                         href='/earn'
-                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'px-3 py-3 h-full flex justify-between gap-2 rounded-full')}
+                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-4 w-auto h-auto flex justify-between gap-[10px]')}
                         onClick={() => handleClick('Earn')}
                     > 
                          <h1 className="text-sm font-medium">Earn</h1>
@@ -62,14 +62,14 @@ export default function NavBar(){
                     </Link>
                     <Link 
                         href='/portfolio'
-                        className={cn(buttonVariants({variant: active === 'Portfolio' ? 'active' : 'inactive'}), 'px-3 py-3 h-full flex justify-between gap-2 rounded-full')}
+                        className={cn(buttonVariants({variant: active === 'Portfolio' ? 'active' : 'inactive'}), 'p-4 w-auto h-auto flex justify-between')}
                         onClick={() => handleClick('Portfolio')}
                     > 
                          <h1 className="text-sm font-medium">Portfolio</h1>
                     </Link>
                     <Link 
                         href='/'
-                        className={cn(buttonVariants({variant: active === 'More' ? 'active' : 'inactive'}), 'px-3 py-3 h-full flex justify-between gap-2 rounded-full')}
+                        className={cn(buttonVariants({variant: active === 'More' ? 'active' : 'inactive'}), 'p-4 w-auto h-auto flex justify-between ')}
                         onClick={() => handleClick('More')}
                     > 
                          <h1 className="text-sm font-medium">More</h1>
@@ -79,7 +79,7 @@ export default function NavBar(){
             <div className="flex justify-between py-4 gap-3 items-center">
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-full p-3">
+                        <div className="bg-secondary rounded-md p-2">
                             <Settings className="h-[24px] w-[24px] text-iconBright"/>
                         </div>
                     </DropdownMenuTrigger>
@@ -104,7 +104,7 @@ export default function NavBar(){
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-full p-3">
+                        <div className="bg-secondary rounded-md p-2">
                             <Bell className="h-[24px] w-[24px] text-iconBright"/>
                         </div>
                     </DropdownMenuTrigger>

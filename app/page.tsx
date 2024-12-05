@@ -26,8 +26,8 @@ export default function Home() {
           <div>
           <CryptoNav />
           </div>
-          <div className="flex flex-col lg:flex-row p-10 gap-10">
-            <div className="lg:w-2/3">
+          <div className="flex flex-col-reverse lg:flex-row p-10 gap-10 max-w-screen-2xl">
+            <div className="w-full mx-auto">
               <Tabs className="p-0">
                   <TabsList className="grid grid-cols-3 rounded-b-none bg-inherit p-0">
                     <TabsTrigger value="chart" className="border-2 rounded-none rounded-tl-[15px]">Chart</TabsTrigger>
@@ -42,7 +42,7 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <div className="lg:w-1/3">
+            <div className="max-w-[600px] w-full mx-auto">
               <OptionsCard />
             </div>
           </div>

@@ -25,7 +25,7 @@ export default function TradingPositions(){
                 </Button>
             </div>
 
-            <div className="w-full bg-secondary rounded-2xl p-6 flex justify-between">
+            <div className="w-full bg-card rounded-2xl p-6 flex justify-between">
                 <div className="flex justify-between items-center gap-2">
                     <Bitcoin className="w-6 h-6 bg-orange-400 rounded-full p-1"/>
                     <span className="text-base font-medium">BTC</span>

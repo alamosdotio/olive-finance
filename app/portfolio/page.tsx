@@ -45,18 +45,19 @@ export default function PortfolioPage(){
             <ProtectedRoute fallback={<ConnectWalletFallback />}>
                 {/* <h1 className="text-3xl font-semibold">Portfolio Dashboard</h1> */}
                 <PortfolioStat />
-                <div className="flex justify-start gap-3">
-                    <Button
-                        className={cn(buttonVariants({variant: active === 'Positions' ? 'selected' : 'unselected'}))}
-                        onClick={()=>handleClickActive('Positions')}
-                    >Position</Button>
-                    <Button
-                        className={cn(buttonVariants({variant: active === 'Transactions' ? 'selected' : 'unselected'}))}
-                        onClick={()=>handleClickActive('Transactions')}
-                    >Transaction History</Button>
-                </div>
+                
                 <div className="flex flex-col space-y-6">
-                    <div className="flex justify-end items-center">
+                    <div className="flex justify-between items-center">
+                        <div className="flex gap-3">
+                            <Button
+                                className={cn(buttonVariants({variant: active === 'Positions' ? 'selected' : 'unselected'}))}
+                                onClick={()=>handleClickActive('Positions')}
+                            >Position</Button>
+                            <Button
+                                className={cn(buttonVariants({variant: active === 'Transactions' ? 'selected' : 'unselected'}))}
+                                onClick={()=>handleClickActive('Transactions')}
+                            >Transaction History</Button>
+                        </div>
                         {/* <h1 className="font-semibold text-3xl">Open Positions</h1> */}
                         <div className="flex gap-4 items-center">
                             <div className="relative">
