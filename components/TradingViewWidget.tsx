@@ -4,7 +4,9 @@ import React, { useEffect, useRef, memo } from 'react';
 
 declare global {
   interface Window {
-    TradingView: unknown;
+    TradingView: {
+      widget: new (config: any) => any;
+    };
   }
 }
 
@@ -17,7 +19,7 @@ function TradingViewWidget() {
     script.async = true;
     script.onload = () => {
       if (typeof window.TradingView !== 'undefined' && container.current) {
-        new TradingView.widget({
+        new window.TradingView.widget({
           autosize: true,
           symbol: "NASDAQ:AAPL",
           interval: "D",
