@@ -27,22 +27,22 @@ export default function Home() {
           <CryptoNav />
           </div>
           <div className="flex flex-col-reverse lg:flex-row p-10 gap-10 max-w-screen-2xl">
-            <div className="w-full mx-auto">
-              <Tabs className="p-0">
-                  <TabsList className="grid grid-cols-3 rounded-b-none bg-inherit p-0">
-                    <TabsTrigger value="chart" className="border-2 rounded-none rounded-tl-[15px]">Chart</TabsTrigger>
-                    <TabsTrigger value="options" className="border-2 rounded-none">Option Price</TabsTrigger>
-                    <TabsTrigger value="trades" className="border-2 rounded-none rounded-tr-[15px]">Recent Trades</TabsTrigger>
+            <div className="w-4/6 h-[500px] mx-auto space-y-5">
+              <Tabs defaultValue="chart">
+                  <TabsList className="grid grid-cols-3 rounded-b-none bg-input p-0 rounded-t-[15px]">
+                    <TabsTrigger value="chart" className="border-2 p-4 bg-input rounded-none rounded-tl-[15px] data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Chart</TabsTrigger>
+                    <TabsTrigger value="options" className="border-2 p-4 bg-input rounded-none data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Option Price</TabsTrigger>
+                    <TabsTrigger value="trades" className="border-2 p-4 bg-input rounded-none rounded-tr-[15px] data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Recent Trades</TabsTrigger>
                   </TabsList>
               </Tabs>
               <TradingViewWidget />
               { isConnected && (
-                <div className="py-6">
+                <div className="py-1">
                   <TradingPositions />
                 </div>
               )}
             </div>
-            <div className="max-w-[600px] w-full mx-auto">
+            <div className="  mx-auto">
               <OptionsCard />
             </div>
           </div>

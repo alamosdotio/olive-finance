@@ -52,7 +52,7 @@ export default function CryptoNav(){
                 </div>   */}
             </div>
             <div className="flex items-center">
-                <ChevronRight className="text-secondary"/>
+                <ChevronRight className="text-secondary-foreground"/>
             </div>
         </div>
     )

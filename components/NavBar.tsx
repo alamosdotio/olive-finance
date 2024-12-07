@@ -79,33 +79,29 @@ export default function NavBar(){
             <div className="flex justify-between py-4 gap-3 items-center">
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-md p-2">
-                            <Settings className="h-[24px] w-[24px] text-iconBright"/>
+                        <div className="bg-secondary rounded-full p-2">
+                            <Settings className="h-[24px] w-[24px] text-foregroundt"/>
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="min-w-72 max-w-72">
                         <DropdownMenuLabel className="text-sm font-semibold">Settings</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="focus:bg-transparent flex justify-between">
-                            <div className="flex w-full items-center justify-between">
-                                <span className="text-sm text-badge font-normal">Color Theme</span>
-                                <div className="flex items-center bg-accent rounded-lg space-x-1 p-2">
-                                    <Switch 
-                                        checked={theme === 'light'}
-                                        onCheckedChange={toggleTheme}
-                                        className="data-[state=checked]:bg-dark data-[state=unchecked]:bg-primary"
-                                    />
-                                    {theme === 'dark' ? <Moon className="h-[24px] w-[24px] text-light" /> : <Sun className="h-[24px] w-[24px] text-dark" />}
-                                </div>
-                            </div>
+                        <DropdownMenuItem onClick={() => setTheme("light")}>
+                            Light
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setTheme("dark")}>
+                            Dark
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setTheme("system")}>
+                            System
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-md p-2">
-                            <Bell className="h-[24px] w-[24px] text-iconBright"/>
+                        <div className="bg-secondary rounded-full p-2">
+                            <Bell className="h-[24px] w-[24px] text-foreground"/>
                         </div>
                     </DropdownMenuTrigger>
                 </DropdownMenu>
@@ -114,7 +110,7 @@ export default function NavBar(){
                     <WalletSideBar></WalletSideBar>
                 ) : (
                     <Button variant='selected' onClick={() => setIsWalletModalOpen(true)} className="w-full h-full">
-                        <span className="text-sm font-medium">Connect Wallet</span>
+                        <span className="text-sm text-foreground font-medium">Connect Wallet</span>
                     </Button>
                 )}
                 

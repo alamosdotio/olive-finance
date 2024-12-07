@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         selected: "text-backgroundSecondary bg-primary rounded-full",
-        unselected: "text-iconBright shadow-sm bg-card",
+        unselected: "text-secondary-foreground shadow-sm bg-secondary",
         ghostPink: "hover:bg-primary hover:text-dark",
         calendar: " bg-background ",
         paginationGhost: "text-dark hover:bg-secondary hover:text-dark",

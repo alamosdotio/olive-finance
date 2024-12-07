@@ -10,7 +10,7 @@ export default function TradingPositions(){
         <div className="space-y-6">
             <div className="flex justify-between">
                 <div className="flex justify-between gap-2">
-                    <Button variant='outline' className="rounded-full bg-[#31332B] border-[#CBE475] text-[#CBE475]  hover:bg-[#31332B] hover:text-[#CBE475]">Open Positions</Button>
+                    <Button variant='active' className="rounded-full">Open Positions</Button>
                     <Button variant='inactive' className="rounded-full">Trade History</Button>
                     <Button variant='inactive' className="rounded-full">Expired Options</Button>
                 </div>
@@ -25,7 +25,7 @@ export default function TradingPositions(){
                 </Button>
             </div>
 
-            <div className="w-full bg-card rounded-2xl p-6 flex justify-between">
+            <div className="w-full bg-backgroundSecondary rounded-2xl p-6 flex justify-between">
                 <div className="flex justify-between items-center gap-2">
                     <Bitcoin className="w-6 h-6 bg-orange-400 rounded-full p-1"/>
                     <span className="text-base font-medium">BTC</span>
