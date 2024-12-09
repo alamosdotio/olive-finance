@@ -78,7 +78,7 @@ export default function StrategyCards(){
                     {selectedStrategyCard === index ? (
                         <StrategyFlipped onClose={() => setSelectedStrategyCard(null)} strategy={{name:"Strategy", apy: strategy.apy}}/>
                     ) : (
-                        <Card className="w-full h-[384px] space-x-2">
+                        <Card className="w-full h-[384px] space-x-2 bg-backgroundSecondary">
                             <CardHeader className="border-b-2 cursor-pointer" onClick={() => setSelectedStrategyCard(index)}>
                                 <div className="flex items-start justify-between">
                                     <div className="flex items-start gap-2"> 
@@ -192,7 +192,7 @@ export default function StrategyCards(){
                                     <div className="flex-shrink-0 pt-2.5 w-full">
                                         <Link
                                             href='/earn/pool'
-                                            className={cn(buttonVariants({variant: 'outline'}),"w-full text-dark border-dark hover:text-primary-foreground")}
+                                            className={cn(buttonVariants({variant: 'outline'}),"w-full text-dark bg-backgroundSecondary hover:text-primary-foreground border-primary")}
                                         >
                                             Go to Pool
                                         </Link>

@@ -38,14 +38,14 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
     return(
             <Tabs defaultValue="Open"
                 onValueChange={(value)=>setActiveTab(value as "Open" | "Close")}
-                className="flex flex-col h-full space-y-4"
+                className="bg-backgroundSecondary flex flex-col h-full space-y-4"
             >
                 <CardHeader className="flex-shrink-0 pb-3">
-                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark">
+                    <TabsList className="w-full grid grid-cols-2 bg-backgroundSecondary text-dark">
                         <TabsTrigger 
                             value="Open"
                             className={cn(
-                            "data-[state=active]:bg-gradient data-[state=active]:text-light"
+                            "data-[state=active]:bg-secondary data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary rounded-full"
                             )}
                         >
                             Open
@@ -53,7 +53,7 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                         <TabsTrigger 
                             value="Close"
                             className={cn(
-                            "data-[state=active]:bg-gradient data-[state=active]:text-light"
+                            "data-[state=active]:bg-secondary data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary rounded-full"
                             )}
                         >
                             Close
@@ -112,12 +112,13 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                     </div>
                     </TabsContent>
                     <div className="flex-shrink-0 pb-4 w-full">
+                            {/* to optimize */}
                             {activeTab === 'Open'? (
-                                <Button className="w-full" variant='unselected'>
+                                <Button className="w-full border-2 border-primary bg-primary text-black rounded-full" variant='unselected'>
                                     Buy
                                 </Button>
                             ) : (
-                                <Button className="w-full" variant='unselected'>
+                                <Button className="w-full border-2 border-primary bg-primary text-black rounded-full" variant='unselected'>
                                     Sell
                                 </Button>
                             )}

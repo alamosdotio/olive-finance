@@ -47,18 +47,18 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
 
 
     return (
-        <Card className="w-full h-full min-h-[384px] space-x-2">
+        <Card className="w-full h-full min-h-[384px] bg-backgroundSecondary space-x-2">
             <Tabs
                 defaultValue="deposit"
                 onValueChange={(value) => setActiveTab(value as "deposit" | "withdraw")}
                 className="flex flex-col h-full"
             >
                 <CardHeader className="flex-shrink-0 pb-3">
-                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark">
+                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark p-0">
                     <TabsTrigger
                         value="deposit"
                         className={cn(
-                        "data-[state=active]:bg-gradient data-[state=active]:text-light"
+                        "data-[state=active]:bg-gradient data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary"
                         )}
                     >
                         Deposit
@@ -66,7 +66,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                     <TabsTrigger
                         value="withdraw"
                         className={cn(
-                        "data-[state=active]:bg-gradient data-[state=active]:text-light"
+                        "data-[state=active]:bg-gradient data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary"
                         )}
                     >
                         Withdraw
@@ -149,7 +149,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                         <div className="flex-shrink-0 pb-4 w-full">
                             <Button
                                 variant='outline'
-                                className="w-full text-dark border-dark hover:text-primary-foreground"
+                                className="w-full text-black bg-primary border-primary hover:text-primary-foreground"
                                 onClick={handlePreviewClick}
                             >
                                 Preview {activeTab === "deposit" ? "Deposit" : "Withdrawal"}

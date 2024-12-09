@@ -1,129 +1,89 @@
 'use client'
 
-import React, { useEffect, useRef, memo } from 'react';
-
-interface TradingViewWidgetConfig {
-  autosize: boolean;
-  symbol: string;
-  interval: string;
-  timezone: string;
-  theme: string;
-  style: string;
-  locale: string;
-  toolbar_bg: string;
-  enable_publishing: boolean;
-  allow_symbol_change: boolean;
-  container_id: string;
-  hide_top_toolbar: boolean;
-  hide_side_toolbar: boolean;
-  save_image: boolean;
-  studies: string[];
-  overrides: Record<string, string | number>;
-  loading_screen: { backgroundColor: string };
-}
-
-declare global {
-  interface Window {
-    TradingView: {
-      widget: new (config: TradingViewWidgetConfig) => unknown;
-    };
-  }
-}
+import React, { useEffect, useRef, useState, memo } from 'react';
+import { tradingViewConfig } from '../config/tradingViewConfig';
+import { createTradingViewErrorHandler } from '../utils/errorHandling';
+import { initializeTradingViewScript } from '../utils/tradingViewInitializer';
 
 function TradingViewWidget() {
-  const container = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/tv.js';
-    script.async = true;
-    script.onload = () => {
-      if (typeof window.TradingView !== 'undefined' && container.current) {
-        new window.TradingView.widget({
-          autosize: true,
-          symbol: "NASDAQ:AAPL",
-          interval: "D",
-          timezone: "Etc/UTC",
-          theme: "dark",
-          style: "1",
-          locale: "en",
-          toolbar_bg: "#222030",
-          enable_publishing: false,
-          allow_symbol_change: true,
-          container_id: container.current.id,
-          hide_top_toolbar: false,
-          hide_side_toolbar: false,
-          save_image: false,
-          studies: ["MASimple@tv-basicstudies"],
-          overrides: {
-            "mainSeriesProperties.candleStyle.upColor": "#9A76FF",
-            "mainSeriesProperties.candleStyle.downColor": "#FF4C4F",
-            "mainSeriesProperties.candleStyle.wickUpColor": "#9A76FF",
-            "mainSeriesProperties.candleStyle.wickDownColor": "#FF4C4F",
-            "mainSeriesProperties.candleStyle.borderUpColor": "#9A76FF",
-            "mainSeriesProperties.candleStyle.borderDownColor": "#FF4C4F",
-            "paneProperties.background": "#222030",
-            "paneProperties.vertGridProperties.color": "#2D2B3B",
-            "paneProperties.horzGridProperties.color": "#2D2B3B",
-            "scalesProperties.textColor": "#9A76FF",
-            "scalesProperties.backgroundColor": "#222030",
-            "mainSeriesProperties.priceLineColor": "#9A76FF",
-            "volumePaneSize": "medium"
-          },
-          loading_screen: { backgroundColor: "#222030" },
-        });
+    const originalErrorHandler = window.onerror;
+    window.onerror = createTradingViewErrorHandler(originalErrorHandler);
+
+    const config = {
+      ...tradingViewConfig,
+      container_id: 'tradingview_chart',
+      autosize: true,
+      enable_publishing: false,
+      hide_top_toolbar: false,
+      hide_side_toolbar: false,
+      save_image: false,
+      backgroundColor: "#232030",
+      toolbar_bg: "#232030",
+      loading_screen: { backgroundColor: "#232030" },
+    };
+
+    let cleanup: (() => void) | undefined;
+
+    const loadWidget = async () => {
+      try {
+        cleanup = await initializeTradingViewScript(containerRef.current, config);
+      } catch (err) {
+        console.error('Failed to load TradingView widget:', err);
+        setError('Failed to load TradingView widget. Please try again later.');
       }
     };
-    document.head.appendChild(script);
+
+    loadWidget();
 
     return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+      window.onerror = originalErrorHandler;
+      if (cleanup) {
+        cleanup();
       }
     };
   }, []);
 
+  if (error) {
+    return (
+      <div className="tradingview-widget-container error">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="tradingview-widget-container">
-      <div id="tradingview_widget" ref={container} style={{ height: "100%", width: "100%" }}></div>
-      <style jsx global>{`
+      <div id="tradingview_chart" ref={containerRef} className="tradingview-widget-container__widget" />
+      <style jsx>{`
         .tradingview-widget-container {
-          height: 500px;
+          height: 550px;
           width: 100%;
           border-radius: 0 0 15px 15px;
           overflow: hidden;
+          background-color: #232030;
         }
-          
-        .tv-lightweight-charts {
-          font-family: var(--font-lufga), sans-serif !important;
+
+        .tradingview-widget-container__widget {
+          height: 100%;
+          width: 100%;
+          background-color: #232030;
         }
-        .chart-page {
-          background-color: #222030 !important;
+
+        :global(#tradingview_chart) {
+          background-color: #232030 !important;
         }
-        .chart-controls-bar {
-          background-color: #222030 !important;
+
+        :global(.tv-side-toolbar),
+        :global(.tv-floating-toolbar) {
+          background-color: #232030 !important;
         }
-        .group-wWM3zP_M- {
-          background-color: #2D2B3B !important;
-        }
-        .button-1iktpaT1- {
-          color: #9A76FF !important;
-        }
-        .button-1iktpaT1-:hover {
-          background-color: #2D2B3B !important;
-        }
-        .feature-no-touch .button-1iktpaT1-:hover {
-          color: #ffffff !important;
-        }
-        .chart-markup-table {
-          border-color: #2D2B3B !important;
-        }
-        .pane-legend-item-value-wrap {
-          color: #9A76FF !important;
-        }
-        .button-1iktpaT1-[aria-pressed="true"] {
-          background-color: #9A76FF !important;
-          color: #ffffff !important;
+
+        :global(.tradingview-widget-copyright) {
+          display: none;
         }
       `}</style>
     </div>
