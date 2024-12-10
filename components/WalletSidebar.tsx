@@ -30,9 +30,8 @@ const cryptoData: CryptoData[] = [
 ]
 
 export default function WalletSideBar() {
-    const { address, disconnect } = useWallet()
+    const { address, disconnect, iconPath } = useWallet()
     const [activeTab, setActiveTab] = useState<string>('Token')
-    const [isOpen, setIsOpen] = useState(false)
     const balance = 10565
     const points = 10900
 
@@ -55,7 +54,10 @@ export default function WalletSideBar() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="selected" className="w-full h-full text-foreground">
+                <Button variant="selected" className="w-full h-full text-foreground bg-secondary border-2 border-transparent space-x-2 hover:bg-primary-foreground hover:border-2 hover:border-primary">
+                    {iconPath && (
+                        <Image src={iconPath} alt="Wallet Icon" width={24} height={24} className="rounded-full" />
+                    )}
                     {address ? truncateAddress(address) : 'Connected'}
                 </Button>
             </SheetTrigger>
@@ -63,10 +65,9 @@ export default function WalletSideBar() {
                 <SheetTitle className="flex justify-between">
                     <div className="flex items-center gap-4">
                         <div className="flex relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
-                                <circle cx="21" cy="21" r="20" fill="#2F3520" stroke="#607C2F"/>
-                            </svg>
-                            <Image src={solfare} alt="icon logo" width={20} height={20} className="rounded-full absolute left-2.5 top-1/2 transform -translate-y-1/2"/>
+                            {iconPath && (
+                                <Image src={iconPath} alt="Wallet Icon" width={24} height={24} className="rounded-full" />
+                            )}
                         </div>
                         <div className="flex items-center gap-1">
                             <span className="text-lg font-medium text-dark">

@@ -3,7 +3,7 @@ import StrategyCards from "@/components/StrategyCards";
 
 export default function earnPage(){
     return (
-        <div>
+        <div className="p-2">
             <StrategyCards />
         </div>
     )

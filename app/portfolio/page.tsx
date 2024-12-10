@@ -46,29 +46,29 @@ export default function PortfolioPage(){
                 {/* <h1 className="text-3xl font-semibold">Portfolio Dashboard</h1> */}
                 <PortfolioStat />
                 
-                <div className="flex flex-col space-y-6">
+                <div className="flex flex-col space-y-6 h-12">
                     <div className="flex justify-between items-center">
-                        <div className="flex gap-3">
+                        <div className="flex gap-3 h-full">
                             <Button
-                                className={cn(buttonVariants({variant: active === 'Positions' ? 'selected' : 'unselected'}))}
+                                className={cn(active==='Positions' ? 'border border-primary text-primary' : 'text-secondary-foreground', 'h-full bg-transparent rounded-full px-6 py-3 shadow-none')}
                                 onClick={()=>handleClickActive('Positions')}
                             >Position</Button>
                             <Button
-                                className={cn(buttonVariants({variant: active === 'Transactions' ? 'selected' : 'unselected'}))}
+                                className={cn(active==='Transactions' ? 'border border-primary text-primary' : 'text-secondary-foreground', 'h-full bg-transparent rounded-full px-6 py-3 shadow-none')}
                                 onClick={()=>handleClickActive('Transactions')}
                             >Transaction History</Button>
                         </div>
                         {/* <h1 className="font-semibold text-3xl">Open Positions</h1> */}
-                        <div className="flex gap-4 items-center">
-                            <div className="relative">
+                        <div className="flex gap-4 items-center h-full">
+                            <div className="relative h-full">
                                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                                 <Input
                                     type="text" 
                                     placeholder="Search..." 
-                                    className="w-auto rounded-md border border-border bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground"
+                                    className="w-full h-full rounded-full border border-border bg-background pl-11 pr-4 text-sm placeholder:text-muted-foreground"
                                 />
                             </div>
-                            <Button variant='unselected'>Add</Button>
+                            <Button variant='unselected' className="py-4 px-6 rounded-full w-full h-full text-foreground">Create</Button>
                         </div>
                     </div>
                     <PortfolioCards />

@@ -47,7 +47,7 @@ export default function PortfolioCards(){
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4 justify-items-center">
             {positions.map((position, index) => (
-                <Card key={index} onClick={() => setSelectedCard(index)} className="w-full h-[382px] bg-backgroundSecondary space-y-6">
+                <Card key={index} onClick={() => setSelectedCard(index)} className="w-full h-96 bg-backgroundSecondary space-y-6 rounded-3xl">
                     {selectedCard === index ? (
                         <PortfolioFlipped onClose={() => setSelectedCard(null)} coin={position.coin}/>
                     ) : (
@@ -57,7 +57,7 @@ export default function PortfolioCards(){
                                     <div className="flex justify-between items-start">
                                         <span className="font-bold text-base">{position.coin}</span>
                                     </div>
-                                    <Badge variant="secondary" className="text-primary border-primary hover:bg-primary">
+                                    <Badge className="bg-primary-foreground border-none text-xs text-primary p-[6px]">
                                         {position.strategyType}
                                     </Badge>
                                 </div>

@@ -17,12 +17,12 @@ export default function StrategyFilters({sortBy, setSortBy, strategyType, setStr
         <section>
             <div className="flex justify-between">
                 <div className="flex gap-4 items-center">
-                    <div className="relative">
+                    <div className="relative h-full">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             type="text" 
                             placeholder="Search..." 
-                            className="w-auto rounded-md border border-border bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground"
+                            className="w-auto h-full rounded-full border border-border bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground"
                         />
                     </div>
                     <Button variant='unselected'>
@@ -32,7 +32,7 @@ export default function StrategyFilters({sortBy, setSortBy, strategyType, setStr
                 
                 <div className="flex gap-2">
                     <Select value={sortBy} onValueChange={setSortBy}>
-                        <SelectTrigger className="max-w-max h-[40px] focus:outline-none">
+                        <SelectTrigger className="max-w-max h-10 focus:outline-none rounded-full">
                         <div className="flex items-center space-x-2">
                             <SelectValue placeholder="Featured Strategies"/>
                         </div>
@@ -55,7 +55,7 @@ export default function StrategyFilters({sortBy, setSortBy, strategyType, setStr
                         </SelectContent>
                     </Select>
                     <Select value={depositAsset} onValueChange={setDepositAsset}>
-                        <SelectTrigger className="max-w-max h-[40px] focus:outline-none">
+                        <SelectTrigger className="max-w-max h-[40px] focus:outline-none rounded-full">
                         <div className="flex items-center space-x-2">
                             <SelectValue placeholder="Deposit Asset"/>
                         </div>

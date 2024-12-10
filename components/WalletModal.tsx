@@ -57,8 +57,8 @@ export default function WalletModal({isOpen, onClose} : WalletModalProps){
     const moreWallets = allWallets.slice(9);
     const { connect } = useWallet();
 
-    const handleWalletConnect = (walletName: string) => {
-        connect(walletName);
+    const handleWalletConnect = (walletName: string, iconPath: string) => {
+        connect(walletName, iconPath);
         onClose();
     }
 
@@ -72,7 +72,7 @@ export default function WalletModal({isOpen, onClose} : WalletModalProps){
                     <div className="space-y-5 flex flex-col justify-between">
                         <div className="grid grid-cols-3 gap-5">
                             {primaryWallets.map((wallet) => (
-                                <WalletButton key={wallet.name} {...wallet} onClick={() => handleWalletConnect(wallet.name)}/>
+                                <WalletButton key={wallet.name} {...wallet} onClick={() => handleWalletConnect(wallet.name, wallet.iconPath)}/>
                             ))}
                         </div>
                         <div id="more-wallets"
@@ -81,7 +81,7 @@ export default function WalletModal({isOpen, onClose} : WalletModalProps){
                             isMoreWalletOpen ? "opacity-100" : "hidden opacity-0"
                         )}>
                             {moreWallets.map((wallet) => (
-                                <WalletButton key={wallet.name} {...wallet} onClick={() => handleWalletConnect(wallet.name)}/>
+                                <WalletButton key={wallet.name} {...wallet} onClick={() => handleWalletConnect(wallet.name, wallet.iconPath)}/>
                             ))}
                         </div>
                     </div>

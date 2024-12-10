@@ -54,11 +54,11 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                 className="flex flex-col h-full"
             >
                 <CardHeader className="flex-shrink-0 pb-3">
-                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark p-0">
+                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark p-0 rounded-full">
                     <TabsTrigger
                         value="deposit"
                         className={cn(
-                        "data-[state=active]:bg-gradient data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary"
+                        "data-[state=active]:bg-gradient data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary rounded-full"
                         )}
                     >
                         Deposit
@@ -66,7 +66,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                     <TabsTrigger
                         value="withdraw"
                         className={cn(
-                        "data-[state=active]:bg-gradient data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary"
+                        "data-[state=active]:bg-gradient data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary rounded-full"
                         )}
                     >
                         Withdraw
@@ -95,7 +95,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                                 type="text"
                                 value={`$${amount.toLocaleString()}`}
                                 onChange={handleInputChange}
-                                className="text-left"
+                                className="text-left h-auto p-2 border-secondary-foreground"
                                 aria-label="Enter deposit/withdraw amount"
                             />
                             <Slider
@@ -137,7 +137,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                         <div className="flex-shrink-0 pb-4 w-full">
                             <Button
                                 variant='outline'
-                                className="w-full text-dark border-dark hover:text-primary-foreground"
+                                className="w-full text-primary border-primary bg-inherit hover:bg-secondary hover:text-primary rounded-full"
                                 onClick={handlePreviewClick}
                             >
                                 {activeTab === "deposit" ? "Deposit" : "Withdraw"} Now
@@ -149,7 +149,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                         <div className="flex-shrink-0 pb-4 w-full">
                             <Button
                                 variant='outline'
-                                className="w-full text-black bg-primary border-primary hover:text-primary-foreground"
+                                className="w-full text-black bg-primary border-primary hover:text-white hover:bg-primary rounded-full"
                                 onClick={handlePreviewClick}
                             >
                                 Preview {activeTab === "deposit" ? "Deposit" : "Withdrawal"}

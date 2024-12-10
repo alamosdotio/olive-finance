@@ -187,7 +187,7 @@ export default function OptionsCard(){
                         </div>
                     </div>
                 </div>
-                <Button className="w-full rounded-full h-auto text-foreground" onClick={() => isConnected ? console.log('Initiate Trade') : setIsWalletModalOpen(true)}>
+                <Button className="w-full rounded-full h-auto text-white" onClick={() => isConnected ? console.log('Initiate Trade') : setIsWalletModalOpen(true)}>
                     {isConnected && walletName ? `Trade` : 'Connect Wallet to Trade'}
                 </Button>
                 <WalletModal 

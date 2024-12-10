@@ -38,7 +38,7 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
     return(
             <Tabs defaultValue="Open"
                 onValueChange={(value)=>setActiveTab(value as "Open" | "Close")}
-                className="bg-backgroundSecondary flex flex-col h-full space-y-4"
+                className="bg-backgroundSecondary flex flex-col h-full space-y-4 rounded-3xl"
             >
                 <CardHeader className="flex-shrink-0 pb-3">
                     <TabsList className="w-full grid grid-cols-2 bg-backgroundSecondary text-dark">
@@ -56,7 +56,7 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                             "data-[state=active]:bg-secondary data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary rounded-full"
                             )}
                         >
-                            Close
+                            Exercise
                         </TabsTrigger>
                     </TabsList>
                 </CardHeader>
@@ -81,7 +81,7 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                             type="text"
                             value={`$${amount.toLocaleString()}`}
                             onChange={handleInputChange}
-                            className="text-left"
+                            className="text-left p-2 h-auto border-secondary-foreground"
                             aria-label="Enter open/close amount"
                         />
                         <Slider 
@@ -114,11 +114,11 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                     <div className="flex-shrink-0 pb-4 w-full">
                             {/* to optimize */}
                             {activeTab === 'Open'? (
-                                <Button className="w-full border-2 border-primary bg-primary text-black rounded-full" variant='unselected'>
+                                <Button className="w-full border-2 border-primary bg-primary text-foreground rounded-full" variant='unselected'>
                                     Buy
                                 </Button>
                             ) : (
-                                <Button className="w-full border-2 border-primary bg-primary text-black rounded-full" variant='unselected'>
+                                <Button className="w-full border-2 border-primary bg-primary text-foreground rounded-full" variant='unselected'>
                                     Sell
                                 </Button>
                             )}

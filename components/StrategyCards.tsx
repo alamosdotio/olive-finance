@@ -99,7 +99,7 @@ export default function StrategyCards(){
                                         </svg>
                                         <span className="font-bold">Strategy</span>
                                     </div>
-                                    <Badge variant="secondary" className="bg-secondary hover:bg-primary">
+                                    <Badge className="bg-primary-foreground border-none text-primary p-1">
                                         {strategy.type}
                                     </Badge>
                                 </div>
@@ -133,7 +133,7 @@ export default function StrategyCards(){
                                     </div>
 
                                     <div className="w-full h-1.5 rounded-full bg-secondary">
-                                        <div className="h-full w-1/3 rounded-full bg-gradient" />
+                                        <div className="h-full w-1/3 rounded-full bg-primary" />
                                     </div>
 
                                     <div className="flex flex-col justify-center gap-1">
@@ -192,7 +192,7 @@ export default function StrategyCards(){
                                     <div className="flex-shrink-0 pt-2.5 w-full">
                                         <Link
                                             href='/earn/pool'
-                                            className={cn(buttonVariants({variant: 'outline'}),"w-full text-dark bg-backgroundSecondary hover:text-primary-foreground border-primary")}
+                                            className={cn(buttonVariants({variant: 'outline'}),"w-full text-foreground bg-backgroundSecondary hover:text-primary hover:bg-secondary border-primary rounded-full")}
                                         >
                                             Go to Pool
                                         </Link>
@@ -213,10 +213,10 @@ export default function StrategyCards(){
                         e.preventDefault();
                         if (currentPage > 1) paginate(currentPage - 1);
                     }}
-                    className="bg-secondary" 
+                    className="text-foreground" 
                     />
                 </PaginationItem>
-                <div className="flex">
+                <div className="flex gap-2">
                     {[...Array(totalPages)].map((_, index) => (
                         <PaginationItem key={index}>
                         <PaginationLink 
@@ -226,6 +226,7 @@ export default function StrategyCards(){
                             e.preventDefault();
                             paginate(index + 1);
                             }}
+                            className="rounded-full"
                         >
                             {index + 1}
                         </PaginationLink>
@@ -239,7 +240,7 @@ export default function StrategyCards(){
                         e.preventDefault();
                         if (currentPage < totalPages) paginate(currentPage + 1);
                     }}
-                    className="bg-secondary" 
+                    className="text-foreground" 
                     />
                 </PaginationItem>
                 </PaginationContent>

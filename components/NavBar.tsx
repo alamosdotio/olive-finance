@@ -67,13 +67,58 @@ export default function NavBar(){
                     > 
                          <h1 className="text-sm font-medium">Portfolio</h1>
                     </Link>
-                    <Link 
-                        href='/'
+                    
+                    <DropdownMenu onOpenChange={() => handleClick('More')}>
+                        <DropdownMenuTrigger
                         className={cn(buttonVariants({variant: active === 'More' ? 'active' : 'inactive'}), 'p-4 w-auto h-auto flex justify-between ')}
                         onClick={() => handleClick('More')}
-                    > 
-                         <h1 className="text-sm font-medium">More</h1>
-                    </Link>
+                        >
+                                <h1 className="text-sm font-medium">More</h1>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="center" className="w-auto text-secondary-foreground">
+                            {[
+                                "Futures",
+                                "Prediction Markets",
+                                "Move",
+                                "Exotic Options",
+                                "Leaderboard",
+                                "Liquidity",
+                                "Tokenized Stocks",
+                                "Bridge",
+                                "Leveraged Farming"
+                            ].map((item) => (
+                                <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
+                                    <Link href={`/`} className="w-full">
+                                        {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
+                                    </Link>
+                                </DropdownMenuItem>
+                            ))}
+                            <DropdownMenuSeparator />
+                            {[
+                                "Docs",
+                                "Feedback",
+                                "Info",
+                            ].map((item) => (
+                                <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
+                                    <Link href={`/`} className="w-full">
+                                        {item}
+                                    </Link>
+                                </DropdownMenuItem>
+                            ))}
+                            <DropdownMenuSeparator />
+                            <div className="flex justify-start px-4 py-2 gap-3">
+                                <a href='https://x.com/_olivefinance' target="_blank">
+                                    <Image src={x} alt="x link"/>
+                                </a>
+                                <a href='https://t.me/olive_financee' target="_blank">
+                                    <Image src={telegram} alt="telegram link"/>
+                                </a>
+                                <a href='https://discord.gg/u6pq5yNj' target="_blank">
+                                    <Image src={discord} alt="discord link" />
+                                </a>
+                            </div>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </nav>
             </div>
             <div className="flex justify-between py-4 gap-3 items-center">
@@ -86,15 +131,15 @@ export default function NavBar(){
                     <DropdownMenuContent align="end" className="min-w-72 max-w-72">
                         <DropdownMenuLabel className="text-sm font-semibold">Settings</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => setTheme("light")}>
-                            Light
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme("dark")}>
-                            Dark
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setTheme("system")}>
-                            System
-                        </DropdownMenuItem>
+                        {[
+                            "dark",
+                            "light",
+                            "system"
+                        ].map((item) => (
+                            <DropdownMenuItem key={item} onClick={() => setTheme(item)} className="focus:bg-primary focus:text-white px-4 py-2">
+                                {item}
+                            </DropdownMenuItem>
+                        ))}
                     </DropdownMenuContent>
                 </DropdownMenu>
 
@@ -110,7 +155,7 @@ export default function NavBar(){
                     <WalletSideBar></WalletSideBar>
                 ) : (
                     <Button variant='selected' onClick={() => setIsWalletModalOpen(true)} className="w-full h-full">
-                        <span className="text-sm text-foreground font-medium">Connect Wallet</span>
+                        <span className="text-sm text-white font-medium">Connect Wallet</span>
                     </Button>
                 )}
                 
