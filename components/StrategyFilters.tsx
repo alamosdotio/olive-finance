@@ -1,4 +1,4 @@
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Plus, Search, SlidersHorizontal } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -27,6 +27,9 @@ export default function StrategyFilters({sortBy, setSortBy, strategyType, setStr
                     </div>
                     <Button variant='unselected'>
                         <SlidersHorizontal />
+                    </Button>
+                    <Button variant='unselected'>
+                        <Plus />
                     </Button>
                 </div>
                 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import PortfolioFlipped from "./PortfolioFlipped";
+import { Button } from "./ui/button";
 
 interface Positions{
     coin: string
@@ -44,12 +45,20 @@ export default function PortfolioCards(){
         setPositions(generatedPositions)
     }, [])
 
+    const handleCardClick = (index: number) =>{
+        if (selectedCard === index) {
+            setSelectedCard(null);
+          } else {
+            setSelectedCard(index);
+          }
+    }
+
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4 justify-items-center">
             {positions.map((position, index) => (
-                <Card key={index} onClick={() => setSelectedCard(index)} className="w-full h-96 bg-backgroundSecondary space-y-6 rounded-3xl">
+                <Card key={index} onClick={() => handleCardClick(index)} className="w-full h-96 bg-backgroundSecondary space-y-6 rounded-3xl">
                     {selectedCard === index ? (
-                        <PortfolioFlipped onClose={() => setSelectedCard(null)} coin={position.coin}/>
+                        <PortfolioFlipped onClose={() => handleCardClick(index)} coin={position.coin}/>
                     ) : (
                         <>
                             <CardHeader className="border-b-2 cursor-pointer">
@@ -112,6 +121,11 @@ export default function PortfolioCards(){
                                         </div>
                                         <span className="font-medium text-xs">{position.vega}</span>
                                     </div>
+                                </div>
+                                <div className="flex-shrink-0 py-4 w-full" onClick={(e) => e.stopPropagation()}>
+                                    <Button className="w-full border-2 border-primary bg-primary text-foreground rounded-full" variant='unselected'>
+                                        Exercise
+                                    </Button>
                                 </div>
                             </CardContent>
                         </>

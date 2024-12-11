@@ -59,17 +59,16 @@ export default function PortfolioPage(){
                             >Transaction History</Button>
                         </div>
                         {/* <h1 className="font-semibold text-3xl">Open Positions</h1> */}
-                        <div className="flex gap-4 items-center h-full">
-                            <div className="relative h-full">
-                                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                <Input
-                                    type="text" 
-                                    placeholder="Search..." 
-                                    className="w-full h-full rounded-full border border-border bg-background pl-11 pr-4 text-sm placeholder:text-muted-foreground"
-                                />
-                            </div>
-                            <Button variant='unselected' className="py-4 px-6 rounded-full w-full h-full text-foreground">Create</Button>
+                        
+                        <div className="relative h-full">
+                            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input
+                                type="text" 
+                                placeholder="Search..." 
+                                className="w-full h-full rounded-full border border-border bg-background pl-11 pr-4 text-sm placeholder:text-muted-foreground"
+                            />
                         </div>
+                        
                     </div>
                     <PortfolioCards />
                 </div>

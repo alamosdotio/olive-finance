@@ -47,14 +47,17 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
 
 
     return (
-        <Card className="w-full h-full min-h-[384px] bg-backgroundSecondary space-x-2">
+        <Card className="w-full h-full min-h-[384px] bg-backgroundSecondary space-x-2" onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+        }}>
             <Tabs
                 defaultValue="deposit"
                 onValueChange={(value) => setActiveTab(value as "deposit" | "withdraw")}
                 className="flex flex-col h-full"
             >
-                <CardHeader className="flex-shrink-0 pb-3">
-                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark p-0 rounded-full">
+                <CardHeader className="flex-shrink-0 pb-3 cursor-pointer">
+                    <TabsList className="w-full grid grid-cols-2 bg-secondary text-dark p-0 rounded-full" onClick={(e) => e.stopPropagation()}>
                     <TabsTrigger
                         value="deposit"
                         className={cn(
@@ -76,7 +79,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                 <CardContent className="flex flex-col flex-grow py-0">
                     <TabsContent value={activeTab} className="flex flex-col h-full">
                     <div className="flex flex-col flex-grow space-y-2">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center" onClick={(e) => e.stopPropagation()}>
                         <Label htmlFor="amount-input">Amount</Label>
                         <Button
                             type="button"
@@ -89,7 +92,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                             <RefreshCcw className="text-dark text-sm" />
                         </Button>
                         </div>
-                        <div className="flex flex-col space-y-2 flex-grow">
+                        <div className="flex flex-col space-y-2 flex-grow" >
                             <Input
                                 id="amount-input"
                                 type="text"
@@ -97,6 +100,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                                 onChange={handleInputChange}
                                 className="text-left h-auto p-2 border-secondary-foreground"
                                 aria-label="Enter deposit/withdraw amount"
+                                onClick={(e) => e.stopPropagation()}
                             />
                             <Slider
                                 value={[amount]}
@@ -105,6 +109,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                                 onValueChange={handleSliderChange}
                                 className="py-4"
                                 aria-label="Adjust deposit/withdraw amount"
+                                onClick={(e) => e.stopPropagation()}
                             />
                             <div className="flex flex-col">
                                 <div className="flex items-center justify-between text-sm">
@@ -134,7 +139,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                         </div>
                     </div>
                     {isPreview && (
-                        <div className="flex-shrink-0 pb-4 w-full">
+                        <div className="flex-shrink-0 pb-4 w-full" onClick={(e) => e.stopPropagation()}>
                             <Button
                                 variant='outline'
                                 className="w-full text-primary border-primary bg-inherit hover:bg-secondary hover:text-primary rounded-full"
@@ -146,7 +151,7 @@ export default function StrategyFlipped({onClose, strategy}:StrategyFlippedProps
                         </div>
                     )}
                     {!isPreview &&(
-                        <div className="flex-shrink-0 pb-4 w-full">
+                        <div className="flex-shrink-0 pb-4 w-full" onClick={(e) => e.stopPropagation()}>
                             <Button
                                 variant='outline'
                                 className="w-full text-black bg-primary border-primary hover:text-white hover:bg-primary rounded-full"

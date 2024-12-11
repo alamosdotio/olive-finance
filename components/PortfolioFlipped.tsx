@@ -39,9 +39,13 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
             <Tabs defaultValue="Open"
                 onValueChange={(value)=>setActiveTab(value as "Open" | "Close")}
                 className="bg-backgroundSecondary flex flex-col h-full space-y-4 rounded-3xl"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                }}
             >
-                <CardHeader className="flex-shrink-0 pb-3">
-                    <TabsList className="w-full grid grid-cols-2 bg-backgroundSecondary text-dark">
+                <CardHeader className="flex-shrink-0 pb-3" >
+                    <TabsList className="w-full grid grid-cols-2 bg-backgroundSecondary text-dark" onClick={(e) => e.stopPropagation()}>
                         <TabsTrigger 
                             value="Open"
                             className={cn(
@@ -56,13 +60,13 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                             "data-[state=active]:bg-secondary data-[state=active]:text-light data-[state=active]:border-2 data-[state=active]:border-primary rounded-full"
                             )}
                         >
-                            Exercise
+                            Close
                         </TabsTrigger>
                     </TabsList>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow py-0">
                     <TabsContent value={activeTab} className="flex flex-col h-full">
-                    <div className="flex flex-col flex-grow space-y-2">
+                    <div className="flex flex-col flex-grow space-y-2" onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-end">
                             <Label htmlFor="amount-input" className="text-sm font-medium">Amount</Label>
                             <Button
@@ -111,8 +115,7 @@ export default function PortfolioFlipped({onClose, coin}:PortfolioFlippedProps){
                         </div>
                     </div>
                     </TabsContent>
-                    <div className="flex-shrink-0 pb-4 w-full">
-                            {/* to optimize */}
+                    <div className="flex-shrink-0 pb-4 w-full" onClick={(e) => e.stopPropagation()}>
                             {activeTab === 'Open'? (
                                 <Button className="w-full border-2 border-primary bg-primary text-foreground rounded-full" variant='unselected'>
                                     Buy

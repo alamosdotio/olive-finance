@@ -4,6 +4,9 @@ import { Badge } from "./ui/badge"
 import { Bitcoin } from "lucide-react"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./ui/pagination"
 import { useState } from "react"
+import OpenPositions from "./OpenPositions"
+import TradeHistory from "./TradeHistory"
+import ExpiredOptions from "./ExpiredOptions"
 
 export default function TradingPositions(){
     const [activeTab, setActiveTab] = useState<string>("Positions")
@@ -50,14 +53,15 @@ export default function TradingPositions(){
                 </Button>
             </div>
 
-            <div className="w-full bg-backgroundSecondary rounded-2xl p-6 flex justify-between">
-                <div className="flex justify-between items-center gap-2">
-                    <Bitcoin className="w-6 h-6 bg-orange-400 rounded-full p-1"/>
-                    <span className="text-base font-medium">BTC</span>
-                    <Badge className="bg-primary-foreground border-none text-[8px] text-primary px-1">CALL</Badge>
-                </div>
-                <ChevronDown />
-            </div>
+            {activeTab === 'Positions' && (
+                <OpenPositions />
+            )}
+            {activeTab === 'History' && (
+                <TradeHistory />
+            )}
+            {activeTab === 'Expired' && (
+                <ExpiredOptions />
+            )}
 
             <Pagination className="w-full">
                 <PaginationContent className="w-full flex justify-between items-center">

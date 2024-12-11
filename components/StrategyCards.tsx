@@ -62,6 +62,14 @@ export default function StrategyCards(){
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
 
+    const handleCardClick = (index: number) =>{
+        if (selectedStrategyCard === index) {
+            setSelectedStrategyCard(null);
+          } else {
+            setSelectedStrategyCard(index);
+          }
+    }
+
     return (
         <div className="w-full h-full space-y-6 flex flex-col justify-between">
             <StrategyFilters
@@ -76,10 +84,10 @@ export default function StrategyCards(){
                 {currentCards.map((strategy, index) => (
                     <div key={index} className="w-full space-x-2">
                     {selectedStrategyCard === index ? (
-                        <StrategyFlipped onClose={() => setSelectedStrategyCard(null)} strategy={{name:"Strategy", apy: strategy.apy}}/>
+                        <StrategyFlipped onClose={() => handleCardClick(index)} strategy={{name:"Strategy", apy: strategy.apy}}/>
                     ) : (
-                        <Card className="w-full h-[384px] space-x-2 bg-backgroundSecondary">
-                            <CardHeader className="border-b-2 cursor-pointer" onClick={() => setSelectedStrategyCard(index)}>
+                        <Card className="w-full h-[384px] space-x-2 bg-backgroundSecondary"  onClick={() => handleCardClick(index)}>
+                            <CardHeader className="border-b-2 cursor-pointer">
                                 <div className="flex items-start justify-between">
                                     <div className="flex items-start gap-2"> 
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
