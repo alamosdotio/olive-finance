@@ -14,28 +14,9 @@ export function initializeTradingViewScript(container: HTMLDivElement | null, co
       if (window.TradingView) {
         try {
           new window.TradingView.widget(config);
-          
-          // Apply custom styles after widget is loaded
-          const style = document.createElement('style');
-          style.textContent = `
-            .tradingview-chart .toolbar-2OthPe,
-            .tradingview-chart .group-wrapper,
-            .tv-chart-container,
-            .chart-page,
-            .chart-container-border,
-            .group-wWM3zP_M-,
-            .wrap-18oKCBRc {
-              background-color: #232030 !important;
-            }
-          `;
-          document.head.appendChild(style);
-
           resolve(() => {
             if (script.parentNode) {
               script.parentNode.removeChild(script);
-            }
-            if (style.parentNode) {
-              style.parentNode.removeChild(style);
             }
           });
         } catch (err) {

@@ -1,18 +1,43 @@
 import { ChevronDown, History } from "lucide-react"
 import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
-import Image from "next/image"
 import { Bitcoin } from "lucide-react"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./ui/pagination"
+import { useState } from "react"
 
 export default function TradingPositions(){
+    const [activeTab, setActiveTab] = useState<string>("Positions")
+
+    const handleClickTab = (state:string) =>{
+        if(activeTab!==state){
+            setActiveTab(state);
+        }
+    }
     return (
         <div className="space-y-6">
             <div className="flex justify-between">
                 <div className="flex justify-between gap-2">
-                    <Button variant='active' className="rounded-full">Open Positions</Button>
-                    <Button variant='inactive' className="rounded-full">Trade History</Button>
-                    <Button variant='inactive' className="rounded-full">Expired Options</Button>
+                    <Button 
+                        variant={activeTab==="Positions" ? 'active' : 'inactive'} 
+                        className="rounded-full" 
+                        onClick={()=>handleClickTab("Positions")}
+                    >
+                        Open Positions
+                    </Button>
+                    <Button 
+                        variant={activeTab==="History" ? 'active' : 'inactive'}  
+                        className="rounded-full" 
+                        onClick={()=>handleClickTab("History")}
+                    >
+                        Trade History
+                    </Button>
+                    <Button 
+                        variant={activeTab==="Expired" ? 'active' : 'inactive'} 
+                        className="rounded-full" 
+                        onClick={()=>handleClickTab("Expired")}
+                    >
+                        Expired Options
+                    </Button>
                 </div>
                 <Button 
                     type="button"

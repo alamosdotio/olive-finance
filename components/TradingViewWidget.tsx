@@ -31,6 +31,12 @@ function TradingViewWidget() {
     const loadWidget = async () => {
       try {
         cleanup = await initializeTradingViewScript(containerRef.current, config);
+        setTimeout(() => {
+          const copyrightElement = document.querySelector('.tradingview-widget-copyright');
+          if (copyrightElement) {
+            (copyrightElement as HTMLElement).style.display = 'block';
+          }
+        }, 1000);
       } catch (err) {
         console.error('Failed to load TradingView widget:', err);
         setError('Failed to load TradingView widget. Please try again later.');
@@ -56,8 +62,15 @@ function TradingViewWidget() {
   }
 
   return (
-    <div className="tradingview-widget-container">
-      <div id="tradingview_chart" ref={containerRef} className="tradingview-widget-container__widget" />
+    <>
+      <div className="tradingview-widget-container">
+        <div id="tradingview_chart" ref={containerRef} className="tradingview-widget-container__widget" />
+        <div className="tradingview-widget-copyright tradingview-widget-copyright-fallback">
+          <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+            <span className="text-primary">Track all markets on TradingView</span>
+          </a>
+        </div>
+      </div>
       <style jsx>{`
         .tradingview-widget-container {
           height: 550px;
@@ -68,25 +81,12 @@ function TradingViewWidget() {
         }
 
         .tradingview-widget-container__widget {
-          height: 100%;
+          height: calc(100% - 32px);
           width: 100%;
           background-color: #232030;
         }
-
-        :global(#tradingview_chart) {
-          background-color: #232030 !important;
-        }
-
-        :global(.tv-side-toolbar),
-        :global(.tv-floating-toolbar) {
-          background-color: #232030 !important;
-        }
-
-        :global(.tradingview-widget-copyright) {
-          display: none;
-        }
       `}</style>
-    </div>
+    </>
   );
 }
 
