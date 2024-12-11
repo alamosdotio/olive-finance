@@ -25,9 +25,9 @@ export default function StrategyFilters({sortBy, setSortBy, strategyType, setStr
                             className="w-auto h-full rounded-full border border-border bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground"
                         />
                     </div>
-                    <Button variant='unselected'>
+                    {/* <Button variant='unselected'>
                         <SlidersHorizontal />
-                    </Button>
+                    </Button> */}
                     <Button variant='unselected'>
                         <Plus />
                     </Button>
