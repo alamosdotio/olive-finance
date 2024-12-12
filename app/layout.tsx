@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { WalletProvider } from "@/contexts/walletprovider";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Script from 'next/script'
 
 const lufga = localFont({
   src: [
@@ -54,6 +55,8 @@ export default function RootLayout({
             </div>
           </WalletProvider>
         </ThemeProvider>
+        <Script src="/charting_library/charting_library.standalone.js" strategy="beforeInteractive" />
+        <Script src="/datafeeds/udf/dist/bundle.js" strategy="beforeInteractive" />
       </body>
     </html>
   );

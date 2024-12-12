@@ -1,0 +1,66 @@
+:root:not(.theme-dark) {
+  --tv-color-platform-background: #F0EAFF;
+  --tv-color-pane-background: #F0EAFF;
+  --tv-color-toolbar-button-background-hover: #E7DCFF;
+  --tv-color-toolbar-button-background-expanded: #F0EAFF;
+  --tv-color-toolbar-button-background-active: #F0EAFF;
+  --tv-color-toolbar-button-background-active-hover: #333333;
+  --tv-color-toolbar-button-text: #8F8F8F;
+  --tv-color-toolbar-button-text-hover: #333333;
+  --tv-color-toolbar-button-text-active: #9A76FF;
+  --tv-color-toolbar-button-text-active-hover: red;
+  --tv-color-item-active-text: #9A76FF;
+  --tv-color-toolbar-toggle-button-background-active: #E7DCFF;
+  --tv-color-toolbar-toggle-button-background-active-hover: #E7DCFF;
+  --tv-color-toolbar-divider-background: #F0EAFF;
+  --tv-color-toolbar-save-layout-loader: #F0EAFF;
+
+  --tv-color-popup-background: #F0EAFF;
+  --tv-color-popup-element-text: #8F8F8F;
+  --tv-color-popup-element-text-hover: #333333;
+  --tv-color-popup-element-background-hover: #E7DCFF;
+  --tv-color-popup-element-divider-background: #F0EAFF;
+  --tv-color-popup-element-secondary-text: #8F8F8F;
+  --tv-color-popup-element-hint-text: #8F8F8F;
+  --tv-color-popup-element-text-active: #9A76FF;
+  --tv-color-popup-element-background-active: #E7DCFF;
+  --tv-color-popup-element-toolbox-text: #8F8F8F  ;
+  --tv-color-popup-element-toolbox-text-hover: #333333;
+  --tv-color-popup-element-toolbox-text-active-hover: #333333;
+  --tv-color-popup-element-toolbox-background-hover: #E7DCFF;
+  --tv-color-popup-element-toolbox-background-active-hover: #E7DCFF;
+}
+
+.theme-dark:root {
+  --tv-color-platform-background: #232130;
+  --tv-color-pane-background: #232130;
+  --tv-color-toolbar-button-background-hover: #393056;
+  --tv-color-toolbar-button-background-expanded: #232130;
+  --tv-color-toolbar-button-background-active: #232130;
+  --tv-color-toolbar-button-background-active-hover: #232130;
+  --tv-color-toolbar-button-text: #7F7993;
+  --tv-color-toolbar-button-text-hover: #FFFFFF;
+  --tv-color-toolbar-button-text-active: #9A76FF;
+  --tv-color-toolbar-button-text-active-hover: #FFFFFF;
+  --tv-color-item-active-text: #9A76FF;
+  --tv-color-toolbar-toggle-button-background-active: #393056;
+  --tv-color-toolbar-toggle-button-background-active-hover: #393056;
+  --tv-color-toolbar-divider-background: #232130;
+  --tv-color-toolbar-save-layout-loader: #232130;
+
+  --tv-color-popup-background: #232130;
+  --tv-color-popup-element-text: #7F7993;
+  --tv-color-popup-element-text-hover: #FFFFFF;
+  --tv-color-popup-element-background-hover: #393056;
+  --tv-color-popup-element-divider-background: #232130;
+  --tv-color-popup-element-secondary-text: #7F7993;
+  --tv-color-popup-element-hint-text: #7F7993;
+  --tv-color-popup-element-text-active: #9A76FF;
+  --tv-color-popup-element-background-active: #393056;
+  --tv-color-popup-element-toolbox-text: #7F7993;
+  --tv-color-popup-element-toolbox-text-hover: #FFFFFF;
+  --tv-color-popup-element-toolbox-text-active-hover: #FFFFFF;
+  --tv-color-popup-element-toolbox-background-hover: #393056;
+  --tv-color-popup-element-toolbox-background-active-hover: #393056;
+}
+

@@ -2,7 +2,7 @@
 import CryptoNav from "@/components/CryptoNav";
 import OptionsCard from "@/components/OptionsCard";
 import TradingPositions from "@/components/TradingPositions";
-import TradingViewWidget from "@/components/TradingViewWidget";
+import TradingViewChart from "@/components/TradingViewChart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useWallet } from "@/contexts/walletprovider";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export default function Home() {
                     <TabsTrigger value="trades" className="border-2  p-2 bg-input rounded-none rounded-tr-[15px] data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Recent Trades</TabsTrigger>
                   </TabsList>
               </Tabs>
-              <TradingViewWidget />
+              <TradingViewChart/>
               { isConnected && (
                 <div className="py-3">
                   <TradingPositions />
