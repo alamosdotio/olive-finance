@@ -1,6 +1,7 @@
 'use client'
 import CryptoNav from "@/components/CryptoNav";
 import OptionsCard from "@/components/OptionsCard";
+import PriceQuote from "@/components/PriceQuote";
 import TradingPositions from "@/components/TradingPositions";
 import TradingViewChart from "@/components/TradingViewChart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -42,8 +43,9 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <div className="  mx-auto">
+            <div className="flex flex-col space-y-6 mx-auto">
               <OptionsCard />
+              <PriceQuote />
             </div>
           </div>
     </div>

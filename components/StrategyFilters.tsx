@@ -2,6 +2,7 @@ import { Plus, Search, SlidersHorizontal } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import CreateStrategyCard from "./CreateStrategyCard";
 
 interface StrategyFiltersProps {
     sortBy: string
@@ -28,9 +29,7 @@ export default function StrategyFilters({sortBy, setSortBy, strategyType, setStr
                     {/* <Button variant='unselected'>
                         <SlidersHorizontal />
                     </Button> */}
-                    <Button variant='unselected'>
-                        <Plus />
-                    </Button>
+                    <CreateStrategyCard />
                 </div>
                 
                 <div className="flex gap-2">

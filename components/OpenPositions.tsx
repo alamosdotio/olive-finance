@@ -108,7 +108,26 @@ export default function OpenPositions(){
                         </div>
                     </div>
                 ) : (
-                    <div className="p-6 bg-secondary rounded-b-md">greeks go here</div>
+                    <div className="p-6 bg-secondary rounded-b-md">
+                        <div className="flex flex-col text-foreground space-y-4">
+                            <div className="flex justify-between text-sm font-medium">
+                                <span>Delta:</span>
+                                <span>xxx</span>
+                            </div>
+                            <div className="flex justify-between text-sm font-medium">
+                                <span>Gamma:</span>
+                                <span>xxx</span>
+                            </div>
+                            <div className="flex justify-between text-sm font-medium">
+                                <span>Theta:</span>
+                                <span>xxx</span>
+                            </div>
+                            <div className="flex justify-between text-sm font-medium">
+                                <span>Vega:</span>
+                                <span>xxx</span>
+                            </div>
+                        </div>
+                    </div>
                 )
             )}
             
