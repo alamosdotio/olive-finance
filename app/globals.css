@@ -41,15 +41,15 @@
   .dark {
     --background: #151419;
     --background-secondary: #222030;
-    --foreground: #FFFFFF;
+    --foreground: #C0BFC7;
     --card: #151419;
     --card-foreground: #FDFDFD;
     --popover: #151419;
     --popover-foreground: #FDFDFD;
-    --primary: #9A76FF;
+    --primary: #B1A3FB;
     --primary-foreground: #393056; 
-    --secondary: #2A2635; 
-    --secondary-foreground: #7F7993;
+    --secondary: #2B2C30; 
+    --secondary-foreground: #808693;
     --muted: #4d3e2b;
     --muted-foreground: #B9B9B9; 
     --accent: #9E9E9E;

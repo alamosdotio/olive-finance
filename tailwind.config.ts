@@ -51,23 +51,16 @@ export default {
           4: 'var(--chart-4)',
           5: 'var(--chart-5)',
         },
-        dark: 'var(--text-dark)',
-        light: 'var(--text-light)',
-		iconBright: 'var(--icon-bright)',
-		textHover: 'var(--text-hover)',
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      backgroundImage: {
-        gradient: 'var(--gradient)',
-      },
       fontFamily: {
         sans: ['var(--font-lufga)', 'system-ui', 'sans-serif'],
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),require('tailwind-scrollbar-hide')]
 } satisfies Config;
