@@ -43,7 +43,7 @@ const allWallets: Wallet[] = [
     { name: "Gem", iconPath: "/images/gemwallet.png" },
     { name: "Tiplink", iconPath: "/images/tiplink.png" },
     { name: "Trust", iconPath: "/images/trust.png" },
-    { name: "Okto", iconPath: "/images/okto.png" },
+    { name: "Okto", iconPath: "/images/okx.png" },
     { name: "Helium", iconPath: "/images/helium.png" },
     { name: "Decaf", iconPath: "/images/decaf.png" },
     { name: "WalletConnect", iconPath: "/images/walletconnect.png" },

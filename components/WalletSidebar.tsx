@@ -54,9 +54,9 @@ export default function WalletSideBar() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="selected" className="w-full h-full text-foreground bg-secondary border-2 border-transparent space-x-2 hover:bg-primary-foreground hover:border-2 hover:border-primary">
+                <Button variant="selected" className="w-full h-auto py-[10px] px-4 rounded-[12px] gap-1 text-foreground bg-secondary border-[1px] border-transparent hover:bg-primary-foreground hover:border-primary">
                     {iconPath && (
-                        <Image src={iconPath} alt="Wallet Icon" width={24} height={24} className="rounded-full" />
+                        <Image src={iconPath} alt="Wallet Icon" width={20} height={20} className="rounded-full" />
                     )}
                     {address ? truncateAddress(address) : 'Connected'}
                 </Button>

@@ -39,7 +39,7 @@ export default function NavBar(){
     }
 
     return (
-        <header className="flex justify-between h-[72px]">
+        <header className="flex justify-between h-[72px] max-w-full">
             <div className="flex justify-between py-3 gap-12">
                 <div className="flex items-center justify-center gap-2">
                     <Image src={logo} alt="logo pic" />
@@ -54,6 +54,14 @@ export default function NavBar(){
                          <h1 className="text-sm font-medium">Options</h1>
                          <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[10px] py-0 px-[6px] bg-transparent")}>BETA</Badge>
                     </Link>
+                    {/* <Link 
+                        href='/futures'
+                        className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between')}
+                        onClick={() => handleClick('Futures')}
+                    > 
+                         <h1 className="text-sm font-medium">Futures</h1>
+                         <Badge className={cn((active === 'Futures' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[10px] py-0 px-[6px] bg-transparent")}>BETA</Badge>
+                    </Link> */}
                     <Link 
                         href='/earn'
                         className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px]')}
@@ -62,13 +70,7 @@ export default function NavBar(){
                          <h1 className="text-sm font-medium">Earn</h1>
                          <Badge className="rounded-[4px] bg-gradient-to-l from-[#A899F4] via-[#A899F4] to-[#DAD1FF] px-[6px] text-black">48% APY</Badge>
                     </Link>
-                    <Link 
-                        href='/portfolio'
-                        className={cn(buttonVariants({variant: active === 'Portfolio' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between')}
-                        onClick={() => handleClick('Portfolio')}
-                    > 
-                         <h1 className="text-sm font-medium">Portfolio</h1>
-                    </Link>
+                    
                     
                     <DropdownMenu onOpenChange={() => handleClick('More')}>
                         <DropdownMenuTrigger

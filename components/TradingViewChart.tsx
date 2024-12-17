@@ -62,7 +62,7 @@ const TradingViewChart: React.FC = () => {
         theme: chartTheme,
         custom_css_url: '/styles/tradingview-theme.css',
         overrides: {
-          "paneProperties.background": chartTheme === 'Dark' ? "#232130" : "#F0EAFF",
+          "paneProperties.background": chartTheme === 'Dark' ? "#151419" : "#F0EAFF",
           "paneProperties.backgroundType": "solid",
           "mainSeriesProperties.candleStyle.upColor": "#9A76FF",
           "mainSeriesProperties.candleStyle.downColor": "#FF4C4F",
@@ -101,7 +101,7 @@ const TradingViewChart: React.FC = () => {
   }, [chartTheme]);
 
   return (
-    <div className="tradingview-chart-container rounded-b-[15px] overflow-hidden w-full h-full min-h-[550px]">
+    <div className="tradingview-chart-container rounded-b-[15px] overflow-hidden w-full h-full min-h-[550px] border-[1px]">
       <div 
         id="tv_chart_container" 
         ref={containerRef} 
