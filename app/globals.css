@@ -1,10 +1,14 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    font-family: var(--font-lufga), system-ui, sans-serif;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
 }
 
@@ -39,12 +43,12 @@
     --icon-bright: #9B7EBD;
   }
   .dark {
-    --background: #151419;
+    --background: #141519;
     --background-secondary: #1D1E22;
     --foreground: #C0BFC7;
-    --card: #151419;
+    --card: #141519;
     --card-foreground: #FDFDFD;
-    --popover: #151419;
+    --popover: #141519;
     --popover-foreground: #FDFDFD;
     --primary: #B1A3FB;
     --primary-foreground: #393056; 
@@ -52,11 +56,11 @@
     --secondary-foreground: #808693;
     --muted: #4d3e2b;
     --muted-foreground: #B9B9B9; 
-    --accent: #9E9E9E;
+    --accent: #212125;
     --accent-foreground: #686868;
     --destructive: #f04e23; 
     --destructive-foreground: #FDFDFD;
-    --border: #282630; 
+    --border: #2B2C30; 
     --input: #232130; 
     --ring: #323232;
     --chart-1: #539fdd;

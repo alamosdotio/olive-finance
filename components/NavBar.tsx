@@ -54,14 +54,6 @@ export default function NavBar(){
                          <h1 className="text-sm font-medium">Options</h1>
                          <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[10px] py-0 px-[6px] bg-transparent")}>BETA</Badge>
                     </Link>
-                    {/* <Link 
-                        href='/futures'
-                        className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between')}
-                        onClick={() => handleClick('Futures')}
-                    > 
-                         <h1 className="text-sm font-medium">Futures</h1>
-                         <Badge className={cn((active === 'Futures' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[10px] py-0 px-[6px] bg-transparent")}>BETA</Badge>
-                    </Link> */}
                     <Link 
                         href='/earn'
                         className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px]')}
@@ -74,18 +66,17 @@ export default function NavBar(){
                     
                     <DropdownMenu onOpenChange={() => handleClick('More')}>
                         <DropdownMenuTrigger
-                        className={cn(buttonVariants({variant: active === 'More' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between ')}
+                        className={cn(buttonVariants({variant: active === 'More' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between focus:bg-transparent focusoutline-none')}
                         onClick={() => handleClick('More')}
                         >
                                 <h1 className="text-sm font-medium">More</h1>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="center" className="w-auto text-secondary-foreground">
                             {[
-                                "Futures",
+                                
                                 "Prediction Markets",
                                 "Move",
                                 "Exotic Options",
-                                "Leaderboard",
                                 "Liquidity",
                                 "Tokenized Stocks",
                                 "Bridge",
@@ -127,6 +118,25 @@ export default function NavBar(){
             </div>
             <div className="flex justify-between py-3 gap-3 items-center">
                 {/* <Image src={vase} alt="vase"/> */}
+                <Link href='/leaderboards'>
+                    <div className="border bg-inherit rounded-2xl p-[10px] cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M3.49854 13.6778C3.49854 9.49382 7.07854 5.35882 9.59254 2.97182C10.2382 2.34812 11.1008 1.99951 11.9985 1.99951C12.8962 1.99951 13.7589 2.34812 14.4045 2.97182C16.9175 5.35982 20.4985 9.49382 20.4985 13.6778C20.4985 17.7798 17.2795 21.9998 11.9985 21.9998C6.71754 21.9998 3.49854 17.7798 3.49854 13.6778Z" stroke="url(#paint0_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M15.9985 14C15.9985 15.0609 15.5771 16.0783 14.827 16.8284C14.0768 17.5786 13.0594 18 11.9985 18" stroke="url(#paint1_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <defs>
+                                <linearGradient id="paint0_linear_139_9650" x1="19.2485" y1="3.24953" x2="1.42237" y2="6.87513" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#806AF1"/>
+                                <stop offset="1" stopColor="#A697F4"/>
+                                </linearGradient>
+                                <linearGradient id="paint1_linear_139_9650" x1="15.7044" y1="14.25" x2="11.5731" y2="15.2386" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#806AF1"/>
+                                <stop offset="1" stopColor="#A697F4"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </Link>
+                
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
                         <div className="bg-secondary rounded-[12px] p-3">

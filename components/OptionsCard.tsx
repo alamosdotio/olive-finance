@@ -7,7 +7,7 @@ import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 import btc from '../public/images/bitcoin.png'
-import { Wallet} from 'lucide-react';
+import { ChevronDown, Wallet} from 'lucide-react';
 
 import Image from "next/image";
 import swapIcon from "@/public/svgs/swapdark.svg"
@@ -65,8 +65,9 @@ export default function OptionsCard(){
                     </TabsList>
                     <div>
                         <Select>
-                            <SelectTrigger className="bg-inherit text-secondary-foreground text-sm focus:outline-none flex items-center p-0 w-28" >
+                            <SelectTrigger className="bg-inherit text-secondary-foreground text-sm focus:outline-none flex items-center justify-evenly p-0 w-28" >
                                 <SelectValue placeholder='Market'/>
+                                <ChevronDown className="opacity-50" size={14}/>
                             </SelectTrigger>
                             <SelectContent className="w-full" align="start">
                                 <SelectItem value="limit">Limit</SelectItem>
@@ -114,6 +115,7 @@ export default function OptionsCard(){
                                         <div className="flex items-center space-x-2 text-[28px]">
                                             <Image src={btc} alt="bitcoin" height={28} width={28}/>
                                             <SelectValue placeholder="Select"/>
+                                            <ChevronDown className="opacity-50" size={28}/>
                                         </div>
                                     </SelectTrigger>
                                     <SelectContent className="w-full">
@@ -161,8 +163,9 @@ export default function OptionsCard(){
                             <div className="w-full flex p-0">
                                 <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
                                     <SelectTrigger className="bg-inherit p-0 w-full h-[52px]">
-                                        <div className="flex items-center space-x-2 text-[28px]">
+                                        <div className="flex items-center space-x-2 text-[28px] justify-evenly">
                                             <SelectValue placeholder="Select"/>
+                                            <ChevronDown className="opacity-50" size={28}/>
                                         </div>
                                     </SelectTrigger>
                                     <SelectContent className="w-full">
@@ -205,6 +208,7 @@ export default function OptionsCard(){
                         <Select>
                             <SelectTrigger className="bg-backgroundSecondary w-full rounded-[12px] ">
                                 <SelectValue placeholder="Never" />
+                                <ChevronDown className="opacity-50" size={14}/>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="never">Never</SelectItem>
