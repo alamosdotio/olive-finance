@@ -9,7 +9,7 @@ export default function TradingPositionsFallback() {
     
 
     return (
-        <div className="w-full h-[300] border-[1px] rounded-[26px] flex flex-col">
+        <div className="w-full h-[300px] border-[1px] rounded-[26px] flex flex-col">
             <div className="w-full flex justify-between px-6 py-3 border-b-[1px]">
                 <Tabs defaultValue="Positions" className="p-0"> 
                     <TabsList className="w-full bg-inherit text-secondary-foreground p-0 gap-6">
