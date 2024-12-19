@@ -8,12 +8,12 @@ export default function PriceQuote(){
 
 
     return (
-        <div className="w-full border rounded-[15px]">
+        <div className="w-full border-[1px] rounded-[26px] flex flex-col">
             <div 
-                className="px-6 py-4 flex justify-between w-full"
+                className="w-full flex justify-between items-center px-6 py-3"
                 onClick={() => setDropDownActive(!dropDownActive)}
             >
-                <span className="text-sm font-medium text-secondary-foreground">Limit Order Summary</span>
+                <span className="text-sm font-medium text-secondary-foreground h-9 py-2">Limit Order Summary</span>
                 {dropDownActive ? <ChevronUp className="text-secondary-foreground text-sm"/> : <ChevronDown className="text-secondary-foreground text-sm"/>}
             </div>
             {dropDownActive && (

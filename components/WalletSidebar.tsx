@@ -54,12 +54,12 @@ export default function WalletSideBar() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="selected" className="w-full h-auto py-[10px] px-4 rounded-[12px] gap-1 text-foreground bg-secondary border-[1px] border-transparent hover:bg-primary-foreground hover:border-primary">
+                <button className="w-full py-[9px] px-[15px] rounded-[12px] gap-2 text-foreground text-sm bg-secondary border border-transparent hover:bg-primary-foreground hover:border-primary flex justify-between">
                     {iconPath && (
-                        <Image src={iconPath} alt="Wallet Icon" width={20} height={20} className="rounded-full" />
+                        <Image src={iconPath} alt="Wallet Icon" width={24} height={20} className="rounded-full" />
                     )}
                     {address ? truncateAddress(address) : 'Connected'}
-                </Button>
+                </button>
             </SheetTrigger>
             <SheetContent className="space-y-16">
                 <SheetTitle className="flex justify-between">

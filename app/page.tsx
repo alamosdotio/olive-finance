@@ -30,46 +30,42 @@ export default function Home() {
           <CryptoNav />
           </div>
           <div className="flex flex-col-reverse lg:flex-row py-4 gap-4 max-w-screen-2xl">
-            <div className="w-4/6 h-[500px] mx-auto space-y-0">
-              {/* <Tabs defaultValue="chart">
-                  <TabsList className="grid grid-cols-3 rounded-b-none bg-input p-0 rounded-t-[15px]">
-                    <TabsTrigger value="chart" className="border-2  p-2 bg-input rounded-none rounded-tl-[15px] data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Chart</TabsTrigger>
-                    <TabsTrigger value="options" className="border-2  p-2 bg-input rounded-none data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Option Price</TabsTrigger>
-                    <TabsTrigger value="trades" className="border-2  p-2 bg-input rounded-none rounded-tr-[15px] data-[state=active]:text-primary data-[state=active]:bg-primary-foreground data-[state=active]:border-primary">Recent Trades</TabsTrigger>
-                  </TabsList>
-              </Tabs> */}
-              <div className="w-full bg-inherit border-[1px] rounded-t-[15px] py-[11px] px-4">
-                <Tabs defaultValue="chart">
-                  <TabsList className="grid grid-cols-3 rounded-full p-0 w-full h-full bg-inherit">
-                    <TabsTrigger
-                      value="chart"
-                      className="border-[1px] border-transparent text-secondary-foreground rounded-full data-[state=active]:text-primary data-[state=active]:border-primary"
-                    >
-                        Chart
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="options"
-                      className="border-[1px] border-transparent text-secondary-foreground rounded-full data-[state=active]:text-primary data-[state=active]:border-primary"
-                    >
-                        Options Price
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="trades"
-                      className="border-[1px] border-transparent text-secondary-foreground rounded-full data-[state=active]:text-primary data-[state=active]:border-primary"
-                    >
-                        Recent Trades
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
+            <div className="w-4/6 mx-auto space-y-6">
+              <div>
+                <div className="w-full bg-inherit border-[1px] rounded-t-[26px] py-[11px] px-4">
+                  <Tabs defaultValue="chart">
+                    <TabsList className="grid grid-cols-3 rounded-full p-0 w-full h-full bg-inherit">
+                      <TabsTrigger
+                        value="chart"
+                        className="border-[1px] border-transparent text-secondary-foreground rounded-full data-[state=active]:text-primary data-[state=active]:border-primary"
+                      >
+                          Chart
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="options"
+                        className="border-[1px] border-transparent text-secondary-foreground rounded-full data-[state=active]:text-primary data-[state=active]:border-primary"
+                      >
+                          Options Price
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="trades"
+                        className="border-[1px] border-transparent text-secondary-foreground rounded-full data-[state=active]:text-primary data-[state=active]:border-primary"
+                      >
+                          Recent Trades
+                      </TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
+                <TradingViewChart/>
               </div>
-              <TradingViewChart/>
-              <div className="py-3">
+              
+              <div className="">
                 <ProtectedRoute fallback={<TradingPositionsFallback/>}>
                     <TradingPositions />
                 </ProtectedRoute>
               </div>
             </div>
-            <div className="flex flex-col space-y-4 mx-auto">
+            <div className="flex flex-col space-y-6 mx-auto">
               <OptionsCard />
               <PriceQuote />
             </div>
