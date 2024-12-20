@@ -14,8 +14,8 @@ export default function CreateStrategyCard(){
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant='unselected'>
-                    <Plus />
+                <Button variant='unselected' className="py-[6px] h-8 w-8 rounded-[10px]">
+                    <Plus size={10}/>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md bg-background">

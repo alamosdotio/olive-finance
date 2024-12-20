@@ -5,26 +5,6 @@ import { WalletProvider } from "@/contexts/walletprovider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Script from 'next/script'
 
-// const lufga = localFont({
-//   src: [
-//     {
-//       path: './fonts/LufgaRegular.woff',
-//       weight: '400',
-//       style: 'normal',
-//     },
-//     {
-//       path: './fonts/LufgaMedium.woff',
-//       weight: '500',
-//       style: 'normal',
-//     },
-//     {
-//       path: './fonts/LufgaBold.woff',
-//       weight: '700',
-//       style: 'normal',
-//     },
-//   ],
-//   variable: '--font-lufga',
-// });
 
 export const metadata: Metadata = {
   title: "Olive Finance",

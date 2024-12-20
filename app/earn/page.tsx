@@ -1,10 +1,11 @@
-import StrategyCards from "@/components/StrategyCards";
+import EarnCards from "@/components/EarnCards";
+
 
 
 export default function earnPage(){
     return (
-        <div className="p-2">
-            <StrategyCards />
+        <div className="py-6">
+            <EarnCards />
         </div>
     )
 }

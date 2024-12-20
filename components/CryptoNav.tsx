@@ -31,6 +31,7 @@ export default function CryptoNav(){
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
+    const [active, setActive] = useState<number | null>(0)
 
     const scroll = (direction: 'left' | 'right') => {
         const container = scrollContainerRef.current;
@@ -71,9 +72,10 @@ export default function CryptoNav(){
                 <div key={crypto.id} className="flex items-center flex-nowrap">
                     <div
                         className={cn(
-                        buttonVariants({variant: 'ghost'}),
-                        "flex items-center space-x-6 px-2 py-1 w-full h-auto rounded-full text-sm"
-                    )}
+                            buttonVariants({variant: 'ghost'}), (active === index && 'bg-secondary hover:bg-secondary'),
+                            "flex items-center space-x-6 px-2 py-1 w-full h-auto rounded-full text-sm cursor-pointer"
+                        )}
+                        onClick={() => setActive(index)}
                     >
                         <div className="flex space-x-1 items-center">
                             <Image 

@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
-import btc from '../public/images/bitcoin.png'
+import usdc from '@/public/images/usdc.png'
 import { ChevronDown, Wallet} from 'lucide-react';
 
 import Image from "next/image";
@@ -43,7 +43,7 @@ export default function OptionsCard(){
         strikePrice: string;
         expiry: string;
     }>({
-        selling: { currency: 'btc', amount: '' },
+        selling: { currency: 'usdc', amount: '' },
         buying: { type: 'call', amount: '' },
         strikePrice: '',
         expiry: 'never'
@@ -135,12 +135,13 @@ export default function OptionsCard(){
                                 <Select value={formValues.selling.currency} onValueChange={(value) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, currency: value } }))}>
                                     <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
                                         <div className="flex items-center space-x-2 text-[28px]">
-                                            <Image src={btc} alt="bitcoin" height={28} width={28}/>
+                                            <Image src={usdc} alt="usdc" height={28} width={28}/>
                                             <SelectValue placeholder="Select"/>
                                             <ChevronDown className="opacity-50" size={28}/>
                                         </div>
                                     </SelectTrigger>
                                     <SelectContent className="w-full">
+                                        <SelectItem value="usdc" >USDC</SelectItem>
                                         <SelectItem value="btc" >BTC</SelectItem>
                                         <SelectItem value="eth">ETH</SelectItem>
                                         <SelectItem value="sol">SOL</SelectItem>
@@ -148,7 +149,7 @@ export default function OptionsCard(){
                                 </Select>
                             </div>
                             <span className="text-sm font-normal text-secondary-foreground p-0">
-                                Bitcoin
+                                USDC
                             </span>
                         </div>
                         <div className="w-fit items-end flex flex-col p-0">

@@ -5,7 +5,7 @@ export default function LeaderboardPagination(){
     return (
         <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-3">
-                <span>Showing</span>
+                <span className="text-secondary-foreground">Showing</span>
                 <Select>
                     <SelectTrigger className="bg-backgroundSecondary w-full px-3 py-[6px] flex justify-between items-center gap-2 rounded-[12px]">
                         <SelectValue placeholder="1-10"/>
@@ -16,19 +16,19 @@ export default function LeaderboardPagination(){
                         <SelectItem value="20">2-20</SelectItem>
                     </SelectContent>
                 </Select>
-                <span>258,152</span>
+                <span className="text-secondary-foreground">258,152</span>
             </div>
             <div className="flex items-center gap-2">
-                <button className="p-2 rounded-lg bg-secondary">
-                    <ChevronLeft className="w-4 h-4" />
+                <button className="p-2 rounded-[12px] bg-secondary">
+                    <ChevronLeft className="w-4 h-4 text-secondary-foreground" />
                 </button>
-                <button className="px-3 py-1 rounded-lg bg-backgroundSecondary">1</button>
-                <button className="px-3 py-1 rounded-lg bg-backgroundSecondary">2</button>
-                <button className="px-3 py-1 rounded-lg bg-backgroundSecondary">3</button>
+                <button className="p-[6px] w-[32px] h-[32px] rounded-[12px] bg-backgroundSecondary">1</button>
+                <button className="p-[6px] w-[32px] h-[32px] rounded-[12px] bg-backgroundSecondary">2</button>
+                <button className="p-[6px] w-[32px] h-[32px] rounded-[12px] bg-backgroundSecondary">3</button>
                 <span>...</span>
-                <button className="px-3 py-1 rounded-lg bg-backgroundSecondary">5169</button>
-                <button className="p-2 rounded-lg bg-secondary">
-                    <ChevronRight className="w-4 h-4" />
+                <button className="p-[6px] rounded-[12px] bg-backgroundSecondary">5169</button>
+                <button className="p-2 rounded-[12px] bg-secondary">
+                    <ChevronRight className="w-4 h-4 text-secondary-foreground" />
                 </button>
             </div>
         </div>
