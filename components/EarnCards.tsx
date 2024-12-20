@@ -59,9 +59,9 @@ export default function EarnCards (){
             <EarnNav sortBy={sortBy} setSortBy={setSortBy}/>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4">
             {currentCards.map((strategy, index) => (
-                <Sheet>
+                <Sheet key={index}>
                     <SheetTrigger>
-                        <Card key={index} className="w-full hover:border-primary">
+                        <Card className="w-full hover:border-primary">
                             <CardHeader className="p-5 border-b">
                                 <div className="flex justify-start space-x-2">
                                     <span className="rounded-full bg-white w-6 h-6 text-[8px] text-center text-black flex justify-center items-center border-2">img</span>
