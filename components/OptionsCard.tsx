@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
-import usdc from '@/public/images/usdc.png'
+import usdc from '@/public/images/usdc-big.png'
 import { ChevronDown, Wallet} from 'lucide-react';
 
 import Image from "next/image";
@@ -82,7 +82,7 @@ export default function OptionsCard(){
                             value="Futures"
                             className="bg-none border-b-2 border-transparent rounded-none data-[state=active]:border-primary"
                         >
-                            Futures
+                            Bermudan
                         </TabsTrigger>
                     </TabsList>
                     <div>
@@ -101,7 +101,7 @@ export default function OptionsCard(){
                 </Tabs>
             </CardHeader>
             <CardContent className="p-0">
-                <div className="px-6 py-7 flex flex-col justify-between border-b-[1px] space-y-7">
+                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-5">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Sell</Label>
@@ -130,14 +130,14 @@ export default function OptionsCard(){
                         </div>
                     </div>
                     <div className="flex justify-between mt-5">
-                        <div className="flex flex-col p-0">
+                        <div className="flex flex-col p-0 space-y-2">
                             <div className="w-full flex p-0">
                                 <Select value={formValues.selling.currency} onValueChange={(value) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, currency: value } }))}>
                                     <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
                                         <div className="flex items-center space-x-2 text-[28px]">
-                                            <Image src={usdc} alt="usdc" height={28} width={28}/>
+                                            <Image src={usdc} alt="usdc" height={48} width={48}/>
                                             <SelectValue placeholder="Select"/>
-                                            <ChevronDown className="opacity-50" size={28}/>
+                                            <ChevronDown className="opacity-50"/>
                                         </div>
                                     </SelectTrigger>
                                     <SelectContent className="w-full">
@@ -152,7 +152,7 @@ export default function OptionsCard(){
                                 USDC
                             </span>
                         </div>
-                        <div className="w-fit items-end flex flex-col p-0">
+                        <div className="w-fit items-end flex flex-col p-0 space-y-2">
                             <Input
                                 type="number"
                                 placeholder="0.00"
@@ -164,8 +164,7 @@ export default function OptionsCard(){
                         </div>
                     </div>
                 </div>
-
-                <div className="px-6 py-7 flex flex-col justify-between border-b-[1px] space-y-7">
+                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-5">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Buy</Label>
@@ -182,11 +181,23 @@ export default function OptionsCard(){
                         </div>
                     </div>
                     <div className="flex justify-between mt-5">
-                        <div className="flex flex-col p-0">
+                        <div className="flex flex-col p-0 space-y-2">
                             <div className="w-full flex p-0">
                                 <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
                                     <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
                                         <div className="flex items-center space-x-2 text-[28px] justify-evenly">
+                                        <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clipPath="url(#clip0_184_5232)">
+                                            <path d="M24 48.333C37.2548 48.333 48 37.5878 48 24.333C48 11.0782 37.2548 0.333008 24 0.333008C10.7452 0.333008 0 11.0782 0 24.333C0 37.5878 10.7452 48.333 24 48.333Z" fill="#53C08D"/>
+                                            <path d="M33.5445 26.4809L28.9573 19.7606L26.1563 15.6362C24.9702 13.8986 23.041 13.8986 21.8549 15.6362L14.4525 26.4809C13.4808 27.9045 14.181 30.333 15.5386 30.333H23.5555H32.4584C33.8303 30.333 34.5162 27.9045 33.5445 26.4809Z" fill="#141519"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0_184_5232">
+                                            <rect width="48" height="48" fill="white" transform="translate(0 0.333008)"/>
+                                            </clipPath>
+                                            </defs>
+                                        </svg>
+
                                             <SelectValue placeholder="Select"/>
                                             <ChevronDown className="opacity-50" size={28}/>
                                         </div>
@@ -201,7 +212,7 @@ export default function OptionsCard(){
                                 Call Option
                             </span>
                         </div>
-                        <div className="w-fit items-end flex flex-col p-0">
+                        <div className="w-fit items-end flex flex-col p-0 space-y-2">
                             <Input
                                 type="number"
                                 placeholder="0.00"

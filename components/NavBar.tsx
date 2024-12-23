@@ -73,14 +73,13 @@ export default function NavBar(){
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="center" className="w-auto text-secondary-foreground">
                             {[
-                                
-                                "Prediction Markets",
-                                "Move",
+                                "Futures",
                                 "Exotic Options",
                                 "Liquidity",
-                                "Tokenized Stocks",
-                                "Bridge",
-                                "Leveraged Farming"
+                                "Synthetics",
+                                "Yield",
+                                "Prediction Markets",
+                                
                             ].map((item) => (
                                 <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
                                     <Link href={`/`} className="w-full">
@@ -92,7 +91,6 @@ export default function NavBar(){
                             {[
                                 "Docs",
                                 "Feedback",
-                                "Info",
                             ].map((item) => (
                                 <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
                                     <Link href={`/`} className="w-full">

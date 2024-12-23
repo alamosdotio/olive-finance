@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
@@ -7,21 +7,118 @@ declare global {
   interface Window {
     TradingView: any;
     tvWidget: any;
-    Datafeeds: {
-      UDFCompatibleDatafeed: new (datafeedUrl: string, updateFrequency?: number, options?: any) => any;
-    };
   }
 }
 
-function getParameterByName(name: string): string {
-  if (typeof window !== 'undefined') {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    const results = regex.exec(window.location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+const PYTH_BASE_URL = 'https://benchmarks.pyth.network/v1/shims/tradingview';
+
+const pythDatafeed = {
+  onReady: (callback: (configuration: any) => void) => {
+    fetch(`${PYTH_BASE_URL}/config`)
+      .then(response => response.json())
+      .then(data => {
+        callback(data);
+      });
+  },
+  
+  searchSymbols: (
+    userInput: string,
+    exchange: string,
+    symbolType: string,
+    onResult: (result: any) => void
+  ) => {
+    fetch(`${PYTH_BASE_URL}/search?query=${encodeURIComponent(userInput)}`)
+      .then(response => response.json())
+      .then(data => {
+        onResult(data);
+      });
+  },
+  
+  resolveSymbol: (
+    symbolName: string,
+    onSymbolResolvedCallback: (symbolInfo: any) => void,
+    onResolveErrorCallback: (error: any) => void
+  ) => {
+    fetch(`${PYTH_BASE_URL}/symbols?symbol=${encodeURIComponent(symbolName.toLowerCase())}`)
+      .then(response => response.json())
+      .then(symbolInfo => {
+        onSymbolResolvedCallback(symbolInfo);
+      })
+      .catch(error => {
+        onResolveErrorCallback(error);
+      });
+  },
+  
+  getBars: (
+    symbolInfo: any,
+    resolution: string,
+    periodParams: any,
+    onHistoryCallback: (bars: any[], meta: { noData: boolean }) => void,
+    onErrorCallback: (error: any) => void
+  ) => {
+    const { from, to, firstDataRequest } = periodParams;
+    
+    fetch(
+      `${PYTH_BASE_URL}/history?symbol=${encodeURIComponent(symbolInfo.name)}&resolution=${resolution}&from=${from}&to=${to}`
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data.s !== 'ok' && data.s !== 'no_data') {
+          onErrorCallback(data.errmsg);
+          return;
+        }
+        
+        const bars = data.t.map((time: number, index: number) => ({
+          time: time * 1000,
+          open: data.o[index],
+          high: data.h[index],
+          low: data.l[index],
+          close: data.c[index],
+          volume: data.v[index]
+        }));
+        
+        onHistoryCallback(bars, {
+          noData: data.s === 'no_data',
+        });
+      })
+      .catch(error => {
+        onErrorCallback(error);
+      });
+  },
+  
+  subscribeBars: (
+    symbolInfo: any,
+    resolution: string,
+    onRealtimeCallback: (bar: any) => void,
+    subscriberUID: string,
+    onResetCacheNeededCallback: () => void
+  ) => {
+    
+    const ws = new WebSocket('wss://benchmarks.pyth.network/v1/shims/tradingview/streaming');
+    
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.symbol === symbolInfo.name) {
+        onRealtimeCallback({
+          time: data.time * 1000,
+          open: data.open,
+          high: data.high,
+          low: data.low,
+          close: data.close,
+          volume: data.volume
+        });
+      }
+    };
+    
+    return () => {
+      ws.close();
+    };
+  },
+  
+  unsubscribeBars: (subscriberUID: string) => {
+    
   }
-  return "";
-}
+};
 
 const TradingViewChart: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,39 +134,32 @@ const TradingViewChart: React.FC = () => {
     const initChart = () => {
       if (typeof window.TradingView === 'undefined' || !containerRef.current) return;
 
-      let datafeedUrl = "https://demo-feed-data.tradingview.com";
-      const customDataUrl = getParameterByName('dataUrl');
-      if (customDataUrl !== "") {
-        datafeedUrl = customDataUrl.startsWith('https://') ? customDataUrl : `https://${customDataUrl}`;
-      }
-
       const widgetOptions: any = {
-        symbol: 'AAPL',
+        symbol: 'Crypto.SOL/USD',
         interval: '1D',
         container: containerRef.current,
-        datafeed: new window.Datafeeds.UDFCompatibleDatafeed(datafeedUrl, undefined, {
-          maxResponseLength: 1000,
-          expectedOrder: 'latestFirst',
-        }),
+        datafeed: pythDatafeed,
         library_path: "/charting_library/",
-        locale: getParameterByName('lang') || "en",
-        disabled_features: ["use_localstorage_for_settings"],
-        enabled_features: ["study_templates"],
-        charts_storage_url: 'https://saveload.tradingview.com',
-        charts_storage_api_version: "1.1",
-        client_id: 'tradingview.com',
-        user_id: 'public_user_id',
+        locale: "en",
+        disabled_features: [
+          "use_localstorage_for_settings",
+          "header_symbol_search"
+        ],
+        enabled_features: [
+          "study_templates",
+          "hide_left_toolbar_by_default"
+        ],
         theme: chartTheme,
         custom_css_url: '/styles/tradingview-theme.css',
         overrides: {
           "paneProperties.background": chartTheme === 'Dark' ? "#141519" : "#FFFFFF",
           "paneProperties.backgroundType": "solid",
-          "mainSeriesProperties.candleStyle.upColor": "#9A76FF",
-          "mainSeriesProperties.candleStyle.downColor": "#FF4C4F",
-          "mainSeriesProperties.candleStyle.wickUpColor": "#9A76FF",
-          "mainSeriesProperties.candleStyle.wickDownColor": "#FF4C4F",
-          "mainSeriesProperties.candleStyle.borderUpColor": "#9A76FF",
-          "mainSeriesProperties.candleStyle.borderDownColor": "#FF4C4F",
+          "mainSeriesProperties.candleStyle.upColor": "#53C08D",
+          "mainSeriesProperties.candleStyle.downColor": "#FF6889",
+          "mainSeriesProperties.candleStyle.wickUpColor": "#53C08D",
+          "mainSeriesProperties.candleStyle.wickDownColor": "#FF6889",
+          "mainSeriesProperties.candleStyle.borderUpColor": "#53C08D",
+          "mainSeriesProperties.candleStyle.borderDownColor": "#FF6889",
         },
         fullscreen: false,
         autosize: true,
@@ -101,15 +191,14 @@ const TradingViewChart: React.FC = () => {
   }, [chartTheme]);
 
   return (
-    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-[550px] border-[1px]">
+    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-[550px] border border-border bg-card">
       <div 
         id="tv_chart_container" 
         ref={containerRef} 
-        className={`tradingview-chart ${chartTheme === 'Dark' ? 'theme-dark' : ''} w-full h-full rounded-[26px]`}
+        className={`tradingview-chart ${chartTheme === 'Dark' ? 'theme-dark' : ''} w-full h-full`}
       />
     </div>
   );
 };
 
 export default TradingViewChart;
-

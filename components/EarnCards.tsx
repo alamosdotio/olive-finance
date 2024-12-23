@@ -101,9 +101,7 @@ export default function EarnCards (){
                             </CardContent>
                         </Card>
                     </SheetTrigger>
-                    <SheetContent>
-                        <EarnSidebar/>
-                    </SheetContent>
+                    <EarnSidebar apy={strategy.apy}/>
                 </Sheet>
             ))}
                 
