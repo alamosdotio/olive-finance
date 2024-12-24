@@ -1,7 +1,6 @@
-import { ArrowRightLeft, ChevronDown, ChevronUp, Circle } from "lucide-react";
-import { DropdownMenuSeparator } from "./ui/dropdown-menu";
+import { ChevronDown, ChevronUp} from "lucide-react";
 import { useState } from "react";
-import PriceQuoteChart from "./PriceQuoteChart";
+
 
 export default function PriceQuote(){
     const [dropDownActive, setDropDownActive] = useState<boolean>(true);
@@ -13,7 +12,7 @@ export default function PriceQuote(){
                 className="w-full flex justify-between items-center px-6 py-3"
                 onClick={() => setDropDownActive(!dropDownActive)}
             >
-                <span className="text-sm font-medium text-secondary-foreground h-9 py-2">Limit Order Summary</span>
+                <span className="text-sm font-medium text-secondary-foreground h-9 py-2">Order Summary</span>
                 {dropDownActive ? <ChevronUp className="text-secondary-foreground text-sm"/> : <ChevronDown className="text-secondary-foreground text-sm"/>}
             </div>
             {dropDownActive && (

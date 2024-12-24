@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import EarnNav from "./EarnNav"
 import { Card, CardContent, CardHeader } from "./ui/card"
 import { Progress } from "./ui/progress"
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { Sheet, SheetTrigger } from "./ui/sheet"
 import EarnSidebar from "./EarnSidebar"
 
 interface Strategy {

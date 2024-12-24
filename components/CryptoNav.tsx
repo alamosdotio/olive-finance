@@ -11,23 +11,29 @@ type CryptoData = {
     symbol: string
     iconPath: string
     change: number
+    pythSymbol: string
 }
 
 const cryptoData: CryptoData[] = [
-    {id: 'solana', name: 'Solana', symbol: 'SOL', iconPath: '/images/solana.png', change: 2.10},
-    {id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', iconPath: '/images/bitcoin.png', change: -1.30},
-    {id: 'ethereum', name: 'Ethereum', symbol: 'ETH', iconPath: '/images/ethereum.png', change: -0.86},
-    {id: 'chainlink', name: 'Chainlink', symbol: 'LINK', iconPath: '/images/chainlink.png', change: -1.72},
-    {id: 'render', name: 'Render', symbol: 'RENDER', iconPath: '/images/render.png', change: 2.48},
-    {id: 'dogwifhat', name: 'DogWifHat', symbol: 'WIF', iconPath: '/images/wif.png', change: 0.52},
-    {id: 'bonk', name: 'Bonk', symbol: 'BONK', iconPath: '/images/bonk.png', change: 2.86},
-    {id: 'thegraph', name: 'The Graph', symbol: 'GRT', iconPath: '/images/grt.png', change: 3.76},
-    {id: 'pyth', name: 'Pyth Network', symbol: 'PYTH', iconPath: '/images/pyth.png', change: 11.91},
-    {id: 'ray', name: 'Raydium', symbol: 'RAY', iconPath: '/images/ray.png', change: 0.30},
+    {id: 'solana', name: 'Solana', symbol: 'SOL', iconPath: '/images/solana.png', change: 2.10, pythSymbol: 'Crypto.SOL/USD'},
+    {id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', iconPath: '/images/bitcoin.png', change: -1.30, pythSymbol: 'Crypto.BTC/USD'},
+    {id: 'ethereum', name: 'Ethereum', symbol: 'ETH', iconPath: '/images/ethereum.png', change: -0.86, pythSymbol: 'Crypto.ETH/USD'},
+    {id: 'chainlink', name: 'Chainlink', symbol: 'LINK', iconPath: '/images/chainlink.png', change: -1.72, pythSymbol: 'Crypto.LINK/USD'},
+    {id: 'render', name: 'Render', symbol: 'RENDER', iconPath: '/images/render.png', change: 2.48, pythSymbol: 'Crypto.RENDER/USD'},
+    {id: 'dogwifhat', name: 'DogWifHat', symbol: 'WIF', iconPath: '/images/wif.png', change: 0.52, pythSymbol: 'Crypto.WIF/USD'},
+    {id: 'bonk', name: 'Bonk', symbol: 'BONK', iconPath: '/images/bonk.png', change: 2.86, pythSymbol: 'Crypto.BONK/USD'},
+    {id: 'thegraph', name: 'The Graph', symbol: 'GRT', iconPath: '/images/grt.png', change: 3.76, pythSymbol: 'Crypto.GRT/USD'},
+    {id: 'pyth', name: 'Pyth Network', symbol: 'PYTH', iconPath: '/images/pyth.png', change: 11.91, pythSymbol: 'Crypto.PYTH/USD'},
+    {id: 'ray', name: 'Raydium', symbol: 'RAY', iconPath: '/images/ray.png', change: 0.30, pythSymbol: 'Crypto.RAY/USD'},
     
 ]
 
-export default function CryptoNav(){
+interface CryptoNavProps {
+    onSymbolChange: (symbol: string) => void;
+}
+
+export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
+
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -61,6 +67,11 @@ export default function CryptoNav(){
         return () => container?.removeEventListener('scroll', checkScroll)
     }, [])
 
+    const handleClick = (index: number) => {
+        setActive(index);
+        onSymbolChange(cryptoData[index].pythSymbol)
+    }
+
     return (
         <div className="flex justify-between h-auto border-[1px] rounded-full p-[6px] w-full"> 
                     <div 
@@ -75,7 +86,7 @@ export default function CryptoNav(){
                             buttonVariants({variant: 'ghost'}), (active === index && 'bg-secondary hover:bg-secondary'),
                             "flex items-center space-x-6 px-2 py-1 w-full h-auto rounded-full text-sm cursor-pointer"
                         )}
-                        onClick={() => setActive(index)}
+                        onClick={() => handleClick(index)}
                     >
                         <div className="flex space-x-1 items-center">
                             <Image 

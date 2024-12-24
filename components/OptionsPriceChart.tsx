@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-interface TradingViewChartProps {
+interface OptionsPriceChartProps {
   symbol?: string;
 }
 
@@ -78,12 +78,12 @@ const pythDatafeed = {
         }
         
         const bars = data.t.map((time: number, index: number) => ({
-          time: time * 1000,
-          open: Math.round(parseFloat(data.o[index])),
-          high: Math.round(parseFloat(data.h[index])),
-          low: Math.round(parseFloat(data.l[index])),
-          close: Math.round(parseFloat(data.c[index])),
-          volume: data.v[index]
+            time: time * 1000,
+            open: Math.round(parseFloat(data.o[index]) / 2),
+            high: Math.round(parseFloat(data.h[index]) / 2),
+            low: Math.round(parseFloat(data.l[index]) / 2),
+            close: Math.round(parseFloat(data.c[index]) / 2),
+            volume: data.v[index]
         }));
         
         onHistoryCallback(bars, {
@@ -109,10 +109,10 @@ const pythDatafeed = {
       if (data.symbol === symbolInfo.name) {
         onRealtimeCallback({
           time: data.time * 1000,
-          open: Math.round(parseFloat(data.open)),
-          high: Math.round(parseFloat(data.high)),
-          low: Math.round(parseFloat(data.low)),
-          close: Math.round(parseFloat(data.close)),
+          open: Math.round(parseFloat(data.open) / 2),
+          high: Math.round(parseFloat(data.high) / 2),
+          low: Math.round(parseFloat(data.low) / 2),
+          close: Math.round(parseFloat(data.close) / 2),          
           volume: data.volume
         });
       }
@@ -128,7 +128,7 @@ const pythDatafeed = {
   }
 };
 
-const TradingViewChart: React.FC<TradingViewChartProps> = ({ symbol = 'Crypto.SOL/USD' }) => {
+const OptionsPriceChart: React.FC<OptionsPriceChartProps> = ({ symbol = 'Crypto.SOL/USD' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<any>(null);
   const { resolvedTheme } = useTheme();
@@ -213,4 +213,4 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({ symbol = 'Crypto.SO
   );
 };
 
-export default TradingViewChart;
+export default OptionsPriceChart;

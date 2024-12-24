@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Label } from "./ui/label";
@@ -15,28 +15,14 @@ import { Button } from "./ui/button";
 import WalletModal from "./WalletModal";
 import { useWallet } from "@/contexts/walletprovider";
 import { CountdownTimer } from "./Timer";
-
-function getNextMidnight() {
-    const now = new Date()
-    const tomorrow = new Date(now)
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    tomorrow.setHours(0, 0, 0, 0)
-    const offset = 0 
-    tomorrow.setHours(0 - offset)
-    return tomorrow
-}
-
-function getFutureDate(days: number) {
-    const date = getNextMidnight()
-    date.setDate(date.getDate() + days - 1)
-    return date
-}
-
+import { getExpiryOptions } from "@/utils/dateUtils";
+import { usePythPrice } from "@/hooks/usePythPrice";
 
 
 export default function OptionsCard(){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [position, setPosition] = useState<string>("American");
+    const { priceData, loading: priceLoading, error: priceError } = usePythPrice();
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
         buying: { type: string; amount: string };
@@ -46,17 +32,20 @@ export default function OptionsCard(){
         selling: { currency: 'usdc', amount: '' },
         buying: { type: 'call', amount: '' },
         strikePrice: '',
-        expiry: 'never'
+        expiry: '14'
     })
 
     const { isConnected, walletName } = useWallet();
+    const expiryOptions = getExpiryOptions();
 
-    const expiryOptions = [
-        { value: 'never', label: 'Never' },
-        { value: '1', label: '', date: getFutureDate(1) },
-        { value: '2', label: '', date: getFutureDate(2) },
-        { value: '3', label: '', date: getFutureDate(3) },
-    ]
+    useEffect(() => {
+        if (priceData.price !== null) {
+            setFormValues(prev => ({
+                ...prev,
+                strikePrice: priceData.price!.toFixed(2)
+            }));
+        }
+    }, [priceData.price]);
  
     return (
         <Card className="rounded-[26px]">
@@ -231,20 +220,28 @@ export default function OptionsCard(){
                         <Label className="text-foreground text-sm font-medium">Strike Price</Label>
                         <Input 
                             type="number"
-                            placeholder="0.00"
+                            placeholder={priceLoading ? "Loading..." : "0.00"}
                             className="border-none bg-backgroundSecondary px-3 py-2 text-foreground rounded-[12px]"
-                            value={formValues.strikePrice}
+                            value={priceData.price ? priceData.price.toFixed(2) : formValues.strikePrice}
                             onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
                         />
+                        {priceError && (
+                            <span className="text-sm text-red-500">Failed to load SOL price</span>
+                        )}
                     </div>
                     <div className="flex flex-col gap-1 w-full">
-                        <Label className="text-foreground text-sm font-medium">Expiry</Label>
+                        <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
+                            Expiry
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M7.99984 14.6665C11.6732 14.6665 14.6665 11.6732 14.6665 7.99984C14.6665 4.3265 11.6732 1.33317 7.99984 1.33317C4.3265 1.33317 1.33317 4.3265 1.33317 7.99984C1.33317 11.6732 4.3265 14.6665 7.99984 14.6665ZM8.49984 10.6665C8.49984 10.9398 8.27317 11.1665 7.99984 11.1665C7.7265 11.1665 7.49984 10.9398 7.49984 10.6665V7.33317C7.49984 7.05984 7.7265 6.83317 7.99984 6.83317C8.27317 6.83317 8.49984 7.05984 8.49984 7.33317V10.6665ZM7.3865 5.07984C7.41984 4.99317 7.4665 4.9265 7.5265 4.85984C7.59317 4.79984 7.6665 4.75317 7.7465 4.71984C7.8265 4.6865 7.91317 4.6665 7.99984 4.6665C8.0865 4.6665 8.17317 4.6865 8.25317 4.71984C8.33317 4.75317 8.4065 4.79984 8.47317 4.85984C8.53317 4.9265 8.57984 4.99317 8.61317 5.07984C8.6465 5.15984 8.6665 5.2465 8.6665 5.33317C8.6665 5.41984 8.6465 5.5065 8.61317 5.5865C8.57984 5.6665 8.53317 5.73984 8.47317 5.8065C8.4065 5.8665 8.33317 5.91317 8.25317 5.9465C8.09317 6.01317 7.9065 6.01317 7.7465 5.9465C7.6665 5.91317 7.59317 5.8665 7.5265 5.8065C7.4665 5.73984 7.41984 5.6665 7.3865 5.5865C7.35317 5.5065 7.33317 5.41984 7.33317 5.33317C7.33317 5.2465 7.35317 5.15984 7.3865 5.07984Z" fill="#808693"/>
+                            </svg>
+                        </Label>
                         <Select
                             value={formValues.expiry}
                             onValueChange={(value) => setFormValues(prev => ({ ...prev, expiry: value }))}
                         >
                             <SelectTrigger className="bg-backgroundSecondary w-full h-full rounded-[12px] text-sm">
-                                <SelectValue placeholder="Never" />
+                                <SelectValue />
                                 <ChevronDown className="opacity-50" size={14}/>
                             </SelectTrigger>
                             <SelectContent>
@@ -254,7 +251,7 @@ export default function OptionsCard(){
                                         value={option.value}
                                         className="flex justify-between items-center"
                                     >
-                                        <span>{option.label}</span>
+                                        <span>{option.label} </span>
                                         {option.date && (
                                             <CountdownTimer targetDate={option.date} />
                                         )}
