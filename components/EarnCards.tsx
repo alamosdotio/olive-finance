@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "./ui/card"
 import { Progress } from "./ui/progress"
 import { Sheet, SheetTrigger } from "./ui/sheet"
 import EarnSidebar from "./EarnSidebar"
+import EarnCardlogo from "./EarnCardLogo"
 
 interface Strategy {
     tvl: number
@@ -64,8 +65,13 @@ export default function EarnCards (){
                         <Card className="w-full hover:border-primary">
                             <CardHeader className="p-5 border-b">
                                 <div className="flex justify-start space-x-2">
-                                    <span className="rounded-full bg-white w-6 h-6 text-[8px] text-center text-black flex justify-center items-center border-2">img</span>
-                                    <span className="text-base font-medium">Strategy Name</span>
+                                    {index === 0 &&(
+                                        <EarnCardlogo />
+                                    )}
+                                    {index !== 0 &&(
+                                        <span className="rounded-full bg-white w-6 h-6 text-[8px] text-center text-black flex justify-center items-center border-2">img</span>
+                                    )}
+                                    <span className="text-base font-medium">{index === 0 ? 'Bitcoin Option Maker' : 'Strategy Name'}</span>
                                 </div>
                             </CardHeader>
                             <CardContent className="p-5">
@@ -97,11 +103,12 @@ export default function EarnCards (){
                                         </span>
                                         <span className="flex font-normal text-sm">{strategy.apy}%</span>
                                     </div>
+                                    
                                 </div>
                             </CardContent>
                         </Card>
                     </SheetTrigger>
-                    <EarnSidebar apy={strategy.apy}/>
+                    <EarnSidebar apy={strategy.apy} index={index}/>
                 </Sheet>
             ))}
                 

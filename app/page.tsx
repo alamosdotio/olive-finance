@@ -23,7 +23,7 @@ export default function Home() {
       }
   }
 
-  const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
+  const [selectedSymbol, setSelectedSymbol] = useState<string>('4DoNfFBfF7UokCC2FQzriy7yHK6DY6NVdYpuekQ5pRgg')
 
 
 
@@ -62,7 +62,7 @@ export default function Home() {
                   </Tabs>
                 </div>
                 {activeTab === 'chart' && (
-                  <TradingViewChart symbol={selectedSymbol}/>
+                  <TradingViewChart pairAddress={selectedSymbol}/>
                 )}
                 {activeTab === 'options' && (
                   <OptionsPriceChart symbol={selectedSymbol}/>

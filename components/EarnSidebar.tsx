@@ -5,13 +5,20 @@ import { Input } from "./ui/input";
 import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import EarnCardlogo from "./EarnCardLogo";
+import bitcoin from '@/public/images/bitcoin.png'
+import usdt from '@/public/images/usdt.png'
+import usdc from '@/public/images/usdc.png'
+import Image from "next/image";
 
 interface EarnSidebarProps {
     apy: number;
+    index: number;
 }
 
 const poolData = [
     {
+        img: bitcoin,
         symbol: 'ETH',
         name: 'Ether Portal',
         poolSize: '$802,350,386.79',
@@ -19,6 +26,7 @@ const poolData = [
         utilization: '78.19%'
     },
     {
+        img: usdc,
         symbol: 'USDC',
         name: 'USD Coin',
         poolSize: '$16,321,098,765',
@@ -26,6 +34,7 @@ const poolData = [
         utilization: '52.18%'
     },
     {
+        img: usdt,
         symbol: 'USDT',
         name: 'USDT',
         poolSize: '$15,210,987,654',
@@ -34,14 +43,14 @@ const poolData = [
     }
 ]
 
-export default function EarnSidebar({apy} : EarnSidebarProps){
+export default function EarnSidebar({apy, index} : EarnSidebarProps){
     const [activeTab, setActiveTab] = useState<string>('mint');
     
     return (
         <SheetContent className="space-y-6 w-auto rounded-l-[26px]">
             <SheetHeader>
                 <SheetTitle className="text-2xl">
-                    Strategy Name
+                    {index === 0 ? 'Bitcoin Option Maker' : 'Strategy Name'}
                 </SheetTitle>
             </SheetHeader>
             <div className="space-y-5 flex flex-col">
@@ -64,7 +73,14 @@ export default function EarnSidebar({apy} : EarnSidebarProps){
                     <div className="w-full h-[1px] border-b my-2"/>
                     <div className="flex flex-col gap-2">
                         <div className="flex gap-2 text-base font-medium">
-                            <div className="rounded-full bg-white w-6 h-6 text-center text-xs text-black flex items-center font-normal">img</div>
+                            {index === 0 &&(
+                                <div className="rounded-full bg-inherit w-6 h-6 flex items-center justify-center ring-2 ring-border">
+                                    <Image src={bitcoin} alt='bitcoin logo' className="h-6 w-6"/>
+                                </div>
+                            )}
+                            {index !==0 &&(
+                                <div className="rounded-full bg-white w-6 h-6 text-center text-xs text-black flex items-center font-normal">img</div>
+                            )}
                             <span>Asset Pool</span>
                         </div>
                         <div className="w-full flex">
@@ -104,12 +120,17 @@ export default function EarnSidebar({apy} : EarnSidebarProps){
                                 {poolData.map((row) => (
                                     <TableRow key={row.symbol} className="border-none">
                                         <TableCell className="flex gap-2 items-center">
-                                            <div className="bg-white h-6 w-6 rounded-full">
-                                                <span className="text-black text-xs">img</span>
+                                            <div className="bg-white h-6 w-6 rounded-full ring-2 ring-border">
+                                                {index === 0 &&(
+                                                    <Image src={row.img} alt="logo" className="w-6 h-6"/>
+                                                )}
+                                                {index !== 0 &&(
+                                                    <span className="text-black text-xs">img</span>
+                                                )}
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-xs text-foreground font-normal">{row.symbol}</span>
-                                                <span className="text-xs text-secondary-foreground font-normal">{row.name}</span>
+                                                <span className="text-xs text-foreground font-normal">{index === 0 && row.symbol === 'ETH' ? 'BTC' : `${row.symbol}`}</span>
+                                                <span className="text-xs text-secondary-foreground font-normal">{index === 0 && row.name === 'Ether Portal' ? 'Bitcoin' : `${row.symbol}`}</span>
                                             </div>
                                         </TableCell>
                                         <TableCell>
