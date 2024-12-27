@@ -7,6 +7,7 @@ import { Progress } from "./ui/progress"
 import { Sheet, SheetTrigger } from "./ui/sheet"
 import EarnSidebar from "./EarnSidebar"
 import EarnCardlogo from "./EarnCardLogo"
+import Image from "next/image"
 
 interface Strategy {
     tvl: number
@@ -64,14 +65,23 @@ export default function EarnCards (){
                     <SheetTrigger>
                         <Card className="w-full hover:border-primary">
                             <CardHeader className="p-5 border-b">
-                                <div className="flex justify-start space-x-2">
+                                <div className="flex justify-start space-x-2 items-center">
                                     {index === 0 &&(
-                                        <EarnCardlogo />
+                                        <EarnCardlogo index={index}/>
                                     )}
-                                    {index !== 0 &&(
+                                    {index !== 0 && index !== 1 &&(
                                         <span className="rounded-full bg-white w-6 h-6 text-[8px] text-center text-black flex justify-center items-center border-2">img</span>
                                     )}
-                                    <span className="text-base font-medium">{index === 0 ? 'Bitcoin Option Maker' : 'Strategy Name'}</span>
+                                    { index!== 1&&(
+                                        <span className="text-sm font-medium">{index === 0 ? 'BTC Option Maker' : 'Strategy Name'}</span>
+                                    )}
+                                    {index === 1 &&(
+                                        <EarnCardlogo index={index}/>
+                                    )}
+                                    { index === 1&&(
+                                        <span className="text-sm font-medium">Ethereum</span>
+                                    )}
+
                                 </div>
                             </CardHeader>
                             <CardContent className="p-5">

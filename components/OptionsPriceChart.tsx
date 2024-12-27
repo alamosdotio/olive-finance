@@ -10,80 +10,78 @@ declare global {
   }
 }
 
-interface OptionsPriceChartProps {
+interface TradingViewChartProps {
   symbol?: string;
 }
 
 const PYTH_BASE_URL = 'https://benchmarks.pyth.network/v1/shims/tradingview';
 
 const pythDatafeed = {
-  onReady: (callback: (configuration: any) => void) => {
+  onReady: (callback: (arg0: any) => void) => {
     fetch(`${PYTH_BASE_URL}/config`)
       .then(response => response.json())
       .then(data => {
         callback({
           ...data,
-          supported_resolutions: ['1', '5', '15', '30', '60', '240', '1D', '1W', '1M']
+          supported_resolutions: [
+            "1", "2", "5", "15", "30", "60", "120", "240", "360", "720",
+            "D", "1D", "W", "1W", "M", "1M"
+          ]
         });
+      })
+      .catch(error => {
+        console.error('Error fetching config:', error);
       });
   },
   
-  searchSymbols: (
-    userInput: string,
-    exchange: string,
-    symbolType: string,
-    onResult: (result: any) => void
-  ) => {
+  searchSymbols: (userInput: string | number | boolean, exchange: any, symbolType: any, onResult: (arg0: any) => void) => {
     fetch(`${PYTH_BASE_URL}/search?query=${encodeURIComponent(userInput)}`)
       .then(response => response.json())
       .then(data => {
         onResult(data);
+      })
+      .catch(error => {
+        console.error('Error searching symbols:', error);
       });
   },
   
-  resolveSymbol: (
-    symbolName: string,
-    onSymbolResolvedCallback: (symbolInfo: any) => void,
-    onResolveErrorCallback: (error: any) => void
-  ) => {
+  resolveSymbol: (symbolName: string, onSymbolResolvedCallback: (arg0: any) => void, onResolveErrorCallback: (arg0: string) => void) => {
     fetch(`${PYTH_BASE_URL}/symbols?symbol=${encodeURIComponent(symbolName.toLowerCase())}`)
       .then(response => response.json())
       .then(symbolInfo => {
-        symbolInfo.pricescale = 1; 
-        symbolInfo.minmov = 1;
+        if (!symbolInfo) {
+          onResolveErrorCallback('Symbol not found');
+          return;
+        }
         onSymbolResolvedCallback(symbolInfo);
       })
       .catch(error => {
-        onResolveErrorCallback(error);
+        console.error('Error resolving symbol:', error);
+        onResolveErrorCallback('Error resolving symbol');
       });
   },
   
-  getBars: (
-    symbolInfo: any,
-    resolution: string,
-    periodParams: any,
-    onHistoryCallback: (bars: any[], meta: { noData: boolean }) => void,
-    onErrorCallback: (error: any) => void
-  ) => {
-    const { from, to, firstDataRequest } = periodParams;
-    
+  getBars: (symbolInfo: { name: string | number | boolean; }, resolution: any, periodParams: { from: any; to: any; }, onHistoryCallback: (arg0: any, arg1: { noData: boolean; }) => void, onErrorCallback: (arg0: string) => void) => {
+    const { from, to } = periodParams;
+
     fetch(
       `${PYTH_BASE_URL}/history?symbol=${encodeURIComponent(symbolInfo.name)}&resolution=${resolution}&from=${from}&to=${to}`
     )
       .then(response => response.json())
       .then(data => {
         if (data.s !== 'ok' && data.s !== 'no_data') {
+          console.error('Error fetching bars:', data.errmsg);
           onErrorCallback(data.errmsg);
           return;
         }
         
-        const bars = data.t.map((time: number, index: number) => ({
-            time: time * 1000,
-            open: Math.round(parseFloat(data.o[index]) / 2),
-            high: Math.round(parseFloat(data.h[index]) / 2),
-            low: Math.round(parseFloat(data.l[index]) / 2),
-            close: Math.round(parseFloat(data.c[index]) / 2),
-            volume: data.v[index]
+        const bars = data.t.map((time: number, index: string | number) => ({
+          time: time * 1000,
+          open: Math.round(parseFloat(data.o[index]) / 2),
+          high: Math.round(parseFloat(data.h[index]) / 2),
+          low: Math.round(parseFloat(data.l[index]) / 2),
+          close: Math.round(parseFloat(data.c[index]) / 2),
+          volume: data.v[index]
         }));
         
         onHistoryCallback(bars, {
@@ -91,18 +89,13 @@ const pythDatafeed = {
         });
       })
       .catch(error => {
-        onErrorCallback(error);
+        console.error('Error fetching history:', error);
+        onErrorCallback('Error fetching data');
       });
   },
   
-  subscribeBars: (
-    symbolInfo: any,
-    resolution: string,
-    onRealtimeCallback: (bar: any) => void,
-    subscriberUID: string,
-    onResetCacheNeededCallback: () => void
-  ) => {
-    const ws = new WebSocket('wss://benchmarks.pyth.network/v1/shims/tradingview/streaming');
+  subscribeBars: (symbolInfo: { name: any; }, resolution: any, onRealtimeCallback: (arg0: { time: number; open: number; high: number; low: number; close: number; volume: any; }) => void, subscriberUID: any, onResetCacheNeededCallback: any) => {
+    const ws = new WebSocket('https://benchmarks.pyth.network/v1/shims/tradingview/streaming');
     
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -112,7 +105,7 @@ const pythDatafeed = {
           open: Math.round(parseFloat(data.open) / 2),
           high: Math.round(parseFloat(data.high) / 2),
           low: Math.round(parseFloat(data.low) / 2),
-          close: Math.round(parseFloat(data.close) / 2),          
+          close: Math.round(parseFloat(data.close) / 2),   
           volume: data.volume
         });
       }
@@ -123,12 +116,13 @@ const pythDatafeed = {
     };
   },
   
-  unsubscribeBars: (subscriberUID: string) => {
-
+  unsubscribeBars: (subscriberUID: any) => {
+    console.log('Unsubscribing bars for:', subscriberUID);
+    
   }
 };
 
-const OptionsPriceChart: React.FC<OptionsPriceChartProps> = ({ symbol = 'Crypto.SOL/USD' }) => {
+const TradingViewChart: React.FC<TradingViewChartProps> = ({ symbol }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<any>(null);
   const { resolvedTheme } = useTheme();
@@ -146,16 +140,24 @@ const OptionsPriceChart: React.FC<OptionsPriceChartProps> = ({ symbol = 'Crypto.
 
       const widgetOptions: any = {
         symbol: symbol,
-        interval: '1D',
+        interval: '15',
         container: containerRef.current,
         datafeed: pythDatafeed,
         library_path: "/charting_library/",
         locale: "en",
         disabled_features: [
           "use_localstorage_for_settings",
+          "timeframes_toolbar",
+          "header_settings",
+          "header_undo_redo",
+          "header_screenshot",
+          "header_fullscreen_button",
+          "control_bar",
+          "timeframes_toolbar",
+          "create_volume_indicator_by_default",
         ],
         enabled_features: [
-          "hide_left_toolbar_by_default"
+          "hide_left_toolbar_by_default",
         ],
         theme: chartTheme,
         custom_css_url: '/styles/tradingview-theme.css',
@@ -168,10 +170,8 @@ const OptionsPriceChart: React.FC<OptionsPriceChartProps> = ({ symbol = 'Crypto.
           "mainSeriesProperties.candleStyle.wickDownColor": "#FF6889",
           "mainSeriesProperties.candleStyle.borderUpColor": "#53C08D",
           "mainSeriesProperties.candleStyle.borderDownColor": "#FF6889",
-          "mainSeriesProperties.priceFormat.type": "price",
-          "mainSeriesProperties.priceFormat.precision": 0,
-          "mainSeriesProperties.priceFormat.minMove": 1,
-          "scalesProperties.precision": 0
+          "mainSeriesProperties.priceFormat.precision": 2,
+          "mainSeriesProperties.priceFormat.minMove": 0.01
         },
         fullscreen: false,
         autosize: true,
@@ -213,4 +213,4 @@ const OptionsPriceChart: React.FC<OptionsPriceChartProps> = ({ symbol = 'Crypto.
   );
 };
 
-export default OptionsPriceChart;
+export default TradingViewChart;

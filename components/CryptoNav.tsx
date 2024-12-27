@@ -25,7 +25,15 @@ const cryptoData: CryptoData[] = [
     {id: 'thegraph', name: 'The Graph', symbol: 'GRT', iconPath: '/images/grt.png', change: 3.76, pythSymbol: 'Crypto.GRT/USD'},
     {id: 'pyth', name: 'Pyth Network', symbol: 'PYTH', iconPath: '/images/pyth.png', change: 11.91, pythSymbol: 'Crypto.PYTH/USD'},
     {id: 'ray', name: 'Raydium', symbol: 'RAY', iconPath: '/images/ray.png', change: 0.30, pythSymbol: 'Crypto.RAY/USD'},
-    
+    {id: 'pengu', name: 'Pudgy Penguins', symbol:'PENGU', iconPath: '/images/pengu.jpeg', change: 0.87, pythSymbol: 'Crypto.PENGU/USD'},
+    {id: 'hnt', name: 'Helium', symbol:'HNT', iconPath: '/images/hnt.png', change: -2.23, pythSymbol: 'Crypto.HNT/USD'},
+    {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
+    {id: 'ar', name: 'Arweave', symbol:'AR', iconPath: '/images/ar.png', change: 4.96, pythSymbol: 'Crypto.AR/USD'},
+    {id: 'fartcoin', name: 'Fartcoin', symbol:'FARTCOIN', iconPath: '/images/fartcoin.png', change: 10.72, pythSymbol: 'Crypto.FARTCOIN/USD'},
+    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
+    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
+    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
+    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
 ]
 
 interface CryptoNavProps {
@@ -95,7 +103,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                             width={18} 
                             height={18} 
                             className={cn(
-                                crypto.name === 'ethereum' ? 'bg-white rounded-full w-6 h-6 p-2' : 'rounded-full'
+                                crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full'
                             )}
                             />
                             <span className="font-medium text-sm">{crypto.symbol}</span>
