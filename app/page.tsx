@@ -23,7 +23,7 @@ export default function Home() {
       }
   }
 
-  const [selectedSymbol, setSelectedSymbol] = useState<string>('4DoNfFBfF7UokCC2FQzriy7yHK6DY6NVdYpuekQ5pRgg')
+  const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
 
 
 
@@ -32,8 +32,8 @@ export default function Home() {
           <div>
           <CryptoNav onSymbolChange={setSelectedSymbol}/>
           </div>
-          <div className="flex flex-col-reverse lg:flex-row py-4 gap-4 max-w-screen-2xl">
-            <div className="w-4/6 mx-auto space-y-6">
+          <div className="flex flex-col-reverse lg:flex-row py-4 gap-4">
+            <div className="w-5/6 mx-auto space-y-6">
               <div>
                 <div className="w-full bg-inherit border-[1px] rounded-t-[26px] py-[11px] px-4">
                   <Tabs defaultValue={activeTab}>
@@ -62,7 +62,7 @@ export default function Home() {
                   </Tabs>
                 </div>
                 {activeTab === 'chart' && (
-                  <TradingViewChart pairAddress={selectedSymbol}/>
+                  <TradingViewChart symbol={selectedSymbol}/>
                 )}
                 {activeTab === 'options' && (
                   <OptionsPriceChart symbol={selectedSymbol}/>

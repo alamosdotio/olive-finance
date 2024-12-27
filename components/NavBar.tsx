@@ -39,7 +39,7 @@ export default function NavBar(){
     }
 
     return (
-        <header className="flex justify-between h-[72px] max-w-full">
+        <header className="flex justify-between h-auto max-w-full">
             <div className="flex justify-between py-3 gap-12">
                 <div className="flex items-center justify-center gap-2">
                     <Image src={logo} alt="logo pic" />
