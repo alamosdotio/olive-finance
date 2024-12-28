@@ -8,7 +8,7 @@ import TradingPositionsFallback from "@/components/TradingPositionsFallback";
 import TradingPositions from "@/components/TradingPositions";
 import PriceQuote from "@/components/PriceQuote";
 
-export default function test(){
+export default function Homepage(){
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
     
     return (
