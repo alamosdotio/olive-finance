@@ -48,13 +48,13 @@ export default function OptionsCard(){
     }, [priceData.price]);
  
     return (
-        <Card className="rounded-[26px]">
-            <CardHeader className="py-2 px-6 border-b-2">
+        <Card className="rounded-[26px] h-[664px] w-2/6">
+            <CardHeader className="py-3 px-6 border-b-2 w-full">
                 <Tabs className="w-full flex justify-between items-center"
                     defaultValue={position}
                     onValueChange={(value)=>setPosition(value)}
                 >
-                    <TabsList className="grid grid-cols-4 rounded-full gap-2 p-0 bg-inherit text-secondary-foreground justify-start">
+                    <TabsList className="w-full grid grid-cols-3 rounded-full gap-2 p-0 bg-inherit text-secondary-foreground">
                         <TabsTrigger
                             value="American"
                             className="bg-none border-b-2 border-transparent rounded-none data-[state=active]:border-primary"
@@ -73,10 +73,12 @@ export default function OptionsCard(){
                         >
                             Bermudan
                         </TabsTrigger>
-                    </TabsList>
-                    <div>
-                        <Select>
-                            <SelectTrigger className="bg-inherit text-secondary-foreground text-sm focus:outline-none flex items-center justify-evenly p-0 w-28 shadow-none" >
+                        {/* <TabsTrigger
+                            value="Market"
+                            className="bg-none border-b-2 border-transparent rounded-none data-[state=active]:border-transparent"
+                        >
+                            <Select>
+                            <SelectTrigger className="bg-inherit text-secondary-foreground focus:outline-none flex items-center justify-evenly p-0 w-28 shadow-none" >
                                 <SelectValue placeholder='Market'/>
                                 <ChevronDown className="opacity-50" size={14}/>
                             </SelectTrigger>
@@ -86,11 +88,13 @@ export default function OptionsCard(){
                                 <SelectItem value="amm">AMM</SelectItem>
                             </SelectContent>
                         </Select>
-                    </div>
+                        </TabsTrigger> */}
+                        
+                    </TabsList>
                 </Tabs>
             </CardHeader>
             <CardContent className="p-0">
-                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-5">
+                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-[38px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Sell</Label>
@@ -147,13 +151,13 @@ export default function OptionsCard(){
                                 placeholder="0.00"
                                 value={formValues.selling.amount}
                                 onChange={(e) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, amount: e.target.value } }))}
-                                className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground w-[200px] h-[52px]"
+                                className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground w-full h-[52px]"
                             />
                             <span className="text-sm font-normal text-secondary-foreground">$10.75</span>
                         </div>
                     </div>
                 </div>
-                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-5">
+                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-[38px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Buy</Label>
@@ -207,7 +211,7 @@ export default function OptionsCard(){
                                 placeholder="0.00"
                                 value={formValues.buying.amount}
                                 onChange={(e) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, amount: e.target.value } }))}
-                                className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground w-[200px] h-[52px]"
+                                className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground w-full h-[52px]"
                             />
                             <span className="text-sm font-normal text-secondary-foreground">$10.75</span>
                         </div>
@@ -217,11 +221,13 @@ export default function OptionsCard(){
             <CardFooter className="px-6 py-7 flex flex-col space-y-7">
                 <div className="w-full flex gap-4">
                     <div className="flex flex-col gap-1 w-full">
-                        <Label className="text-foreground text-sm font-medium">Strike Price</Label>
+                        <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
+                            Strike Price
+                        </Label>
                         <Input 
                             type="number"
                             placeholder={priceLoading ? "Loading..." : "0.00"}
-                            className="border-none bg-backgroundSecondary px-3 py-2 text-foreground rounded-[12px]"
+                            className="border-none bg-backgroundSecondary px-3 py-2 text-foreground rounded-[12px] w-full"
                             value={priceData.price ? priceData.price.toFixed(2) : formValues.strikePrice}
                             onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
                         />

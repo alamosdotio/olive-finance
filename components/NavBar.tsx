@@ -1,9 +1,7 @@
 'use client'
 import Link from "next/link";
-import { Moon, Sun } from 'lucide-react'
 
 import { Button, buttonVariants } from "./ui/button";
-import { Switch } from "./ui/switch";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
@@ -11,12 +9,10 @@ import WalletModal from "./WalletModal";
 import { useWallet } from "@/contexts/walletprovider";
 import WalletSideBar from "./WalletSidebar";
 import { useTheme } from "next-themes";
-import { Settings, Star, Bell } from 'lucide-react';
 import x from '@/public/svgs/x.svg';
 import discord from '@/public/svgs/discord.svg'
 import telegram from '@/public/svgs/telegram.svg'
 import Image from "next/image";
-import vase from '@/public/svgs/vase.svg'
 
 import logo from '@/public/svgs/logo.svg'
 import { Badge } from "./ui/badge";
@@ -27,10 +23,6 @@ export default function NavBar(){
     const { theme, setTheme } = useTheme()
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const { isConnected } = useWallet();
-
-    const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark')
-    }
 
     const handleClick = (state:string) =>{
         if(active!==state){
@@ -48,7 +40,7 @@ export default function NavBar(){
                 <nav className="flex justify-evenly items-center gap-8">
                     <Link 
                         href='/'
-                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px]')}
+                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px] hover:text-primary')}
                         onClick={() => handleClick('Options')}
                     > 
                          <h1 className="text-sm font-medium">Options</h1>
@@ -56,7 +48,7 @@ export default function NavBar(){
                     </Link>
                     <Link 
                         href='/earn'
-                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px]')}
+                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px] hover:text-primary')}
                         onClick={() => handleClick('Earn')}
                     > 
                          <h1 className="text-sm font-medium">Earn</h1>
@@ -64,10 +56,9 @@ export default function NavBar(){
                     </Link>
                     
                     
-                    <DropdownMenu onOpenChange={() => handleClick('More')}>
+                    <DropdownMenu>
                         <DropdownMenuTrigger
-                        className={cn(buttonVariants({variant: active === 'More' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between focus:bg-transparent focusoutline-none')}
-                        onClick={() => handleClick('More')}
+                        className='text-secondary-foreground p-0 w-auto h-auto flex justify-between focus:bg-transparent focus:outline-none hover:text-primary'
                         >
                                 <h1 className="text-sm font-medium">More</h1>
                         </DropdownMenuTrigger>
@@ -82,7 +73,7 @@ export default function NavBar(){
                                 
                             ].map((item) => (
                                 <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
-                                    <Link href={`/`} className="w-full">
+                                    <Link href={`#`} className="w-full">
                                         {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
                                     </Link>
                                 </DropdownMenuItem>
@@ -94,7 +85,7 @@ export default function NavBar(){
                                 "Feedback",
                             ].map((item) => (
                                 <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
-                                    <Link href={`/`} className="w-full">
+                                    <Link href={`#`} className="w-full">
                                         {item}
                                     </Link>
                                 </DropdownMenuItem>

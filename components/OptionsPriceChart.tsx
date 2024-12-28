@@ -203,7 +203,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({ symbol }) => {
   }, [chartTheme, symbol]);
 
   return (
-    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-[550px] border border-border bg-card">
+    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-full border border-border bg-card">
       <div 
         id="tv_chart_container" 
         ref={containerRef} 

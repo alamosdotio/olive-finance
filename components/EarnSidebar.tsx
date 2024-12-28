@@ -12,45 +12,48 @@ import usdc from '@/public/images/usdc.png'
 import Image from "next/image";
 
 interface EarnSidebarProps {
+    name: string;
+    symbol: string;
+    logo: string;
     apy: number;
-    index: number;
 }
 
-const poolData = [
-    {
-        img: bitcoin,
-        symbol: 'ETH',
-        name: 'Ether Portal',
-        poolSize: '$802,350,386.79',
-        weightage: '46.27% / 47%',
-        utilization: '78.19%'
-    },
-    {
-        img: usdc,
-        symbol: 'USDC',
-        name: 'USD Coin',
-        poolSize: '$16,321,098,765',
-        weightage: '9.9% / 10%',
-        utilization: '52.18%'
-    },
-    {
-        img: usdt,
-        symbol: 'USDT',
-        name: 'USDT',
-        poolSize: '$15,210,987,654',
-        weightage: '11.47% / 11%',
-        utilization: '44.31%'
-    }
-]
 
-export default function EarnSidebar({apy, index} : EarnSidebarProps){
+
+export default function EarnSidebar({name, symbol, logo, apy} : EarnSidebarProps){
+    const poolData = [
+        {
+            img: logo,
+            symbol: symbol,
+            name: name,
+            poolSize: '$802,350,386.79',
+            weightage: '46.27% / 47%',
+            utilization: '78.19%'
+        },
+        {
+            img: usdc,
+            symbol: 'USDC',
+            name: 'USD Coin',
+            poolSize: '$16,321,098,765',
+            weightage: '9.9% / 10%',
+            utilization: '52.18%'
+        },
+        {
+            img: usdt,
+            symbol: 'USDT',
+            name: 'USDT',
+            poolSize: '$15,210,987,654',
+            weightage: '11.47% / 11%',
+            utilization: '44.31%'
+        }
+    ]
     const [activeTab, setActiveTab] = useState<string>('mint');
     
     return (
         <SheetContent className="space-y-6 w-auto rounded-l-[26px]">
             <SheetHeader>
                 <SheetTitle className="text-2xl">
-                    {index === 0 ? 'Bitcoin Option Maker' : 'Strategy Name'}
+                    {name} Option Maker
                 </SheetTitle>
             </SheetHeader>
             <div className="space-y-5 flex flex-col">
@@ -73,15 +76,10 @@ export default function EarnSidebar({apy, index} : EarnSidebarProps){
                     <div className="w-full h-[1px] border-b my-2"/>
                     <div className="flex flex-col gap-2">
                         <div className="flex gap-2 text-base font-medium">
-                            {index === 0 &&(
-                                <div className="rounded-full bg-inherit w-6 h-6 flex items-center justify-center ring-2 ring-border">
-                                    <Image src={bitcoin} alt='bitcoin logo' className="h-6 w-6"/>
-                                </div>
-                            )}
-                            {index !==0 &&(
-                                <div className="rounded-full bg-white w-6 h-6 text-center text-xs text-black flex items-center font-normal">img</div>
-                            )}
-                            <span>Asset Pool</span>
+                            <div className="rounded-full bg-inherit w-6 h-6 flex items-center justify-center ring-2 ring-border">
+                                <Image src={logo} alt={name} width={24} height={24} className="h-6 w-6 rounded-full"/>
+                            </div>
+                            <span>{name} Pool</span>
                         </div>
                         <div className="w-full flex">
                             <p className="text-xs tracking-tight text-justify">
@@ -120,17 +118,12 @@ export default function EarnSidebar({apy, index} : EarnSidebarProps){
                                 {poolData.map((row) => (
                                     <TableRow key={row.symbol} className="border-none">
                                         <TableCell className="flex gap-2 items-center">
-                                            <div className="bg-white h-6 w-6 rounded-full ring-2 ring-border">
-                                                {index === 0 &&(
-                                                    <Image src={row.img} alt="logo" className="w-6 h-6"/>
-                                                )}
-                                                {index !== 0 &&(
-                                                    <span className="text-black text-xs">img</span>
-                                                )}
+                                            <div className="rounded-full bg-inherit w-6 h-6 flex items-center justify-center ring-2 ring-border">
+                                                    <Image src={row.img} alt={name} width={24} height={24} className="h-6 w-6 rounded-full"/>
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-xs text-foreground font-normal">{index === 0 && row.symbol === 'ETH' ? 'BTC' : `${row.symbol}`}</span>
-                                                <span className="text-xs text-secondary-foreground font-normal">{index === 0 && row.name === 'Ether Portal' ? 'Bitcoin' : `${row.symbol}`}</span>
+                                                <span className="text-xs text-foreground font-normal">{row.symbol}</span>
+                                                <span className="text-xs text-secondary-foreground font-normal">{row.name}</span>
                                             </div>
                                         </TableCell>
                                         <TableCell>
@@ -152,12 +145,12 @@ export default function EarnSidebar({apy, index} : EarnSidebarProps){
                         <div className="border-t pt-3">
                             <div className="flex flex-col">
                                 <div className="flex justify-between">
-                                    <span className="text-xs text-secondary-foreground font-normal">JLP Price</span>
+                                    <span className="text-xs text-secondary-foreground font-normal">{symbol}OM Price</span>
                                     <span className="text-xs text-foreground font-medium">$4,228</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-xs text-secondary-foreground font-normal">Total Supply</span>
-                                    <span className="text-xs text-foreground font-medium">375 157 373,224 JLP</span>
+                                    <span className="text-xs text-foreground font-medium">375 157 373,224 {symbol}OM</span>
                                 </div>
                             </div>
                         </div>

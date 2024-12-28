@@ -7,7 +7,7 @@ export default function PriceQuote(){
 
 
     return (
-        <div className="w-full border-[1px] rounded-[26px] flex flex-col">
+        <div className="w-full border rounded-[26px] flex flex-col">
             <div 
                 className="w-full flex justify-between items-center px-6 py-3"
                 onClick={() => setDropDownActive(!dropDownActive)}

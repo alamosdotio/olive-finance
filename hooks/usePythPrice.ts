@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PriceServiceConnection, PriceFeed, Price } from '@pythnetwork/price-service-client';
+import { PriceServiceConnection } from '@pythnetwork/price-service-client';
 
 const PYTH_ENDPOINT = 'https://hermes.pyth.network';
 const SOL_PRICE_FEED_ID = '0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d';
 const LAMPORTS_PER_SOL = 1e8;
+const POLLING_INTERVAL = 15000;
 
 interface PythPriceState {
   price: number | null;
@@ -31,13 +32,21 @@ export function usePythPrice(): UsePythPriceResult {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let connection: PriceServiceConnection | null = null;
     let mounted = true;
+    let connection: PriceServiceConnection | null = null;
+    let intervalId: NodeJS.Timeout;
 
-    async function updatePrice(priceFeed: PriceFeed) {
-      if (!mounted) return;
-      
+    async function fetchPrice() {
+      if (!mounted || !connection) return;
+
       try {
+        const priceFeeds = await connection.getLatestPriceFeeds([SOL_PRICE_FEED_ID]);
+        const priceFeed = priceFeeds?.[0];
+        
+        if (!priceFeed) {
+          throw new Error('No price feed data available');
+        }
+
         const priceInfo = priceFeed.getPriceNoOlderThan(60);
         if (!priceInfo) {
           setError('Price data is stale');
@@ -54,36 +63,34 @@ export function usePythPrice(): UsePythPriceResult {
         });
         setError(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to parse price data');
+        setError(err instanceof Error ? err.message : 'Failed to fetch price data');
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
       }
     }
 
-    async function initializePriceConnection() {
-      if (!mounted) return;
-
+    async function initialize() {
       try {
-        setLoading(true);
         connection = new PriceServiceConnection(PYTH_ENDPOINT);
+        await fetchPrice();
         
-        const priceFeeds = await connection.getLatestPriceFeeds([SOL_PRICE_FEED_ID]);
-        if (!priceFeeds?.[0]) {
-          throw new Error('No price feed data available');
-        }
-
-        await updatePrice(priceFeeds[0]);
-        connection.subscribePriceFeedUpdates([SOL_PRICE_FEED_ID], updatePrice);
         
-        setLoading(false);
+        intervalId = setInterval(fetchPrice, POLLING_INTERVAL);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to connect to Pyth network');
         setLoading(false);
       }
     }
 
-    initializePriceConnection();
+    initialize();
 
     return () => {
       mounted = false;
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
       if (connection) {
         connection.closeWebSocket();
       }

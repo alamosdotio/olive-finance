@@ -30,10 +30,10 @@ const cryptoData: CryptoData[] = [
     {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
     {id: 'ar', name: 'Arweave', symbol:'AR', iconPath: '/images/ar.png', change: 4.96, pythSymbol: 'Crypto.AR/USD'},
     {id: 'fartcoin', name: 'Fartcoin', symbol:'FARTCOIN', iconPath: '/images/fartcoin.png', change: 10.72, pythSymbol: 'Crypto.FARTCOIN/USD'},
-    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
-    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
-    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
-    // {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
+    {id: 'jto', name: 'Jito', symbol:'JITO', iconPath: '/images/jito.png', change: 0.62, pythSymbol: 'Crypto.JTO/USD'},
+    {id: 'w', name: 'Wormhole', symbol:'WORMHOLE', iconPath: '/images/wormhole.png', change: 2.17, pythSymbol: 'Crypto.W/USD'},
+    {id: 'popcat', name: 'Popcat (SOL)', symbol:'POPCAT', iconPath: '/images/popcat.png', change: -0.70, pythSymbol: 'Crypto.POPCAT/USD'},
+    {id: 'pnut', name: 'Peanut the Squirrel', symbol:'PNUT', iconPath: '/images/pnut.png', change: -1.72, pythSymbol: 'Crypto.PNUT/USD'},
 ]
 
 interface CryptoNavProps {
@@ -81,7 +81,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
     }
 
     return (
-        <div className="flex justify-between h-auto border-[1px] rounded-full p-[6px] w-full"> 
+        <div className="flex justify-between h-10 border-[1px] rounded-full p-[6px] w-full"> 
                     <div 
             ref={scrollContainerRef}
             className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0"

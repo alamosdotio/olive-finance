@@ -1,12 +1,6 @@
-import { Ban, ChevronDown, History, RotateCw } from "lucide-react"
+import { Ban, RotateCw } from "lucide-react"
 import { Button } from "./ui/button"
-import { Badge } from "./ui/badge"
-import { Bitcoin } from "lucide-react"
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./ui/pagination"
 import { useState } from "react"
-import OpenPositions from "./OpenPositions"
-import TradeHistory from "./TradeHistory"
-import ExpiredOptions from "./ExpiredOptions"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 
 export default function TradingPositions(){
@@ -18,7 +12,7 @@ export default function TradingPositions(){
         }
     }
     return (
-        <div className="w-full h-[300px] border-[1px] rounded-[26px] flex flex-col">
+        <div className="w-full h-[314px] border rounded-[26px] flex flex-col">
             <div className="w-full flex justify-between px-6 py-3 border-b-[1px]">
                 <Tabs defaultValue="Positions" className="p-0"> 
                     <TabsList className="w-full bg-inherit text-secondary-foreground p-0 gap-6">
