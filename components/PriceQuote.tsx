@@ -1,13 +1,16 @@
 import { ChevronDown, ChevronUp} from "lucide-react";
 import { useState } from "react";
 
+interface PriceQuoteProps{
+    value: string
+}
 
-export default function PriceQuote(){
+export default function PriceQuote({value}:PriceQuoteProps){
     const [dropDownActive, setDropDownActive] = useState<boolean>(true);
 
 
     return (
-        <div className="w-full border rounded-[26px] flex flex-col">
+        <div className={value === '' ? 'hidden' : 'w-full border rounded-[26px] flex flex-col'}>
             <div 
                 className="w-full flex justify-between items-center px-6 py-3"
                 onClick={() => setDropDownActive(!dropDownActive)}

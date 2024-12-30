@@ -1,15 +1,16 @@
+'use client'
+
 import { CircleCheck, Plus } from "lucide-react";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-// interface CreateStrategyCardProps {
-//     isOpen: boolean;
-//     onClose: () => void
-// }
+
 
 export default function CreateStrategyCard(){
     const [selectedOption, setSelectedOption] = useState<string | null>(null)
+    const router = useRouter();
 
     return (
         <Dialog>
@@ -25,37 +26,46 @@ export default function CreateStrategyCard(){
                 <div className="flex flex-col gap-3">
                     <button 
                         className={`w-full p-4 text-left rounded-lg transition-colors bg-backgroundSecondary 
-                            ${selectedOption === 'options' ? 'border border-foreground' : 'hover:bg-secondary'}`}
-                        onClick={() => setSelectedOption('options')}
+                            ${selectedOption === 'create-options-pool' ? 'border border-foreground' : 'hover:bg-secondary'}`}
+                        onClick={() => setSelectedOption('create-options-pool')}
                     >
                         <div className="flex justify-between items-start">
                             <span className="text-foreground font-medium">Create Options Pool</span>
-                            {selectedOption === 'options' && (
-                                <div className="flex items-center justify-center w-auto h-auto rounded-full bg-primary">
-                                    <CircleCheck />
-                                </div>
+                            {selectedOption === 'create-options-pool' && (
+                                    <CircleCheck className="text-foreground"/>
                             )}
                         </div>
                     </button>
                     <button 
                         className={`w-full p-4 text-left rounded-lg transition-colors bg-backgroundSecondary 
-                            ${selectedOption === 'futures' ? 'border border-foreground' : 'hover:bg-secondary'}`}
-                        onClick={() => setSelectedOption('futures')}
+                            ${selectedOption === 'create-futures-pool' ? 'border border-foreground' : 'hover:bg-secondary'}`}
+                        onClick={() => setSelectedOption('create-futures-pool')}
                     >
                         <div className="flex justify-between items-start">
                             <span className="text-foreground font-medium">Create Futures Pool</span>
-                            {selectedOption === 'futures' && (
-                                <div className="flex items-center justify-center w-auto h-auto rounded-full bg-primary">
-                                    <CircleCheck />
-                                </div>
+                            {selectedOption === 'create-futures-pool' && (
+                                <CircleCheck className="text-foreground"/>
+                            )}
+                        </div>
+                    </button>
+                    <button 
+                        className={`w-full p-4 text-left rounded-lg transition-colors bg-backgroundSecondary 
+                            ${selectedOption === 'create-exotic-pool' ? 'border border-foreground' : 'hover:bg-secondary'}`}
+                        onClick={() => setSelectedOption('create-exotic-pool')}
+                    >
+                        <div className="flex justify-between items-start">
+                            <span className="text-foreground font-medium">Create Exotic Options Pool</span>
+                            {selectedOption === 'create-exotic-pool' && (
+                                <CircleCheck className="text-foreground"/>
                             )}
                         </div>
                     </button>
                 </div>
                 <div className="flex flex-col gap-2 mt-4">
                     <Button 
-                        className="w-full bg-primary hover:bg-primary-foreground text-foreground font-medium"
+                        className="w-full bg-primary hover:opacity-85 text-black font-medium disabled:pointer-events-auto disabled:cursor-not-allowed disabled:bg-primary-foreground"
                         disabled={!selectedOption}
+                        onClick={() => router.push(`/${selectedOption}`)}
                     >
                         Continue
                     </Button>

@@ -66,17 +66,18 @@ export default function NavBar(){
                             {[
                                 "Futures",
                                 "Exotic Options",
+                                "NFT Options",
                                 "Liquidity",
                                 "Synthetics",
                                 "Yield",
                                 "Prediction Markets",
                                 
                             ].map((item) => (
-                                <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
-                                    <Link href={`#`} className="w-full">
+                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
+                                    <DropdownMenuItem className="focus:bg-primary focus:text-white px-4 py-2 cursor-pointer">
                                         {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
-                                    </Link>
-                                </DropdownMenuItem>
+                                    </DropdownMenuItem>
+                                </Link>
                             ))}
                             <DropdownMenuSeparator />
                             {[
@@ -84,11 +85,11 @@ export default function NavBar(){
                                 "Info",
                                 "Feedback",
                             ].map((item) => (
-                                <DropdownMenuItem key={item} className="focus:bg-primary focus:text-white px-4 py-2">
-                                    <Link href={`#`} className="w-full">
+                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
+                                    <DropdownMenuItem className="focus:bg-primary focus:text-white px-4 py-2 cursor-pointer">
                                         {item}
-                                    </Link>
-                                </DropdownMenuItem>
+                                    </DropdownMenuItem>
+                                </Link>
                             ))}
                             <DropdownMenuSeparator />
                             <div className="flex justify-start px-4 py-2 gap-3">

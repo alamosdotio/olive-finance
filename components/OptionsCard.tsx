@@ -7,6 +7,7 @@ import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 import usdc from '@/public/images/usdc-big.png'
+import swap from '@/public/svgs/swap.svg'
 import { ChevronDown, Wallet} from 'lucide-react';
 
 import Image from "next/image";
@@ -18,8 +19,12 @@ import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
 import { usePythPrice } from "@/hooks/usePythPrice";
 
+interface OptionsCardProps{
+    onValueChange: (newValue: string) => void;
+}
 
-export default function OptionsCard(){
+
+export default function OptionsCard({onValueChange} : OptionsCardProps){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [position, setPosition] = useState<string>("American");
     const { priceData, loading: priceLoading, error: priceError } = usePythPrice();
@@ -35,6 +40,15 @@ export default function OptionsCard(){
         expiry: '14'
     })
 
+    const handleSellingAmountChange = (newAmount: string) => {
+        setFormValues(prev => ({
+          ...prev,
+          selling: { ...prev.selling, amount: newAmount }
+        }));
+        onValueChange(newAmount)
+    };
+    
+
     const { isConnected, walletName } = useWallet();
     const expiryOptions = getExpiryOptions();
 
@@ -49,7 +63,7 @@ export default function OptionsCard(){
  
     return (
         <Card className="rounded-[26px] h-[664px] w-2/6">
-            <CardHeader className="py-3 px-6 border-b-2 w-full">
+            <CardHeader className="py-3 px-6 border-b w-full">
                 <Tabs className="w-full flex justify-between items-center"
                     defaultValue={position}
                     onValueChange={(value)=>setPosition(value)}
@@ -94,7 +108,7 @@ export default function OptionsCard(){
                 </Tabs>
             </CardHeader>
             <CardContent className="p-0">
-                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-[38px]">
+                <div className="px-6 pt-7 flex flex-col justify-between space-y-[38px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Sell</Label>
@@ -123,11 +137,11 @@ export default function OptionsCard(){
                         </div>
                     </div>
                     <div className="flex justify-between mt-5">
-                        <div className="flex flex-col p-0 space-y-2">
+                        <div className="flex flex-col p-0 space-y-2 w-full">
                             <div className="w-full flex p-0">
                                 <Select value={formValues.selling.currency} onValueChange={(value) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, currency: value } }))}>
                                     <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
-                                        <div className="flex items-center space-x-2 text-[28px]">
+                                        <div className="flex items-center space-x-2 text-[28px] w-full">
                                             <Image src={usdc} alt="usdc" height={48} width={48}/>
                                             <SelectValue placeholder="Select"/>
                                             <ChevronDown className="opacity-50"/>
@@ -145,19 +159,27 @@ export default function OptionsCard(){
                                 USDC
                             </span>
                         </div>
-                        <div className="w-fit items-end flex flex-col p-0 space-y-2">
+                        <div className="w-full items-end flex flex-col p-0 space-y-2">
                             <Input
                                 type="number"
                                 placeholder="0.00"
                                 value={formValues.selling.amount}
-                                onChange={(e) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, amount: e.target.value } }))}
-                                className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground w-full h-[52px]"
+                                onChange={(e) => handleSellingAmountChange(e.target.value)}
+                                className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground h-[52px] w-full"
                             />
                             <span className="text-sm font-normal text-secondary-foreground">$10.75</span>
                         </div>
                     </div>
                 </div>
-                <div className="px-6 py-7 flex flex-col justify-between border-b space-y-[38px]">
+                <div className="relative flex justify-center">
+                    <div className="absolute top-1/2 w-full border-t bg-border"/>
+                    <Button
+                        className="bg-background border rounded-full p-3 w-14 h-14 z-50 hover:border-primary"
+                    >
+                        <Image src={swap} alt="swap button" className="w-8 h-8"/>
+                    </Button>
+                </div>
+                <div className="px-6 pb-7 flex flex-col justify-between border-b space-y-[38px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Buy</Label>
@@ -263,6 +285,11 @@ export default function OptionsCard(){
                                         )}
                                     </SelectItem>
                                 ))}
+                                <SelectItem
+                                    value="custom"
+                                >
+                                    Pick a Date
+                                </SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

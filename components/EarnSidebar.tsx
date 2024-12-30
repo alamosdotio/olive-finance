@@ -5,8 +5,6 @@ import { Input } from "./ui/input";
 import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import EarnCardlogo from "./EarnCardLogo";
-import bitcoin from '@/public/images/bitcoin.png'
 import usdt from '@/public/images/usdt.png'
 import usdc from '@/public/images/usdc.png'
 import Image from "next/image";
@@ -38,14 +36,6 @@ export default function EarnSidebar({name, symbol, logo, apy} : EarnSidebarProps
             weightage: '9.9% / 10%',
             utilization: '52.18%'
         },
-        {
-            img: usdt,
-            symbol: 'USDT',
-            name: 'USDT',
-            poolSize: '$15,210,987,654',
-            weightage: '11.47% / 11%',
-            utilization: '44.31%'
-        }
     ]
     const [activeTab, setActiveTab] = useState<string>('mint');
     
