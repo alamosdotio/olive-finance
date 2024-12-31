@@ -18,7 +18,6 @@ import { useWallet } from "@/contexts/walletprovider";
 import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
 import { usePythPrice } from "@/hooks/usePythPrice";
-import OptionsCardTokenList from "./OptionsCardTokenList";
 
 interface OptionsCardProps{
     onValueChange: (newValue: string) => void;
@@ -88,22 +87,21 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
                 <div className="flex flex-col p-0 space-y-2 w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
-                            // <Select value={formValues.selling.currency} onValueChange={(value) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, currency: value } }))}>
-                            //     <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
-                            //         <div className="flex items-center space-x-2 text-[28px] w-full">
-                            //             <Image src={usdc} alt="usdc" height={48} width={48}/>
-                            //             <SelectValue placeholder="Select"/>
-                            //             <ChevronDown className="opacity-50"/>
-                            //         </div>
-                            //     </SelectTrigger>
-                            //     <SelectContent className="w-full">
-                            //         <SelectItem value="usdc" >USDC</SelectItem>
-                            //         <SelectItem value="btc" >BTC</SelectItem>
-                            //         <SelectItem value="eth">ETH</SelectItem>
-                            //         <SelectItem value="sol">SOL</SelectItem>
-                            //     </SelectContent>
-                            // </Select>
-                            <OptionsCardTokenList />
+                            <Select value={formValues.selling.currency} onValueChange={(value) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, currency: value } }))}>
+                                <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
+                                    <div className="flex items-center space-x-2 text-[28px] w-full">
+                                        <Image src={usdc} alt="usdc" height={48} width={48}/>
+                                        <SelectValue placeholder="Select"/>
+                                        <ChevronDown className="opacity-50"/>
+                                    </div>
+                                </SelectTrigger>
+                                <SelectContent className="w-full">
+                                    <SelectItem value="usdc" >USDC</SelectItem>
+                                    <SelectItem value="btc" >BTC</SelectItem>
+                                    <SelectItem value="eth">ETH</SelectItem>
+                                    <SelectItem value="sol">SOL</SelectItem>
+                                </SelectContent>
+                            </Select>
                         ) : (
                             <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
                                 <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">

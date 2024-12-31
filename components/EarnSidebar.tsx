@@ -2,23 +2,26 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { SheetContent, SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table";
+import { SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import usdt from '@/public/images/usdt.png'
+
 import usdc from '@/public/images/usdc.png'
 import Image from "next/image";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+
+
 
 interface EarnSidebarProps {
     name: string;
     symbol: string;
     logo: string;
     apy: number;
+    apr: number;
 }
 
 
-
-export default function EarnSidebar({name, symbol, logo, apy} : EarnSidebarProps){
+export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebarProps){
     const poolData = [
         {
             img: logo,
@@ -38,25 +41,36 @@ export default function EarnSidebar({name, symbol, logo, apy} : EarnSidebarProps
         },
     ]
     const [activeTab, setActiveTab] = useState<string>('mint');
+    const [isApr, setIsApr] = useState<boolean>(false)
+
     
     return (
         <SheetContent className="space-y-6 w-auto rounded-l-[26px]">
             <SheetHeader>
-                <SheetTitle className="text-2xl">
+                <SheetTitle className="text-2xl flex justify-between">
                     {name} Option Maker
                 </SheetTitle>
             </SheetHeader>
             <div className="space-y-5 flex flex-col">
                 <div className="border rounded-[26px] p-3">
                     <div className="flex justify-between">
-                        <div className="flex gap-1 text-sm font-medium">
+                        <div className="flex space-x-1 text-sm font-medium ">
                             <div className="flex gap-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
                                     <path d="M7.99984 15.1665C11.6732 15.1665 14.6665 12.1732 14.6665 8.49984C14.6665 4.8265 11.6732 1.83317 7.99984 1.83317C4.3265 1.83317 1.33317 4.8265 1.33317 8.49984C1.33317 12.1732 4.3265 15.1665 7.99984 15.1665ZM8.49984 11.1665C8.49984 11.4398 8.27317 11.6665 7.99984 11.6665C7.7265 11.6665 7.49984 11.4398 7.49984 11.1665V7.83317C7.49984 7.55984 7.7265 7.33317 7.99984 7.33317C8.27317 7.33317 8.49984 7.55984 8.49984 7.83317V11.1665ZM7.3865 5.57984C7.41984 5.49317 7.4665 5.4265 7.5265 5.35984C7.59317 5.29984 7.6665 5.25317 7.7465 5.21984C7.8265 5.1865 7.91317 5.1665 7.99984 5.1665C8.0865 5.1665 8.17317 5.1865 8.25317 5.21984C8.33317 5.25317 8.4065 5.29984 8.47317 5.35984C8.53317 5.4265 8.57984 5.49317 8.61317 5.57984C8.6465 5.65984 8.6665 5.7465 8.6665 5.83317C8.6665 5.91984 8.6465 6.0065 8.61317 6.0865C8.57984 6.1665 8.53317 6.23984 8.47317 6.3065C8.4065 6.3665 8.33317 6.41317 8.25317 6.4465C8.09317 6.51317 7.9065 6.51317 7.7465 6.4465C7.6665 6.41317 7.59317 6.3665 7.5265 6.3065C7.4665 6.23984 7.41984 6.1665 7.3865 6.0865C7.35317 6.0065 7.33317 5.91984 7.33317 5.83317C7.33317 5.7465 7.35317 5.65984 7.3865 5.57984Z" fill="#808693"/>
                                 </svg>
-                                <span className="text-secondary-foreground">APY:</span>
+                                <span className="text-secondary-foreground">{isApr ? 'APR':'APY'}:</span>
                             </div>
-                            <span className="text-foreground text-right">{apy}%</span>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild onClick={() => setIsApr(!isApr)} className="cursor-pointer">
+                                        <span className="text-foreground text-right">{isApr ? `${apr}` : `${apy}`}%</span>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="">
+                                        <span className="text-background text-right">Click to toggle between APR / APY</span>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </div>
                         <div className="flex gap-2 text-xs font-normal text-secondary-foreground items-center">
                             <span>Last updated at:</span>

@@ -7,6 +7,7 @@ export interface Strategy{
     stats: {
         tvl: number
         apy: number
+        apr: number
     }
 }
 
@@ -20,6 +21,7 @@ export const generateStrategies = (count: number) : Strategy[] =>{
             stats: {
                 tvl: Math.round((Math.random() * 500000 + 100000) * 100) / 100,
                 apy: Math.round((Math.random() * 10 + 1) * 100) / 100,
+                apr: Math.round((Math.random() * 15 + 1.5) * 100) / 100,
             }
         }   
     })

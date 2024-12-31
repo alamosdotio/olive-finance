@@ -9,6 +9,7 @@ import EarnSidebar from "./EarnSidebar"
 import EarnCardlogo from "./EarnCardLogo"
 import { generateStrategies, Strategy } from "@/lib/data/strategies"
 import EarnPaginate from "./EarnPaginate"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 
 
@@ -86,12 +87,11 @@ export default function EarnCards (){
                                         </span>
                                         <span className="flex font-normal text-sm">{strategy.stats.apy}%</span>
                                     </div>
-                                    
                                 </div>
                             </CardContent>
                         </Card>
                     </SheetTrigger>
-                    <EarnSidebar name={strategy.name} symbol={strategy.symbol} logo={strategy.asset.logo} apy={strategy.stats.apy}/>
+                    <EarnSidebar name={strategy.name} symbol={strategy.symbol} logo={strategy.asset.logo} apy={strategy.stats.apy} apr={strategy.stats.apr}/>
                 </Sheet>
             ))}
             </div>
