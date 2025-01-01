@@ -9,7 +9,7 @@ import EarnSidebar from "./EarnSidebar"
 import EarnCardlogo from "./EarnCardLogo"
 import { generateStrategies, Strategy } from "@/lib/data/strategies"
 import EarnPaginate from "./EarnPaginate"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+
 
 
 

@@ -159,8 +159,8 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
     }
 
     return (
-        <Card className="rounded-[26px] h-[664px] w-2/6">
-            <CardHeader className="py-3 px-6 border-b w-full">
+        <Card className="rounded-[26px] w-2/6 h-fit">
+            {/* <CardHeader className="py-3 px-6 border-b w-full">
                 <Tabs className="w-full flex justify-between items-center"
                     defaultValue={position}
                     onValueChange={(value)=>setPosition(value)}
@@ -186,9 +186,9 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
-            </CardHeader>
+            </CardHeader> */}
             <CardContent className="p-0">
-                <div className="px-6 pt-7 flex flex-col justify-between space-y-[38px]">
+                <div className="px-6 pt-5 flex flex-col justify-between space-y-[38px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Sell</Label>
@@ -244,7 +244,7 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
                     {renderSection('buy')}
                 </div>
             </CardContent>
-            <CardFooter className="px-6 py-7 flex flex-col space-y-7 border-t">
+            <CardFooter className="px-6 py-7 pb-5 flex flex-col space-y-7 border-t">
                 <div className="w-full flex gap-4">
                     <div className="flex flex-col gap-1 w-full">
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
