@@ -19,8 +19,10 @@ import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
 import { usePythPrice } from "@/hooks/usePythPrice";
 import OptionsCardTokenList from "./OptionsCardTokenList";
+import { formatPrice } from "@/utils/formatter";
 
 interface OptionsCardProps{
+    chartToken: string
     onValueChange: (newValue: string) => void;
 }
 
@@ -30,10 +32,10 @@ interface ExpiryOption {
     label: string;
 }
 
-export default function OptionsCard({onValueChange} : OptionsCardProps){
+export default function OptionsCard({onValueChange, chartToken} : OptionsCardProps){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [position, setPosition] = useState<string>("American");
-    const { priceData, loading: priceLoading, error: priceError } = usePythPrice();
+    const { priceData, loading: priceLoading, error: priceError } = usePythPrice(chartToken);
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
         buying: { type: string; amount: string };
@@ -74,7 +76,7 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
         if (priceData.price !== null) {
             setFormValues(prev => ({
                 ...prev,
-                strikePrice: priceData.price!.toFixed(2)
+                strikePrice: formatPrice(priceData.price!)
             }));
         }
     }, [priceData.price]);
@@ -103,7 +105,7 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
                             //         <SelectItem value="sol">SOL</SelectItem>
                             //     </SelectContent>
                             // </Select>
-                            <OptionsCardTokenList />
+                            <OptionsCardTokenList chartToken={chartToken}/>
                         ) : (
                             <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
                                 <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
@@ -254,7 +256,7 @@ export default function OptionsCard({onValueChange} : OptionsCardProps){
                             type="number"
                             placeholder={priceLoading ? "Loading..." : "0.00"}
                             className="border-none bg-backgroundSecondary px-3 py-2 text-foreground rounded-[12px] w-full"
-                            value={priceData.price ? priceData.price.toFixed(2) : formValues.strikePrice}
+                            value={priceData.price ? formatPrice(priceData.price) : formValues.strikePrice}
                             onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
                         />
                         {priceError && (

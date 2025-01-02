@@ -30,7 +30,7 @@ export default function Homepage(){
             <div className="flex flex-col w-full justify-evenly h-full space-y-6">
                 <div className="flex w-full h-[572px] pt-4 pb-6 space-x-4">
                     <TradingViewChartContainer symbol={selectedSymbol}/>
-                    <OptionsCard onValueChange={handleSellingAmountChange}/>
+                    <OptionsCard chartToken={selectedSymbol} onValueChange={handleSellingAmountChange}/>
                 </div>
                 <div className="flex w-full pt-4 pb-6 space-x-4 h-auto">
                   <div className="w-4/6">

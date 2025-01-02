@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { PriceServiceConnection } from '@pythnetwork/price-service-client';
+import { PRICE_FEEDS, priceFeed } from '../lib/data/price-feed';
 
 const PYTH_ENDPOINT = 'https://hermes.pyth.network';
-const SOL_PRICE_FEED_ID = '0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d';
-const LAMPORTS_PER_SOL = 1e8;
 const POLLING_INTERVAL = 15000;
 
 interface PythPriceState {
@@ -26,7 +25,7 @@ const initialPriceState: PythPriceState = {
   timestamp: null,
 };
 
-export function usePythPrice(): UsePythPriceResult {
+export function usePythPrice(token: string): UsePythPriceResult {
   const [priceData, setPriceData] = useState<PythPriceState>(initialPriceState);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,29 +35,38 @@ export function usePythPrice(): UsePythPriceResult {
     let connection: PriceServiceConnection | null = null;
     let intervalId: NodeJS.Timeout;
 
+    const priceFeed = PRICE_FEEDS.find(feed => feed.token === token);
+    if (!priceFeed) {
+      setError(`Price feed not found for token: ${token}`);
+      setLoading(false);
+      return;
+    }
+    const feedId = priceFeed.id;
+
     async function fetchPrice() {
       if (!mounted || !connection) return;
 
       try {
-        const priceFeeds = await connection.getLatestPriceFeeds([SOL_PRICE_FEED_ID]);
-        const priceFeed = priceFeeds?.[0];
+        const priceFeeds = await connection.getLatestPriceFeeds([feedId]);
+        const feed = priceFeeds?.[0];
         
-        if (!priceFeed) {
+        if (!feed) {
           throw new Error('No price feed data available');
         }
 
-        const priceInfo = priceFeed.getPriceNoOlderThan(60);
+        const priceInfo = feed.getPriceNoOlderThan(60);
+        console.log(priceInfo)
         if (!priceInfo) {
           setError('Price data is stale');
           return;
         }
 
-        const priceInSol = parseFloat(priceInfo.price.toString()) / LAMPORTS_PER_SOL;
-        const confidenceInSol = parseFloat(priceInfo.conf.toString()) / LAMPORTS_PER_SOL;
+        const price = parseFloat(priceInfo.price) * Math.pow(10, priceInfo.expo);
+        const confidence = parseFloat(priceInfo.conf) * Math.pow(10, priceInfo.expo);
 
         setPriceData({
-          price: priceInSol,
-          confidence: confidenceInSol,
+          price,
+          confidence,
           timestamp: priceInfo.publishTime,
         });
         setError(null);
@@ -75,8 +83,6 @@ export function usePythPrice(): UsePythPriceResult {
       try {
         connection = new PriceServiceConnection(PYTH_ENDPOINT);
         await fetchPrice();
-        
-        
         intervalId = setInterval(fetchPrice, POLLING_INTERVAL);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to connect to Pyth network');
@@ -95,7 +101,7 @@ export function usePythPrice(): UsePythPriceResult {
         connection.closeWebSocket();
       }
     };
-  }, []);
+  }, [token]);
 
   return { priceData, loading, error };
 }

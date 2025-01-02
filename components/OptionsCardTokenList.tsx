@@ -8,6 +8,7 @@ import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
 import { tokens, Token } from "@/lib/data/tokens";
+import { Badge } from "./ui/badge";
 
 
 interface token {
@@ -18,8 +19,12 @@ interface token {
     address: string
 }
 
+interface OptionsCardTokenListProps{
+    chartToken: string
+}
 
-export default function OptionsCardTokenList(){
+
+export default function OptionsCardTokenList({chartToken} : OptionsCardTokenListProps){
     const [allTokens, setAllTokens] = useState<token[]>([])
     const generateTokens = (count: number) :  token[] =>{
         return Array(count).fill(null).map((_, index) => {
@@ -94,8 +99,11 @@ export default function OptionsCardTokenList(){
                                     </div>
                                     <div className="flex justify-between w-full">
                                         <div className="flex flex-col space-y-0 items-start">
-                                            <div className="flex space-x-1">
+                                            <div className="flex space-x-1.5 items-center">
                                                 <h3 className="text-sm">{token.symbol}</h3>
+                                                {(chartToken === `Crypto.${token.symbol}/USD` || token.symbol === 'USDC') &&(
+                                                    <Badge variant="outline" className="p-0 px-1 h-4 text-[8px]">Zero Fees</Badge>
+                                                )}
                                             </div>
                                             <span className="text-xs">{token.name}</span>
                                         </div>
