@@ -32,7 +32,7 @@ interface ExpiryOption {
 export default function OptionsCard({onValueChange} : OptionsCardProps){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [position, setPosition] = useState<string>("American");
-    const { priceData, loading: priceLoading, error: priceError } = usePythPrice();
+    const { priceData, loading: priceLoading, error: priceError } = usePythPrice('Crypto.SOL/USD');
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
         buying: { type: string; amount: string };
