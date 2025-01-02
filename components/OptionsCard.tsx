@@ -33,7 +33,7 @@ interface ExpiryOption {
 }
 
 export default function OptionsCard({onValueChange, chartToken} : OptionsCardProps){
-    const token = chartToken;
+    const token = chartToken || '';
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [position, setPosition] = useState<string>("American");
     const { priceData, loading: priceLoading, error: priceError } = usePythPrice(token);
