@@ -55,7 +55,7 @@ export function usePythPrice(token: string): UsePythPriceResult {
         }
 
         const priceInfo = feed.getPriceNoOlderThan(60);
-        console.log(priceInfo)
+
         if (!priceInfo) {
           setError('Price data is stale');
           return;

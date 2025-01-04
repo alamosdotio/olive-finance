@@ -14,22 +14,22 @@ export default function TradingPositionsFallback() {
                 <Tabs defaultValue="Positions" className="p-0"> 
                     <TabsList className="w-full bg-inherit text-secondary-foreground p-0 gap-6">
                         <TabsTrigger 
-                            value="Positions"
+                            value='Positions'
                             className="px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
                         >
                             Open Positions
+                        </TabsTrigger>
+                        <TabsTrigger 
+                            value="Orders"
+                            className="px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+                        >
+                            Open Orders
                         </TabsTrigger>
                         <TabsTrigger 
                             value="History"
                             className="px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
                         >
                             Order History
-                        </TabsTrigger>
-                        <TabsTrigger 
-                            value="Expired"
-                            className="px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
-                        >
-                            Expired
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>

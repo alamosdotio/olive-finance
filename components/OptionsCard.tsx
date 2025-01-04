@@ -1,12 +1,10 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { Card, CardContent, CardFooter} from "./ui/card";
 import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
-import usdc from '@/public/images/usdc-big.png'
 import swap from '@/public/svgs/swap.svg'
 import { ChevronDown, Wallet} from 'lucide-react';
 
@@ -90,21 +88,6 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 <div className="flex flex-col p-0 space-y-2 w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
-                            // <Select value={formValues.selling.currency} onValueChange={(value) => setFormValues(prev => ({ ...prev, selling: { ...prev.selling, currency: value } }))}>
-                            //     <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
-                            //         <div className="flex items-center space-x-2 text-[28px] w-full">
-                            //             <Image src={usdc} alt="usdc" height={48} width={48}/>
-                            //             <SelectValue placeholder="Select"/>
-                            //             <ChevronDown className="opacity-50"/>
-                            //         </div>
-                            //     </SelectTrigger>
-                            //     <SelectContent className="w-full">
-                            //         <SelectItem value="usdc" >USDC</SelectItem>
-                            //         <SelectItem value="btc" >BTC</SelectItem>
-                            //         <SelectItem value="eth">ETH</SelectItem>
-                            //         <SelectItem value="sol">SOL</SelectItem>
-                            //     </SelectContent>
-                            // </Select>
                             <OptionsCardTokenList chartToken={chartToken}/>
                         ) : (
                             <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
@@ -162,33 +145,6 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
 
     return (
         <Card className="rounded-[26px] w-2/6 h-fit">
-            {/* <CardHeader className="py-3 px-6 border-b w-full">
-                <Tabs className="w-full flex justify-between items-center"
-                    defaultValue={position}
-                    onValueChange={(value)=>setPosition(value)}
-                >
-                    <TabsList className="w-full grid grid-cols-3 rounded-full gap-2 p-0 bg-inherit text-secondary-foreground">
-                        <TabsTrigger
-                            value="American"
-                            className="bg-none border-b-2 border-transparent rounded-none data-[state=active]:border-primary"
-                        >
-                            American
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="European"
-                            className="bg-none border-b-2 border-transparent rounded-none data-[state=active]:border-primary"
-                        >
-                            European
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="Futures"
-                            className="bg-none border-b-2 border-transparent rounded-none data-[state=active]:border-primary"
-                        >
-                            Bermudan
-                        </TabsTrigger>
-                    </TabsList>
-                </Tabs>
-            </CardHeader> */}
             <CardContent className="p-0">
                 <div className="px-6 pt-5 flex flex-col justify-between space-y-[38px]">
                     <div className="w-full flex justify-between items-center">
