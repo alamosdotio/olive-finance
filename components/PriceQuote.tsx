@@ -12,10 +12,10 @@ export default function PriceQuote({value}:PriceQuoteProps){
     return (
         <div className={value === '' ? 'hidden' : 'w-full border rounded-[26px] flex flex-col'}>
             <div 
-                className="w-full flex justify-between items-center px-6 py-3"
+                className="w-full flex justify-between items-center px-6 py-[18px]"
                 onClick={() => setDropDownActive(!dropDownActive)}
             >
-                <span className="text-sm font-medium text-secondary-foreground h-9 py-2">Order Summary</span>
+                <span className="text-sm font-medium text-secondary-foreground h-6 items-center flex">Order Summary</span>
                 {dropDownActive ? <ChevronUp className="text-secondary-foreground text-sm"/> : <ChevronDown className="text-secondary-foreground text-sm"/>}
             </div>
             {dropDownActive && (

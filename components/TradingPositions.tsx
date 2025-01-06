@@ -1,4 +1,4 @@
-import { Ban, RotateCw } from "lucide-react"
+import { Ban, ChevronLeft, ChevronRight, RotateCw } from "lucide-react"
 import { Button } from "./ui/button"
 import { useEffect, useState } from "react"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
@@ -112,7 +112,22 @@ export default function TradingPositions(){
                 )}
             </div>
             <div className="px-6 pb-4 flex justify-end">
-                pagination
+                <div className="flex items-center gap-5">
+                    <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
+                        <ChevronLeft className="w-fit h-fit  text-secondary-foreground" />
+                    </button>
+                    <div className="space-x-2">   
+                        <button className="p-[6px] w-9 h-9 rounded-[12px] bg-backgroundSecondary">1</button>
+                        <button className="p-[6px] w-9 h-9 rounded-[12px] bg-backgroundSecondary">2</button>
+                        <button className="p-[6px] w-9 h-9 rounded-[12px] bg-backgroundSecondary">3</button>
+                        <span>...</span>
+                        <button className="py-[6px] px-2 rounded-[12px] bg-backgroundSecondary w-fit h-fit">109</button>
+                    </div>
+                    
+                    <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
+                        <ChevronRight className="w-fit h-fit  text-secondary-foreground" />
+                    </button>
+                </div>
             </div>
         </div>
     )

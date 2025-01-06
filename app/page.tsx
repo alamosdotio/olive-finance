@@ -7,6 +7,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import TradingPositionsFallback from "@/components/TradingPositionsFallback";
 import TradingPositions from "@/components/TradingPositions";
 import PriceQuote from "@/components/PriceQuote";
+import GreekPopup from "@/components/GreekPopup";
 
 export default function Homepage(){
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
@@ -27,7 +28,7 @@ export default function Homepage(){
     return (
         <>
             <CryptoNav onSymbolChange={setSelectedSymbol}/>
-            <div className="flex flex-col w-full justify-evenly h-full space-y-6">
+            <div className="flex flex-col w-full justify-evenly h-full space-y-4">
                 <div className="flex w-full h-[572px] pt-4 pb-6 space-x-4">
                     <TradingViewChartContainer symbol={selectedSymbol}/>
                     <OptionsCard chartToken={selectedSymbol} onValueChange={handleSellingAmountChange}/>
@@ -38,8 +39,9 @@ export default function Homepage(){
                         <TradingPositions />
                     </ProtectedRoute>
                   </div>
-                  <div className="w-2/6">
+                  <div className="w-2/6 flex flex-col space-y-4">
                     <PriceQuote value={formValues.selling.amount}/>
+                    <GreekPopup value={formValues.selling.amount}/>
                   </div>
                 </div>
             </div>

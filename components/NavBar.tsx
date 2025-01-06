@@ -16,6 +16,7 @@ import Image from "next/image";
 
 import logo from '@/public/svgs/logo.svg'
 import { Badge } from "./ui/badge";
+import Settings from "./Settings";
 
 
 export default function NavBar(){
@@ -127,8 +128,10 @@ export default function NavBar(){
                         </svg>
                     </div>
                 </Link>
+
+                <Settings />
                 
-                <DropdownMenu>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
                         <div className="bg-secondary rounded-[12px] p-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -149,7 +152,7 @@ export default function NavBar(){
                             </DropdownMenuItem>
                         ))}
                     </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">

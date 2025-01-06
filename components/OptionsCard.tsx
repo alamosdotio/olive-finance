@@ -215,9 +215,9 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                             value={priceData.price ? formatPrice(priceData.price) : formValues.strikePrice}
                             onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
                         />
-                        {priceError && (
+                        {/* {priceError && (
                             <span className="text-sm text-red-500">Failed to load SOL price</span>
-                        )}
+                        )} */}
                     </div>
                     <div className="flex flex-col gap-1 w-full">
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
