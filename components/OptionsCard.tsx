@@ -85,14 +85,14 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
 
         return(
             <div className="flex justify-between mt-5">
-                <div className="flex flex-col p-0 space-y-2 w-full">
+                <div className="flex flex-col p-0 space-y-[13px] justify-center w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
                             <OptionsCardTokenList chartToken={chartToken}/>
                         ) : (
                             <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
-                                <SelectTrigger className="bg-inherit p-0 w-full h-[52px] shadow-none">
-                                    <div className="flex items-center space-x-2 text-[28px] justify-evenly">
+                                <SelectTrigger className="bg-inherit py-2 px-0 w-full h-[52px] shadow-none">
+                                    <div className="flex items-center space-x-2 py-2 px-0 text-[28px] justify-evenly">
                                     <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clipPath="url(#clip0_184_5232)">
                                         <path d="M24 48.333C37.2548 48.333 48 37.5878 48 24.333C48 11.0782 37.2548 0.333008 24 0.333008C10.7452 0.333008 0 11.0782 0 24.333C0 37.5878 10.7452 48.333 24 48.333Z" fill="#53C08D"/>
@@ -120,7 +120,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         {isSelling ? 'USDC' : 'Call Option'}
                     </span>
                 </div>
-                <div className="w-full items-end flex flex-col p-0 space-y-2">
+                <div className="w-full items-end flex flex-col p-0 space-y-3">
                     <Input
                         type="number"
                         placeholder="0.00"
@@ -146,10 +146,10 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     return (
         <Card className="rounded-[26px] w-2/6 h-fit">
             <CardContent className="p-0">
-                <div className="px-6 pt-5 flex flex-col justify-between space-y-[38px]">
+                <div className="px-6 pt-7 flex flex-col justify-between space-y-14">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
-                            <Label className="text-sm font-medium text-foreground">You Sell</Label>
+                            <Label className="text-sm font-medium text-foreground whitespace-nowrap overflow-hidden text-ellipsis">You Sell</Label>
                         </div>
                         <div className="flex justify-between gap-2 w-full items-center">
                         <div className="w-full flex gap-1">
@@ -184,7 +184,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         <Image src={swap} alt="swap button" className="w-8 h-8"/>
                     </Button>
                 </div>
-                <div className="px-6 pb-7 flex flex-col justify-between space-y-[38px]">
+                <div className="px-6 pb-7 flex flex-col justify-between space-y-14">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Buy</Label>
@@ -202,9 +202,9 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                     {renderSection('buy')}
                 </div>
             </CardContent>
-            <CardFooter className="px-6 py-7 pb-5 flex flex-col space-y-7 border-t">
+            <CardFooter className="px-6 py-7 flex flex-col space-y-10 border-t">
                 <div className="w-full flex gap-4">
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="flex flex-col gap-[6px] w-full">
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
                             Strike Price
                         </Label>
@@ -219,7 +219,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                             <span className="text-sm text-red-500">Failed to load SOL price</span>
                         )} */}
                     </div>
-                    <div className="flex flex-col gap-1 w-full">
+                    <div className="flex flex-col gap-[6px] w-full">
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
                             Expiry
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

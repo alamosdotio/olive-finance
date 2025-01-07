@@ -60,7 +60,7 @@ export default function OptionsCardTokenList({chartToken} : OptionsCardTokenList
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
-                <DialogTrigger>
+                <DialogTrigger className="py-2">
                     <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
                         {selectedToken && selectedToken.logo ? (
                             <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full"/>

@@ -110,7 +110,10 @@ export default function NavBar(){
             </div>
             <div className="flex justify-between py-3 gap-3 items-center">
                 {/* <Image src={vase} alt="vase"/> */}
-                <Link href='/leaderboards'>
+                <Link 
+                    href='/leaderboards'
+                    onClick={() => setActive('leaderboards')}
+                >
                     <div className="border bg-inherit rounded-[12px] p-[9px] cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M3.49854 13.6778C3.49854 9.49382 7.07854 5.35882 9.59254 2.97182C10.2382 2.34812 11.1008 1.99951 11.9985 1.99951C12.8962 1.99951 13.7589 2.34812 14.4045 2.97182C16.9175 5.35982 20.4985 9.49382 20.4985 13.6778C20.4985 17.7798 17.2795 21.9998 11.9985 21.9998C6.71754 21.9998 3.49854 17.7798 3.49854 13.6778Z" stroke="url(#paint0_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
