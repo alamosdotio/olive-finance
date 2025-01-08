@@ -17,7 +17,7 @@ import Image from "next/image";
 import logo from '@/public/svgs/logo.svg'
 import { Badge } from "./ui/badge";
 import Settings from "./Settings";
-import { NotificationIcon } from "@/public/svgs/icons";
+import { ArrowDown, EarnIcon, MoreIcon, NotificationIcon, OptionsIcon } from "@/public/svgs/icons";
 
 
 export default function NavBar(){
@@ -33,8 +33,8 @@ export default function NavBar(){
     }
 
     return (
-        <header className="flex justify-between h-auto max-w-full">
-            <div className="flex justify-between py-3 gap-12">
+        <header className="flex justify-between max-w-full">
+            <div className="flex justify-between py-2 gap-12">
                 <div className="flex items-center justify-center gap-2">
                     <Image src={logo} alt="logo pic" />
                     <h1 className="text-sm font-normal">Olive Finance</h1>
@@ -42,27 +42,31 @@ export default function NavBar(){
                 <nav className="flex justify-evenly items-center gap-8">
                     <Link 
                         href='/'
-                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px] hover:text-primary')}
+                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary')}
                         onClick={() => handleClick('Options')}
                     > 
+                         <OptionsIcon />
                          <h1 className="text-sm font-medium">Options</h1>
-                         <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[10px] py-0 px-[6px] bg-transparent")}>BETA</Badge>
+                         <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex")}>BETA</Badge>
                     </Link>
                     <Link 
                         href='/earn'
-                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-[10px] hover:text-primary')}
+                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary')}
                         onClick={() => handleClick('Earn')}
                     > 
+                         <EarnIcon />
                          <h1 className="text-sm font-medium">Earn</h1>
-                         <Badge className="rounded-[4px] bg-gradient-to-l from-[#A899F4] via-[#A899F4] to-[#DAD1FF] px-[6px] text-background">48% APY</Badge>
+                         <Badge className="rounded-[4px] bg-gradient-to-l from-[#A899F4] via-[#A899F4] to-[#DAD1FF] px-1 py-[3px] text-background h-4 text-[8px]">48% APY</Badge>
                     </Link>
                     
                     
                     <DropdownMenu>
                         <DropdownMenuTrigger
-                        className='text-secondary-foreground p-0 w-auto h-auto flex justify-between focus:bg-transparent focus:outline-none hover:text-primary'
+                        className='text-secondary-foreground p-0 w-auto h-auto flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary'
                         >
+                                <MoreIcon />
                                 <h1 className="text-sm font-medium">More</h1>
+                                <ArrowDown />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="center" className="w-auto text-secondary-foreground">
                             {[
@@ -109,14 +113,14 @@ export default function NavBar(){
                     </DropdownMenu>
                 </nav>
             </div>
-            <div className="flex justify-between py-3 gap-3 items-center">
+            <div className="flex justify-between py-2 gap-3 items-center">
                 {/* <Image src={vase} alt="vase"/> */}
                 <Link 
                     href='/leaderboards'
                     onClick={() => setActive('leaderboards')}
                 >
-                    <div className="border bg-inherit rounded-[12px] p-[9px] cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <div className="border bg-inherit rounded-[12px] p-2 cursor-pointer flex justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
                             <path d="M3.49854 13.6778C3.49854 9.49382 7.07854 5.35882 9.59254 2.97182C10.2382 2.34812 11.1008 1.99951 11.9985 1.99951C12.8962 1.99951 13.7589 2.34812 14.4045 2.97182C16.9175 5.35982 20.4985 9.49382 20.4985 13.6778C20.4985 17.7798 17.2795 21.9998 11.9985 21.9998C6.71754 21.9998 3.49854 17.7798 3.49854 13.6778Z" stroke="url(#paint0_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M15.9985 14C15.9985 15.0609 15.5771 16.0783 14.827 16.8284C14.0768 17.5786 13.0594 18 11.9985 18" stroke="url(#paint1_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             <defs>
@@ -160,7 +164,7 @@ export default function NavBar(){
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-[12px] p-3">
+                        <div className="bg-secondary rounded-[12px] p-[9px]">
                             <NotificationIcon />
                         </div>
                     </DropdownMenuTrigger>
@@ -169,7 +173,7 @@ export default function NavBar(){
                 {isConnected ? (
                     <WalletSideBar></WalletSideBar>
                 ) : (
-                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-[43] border border-transparent py-[9px] px-[15px] rounded-[12px] gap-2 text-background">
+                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M6.88152 17.7048C7.42067 17.1657 7.7304 16.4774 7.8107 15.7662C7.91967 14.8199 7.60421 13.8391 6.88152 13.1165C6.45135 12.6863 5.92367 12.3995 5.36731 12.2676C4.30622 11.998 3.13041 12.2791 2.293 13.1165C1.7137 13.6957 1.39824 14.4356 1.35809 15.1984C1.32941 15.5254 1.35809 15.8637 1.44413 16.1907C1.57605 16.747 1.86283 17.2747 2.293 17.7048C3.56058 18.9724 5.61394 18.9724 6.88152 17.7048ZM5.80322 14.8142C6.13589 14.8142 6.4112 15.0895 6.4112 15.4221C6.40546 15.7605 6.13589 16.0301 5.79748 16.0358L5.19524 16.0301L5.20098 16.6094C5.19524 16.9478 4.92567 17.2173 4.58726 17.2231C4.24886 17.2173 3.97928 16.9478 3.97355 16.6094L3.97928 16.0301L3.37704 16.0358C3.03864 16.0301 2.76906 15.7605 2.76333 15.4221C2.76906 15.2558 2.83789 15.1067 2.94687 14.9977C3.05584 14.8887 3.20497 14.8199 3.3713 14.8142L3.97928 14.8142L3.97928 14.1833C3.97928 14.0112 4.04811 13.8621 4.15709 13.7531C4.26607 13.6441 4.41519 13.5753 4.58726 13.5753C4.91993 13.5753 5.19524 13.8506 5.19524 14.1833L5.19524 14.8142L5.80322 14.8142Z" fill="currentColor"/>
                             <path d="M12.5782 3.20568V6.28793H11.3615V3.20568C11.3615 2.98668 11.1668 2.88123 11.037 2.88123C10.9964 2.88123 10.9559 2.88934 10.9153 2.90556L4.48296 5.33081C4.05305 5.49303 3.77726 5.89859 3.77726 6.36093V6.90438C3.03912 7.45594 2.56055 8.34006 2.56055 9.33774V6.36093C2.56055 5.3957 3.15268 4.53591 4.05305 4.19524L10.4935 1.76189C10.672 1.697 10.8585 1.66455 11.037 1.66455C11.8481 1.66455 12.5782 2.32156 12.5782 3.20568Z" fill="currentColor"/>

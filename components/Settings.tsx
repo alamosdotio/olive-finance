@@ -32,7 +32,7 @@ export default function Settings(){
     return (
         <Dialog>
             <DialogTrigger>
-                <div className="bg-secondary rounded-[12px] p-3">
+                <div className="bg-secondary rounded-[12px] p-[9px]">
                     <SettingsIcon />
                 </div>
             </DialogTrigger>

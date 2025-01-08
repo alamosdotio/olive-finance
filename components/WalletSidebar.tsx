@@ -54,7 +54,7 @@ export default function WalletSideBar() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <button className="w-full py-[9px] px-[15px] rounded-[12px] gap-2 text-foreground text-sm bg-secondary border border-transparent hover:bg-primary-foreground hover:border-primary flex justify-between">
+                <button className="w-full py-[5px] px-[15px] h-fit rounded-[12px] gap-2 text-foreground text-sm bg-secondary border border-transparent hover:bg-primary-foreground hover:border-primary flex justify-between">
                     {iconPath && (
                         <Image src={iconPath} alt="Wallet Icon" width={24} height={20} className="rounded-full" />
                     )}
