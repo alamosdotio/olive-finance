@@ -7,6 +7,7 @@ import { TabsTrigger } from "@radix-ui/react-tabs";
 import { Button } from './ui/button';
 import PositionOverview from './PositionOverview';
 import PositionGreeks from './PositionGreeks';
+import { ArrowDown, ArrowUp } from '@/public/svgs/icons';
 
 interface OpenPositionProps{
     token: string
@@ -41,13 +42,9 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                     <Badge className="text-[8px] text-black font-semibold py-[3px] px-1 w-7 h-3 rounded-[3px] flex items-center justify-center">{type}</Badge>
                 </div>
                 {isOpen ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M9.95998 7.52531L6.69998 4.26531C6.31498 3.88031 5.68498 3.88031 5.29998 4.26531L2.03998 7.52531" stroke="#808693" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <ArrowUp />
                 ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M9.96004 4.47461L6.70004 7.73461C6.31504 8.11961 5.68504 8.11961 5.30004 7.73461L2.04004 4.47461" stroke="#808693" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <ArrowDown />
                 )}
                 
             </div>

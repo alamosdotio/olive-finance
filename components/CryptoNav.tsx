@@ -81,7 +81,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
     }
 
     return (
-        <div className="flex justify-between h-10 border-[1px] rounded-full p-[6px] w-full"> 
+        <div className="flex justify-between h-fit border-[1px] rounded-full p-1 w-full"> 
                     <div 
             ref={scrollContainerRef}
             className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0"
@@ -92,7 +92,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                     <div
                         className={cn(
                             buttonVariants({variant: 'ghost'}), (active === index && 'bg-secondary hover:bg-secondary'),
-                            "flex items-center space-x-6 px-2 py-1 w-full h-auto rounded-full text-sm cursor-pointer"
+                            "flex items-center space-x-5 px-[6px] py-1 w-full h-auto rounded-full text-[10px] cursor-pointer"
                         )}
                         onClick={() => handleClick(index)}
                     >
@@ -100,33 +100,33 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                             <Image 
                             src={crypto.iconPath} 
                             alt={crypto.name} 
-                            width={18} 
-                            height={18} 
+                            width={12} 
+                            height={12} 
                             className={cn(
                                 crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full'
                             )}
                             />
-                            <span className="font-medium text-sm">{crypto.symbol}</span>
+                            <span className="font-medium text-[10px]">{crypto.symbol}</span>
                         </div>
                         <span className={crypto.change >= 0 ? "text-green-500" : "text-red-500"}>
                             {crypto.change >= 0 ? "↑" : "↓"} {Math.abs(crypto.change).toFixed(2)}%
                         </span>
                     </div>
                     {index < cryptoData.length - 1 && (
-                        <div className="min-w-[1px] h-5 bg-border mx-2 flex-shrink-0" aria-hidden="true" />
+                        <div className="min-w-[1px] h-[18px] bg-border mx-1 flex-shrink-0" aria-hidden="true" />
                     )}
                 </div>
                 ))}
             </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-[2px]">
                 <button 
                     onClick={() => scroll('left')}
                     disabled={!canScrollLeft}
                     className="disabled:opacity-50 focus:outline-none"
                     aria-label="Scroll Left"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 28 28" fill="none">
                         <path d="M14.0002 25.6668C20.4435 25.6668 25.6668 20.4435 25.6668 14.0002C25.6668 7.55684 20.4435 2.3335 14.0002 2.3335C7.55684 2.3335 2.3335 7.55684 2.3335 14.0002C2.3335 20.4435 7.55684 25.6668 14.0002 25.6668Z" className="fill-current text-backgroundSecondary"/>
                         <path d="M15.4699 18.1185L11.3633 14.0002L15.4699 9.88184" className='stroke-current text-secondary-foreground' strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -137,7 +137,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                     className="disabled:opacity-50 focus:outline-none"
                     aria-label="Scroll Right"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 28 28" fill="none">
                         <path d="M14.0002 25.6668C20.4435 25.6668 25.6668 20.4435 25.6668 14.0002C25.6668 7.55684 20.4435 2.3335 14.0002 2.3335C7.55684 2.3335 2.3335 7.55684 2.3335 14.0002C2.3335 20.4435 7.55684 25.6668 14.0002 25.6668Z" className="fill-current text-backgroundSecondary"/>
                         <path d="M12.5298 18.1185L16.6365 14.0002L12.5298 9.88184" className='stroke-current text-secondary-foreground' strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
