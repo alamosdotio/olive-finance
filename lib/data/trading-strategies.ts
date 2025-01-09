@@ -11,7 +11,7 @@ export const tradingStrategies: TradingStrategy[] = [
         type: 'Neutral'
     },
     {
-        image: '/strategy-images/LongCallbutterfly.png',
+        image: '/strategy-images/LongCallButterfly.png',
         name: 'Long Call Butterfly',
         type: 'Dangerous'
     },
@@ -31,7 +31,7 @@ export const tradingStrategies: TradingStrategy[] = [
         type: 'Neutral'
     },
     {
-        image: '/strategy-images/LongCallbutterfly.png',
+        image: '/strategy-images/LongCallButterfly.png',
         name: 'Long Call Butterfly',
         type: 'Dangerous'
     },
