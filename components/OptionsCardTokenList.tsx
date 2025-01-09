@@ -95,7 +95,7 @@ export default function OptionsCardTokenList({chartToken} : OptionsCardTokenList
             
             <DialogContent className="max-w-[420px] px-3 py-5 bg-accent gap-0 sm:rounded-[20px]">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
-                    <DialogTitle className="p-0 text-base font-medium text-foreground">You're Selling</DialogTitle>
+                    <DialogTitle className="p-0 text-base font-medium text-foreground">You&apos;re Selling</DialogTitle>
                     <Tabs>
                         <TabsList className="p-0 flex gap-3 bg-inherit text-secondary-foreground rounded-[10px]">
                             <TabsTrigger
