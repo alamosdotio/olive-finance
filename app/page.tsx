@@ -29,7 +29,7 @@ export default function Homepage(){
         <>
             <CryptoNav onSymbolChange={setSelectedSymbol}/>
             <div className="flex flex-col w-full justify-evenly h-full space-y-4">
-                <div className="flex w-full h-[646px] pt-4 pb-6 space-x-4">
+                <div className="flex w-full h-[700px] pt-4 pb-6 space-x-4">
                     <TradingViewChartContainer symbol={selectedSymbol}/>
                     <OptionsCard chartToken={selectedSymbol} onValueChange={handleSellingAmountChange}/>
                 </div>

@@ -81,7 +81,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
     }
 
     return (
-        <div className="flex justify-between h-fit border-[1px] rounded-full p-1 w-full"> 
+        <div className="flex justify-between h-[30px] border-[1px] rounded-full px-1 py-1 w-full"> 
                     <div 
             ref={scrollContainerRef}
             className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0"
@@ -92,7 +92,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                     <div
                         className={cn(
                             buttonVariants({variant: 'ghost'}), (active === index && 'bg-secondary hover:bg-secondary'),
-                            "flex items-center space-x-5 px-[6px] py-1 w-full h-auto rounded-full text-[10px] cursor-pointer"
+                            "flex items-center space-x-5 px-[6px] py-0 w-full h-fit rounded-full text-sm cursor-pointer"
                         )}
                         onClick={() => handleClick(index)}
                     >
@@ -103,10 +103,10 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                             width={12} 
                             height={12} 
                             className={cn(
-                                crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full'
+                                crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full', 'w-4 h-4'
                             )}
                             />
-                            <span className="font-medium text-[10px]">{crypto.symbol}</span>
+                            <span className="font-medium text-sm">{crypto.symbol}</span>
                         </div>
                         <span className={crypto.change >= 0 ? "text-green-500" : "text-red-500"}>
                             {crypto.change >= 0 ? "↑" : "↓"} {Math.abs(crypto.change).toFixed(2)}%

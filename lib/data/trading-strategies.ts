@@ -21,8 +21,8 @@ export const tradingStrategies: TradingStrategy[] = [
         type: 'Neutral'
     },
     {
-        image: '/strategy-images/longcall.png',
-        name: 'Short Call Butterfly',
+        image: '/strategy-images/frame1.png',
+        name: 'Long Call',
         type: 'Neutral'
     },
     {

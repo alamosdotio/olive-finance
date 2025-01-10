@@ -3,6 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import TradingViewChart from "./TradingViewChart";
 import OptionsPriceChart from "@/components/OptionsPriceChart";
 import RecentTrades from "./RecentTrades";
+import TradingViewTopNav from "./TradingViewTopNav";
 
 interface TradingViewChartContainerProps{
     symbol: string
@@ -18,8 +19,9 @@ export default function TradingViewChartContainer({symbol} : TradingViewChartCon
     }
     return (
         <>
-            <div className="w-4/6 h-[646px] flex flex-col">
-                <div className="bg-inherit border border-b-0 rounded-t-[26px] py-1 px-4">
+            <div className="w-4/6 h-[700px] flex flex-col">
+                <TradingViewTopNav />
+                <div className="bg-inherit border border-b-0 py-2 px-4">
                     <Tabs defaultValue={activeTab}>
                         <TabsList className="grid grid-cols-3 rounded-full p-0 w-full h-8 bg-inherit">
                         <TabsTrigger

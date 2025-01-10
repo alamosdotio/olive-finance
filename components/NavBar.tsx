@@ -14,7 +14,7 @@ import discord from '@/public/svgs/discord.svg'
 import telegram from '@/public/svgs/telegram.svg'
 import Image from "next/image";
 
-import logo from '@/public/svgs/logo.svg'
+import logo from '@/public/images/logo.png'
 import { Badge } from "./ui/badge";
 import Settings from "./Settings";
 import { ArrowDown, EarnIcon, MoreIcon, NotificationIcon, OptionsIcon } from "@/public/svgs/icons";
@@ -34,10 +34,10 @@ export default function NavBar(){
 
     return (
         <header className="flex justify-between max-w-full">
-            <div className="flex justify-between py-2 gap-12">
+            <div className="flex justify-between py-2 gap-6">
                 <div className="flex items-center justify-center gap-2">
-                    <Image src={logo} alt="logo pic" />
-                    <h1 className="text-sm font-normal">Olive Finance</h1>
+                    <Image src={logo} alt="logo pic" className="w-full h-7 mb-1" />
+                    {/* <h1 className="text-sm font-normal">Olive Finance</h1> */}
                 </div>
                 <nav className="flex justify-evenly items-center gap-8">
                     <Link 

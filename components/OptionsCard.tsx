@@ -88,7 +88,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 <div className="flex flex-col p-0 space-y-[13px] justify-center w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
-                            <OptionsCardTokenList chartToken={chartToken}/>
+                            <OptionsCardTokenList type={type} chartToken={chartToken}/>
                         ) : (
                             <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
                                 <SelectTrigger className="bg-inherit py-2 px-0 w-full h-[52px] shadow-none">

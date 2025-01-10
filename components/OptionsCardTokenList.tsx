@@ -19,10 +19,11 @@ import { AmericanIcon, BermudanIcon, EuropeanIcon } from "@/public/svgs/icons";
 
 interface OptionsCardTokenListProps{
     chartToken: string
+    type: string
 }
 
 
-export default function OptionsCardTokenList({chartToken} : OptionsCardTokenListProps){
+export default function OptionsCardTokenList({chartToken, type} : OptionsCardTokenListProps){
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const generateTokens = (count: number) :  Token[] =>{
         return Array(count).fill(null).map((_, index) => {
@@ -81,17 +82,19 @@ export default function OptionsCardTokenList({chartToken} : OptionsCardTokenList
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
-                <DialogTrigger className="py-2">
-                    <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
-                        {selectedToken && selectedToken.logo ? (
-                            <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full"/>
-                        ) : null}
-                        <h1>{selectedToken ? selectedToken.symbol : "Loading..."}</h1>
-                        <ChevronDown className="opacity-50" size={28}/>
-                    </div>
-                </DialogTrigger>
-            </div>
+            {type === 'sell' && (
+                <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
+                    <DialogTrigger className="py-2">
+                        <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
+                            {selectedToken && selectedToken.logo ? (
+                                <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full"/>
+                            ) : null}
+                            <h1>{selectedToken ? selectedToken.symbol : "Loading..."}</h1>
+                            <ChevronDown className="opacity-50" size={28}/>
+                        </div>
+                    </DialogTrigger>
+                </div>
+            )}
             
             <DialogContent className="max-w-[420px] px-3 py-5 bg-accent gap-0 sm:rounded-[20px]">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
@@ -139,8 +142,8 @@ export default function OptionsCardTokenList({chartToken} : OptionsCardTokenList
                         <div className="grid grid-cols-3 gap-x-[6px] gap-y-[14px]">
                             {allStrategies.map((strategy, index) => (
                                 <div key={index} className="flex flex-col space-y-[6px] cursor-pointer">
-                                    <div className="">
-                                        <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] border border-transparent hover:border-primary rounded-[10px]"/>
+                                    <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
+                                        <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
                                     </div>
                                     <div className="flex flex-col space-y-1">
                                         <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
@@ -149,7 +152,7 @@ export default function OptionsCardTokenList({chartToken} : OptionsCardTokenList
                                     
                                 </div>
                             ))}
-                        </div>
+                        </div>   
                         <div className="w-full flex justify-center">
                             <Button
                                 className="border bg-inherit text-foreground shadow-none py-2 px-4 rounded-[12px]"
@@ -190,7 +193,10 @@ export default function OptionsCardTokenList({chartToken} : OptionsCardTokenList
                         </div>
                         <ScrollArea className="w-full h-[242px]">
                             {allTokens.map((token, index) => (
-                                <div key={index} className="w-full h-fit rounded-[8px] p-2 flex justify-between space-x-4 hover:bg-secondary">
+                                <div 
+                                    key={index}
+                                    onClick={()=>handleClick(token)}
+                                    className="w-full h-fit rounded-[8px] p-2 flex justify-between space-x-4 hover:bg-secondary">
                                     <div className="flex items-center space-x-[6px]">
                                         <Image src={token.logo} alt={token.name} width={28} height={28} className="w-7 h-7 rounded-full" />
                                         <div className="flex flex-col justify-center space-y-0 h-8">
