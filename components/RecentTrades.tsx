@@ -138,10 +138,10 @@ export default function RecentTrades(){
                         <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">Quantity</TableHead>
                         <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">Option</TableHead>
                         <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">Call/Put</TableHead>
-                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">Strike Price</TableHead>
-                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">Expiry Date</TableHead>
-                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">Trade Size</TableHead>
-                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify pr-5 pl-3 py-4">Purchase Date</TableHead>
+                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 whitespace-nowrap overflow-hidden">Strike Price</TableHead>
+                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 whitespace-nowrap overflow-hidden">Expiry Date</TableHead>
+                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 whitespace-nowrap overflow-hidden">Trade Size</TableHead>
+                        <TableHead className="text-xs text-secondary-foreground font-medium text-justify pr-5 pl-3 py-4 whitespace-nowrap overflow-hidden">Purchase Date</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

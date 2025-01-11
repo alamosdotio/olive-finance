@@ -17,7 +17,9 @@ import Image from "next/image";
 import logo from '@/public/images/logo.png'
 import { Badge } from "./ui/badge";
 import Settings from "./Settings";
-import { ArrowDown, EarnIcon, MoreIcon, NotificationIcon, OptionsIcon } from "@/public/svgs/icons";
+import { ArrowDown, BoostIcon, EarnIcon, GrayPointsIcon, MoreIcon, NotificationIcon, OptionsIcon, PointsIcon, RankingIcon } from "@/public/svgs/icons";
+import { Separator } from "./ui/separator";
+import { useRouter } from "next/navigation";
 
 
 export default function NavBar(){
@@ -25,6 +27,7 @@ export default function NavBar(){
     const { theme, setTheme } = useTheme()
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const { isConnected } = useWallet();
+    const router = useRouter()
 
     const handleClick = (state:string) =>{
         if(active!==state){
@@ -115,52 +118,59 @@ export default function NavBar(){
             </div>
             <div className="flex justify-between py-2 gap-3 items-center">
                 {/* <Image src={vase} alt="vase"/> */}
-                <Link 
+                {/* <Link 
                     href='/leaderboards'
                     onClick={() => setActive('leaderboards')}
                 >
-                    <div className="border bg-inherit rounded-[12px] p-2 cursor-pointer flex justify-center items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
-                            <path d="M3.49854 13.6778C3.49854 9.49382 7.07854 5.35882 9.59254 2.97182C10.2382 2.34812 11.1008 1.99951 11.9985 1.99951C12.8962 1.99951 13.7589 2.34812 14.4045 2.97182C16.9175 5.35982 20.4985 9.49382 20.4985 13.6778C20.4985 17.7798 17.2795 21.9998 11.9985 21.9998C6.71754 21.9998 3.49854 17.7798 3.49854 13.6778Z" stroke="url(#paint0_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M15.9985 14C15.9985 15.0609 15.5771 16.0783 14.827 16.8284C14.0768 17.5786 13.0594 18 11.9985 18" stroke="url(#paint1_linear_139_9650)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <defs>
-                                <linearGradient id="paint0_linear_139_9650" x1="19.2485" y1="3.24953" x2="1.42237" y2="6.87513" gradientUnits="userSpaceOnUse">
-                                <stop stopColor="#806AF1"/>
-                                <stop offset="1" stopColor="#A697F4"/>
-                                </linearGradient>
-                                <linearGradient id="paint1_linear_139_9650" x1="15.7044" y1="14.25" x2="11.5731" y2="15.2386" gradientUnits="userSpaceOnUse">
-                                <stop stopColor="#806AF1"/>
-                                <stop offset="1" stopColor="#A697F4"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                    </div>
-                </Link>
+                    
+                </Link> */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <div className="border bg-inherit rounded-[12px] p-2 cursor-pointer flex justify-center items-center">
+                            <PointsIcon />
+                        </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-[280px] p-5 bg-accent rounded-[20px] space-y-4 flex flex-col">
+                        <div className="w-full flex flex-col p-3 border rounded-[12px]">
+                            <div className="w-full flex flex-col justify-center items-center space-y-[6px]">
+                                <span className="text-secondary-foreground text-xs font-medium">Season 1 Points</span>
+                                <span className="text-primary text-2xl font-medium">1,953,676</span>
+                                <div className="w-full flex justify-center items-center gap-1">
+                                    <BoostIcon />
+                                    <span className="text-xs text-foreground font-medium">6.9x Boost</span>
+                                </div>
+                            </div>
+                            <div className="w-full py-3">
+                                <Separator />
+                            </div>
+                            <div className="w-full flex flex-col space-y-3">
+                                <div className="w-full flex justify-between items-center">
+                                    <div className="flex items-center gap-1">
+                                        <RankingIcon />
+                                        <span className="text-xs text-secondary-foreground font-medium">Ranking</span>
+                                    </div>
+                                    <span className="text-xs text-foreground font-medium">#16189</span>
+                                </div>
+                                <div className="w-full flex justify-between items-center">
+                                    <div className="flex items-center gap-1">
+                                        <GrayPointsIcon />
+                                        <span className="text-xs text-secondary-foreground font-medium">Points Per Day</span>
+                                    </div>
+                                    <span className="text-xs text-foreground font-medium">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <Button
+                            className="bg-inherit border rounded-[12px] text-primary py-2 px-4 w-full text-xs font-medium shadow-none"
+                            onClick={()=>router.push('/leaderboards')}
+                        >
+                            Go to leaderboard
+                        </Button>
+                    </DropdownMenuContent>
+                </DropdownMenu>
 
                 <Settings />
                 
-                {/* <DropdownMenu>
-                    <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-[12px] p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.7484 7.68336C15.24 7.68336 14.6234 6.6167 15.3734 5.30836C15.8067 4.55003 15.5484 3.58336 14.79 3.15003L13.3484 2.32503C12.69 1.93336 11.84 2.1667 11.4484 2.82503L11.3567 2.98336C10.6067 4.2917 9.37337 4.2917 8.61504 2.98336L8.52337 2.82503C8.14837 2.1667 7.29837 1.93336 6.64004 2.32503L5.19837 3.15003C4.44004 3.58336 4.18171 4.55836 4.61504 5.3167C5.37337 6.6167 4.75671 7.68336 3.24837 7.68336C2.38171 7.68336 1.66504 8.3917 1.66504 9.2667V10.7334C1.66504 11.6 2.37337 12.3167 3.24837 12.3167C4.75671 12.3167 5.37337 13.3834 4.61504 14.6917C4.18171 15.45 4.44004 16.4167 5.19837 16.85L6.64004 17.675C7.29837 18.0667 8.14837 17.8334 8.54004 17.175L8.63171 17.0167C9.38171 15.7084 10.615 15.7084 11.3734 17.0167L11.465 17.175C11.8567 17.8334 12.7067 18.0667 13.365 17.675L14.8067 16.85C15.565 16.4167 15.8234 15.4417 15.39 14.6917C14.6317 13.3834 15.2484 12.3167 16.7567 12.3167C17.6234 12.3167 18.34 11.6084 18.34 10.7334V9.2667C18.3317 8.40003 17.6234 7.68336 16.7484 7.68336ZM9.99837 12.7084C8.50671 12.7084 7.29004 11.4917 7.29004 10C7.29004 8.50836 8.50671 7.2917 9.99837 7.2917C11.49 7.2917 12.7067 8.50836 12.7067 10C12.7067 11.4917 11.49 12.7084 9.99837 12.7084Z" fill="#C0BFC7"/>
-                            </svg>
-                        </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="min-w-72 max-w-72">
-                        <DropdownMenuLabel className="text-sm font-semibold">Settings</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {[
-                            "dark",
-                            "light",
-                            "system"
-                        ].map((item) => (
-                            <DropdownMenuItem key={item} onClick={() => setTheme(item)} className="focus:bg-primary focus:text-white px-4 py-2">
-                                {item}
-                            </DropdownMenuItem>
-                        ))}
-                    </DropdownMenuContent>
-                </DropdownMenu> */}
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">

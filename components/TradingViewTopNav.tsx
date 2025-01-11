@@ -18,7 +18,7 @@ export default function TradingViewTopNav(){
                                 BTC/USDC
                             </span>
                         </div>
-                        <ChevronDown className="text-background h-3 w-3"/>
+                        <ChevronDown className="text-secondary-foreground h-3 w-3"/>
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[242px] py-2 px-1 bg-accent rounded-[14px] flex flex-col space-y-2" align="start">

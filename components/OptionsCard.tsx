@@ -146,7 +146,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     return (
         <Card className="rounded-[26px] w-2/6 h-fit">
             <CardContent className="p-0">
-                <div className="px-6 pt-7 flex flex-col justify-between space-y-14">
+                <div className="px-6 pt-7 flex flex-col justify-between space-y-[84px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground whitespace-nowrap overflow-hidden text-ellipsis">You Sell</Label>
@@ -184,7 +184,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         <Image src={swap} alt="swap button" className="w-8 h-8"/>
                     </Button>
                 </div>
-                <div className="px-6 pb-7 flex flex-col justify-between space-y-14">
+                <div className="px-6 pb-7 flex flex-col justify-between space-y-[84px]">
                     <div className="w-full flex justify-between items-center">
                         <div className="w-full">
                             <Label className="text-sm font-medium text-foreground">You Buy</Label>
