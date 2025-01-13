@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 import { useState } from "react"
 import WalletModal from "./WalletModal"
 
+
 export default function TradingPositionsFallback() {
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     

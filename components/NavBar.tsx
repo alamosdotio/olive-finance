@@ -45,12 +45,12 @@ export default function NavBar(){
                 <nav className="flex justify-evenly items-center gap-8">
                     <Link 
                         href='/'
-                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary')}
+                        className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary group')}
                         onClick={() => handleClick('Options')}
                     > 
                          <OptionsIcon />
-                         <h1 className="text-sm font-medium">Options</h1>
-                         <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border-[1px] text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex")}>BETA</Badge>
+                         <h1 className="text-sm font-medium group-hover:text-primary">Options</h1>
+                         <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                     </Link>
                     <Link 
                         href='/earn'
@@ -126,7 +126,7 @@ export default function NavBar(){
                 </Link> */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <div className="border bg-inherit rounded-[12px] p-2 cursor-pointer flex justify-center items-center">
+                        <div className="border bg-inherit rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB]">
                             <PointsIcon />
                         </div>
                     </DropdownMenuTrigger>
@@ -174,7 +174,7 @@ export default function NavBar(){
 
                 <DropdownMenu>
                     <DropdownMenuTrigger className="focus:outline-none">
-                        <div className="bg-secondary rounded-[12px] p-[9px]">
+                        <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                             <NotificationIcon />
                         </div>
                     </DropdownMenuTrigger>

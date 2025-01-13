@@ -29,9 +29,14 @@ export default function Homepage(){
         <>
             <CryptoNav onSymbolChange={setSelectedSymbol}/>
             <div className="flex flex-col w-full justify-evenly h-full space-y-4">
-                <div className="flex w-full h-[700px] pt-4 pb-6 space-x-4">
+                <div className="flex w-full h-[700px] pt-4 pb-6 space-x-4 justify-between">
+                  <div className="w-4/6">
                     <TradingViewChartContainer symbol={selectedSymbol}/>
+                  </div>
+                  <div className="w-2/6">
                     <OptionsCard chartToken={selectedSymbol} onValueChange={handleSellingAmountChange}/>
+                  </div>
+                    
                 </div>
                 <div className="flex w-full pt-4 pb-6 space-x-4 h-auto">
                   <div className="w-4/6">
@@ -39,6 +44,7 @@ export default function Homepage(){
                         <TradingPositions />
                     </ProtectedRoute>
                   </div>
+  
                   <div className="w-2/6 flex flex-col space-y-4">
                     <PriceQuote value={formValues.selling.amount}/>
                     <GreekPopup value={formValues.selling.amount}/>

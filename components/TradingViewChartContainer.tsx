@@ -19,9 +19,8 @@ export default function TradingViewChartContainer({symbol} : TradingViewChartCon
     }
     return (
         <>
-            <div className="w-4/6 h-[700px] flex flex-col">
-                <TradingViewTopNav />
-                <div className="bg-inherit border border-b-0 py-2 px-4">
+            <div className="w-full h-[700px] flex flex-col">
+                <div className="bg-inherit border border-b-0 py-1 px-4 rounded-t-[26px]">
                     <Tabs defaultValue={activeTab}>
                         <TabsList className="grid grid-cols-3 rounded-full p-0 w-full h-8 bg-inherit">
                         <TabsTrigger
@@ -48,7 +47,7 @@ export default function TradingViewChartContainer({symbol} : TradingViewChartCon
                         </TabsList>
                     </Tabs>
                 </div>
-                <div className="h-full">
+                <div className="h-full w-full">
                     {activeTab === 'chart' && (
                         <TradingViewChart symbol={symbol}/>
                     )}

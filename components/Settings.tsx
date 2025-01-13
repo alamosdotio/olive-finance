@@ -32,7 +32,7 @@ export default function Settings(){
     return (
         <Dialog>
             <DialogTrigger>
-                <div className="bg-secondary rounded-[12px] p-[9px]">
+                <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                     <SettingsIcon />
                 </div>
             </DialogTrigger>
@@ -49,7 +49,9 @@ export default function Settings(){
                         <Select>
                             <SelectTrigger className="w-[190px] text-xs flex justify-between bg-secondary text-foreground">
                                 <SelectValue placeholder='English'/>
-                                <ArrowDown />
+                                <span className="text-secondary-foreground">
+                                    <ArrowDown />
+                                </span>
                             </SelectTrigger>
                             <SelectContent className="w-fit bg-secondary">
                                 <SelectItem className='text-xs text-foreground'value="eng">English</SelectItem>

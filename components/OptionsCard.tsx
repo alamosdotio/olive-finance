@@ -88,32 +88,9 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 <div className="flex flex-col p-0 space-y-[13px] justify-center w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
-                            <OptionsCardTokenList type={type} chartToken={chartToken}/>
+                            <OptionsCardTokenList type={'sell'} chartToken={chartToken}/>
                         ) : (
-                            <Select value={formValues.buying.type} onValueChange={(value) => setFormValues(prev => ({ ...prev, buying: { ...prev.buying, type: value } }))}>
-                                <SelectTrigger className="bg-inherit py-2 px-0 w-full h-[52px] shadow-none">
-                                    <div className="flex items-center space-x-2 py-2 px-0 text-[28px] justify-evenly">
-                                    <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clipPath="url(#clip0_184_5232)">
-                                        <path d="M24 48.333C37.2548 48.333 48 37.5878 48 24.333C48 11.0782 37.2548 0.333008 24 0.333008C10.7452 0.333008 0 11.0782 0 24.333C0 37.5878 10.7452 48.333 24 48.333Z" fill="#53C08D"/>
-                                        <path d="M33.5445 26.4809L28.9573 19.7606L26.1563 15.6362C24.9702 13.8986 23.041 13.8986 21.8549 15.6362L14.4525 26.4809C13.4808 27.9045 14.181 30.333 15.5386 30.333H23.5555H32.4584C33.8303 30.333 34.5162 27.9045 33.5445 26.4809Z" fill="#141519"/>
-                                        </g>
-                                        <defs>
-                                        <clipPath id="clip0_184_5232">
-                                        <rect width="48" height="48" fill="white" transform="translate(0 0.333008)"/>
-                                        </clipPath>
-                                        </defs>
-                                    </svg>
-
-                                        <SelectValue placeholder="Select"/>
-                                        <ChevronDown className="opacity-50" size={28}/>
-                                    </div>
-                                </SelectTrigger>
-                                <SelectContent className="w-full">
-                                    <SelectItem value="call">Call</SelectItem>
-                                    <SelectItem value="put">Put</SelectItem>
-                                </SelectContent>
-                            </Select>
+                            <OptionsCardTokenList type={'buy'} chartToken={chartToken}/>
                         )}
                     </div>
                     <span className="text-sm font-normal text-secondary-foreground p-0">
@@ -144,7 +121,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     }
 
     return (
-        <Card className="rounded-[26px] w-2/6 h-fit">
+        <Card className="rounded-[26px] h-fit">
             <CardContent className="p-0">
                 <div className="px-6 pt-7 flex flex-col justify-between space-y-[84px]">
                     <div className="w-full flex justify-between items-center">

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import TradingViewTopNav from "./TradingViewTopNav";
 
 type CryptoData = {
     id: string
@@ -80,8 +81,8 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
         onSymbolChange(cryptoData[index].pythSymbol)
     }
 
-    return (
-        <div className="flex justify-between h-[30px] border-[1px] rounded-full px-1 py-1 w-full"> 
+    return <>
+        <div className="flex justify-between h-[30px] border rounded-[14px] rounded-b-none px-1 py-1 w-full"> 
                     <div 
             ref={scrollContainerRef}
             className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0"
@@ -144,5 +145,6 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
                 </button>
             </div>
         </div>
-    )
+        <TradingViewTopNav symbol={cryptoData[active?active: 0].symbol} pythSymbol={cryptoData[active?active: 0].pythSymbol} logo={cryptoData[active?active: 0].iconPath}/>
+    </>
 }

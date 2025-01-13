@@ -4,18 +4,26 @@ import { Separator } from "./ui/separator";
 import { DollarIcon, SortIcon } from "@/public/svgs/icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
+import { usePythPrice } from "@/hooks/usePythPrice";
+import { formatPrice } from "@/utils/formatter";
 
+interface TradingViewTopNavProps {
+    symbol: string | null,
+    pythSymbol: string,
+    logo: string
+}
 
-export default function TradingViewTopNav(){
+export default function TradingViewTopNav({symbol, pythSymbol, logo} : TradingViewTopNavProps){
+    const {priceData, loading: priceLoading} = usePythPrice(pythSymbol)
     return (
-        <div className="border border-b-0 rounded-t-[26px] py-2 px-[10px] w-full flex h-fit">
+        <div className="border border-t-0 rounded-b-[14px] p-1 w-full flex h-fit">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <div className="px-2 py-1 flex space-x-2 items-center">
                         <div className="flex space-x-[6px] items-center">
-                            <Image src='/images/bitcoin.png' alt="bitcoin" width={18} height={18} className="rounded-full"/>
+                            <Image src={logo} alt={symbol!} width={18} height={18} className="rounded-full"/>
                             <span className="text-sm text-foreground font-medium">
-                                BTC/USDC
+                                {symbol}/USDC
                             </span>
                         </div>
                         <ChevronDown className="text-secondary-foreground h-3 w-3"/>
@@ -93,7 +101,7 @@ export default function TradingViewTopNav(){
             <div className="py-1 space-x-[6px] flex items-center">
                 <DollarIcon />
                 <span className="text-sm font-medium text-foreground">
-                    204.90
+                    {priceData.price ? formatPrice(priceData.price) : priceLoading}
                 </span>
             </div>
             <div className="px-4 py-1">

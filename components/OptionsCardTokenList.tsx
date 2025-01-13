@@ -78,7 +78,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
 
     }, [])
 
-    const [active, setActiveTab] = useState<string>('tokens')
+    const [active, setActiveTab] = useState<string>(type)
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -90,6 +90,27 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                                 <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full"/>
                             ) : null}
                             <h1>{selectedToken ? selectedToken.symbol : "Loading..."}</h1>
+                            <ChevronDown className="opacity-50" size={28}/>
+                        </div>
+                    </DialogTrigger>
+                </div>
+            )}
+            {type === 'buy' && (
+                <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
+                    <DialogTrigger className="py-2">
+                        <div className="flex items-center space-x-2 py-2 px-0 text-[28px] justify-evenly">
+                            <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clipPath="url(#clip0_184_5232)">
+                                <path d="M24 48.333C37.2548 48.333 48 37.5878 48 24.333C48 11.0782 37.2548 0.333008 24 0.333008C10.7452 0.333008 0 11.0782 0 24.333C0 37.5878 10.7452 48.333 24 48.333Z" fill="#53C08D"/>
+                                <path d="M33.5445 26.4809L28.9573 19.7606L26.1563 15.6362C24.9702 13.8986 23.041 13.8986 21.8549 15.6362L14.4525 26.4809C13.4808 27.9045 14.181 30.333 15.5386 30.333H23.5555H32.4584C33.8303 30.333 34.5162 27.9045 33.5445 26.4809Z" fill="#141519"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_184_5232">
+                                <rect width="48" height="48" fill="white" transform="translate(0 0.333008)"/>
+                                </clipPath>
+                                </defs>
+                            </svg>
+                            <span>Call</span>
                             <ChevronDown className="opacity-50" size={28}/>
                         </div>
                     </DialogTrigger>
