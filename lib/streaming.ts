@@ -28,7 +28,7 @@ function handleStreamingData(data: any, subscriptionItem: SubscriptionItem) {
     const lastDailyBar = subscriptionItem.lastDailyBar;
     const nextDailyBarTime = getNextDailyBarTime(lastDailyBar.time);
 
-    let bar: Bar = {
+    const bar: Bar = {
       time: tradeTime >= nextDailyBarTime ? nextDailyBarTime : lastDailyBar.time,
       open: tradeTime >= nextDailyBarTime ? tradePrice : lastDailyBar.open,
       high: tradeTime >= nextDailyBarTime ? tradePrice : Math.max(lastDailyBar.high, tradePrice),
