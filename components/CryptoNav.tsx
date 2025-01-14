@@ -39,9 +39,10 @@ const cryptoData: CryptoData[] = [
 
 interface CryptoNavProps {
     onSymbolChange: (symbol: string) => void;
+    onIconChange: (symbol: string) => void;
 }
 
-export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
+export default function CryptoNav({ onSymbolChange, onIconChange } : CryptoNavProps ){
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -79,6 +80,7 @@ export default function CryptoNav({ onSymbolChange } : CryptoNavProps ){
     const handleClick = (index: number) => {
         setActive(index);
         onSymbolChange(cryptoData[index].pythSymbol)
+        onIconChange(cryptoData[index].iconPath)
     }
 
     return <>

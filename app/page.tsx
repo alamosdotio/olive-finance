@@ -11,6 +11,7 @@ import GreekPopup from "@/components/GreekPopup";
 
 export default function Homepage(){
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
+    const [selectedLogo, setSelectedLogo] = useState<string>('/images/solana.png')
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
     }>({
@@ -27,11 +28,11 @@ export default function Homepage(){
     
     return (
         <>
-            <CryptoNav onSymbolChange={setSelectedSymbol}/>
+            <CryptoNav onSymbolChange={setSelectedSymbol} onIconChange={setSelectedLogo}/>
             <div className="flex flex-col w-full justify-evenly h-full space-y-4">
                 <div className="flex w-full h-[700px] pt-4 pb-6 space-x-4 justify-between">
                   <div className="w-4/6">
-                    <TradingViewChartContainer symbol={selectedSymbol}/>
+                    <TradingViewChartContainer symbol={selectedSymbol} logo={selectedLogo}/>
                   </div>
                   <div className="w-2/6">
                     <OptionsCard chartToken={selectedSymbol} onValueChange={handleSellingAmountChange}/>

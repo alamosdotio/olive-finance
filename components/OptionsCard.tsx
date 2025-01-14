@@ -88,9 +88,9 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 <div className="flex flex-col p-0 space-y-[13px] justify-center w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
-                            <OptionsCardTokenList type={'sell'} chartToken={chartToken}/>
+                            <OptionsCardTokenList type={isSelling} chartToken={chartToken}/>
                         ) : (
-                            <OptionsCardTokenList type={'buy'} chartToken={chartToken}/>
+                            <OptionsCardTokenList type={isSelling} chartToken={chartToken}/>
                         )}
                     </div>
                     <span className="text-sm font-normal text-secondary-foreground p-0">

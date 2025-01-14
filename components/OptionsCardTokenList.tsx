@@ -12,14 +12,14 @@ import { Badge } from "./ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Separator } from "./ui/separator";
 import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategies";
-import { AmericanIcon, BermudanIcon, EuropeanIcon } from "@/public/svgs/icons";
+import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark } from "@/public/svgs/icons";
 
 
 
 
 interface OptionsCardTokenListProps{
     chartToken: string
-    type: string
+    type: boolean
 }
 
 
@@ -45,7 +45,8 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
             return {
                 image: strategy.image,
                 name: strategy.name,
-                type: strategy.type
+                type: strategy.type,
+                transaction: strategy.transaction
             }
         })
     }
@@ -58,6 +59,20 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
         if(selectedToken !== value){
             setSelectedToken(value)
             setIsOpen(false)
+        }
+    }
+
+    const handleClickOptions = (value: TradingStrategy) =>{
+        if(selectedStrategy !== value){
+            setSelectedStrategy(value)
+            setIsOpen(false)
+        }
+    }
+
+    const handleOpenChange = (open: boolean) => {
+        setIsOpen(open)
+        if (open) {
+            setActiveTab(type ? 'tokens' : 'options')
         }
     }
 
@@ -78,11 +93,11 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
 
     }, [])
 
-    const [active, setActiveTab] = useState<string>(type)
+    const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
 
     return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            {type === 'sell' && (
+        <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+            {type === true && (
                 <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
                     <DialogTrigger className="py-2">
                         <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
@@ -95,22 +110,16 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                     </DialogTrigger>
                 </div>
             )}
-            {type === 'buy' && (
+            {type === false && (
                 <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
                     <DialogTrigger className="py-2">
                         <div className="flex items-center space-x-2 py-2 px-0 text-[28px] justify-evenly">
-                            <svg width="48" height="49" viewBox="0 0 48 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clipPath="url(#clip0_184_5232)">
-                                <path d="M24 48.333C37.2548 48.333 48 37.5878 48 24.333C48 11.0782 37.2548 0.333008 24 0.333008C10.7452 0.333008 0 11.0782 0 24.333C0 37.5878 10.7452 48.333 24 48.333Z" fill="#53C08D"/>
-                                <path d="M33.5445 26.4809L28.9573 19.7606L26.1563 15.6362C24.9702 13.8986 23.041 13.8986 21.8549 15.6362L14.4525 26.4809C13.4808 27.9045 14.181 30.333 15.5386 30.333H23.5555H32.4584C33.8303 30.333 34.5162 27.9045 33.5445 26.4809Z" fill="#141519"/>
-                                </g>
-                                <defs>
-                                <clipPath id="clip0_184_5232">
-                                <rect width="48" height="48" fill="white" transform="translate(0 0.333008)"/>
-                                </clipPath>
-                                </defs>
-                            </svg>
-                            <span>Call</span>
+                            {selectedStrategy?.transaction === 'Call' ? (
+                                <CallIconDark width="48" height="48" />
+                            ):(
+                                <PutIconDark width="48" height="48" />
+                            )}
+                            <span>{selectedStrategy?.transaction}</span>
                             <ChevronDown className="opacity-50" size={28}/>
                         </div>
                     </DialogTrigger>
@@ -120,19 +129,17 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
             <DialogContent className="max-w-[420px] px-3 py-5 bg-accent gap-0 sm:rounded-[20px]">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
                     <DialogTitle className="p-0 text-base font-medium text-foreground">You&apos;re Selling</DialogTitle>
-                    <Tabs>
+                    <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
                         <TabsList className="p-0 flex gap-3 bg-inherit text-secondary-foreground rounded-[10px]">
                             <TabsTrigger
                                 value="tokens"
                                 className="w-full py-2 px-5 text-sm rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
-                                onClick={() => setActiveTab('tokens')}
                             >
                                 Tokens
                             </TabsTrigger>
                             <TabsTrigger
                                 value="options"
                                 className="w-full py-2 px-5 text-sm rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
-                                onClick={() => setActiveTab('options')}
                             >
                                 Options
                             </TabsTrigger>
@@ -140,7 +147,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                     </Tabs>
                 </div>
                 <Separator className="my-[14px]"/>
-                {active === 'options' && (
+                {activeTab === 'options' && (
                     <div className="space-y-5">
                         <div className="flex justify-between items-center">
                             <ChevronLeft className="w-7 h-7 text-secondary-foreground"/>
@@ -162,7 +169,12 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                         </div>
                         <div className="grid grid-cols-3 gap-x-[6px] gap-y-[14px]">
                             {allStrategies.map((strategy, index) => (
-                                <div key={index} className="flex flex-col space-y-[6px] cursor-pointer">
+                                <div 
+                                    key={index}
+                                    onClick={()=>handleClickOptions(strategy)}
+                                    className="flex flex-col space-y-[6px] cursor-pointer"
+                                
+                                >
                                     <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
                                         <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
                                     </div>
@@ -184,7 +196,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                         </div>
                     </div>
                 )}
-                {active === 'tokens' && (
+                {activeTab === 'tokens' && (
                     <>
                         <div className="w-full flex flex-col space-y-4 px-2">
                             <div className="w-full flex flex-col space-y-3">

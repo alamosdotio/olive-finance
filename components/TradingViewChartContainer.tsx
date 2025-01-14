@@ -7,9 +7,10 @@ import TradingViewTopNav from "./TradingViewTopNav";
 
 interface TradingViewChartContainerProps{
     symbol: string
+    logo: string
 }
 
-export default function TradingViewChartContainer({symbol} : TradingViewChartContainerProps){
+export default function TradingViewChartContainer({symbol, logo} : TradingViewChartContainerProps){
     const [activeTab, setActiveTab] = useState<string>("chart")
     
     const handleClick = (state: string) => {
@@ -49,7 +50,7 @@ export default function TradingViewChartContainer({symbol} : TradingViewChartCon
                 </div>
                 <div className="h-full w-full">
                     {activeTab === 'chart' && (
-                        <TradingViewChart symbol={symbol}/>
+                        <TradingViewChart symbol={symbol} logo={logo}/>
                     )}
                     {activeTab === 'options' && (
                         <OptionsPriceChart symbol={symbol}/>
