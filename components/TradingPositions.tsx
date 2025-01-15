@@ -85,7 +85,7 @@ export default function TradingPositions(){
                     </Button>
                 </div>
             </div>
-            <div className="px-6 py-4">
+            <div className="px-6 py-4 pb-[10px]">
                 {activeTab === 'Positions' && (
                     <div className="space-y-[10px]">
                         {allPositions.map((position, index) => (

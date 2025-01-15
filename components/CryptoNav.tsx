@@ -5,36 +5,36 @@ import { buttonVariants } from "./ui/button";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import TradingViewTopNav from "./TradingViewTopNav";
+import { usePythMarketData } from "@/hooks/usePythMarketData";
 
 type CryptoData = {
     id: string
     name: string
     symbol: string
     iconPath: string
-    change: number
     pythSymbol: string
 }
 
 const cryptoData: CryptoData[] = [
-    {id: 'solana', name: 'Solana', symbol: 'SOL', iconPath: '/images/solana.png', change: 2.10, pythSymbol: 'Crypto.SOL/USD'},
-    {id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', iconPath: '/images/bitcoin.png', change: -1.30, pythSymbol: 'Crypto.BTC/USD'},
-    {id: 'ethereum', name: 'Ethereum', symbol: 'ETH', iconPath: '/images/ethereum.png', change: -0.86, pythSymbol: 'Crypto.ETH/USD'},
-    {id: 'chainlink', name: 'Chainlink', symbol: 'LINK', iconPath: '/images/chainlink.png', change: -1.72, pythSymbol: 'Crypto.LINK/USD'},
-    {id: 'render', name: 'Render', symbol: 'RENDER', iconPath: '/images/render.png', change: 2.48, pythSymbol: 'Crypto.RENDER/USD'},
-    {id: 'dogwifhat', name: 'DogWifHat', symbol: 'WIF', iconPath: '/images/wif.png', change: 0.52, pythSymbol: 'Crypto.WIF/USD'},
-    {id: 'bonk', name: 'Bonk', symbol: 'BONK', iconPath: '/images/bonk.png', change: 2.86, pythSymbol: 'Crypto.BONK/USD'},
-    {id: 'thegraph', name: 'The Graph', symbol: 'GRT', iconPath: '/images/grt.png', change: 3.76, pythSymbol: 'Crypto.GRT/USD'},
-    {id: 'pyth', name: 'Pyth Network', symbol: 'PYTH', iconPath: '/images/pyth.png', change: 11.91, pythSymbol: 'Crypto.PYTH/USD'},
-    {id: 'ray', name: 'Raydium', symbol: 'RAY', iconPath: '/images/ray.png', change: 0.30, pythSymbol: 'Crypto.RAY/USD'},
-    {id: 'pengu', name: 'Pudgy Penguins', symbol:'PENGU', iconPath: '/images/pengu.jpeg', change: 0.87, pythSymbol: 'Crypto.PENGU/USD'},
-    {id: 'hnt', name: 'Helium', symbol:'HNT', iconPath: '/images/hnt.png', change: -2.23, pythSymbol: 'Crypto.HNT/USD'},
-    {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg', change: -1.72, pythSymbol: 'Crypto.JUP/USD'},
-    {id: 'ar', name: 'Arweave', symbol:'AR', iconPath: '/images/ar.png', change: 4.96, pythSymbol: 'Crypto.AR/USD'},
-    {id: 'fartcoin', name: 'Fartcoin', symbol:'FARTCOIN', iconPath: '/images/fartcoin.png', change: 10.72, pythSymbol: 'Crypto.FARTCOIN/USD'},
-    {id: 'jto', name: 'Jito', symbol:'JITO', iconPath: '/images/jito.png', change: 0.62, pythSymbol: 'Crypto.JTO/USD'},
-    {id: 'w', name: 'Wormhole', symbol:'WORMHOLE', iconPath: '/images/wormhole.png', change: 2.17, pythSymbol: 'Crypto.W/USD'},
-    {id: 'popcat', name: 'Popcat (SOL)', symbol:'POPCAT', iconPath: '/images/popcat.png', change: -0.70, pythSymbol: 'Crypto.POPCAT/USD'},
-    {id: 'pnut', name: 'Peanut the Squirrel', symbol:'PNUT', iconPath: '/images/pnut.png', change: -1.72, pythSymbol: 'Crypto.PNUT/USD'},
+    {id: 'solana', name: 'Solana', symbol: 'SOL', iconPath: '/images/solana.png', pythSymbol: 'Crypto.SOL/USD'},
+    {id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', iconPath: '/images/bitcoin.png',  pythSymbol: 'Crypto.BTC/USD'},
+    {id: 'ethereum', name: 'Ethereum', symbol: 'ETH', iconPath: '/images/ethereum.png',  pythSymbol: 'Crypto.ETH/USD'},
+    {id: 'chainlink', name: 'Chainlink', symbol: 'LINK', iconPath: '/images/chainlink.png',  pythSymbol: 'Crypto.LINK/USD'},
+    {id: 'render', name: 'Render', symbol: 'RENDER', iconPath: '/images/render.png', pythSymbol: 'Crypto.RENDER/USD'},
+    {id: 'dogwifhat', name: 'DogWifHat', symbol: 'WIF', iconPath: '/images/wif.png', pythSymbol: 'Crypto.WIF/USD'},
+    {id: 'bonk', name: 'Bonk', symbol: 'BONK', iconPath: '/images/bonk.png', pythSymbol: 'Crypto.BONK/USD'},
+    {id: 'thegraph', name: 'The Graph', symbol: 'GRT', iconPath: '/images/grt.png', pythSymbol: 'Crypto.GRT/USD'},
+    {id: 'pyth', name: 'Pyth Network', symbol: 'PYTH', iconPath: '/images/pyth.png',  pythSymbol: 'Crypto.PYTH/USD'},
+    {id: 'ray', name: 'Raydium', symbol: 'RAY', iconPath: '/images/ray.png', pythSymbol: 'Crypto.RAY/USD'},
+    {id: 'pengu', name: 'Pudgy Penguins', symbol:'PENGU', iconPath: '/images/pengu.jpeg', pythSymbol: 'Crypto.PENGU/USD'},
+    {id: 'hnt', name: 'Helium', symbol:'HNT', iconPath: '/images/hnt.png',  pythSymbol: 'Crypto.HNT/USD'},
+    {id: 'jup', name: 'Jupiter', symbol:'JUP', iconPath: '/images/jup.jpg',  pythSymbol: 'Crypto.JUP/USD'},
+    {id: 'ar', name: 'Arweave', symbol:'AR', iconPath: '/images/ar.png', pythSymbol: 'Crypto.AR/USD'},
+    {id: 'fartcoin', name: 'Fartcoin', symbol:'FARTCOIN', iconPath: '/images/fartcoin.png',  pythSymbol: 'Crypto.FARTCOIN/USD'},
+    {id: 'jto', name: 'Jito', symbol:'JITO', iconPath: '/images/jito.png', pythSymbol: 'Crypto.JTO/USD'},
+    {id: 'w', name: 'Wormhole', symbol:'WORMHOLE', iconPath: '/images/wormhole.png', pythSymbol: 'Crypto.W/USD'},
+    {id: 'popcat', name: 'Popcat (SOL)', symbol:'POPCAT', iconPath: '/images/popcat.png',  pythSymbol: 'Crypto.POPCAT/USD'},
+    {id: 'pnut', name: 'Peanut the Squirrel', symbol:'PNUT', iconPath: '/images/pnut.png',  pythSymbol: 'Crypto.PNUT/USD'},
 ]
 
 interface CryptoNavProps {
@@ -48,6 +48,18 @@ export default function CryptoNav({ onSymbolChange, onIconChange } : CryptoNavPr
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const [active, setActive] = useState<number | null>(0)
+
+    const marketDataMap = new Map(
+        cryptoData.map(crypto => [
+            crypto.pythSymbol,
+            usePythMarketData(crypto.pythSymbol)
+        ])
+    )
+
+    const formatChange = (change: number | null) => {
+        if (change === null) return null;
+        return change.toFixed(2);
+    };
 
     const scroll = (direction: 'left' | 'right') => {
         const container = scrollContainerRef.current;
@@ -90,36 +102,53 @@ export default function CryptoNav({ onSymbolChange, onIconChange } : CryptoNavPr
             className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0"
             >
             <div className="flex items-center flex-nowrap">
-                {cryptoData.map((crypto, index) => (
-                <div key={crypto.id} className="flex items-center flex-nowrap">
-                    <div
-                        className={cn(
-                            buttonVariants({variant: 'ghost'}), (active === index && 'bg-secondary hover:bg-secondary'),
-                            "flex items-center space-x-5 px-[6px] py-0 w-full h-fit rounded-full text-sm cursor-pointer"
-                        )}
-                        onClick={() => handleClick(index)}
-                    >
-                        <div className="flex space-x-1 items-center">
-                            <Image 
-                            src={crypto.iconPath} 
-                            alt={crypto.name} 
-                            width={12} 
-                            height={12} 
-                            className={cn(
-                                crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full', 'w-4 h-4'
+                {cryptoData.map((crypto, index) => {
+                    const { marketData, loading, error } = marketDataMap.get(crypto.pythSymbol) || 
+                        { marketData: { change24h: null }, loading: true, error: null };
+                    
+                    return (
+                        <div key={crypto.id} className="flex items-center flex-nowrap">
+                            <div
+                                className={cn(
+                                    buttonVariants({variant: 'ghost'}), 
+                                    (active === index && 'bg-secondary hover:bg-secondary'),
+                                    "flex items-center space-x-5 px-[6px] py-0 w-full h-fit rounded-full text-sm cursor-pointer"
+                                )}
+                                onClick={() => handleClick(index)}
+                            >
+                                <div className="flex space-x-1 items-center">
+                                    <Image 
+                                        src={crypto.iconPath} 
+                                        alt={crypto.name} 
+                                        width={12} 
+                                        height={12} 
+                                        className={cn(
+                                            crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full',
+                                            'w-4 h-4'
+                                        )}
+                                    />
+                                    <span className="font-medium text-sm">{crypto.symbol}</span>
+                                </div>
+                                {loading ? (
+                                    <span className="text-muted-foreground">...</span>
+                                ) : error ? (
+                                    <span className="text-destructive">Error</span>
+                                ) : (
+                                    <span className={marketData.change24h && marketData.change24h >= 0 ? "text-green-500" : "text-red-500"}>
+                                        {marketData.change24h !== null && (
+                                            <>
+                                                {marketData.change24h >= 0 ? "↑" : "↓"} {formatChange(Math.abs(marketData.change24h))}%
+                                            </>
+                                        )}
+                                    </span>
+                                )}
+                            </div>
+                            {index < cryptoData.length - 1 && (
+                                <div className="min-w-[1px] h-[18px] bg-border mx-1 flex-shrink-0" aria-hidden="true" />
                             )}
-                            />
-                            <span className="font-medium text-sm">{crypto.symbol}</span>
                         </div>
-                        <span className={crypto.change >= 0 ? "text-green-500" : "text-red-500"}>
-                            {crypto.change >= 0 ? "↑" : "↓"} {Math.abs(crypto.change).toFixed(2)}%
-                        </span>
-                    </div>
-                    {index < cryptoData.length - 1 && (
-                        <div className="min-w-[1px] h-[18px] bg-border mx-1 flex-shrink-0" aria-hidden="true" />
-                    )}
-                </div>
-                ))}
+                    );
+                })}
             </div>
             </div>
             <div className="flex gap-[2px]">

@@ -84,7 +84,7 @@ export default function WalletPortfolio(){
                     <span className="flex items-center h-4 text-secondary-foreground"><ArrowDown /></span>
                 </div>
             </div>
-            <div className="w-full flex justify-between items-center py-3 px-4 bg-accent-foreground rounded-full h-fit">
+            {/* <div className="w-full flex justify-between items-center py-3 px-4 bg-accent-foreground rounded-full h-fit">
                 <div className="flex space-x-[6px] items-center">
                     <span className="text-sm text-foreground font-medium flex items-center h-4">Limits</span>
                     <span className="text-[10px] text-primary font-semibold border border-primary py-[5px] px-[6px] flex items-center h-4 rounded-[4px]">0 OPEN ORDERS</span>
@@ -119,7 +119,7 @@ export default function WalletPortfolio(){
                 <span className="text-sm text-foreground font-medium flex items-center h-4">
                     $0
                 </span>
-            </div>
+            </div> */}
         </div>
     )
 }

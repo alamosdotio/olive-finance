@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dro
 import { Input } from "./ui/input";
 import { usePythPrice } from "@/hooks/usePythPrice";
 import { formatPrice } from "@/utils/formatter";
+import { usePythMarketData } from "@/hooks/usePythMarketData";
 
 interface TradingViewTopNavProps {
     symbol: string | null,
@@ -15,6 +16,7 @@ interface TradingViewTopNavProps {
 
 export default function TradingViewTopNav({symbol, pythSymbol, logo} : TradingViewTopNavProps){
     const {priceData, loading: priceLoading} = usePythPrice(pythSymbol)
+    const {marketData, loading} = usePythMarketData(pythSymbol)
     return (
         <div className="border border-t-0 rounded-b-[14px] p-1 w-full flex h-fit">
             <DropdownMenu>
@@ -109,21 +111,21 @@ export default function TradingViewTopNav({symbol, pythSymbol, logo} : TradingVi
             </div>
             <div className="flex flex-col">
                 <span className="text-secondary-foreground font-normal text-[10px] h-3">24h high</span>
-                <span className="text-foreground text-xs font-medium">$208.18</span>
+                <span className="text-foreground text-xs font-medium">${marketData.high24h ? formatPrice(marketData.high24h) : loading}</span>
             </div>
             <div className="px-4 py-1">
                 <Separator orientation="vertical"/>
             </div>
             <div className="flex flex-col">
                 <span className="text-secondary-foreground font-normal text-[10px] h-3">24h low</span>
-                <span className="text-foreground text-xs font-medium">$202.37</span>
+                <span className="text-foreground text-xs font-medium">${marketData.low24h ? formatPrice(marketData.low24h) : loading}</span>
             </div>
             <div className="px-4 py-1">
                 <Separator orientation="vertical"/>
             </div>
             <div className="flex flex-col">
                 <span className="text-secondary-foreground font-normal text-[10px] h-3">24h volume</span>
-                <span className="text-foreground text-xs font-medium">$9.16M</span>
+                <span className="text-foreground text-xs font-medium">$</span>
             </div>
         </div>
     )

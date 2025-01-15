@@ -41,7 +41,7 @@ export default function WalletSideBar() {
                     {address ? truncateAddress(address) : 'Connected'}
                 </button>
             </SheetTrigger>
-            <SheetContent className="bg-accent rounded-l-[26px] p-6 space-y-4">
+            <SheetContent className="bg-accent rounded-l-[26px] p-6 space-y-4 sm:w-[550px]">
                 <SheetTitle className="flex justify-between">
                     <div className="flex space-x-2 items-center">
                         {iconPath && (

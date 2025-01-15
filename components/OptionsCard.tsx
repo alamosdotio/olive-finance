@@ -47,6 +47,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     })
 
     const [isSwapped , setIsSwapped] = useState(false)
+    const [userEditedStrikePrice, setUserEditedStrikePrice] = useState(false)
 
     const handleSwap = () => {
         setIsSwapped(!isSwapped)
@@ -65,19 +66,24 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
         }));
         onValueChange(newAmount)
     };
+
+    const handleStrikePriceChange = (value:string) => {
+        setUserEditedStrikePrice(true)
+        setFormValues(prev => ({ ...prev, strikePrice: value }))
+    }
     
 
     const { isConnected } = useWallet();
     const expiryOptions = getExpiryOptions() as ExpiryOption[];
 
     useEffect(() => {
-        if (priceData.price !== null) {
+        if (priceData.price !== null && !userEditedStrikePrice) {
             setFormValues(prev => ({
                 ...prev,
                 strikePrice: formatPrice(priceData.price!)
             }));
         }
-    }, [priceData.price]);
+    }, [priceData.price, userEditedStrikePrice]);
 
     const renderSection = (type: 'buy' | 'sell') => {
         const isSelling = (type === 'sell' && !isSwapped) || (type === 'buy' && isSwapped)
@@ -185,13 +191,16 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
                             Strike Price
                         </Label>
-                        <Input 
-                            type="number"
-                            placeholder={priceLoading ? "Loading..." : "0.00"}
-                            className="border-none bg-backgroundSecondary px-3 py-2 text-foreground rounded-[12px] w-full"
-                            value={priceData.price ? formatPrice(priceData.price) : formValues.strikePrice}
-                            onChange={(e) => setFormValues(prev => ({ ...prev, strikePrice: e.target.value }))}
-                        />
+                        <div className="relative">
+                            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground">$</span>
+                            <Input 
+                                type="number"
+                                placeholder={priceLoading ? "Loading..." : "0.00"}
+                                className="border-none bg-backgroundSecondary pl-6 pr-3 py-2 text-foreground rounded-[12px] w-full"
+                                value={formValues.strikePrice}
+                                onChange={(e) => handleStrikePriceChange(e.target.value)}
+                            />
+                        </div>
                         {/* {priceError && (
                             <span className="text-sm text-red-500">Failed to load SOL price</span>
                         )} */}
@@ -218,7 +227,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                         value={option.value}
                                         className="flex justify-between items-center"
                                     >
-                                        <span>{option.label} </span>
+                                        <span>{option.label} • </span>
                                         {option.date && (
                                             <CountdownTimer targetDate={option.date} />
                                         )}
