@@ -58,15 +58,15 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
     const handleClick = (value: Token) =>{
         if(selectedToken !== value){
             setSelectedToken(value)
-            setIsOpen(false)
         }
+        setIsOpen(false)
     }
 
     const handleClickOptions = (value: TradingStrategy) =>{
         if(selectedStrategy !== value){
             setSelectedStrategy(value)
-            setIsOpen(false)
         }
+        setIsOpen(false)
     }
 
     const handleOpenChange = (open: boolean) => {
@@ -102,7 +102,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                     <DialogTrigger className="py-2">
                         <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
                             {selectedToken && selectedToken.logo ? (
-                                <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full"/>
+                                <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full bg-white"/>
                             ) : null}
                             <h1>{selectedToken ? selectedToken.symbol : "Loading..."}</h1>
                             <ChevronDown className="opacity-50" size={28}/>
@@ -231,7 +231,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                                     onClick={()=>handleClick(token)}
                                     className="w-full h-fit rounded-[8px] p-2 flex justify-between space-x-4 hover:bg-secondary">
                                     <div className="flex items-center space-x-[6px]">
-                                        <Image src={token.logo} alt={token.name} width={28} height={28} className="w-7 h-7 rounded-full" />
+                                        <Image src={token.logo} alt={token.name} width={28} height={28} className="w-7 h-7 rounded-full bg-white" />
                                         <div className="flex flex-col justify-center space-y-0 h-8">
                                             <div className="flex space-x-1 items-center h-fit">
                                                 <span className="text-base text-foreground font-medium">{token.symbol}</span>

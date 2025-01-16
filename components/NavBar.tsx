@@ -29,10 +29,22 @@ export default function NavBar(){
     const { isConnected } = useWallet();
     const router = useRouter()
 
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+
     const handleClick = (state:string) =>{
         if(active!==state){
             setActive(state)
         }
+    }
+
+    const handleOpenChange = (open: boolean) => {
+        setIsOpen(open)
+    }
+
+    const handleClickPoints = () => {
+        router.push('/leaderboards')
+        setIsOpen(false)
+        setActive('leaderboards')
     }
 
     return (
@@ -124,9 +136,9 @@ export default function NavBar(){
                 >
                     
                 </Link> */}
-                <DropdownMenu>
+                <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
                     <DropdownMenuTrigger asChild>
-                        <div className="border bg-inherit rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB]">
+                        <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[#2F2A28]' : 'border bg-inherit'),"border rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[#2F2A28]")}>
                             <PointsIcon />
                         </div>
                     </DropdownMenuTrigger>
@@ -161,8 +173,8 @@ export default function NavBar(){
                             </div>
                         </div>
                         <Button
-                            className="bg-inherit border rounded-[12px] text-primary py-2 px-4 w-full text-xs font-medium shadow-none"
-                            onClick={()=>router.push('/leaderboards')}
+                            className="bg-inherit border rounded-[12px] text-primary py-2 px-4 w-full text-xs font-medium shadow-none hover:border-primary"
+                            onClick={()=>handleClickPoints()}
                         >
                             Go to leaderboard
                         </Button>

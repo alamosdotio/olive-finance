@@ -1,3 +1,4 @@
+import { Rank1Icon, Rank2Icon, Rank3Icon } from "@/public/svgs/icons";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 
 
@@ -102,7 +103,29 @@ export default function LeaderboardTable() {
                 <TableBody>
                     {leaderboardData.map((row) => (
                         <TableRow key={row.rank} className="border-none">
-                            <TableCell className="text-center text-foreground px-[10px] py-3">{row.rank}</TableCell>
+                            <TableCell className="text-center text-foreground px-[10px] py-3">
+                              {row.rank === 1 && (
+                                <span className="flex justify-center">
+                                  <Rank1Icon />
+                                </span>
+                              )}
+
+                              {row.rank === 2 && (
+                                <span className="flex justify-center">
+                                  <Rank2Icon />
+                                </span>
+                              )}
+
+                              {row.rank === 3 && (
+                                <span className="flex justify-center">
+                                  <Rank3Icon />
+                                </span>
+                              )}
+
+                              {row.rank > 3 && (
+                                row.rank
+                              )}
+                            </TableCell>
                             <TableCell className="text-foreground px-[10px] py-3">{row.address}</TableCell>
                             <TableCell className="text-foreground text-center px-[10px] py-3">{row.tradingPoints}</TableCell>
                             <TableCell className="text-foreground text-center px-[10px] py-3">{row.liquidityPoints}</TableCell>

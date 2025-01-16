@@ -94,7 +94,7 @@ export function usePythMarketData(token: string): UsePythMarketDataResult {
     fetchDailyData();
 
     
-    const intervalId = setInterval(fetchDailyData, 60000);
+    const intervalId = setInterval(fetchDailyData, 120000);
 
     return () => {
       mounted = false;

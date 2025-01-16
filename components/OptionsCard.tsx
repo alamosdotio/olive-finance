@@ -18,6 +18,7 @@ import { getExpiryOptions } from "@/utils/dateUtils";
 import { usePythPrice } from "@/hooks/usePythPrice";
 import OptionsCardTokenList from "./OptionsCardTokenList";
 import { formatPrice } from "@/utils/formatter";
+import { cn } from "@/lib/utils";
 
 interface OptionsCardProps{
     chartToken: string
@@ -32,7 +33,7 @@ interface ExpiryOption {
 
 export default function OptionsCard({onValueChange, chartToken} : OptionsCardProps){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
-    const [position, setPosition] = useState<string>("American");
+    const [isExpiry, setIsExpiry] = useState(false)
     const { priceData, loading: priceLoading, error: priceError } = usePythPrice(chartToken);
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
@@ -75,6 +76,8 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
 
     const { isConnected } = useWallet();
     const expiryOptions = getExpiryOptions() as ExpiryOption[];
+
+
 
     useEffect(() => {
         if (priceData.price !== null && !userEditedStrikePrice) {
@@ -196,7 +199,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                             <Input 
                                 type="number"
                                 placeholder={priceLoading ? "Loading..." : "0.00"}
-                                className="border-none bg-backgroundSecondary pl-6 pr-3 py-2 text-foreground rounded-[12px] w-full"
+                                className="border border-transparent bg-backgroundSecondary pl-6 pr-3 py-2 text-foreground rounded-[12px] w-full focus-visible:border-primary"
                                 value={formValues.strikePrice}
                                 onChange={(e) => handleStrikePriceChange(e.target.value)}
                             />
@@ -215,8 +218,9 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         <Select
                             value={formValues.expiry}
                             onValueChange={(value) => setFormValues(prev => ({ ...prev, expiry: value }))}
+                            onOpenChange={() => setIsExpiry(!isExpiry)}
                         >
-                            <SelectTrigger className="bg-backgroundSecondary w-full h-full rounded-[12px] text-sm">
+                            <SelectTrigger className={cn((isExpiry === true ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-full rounded-[12px] text-sm border")}>
                                 <SelectValue />
                                 <ChevronDown className="opacity-50" size={14}/>
                             </SelectTrigger>
