@@ -6,7 +6,7 @@ import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 import swap from '@/public/svgs/swap.svg'
-import { ChevronDown, Wallet} from 'lucide-react';
+import { CalendarIcon, ChevronDown, Wallet} from 'lucide-react';
 
 import Image from "next/image";
 import { Input } from "./ui/input";
@@ -19,6 +19,9 @@ import { usePythPrice } from "@/hooks/usePythPrice";
 import OptionsCardTokenList from "./OptionsCardTokenList";
 import { formatPrice } from "@/utils/formatter";
 import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Calendar } from "./ui/calendar";
+import { format } from "date-fns"
 
 interface OptionsCardProps{
     chartToken: string
@@ -34,6 +37,8 @@ interface ExpiryOption {
 export default function OptionsCard({onValueChange, chartToken} : OptionsCardProps){
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+    const [date, setDate] = useState<Date>()
     const { priceData, loading: priceLoading, error: priceError } = usePythPrice(chartToken);
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
@@ -58,6 +63,21 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
             selling:{ ...prev.selling, amount:prev.buying.amount},
             buying: {...prev.buying, amount:tempAmount}
         }))
+    }
+
+    const handleExpiryChange = (value: string) => {
+        if (value === 'custom') {
+            setFormValues(prev => ({ 
+                ...prev, 
+                expiry: value,
+            }));
+            setIsCalendarOpen(true);
+        } else {
+            setFormValues(prev => ({ 
+                ...prev, 
+                expiry: value,
+            }));
+        }
     }
 
     const handleSellingAmountChange = (newAmount: string) => {
@@ -217,10 +237,11 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         </Label>
                         <Select
                             value={formValues.expiry}
-                            onValueChange={(value) => setFormValues(prev => ({ ...prev, expiry: value }))}
+                            onValueChange={(value) => (handleExpiryChange(value))}
+                            open={isExpiry}
                             onOpenChange={() => setIsExpiry(!isExpiry)}
                         >
-                            <SelectTrigger className={cn((isExpiry === true ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-full rounded-[12px] text-sm border")}>
+                            <SelectTrigger className={cn((isExpiry === true ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-[42px] rounded-[12px] text-sm border")}>
                                 <SelectValue />
                                 <ChevronDown className="opacity-50" size={14}/>
                             </SelectTrigger>
@@ -239,11 +260,30 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                 ))}
                                 <SelectItem
                                     value="custom"
+                                    onClick={() => {
+                                        setIsCalendarOpen(true)
+                                    }}
                                 >
                                     Pick a Date
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                            <PopoverTrigger asChild>
+                                <div className="h-0"></div>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={() => {
+                                    setDate
+                                    setIsExpiry(false)
+                                }}
+                                initialFocus
+                                />
+                            </PopoverContent>
+                        </Popover>
                     </div>
                 </div>
                 {!isConnected && (
