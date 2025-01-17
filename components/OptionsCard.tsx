@@ -277,7 +277,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                 mode="single"
                                 selected={date}
                                 onSelect={() => {
-                                    setDate
+                                    setDate(date)
                                     setIsExpiry(false)
                                 }}
                                 initialFocus
