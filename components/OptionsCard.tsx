@@ -208,7 +208,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                     {renderSection('buy')}
                 </div>
             </CardContent>
-            <CardFooter className="px-6 py-7 flex flex-col space-y-10 border-t">
+            <CardFooter className="px-6 py-7 flex flex-col space-y-8 border-t">
                 <div className="w-full flex gap-4">
                     <div className="flex flex-col gap-[6px] w-full">
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">

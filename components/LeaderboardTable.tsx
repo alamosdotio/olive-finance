@@ -28,8 +28,8 @@ export default function LeaderboardTable() {
   const leaderboardData = generateLeaderboardData(50);
 
     return (
-        <div className="rounded-[26px] border">
-          <ScrollArea className="h-[575px] w-full rounded-[25px]">
+        <div className="rounded-[26px] border h-fit">
+          {/* <ScrollArea className="h-fit w-full rounded-[25px]"> */}
             <Table>
                 <TableHeader>
                     <TableRow className="w-full">
@@ -81,7 +81,7 @@ export default function LeaderboardTable() {
                     ))}
                 </TableBody>
             </Table>
-            </ScrollArea>
+            {/* </ScrollArea> */}
         </div>
     )
 }
