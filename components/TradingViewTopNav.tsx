@@ -87,14 +87,14 @@ export default function TradingViewTopNav({
                                         <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
                                     )}
                                 </button>
-                                <button className={cn((active === 'crypto' ? 'text-primary' : ''),"px-1 relative")}
+                                {/* <button className={cn((active === 'crypto' ? 'text-primary' : ''),"px-1 relative")}
                                     onClick={()=>setActive('crypto')}
                                 >
                                     <span>Crypto</span>
                                     {active === 'crypto' && (
                                         <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
                                     )}
-                                </button>
+                                </button> */}
                                 <button className={cn((active === 'memes' ? 'text-primary' : ''),"px-1 relative")}
                                     onClick={()=>setActive('memes')}
                                 >

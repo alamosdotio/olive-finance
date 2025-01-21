@@ -42,6 +42,8 @@ const cryptoData: CryptoData[] = [
     {id: 'w', name: 'Wormhole', symbol:'WORMHOLE', iconPath: '/images/wormhole.png', pythSymbol: 'Crypto.W/USD', category: {crypto: true, memes: false, forex: false, ai: false, metals:false}},
     {id: 'popcat', name: 'Popcat (SOL)', symbol:'POPCAT', iconPath: '/images/popcat.png', pythSymbol: 'Crypto.POPCAT/USD', category: {crypto: true, memes: true, forex: false, ai: false, metals:false}},
     {id: 'pnut', name: 'Peanut the Squirrel', symbol:'PNUT', iconPath: '/images/pnut.png', pythSymbol: 'Crypto.PNUT/USD', category: {crypto: true, memes: true, forex: false, ai: false, metals:false}},
+    {id: 'paxg', name: 'PAX Gold', symbol:'PAXG', iconPath: '/images/paxg.png', pythSymbol: 'Crypto.PAXG/USD', category: {crypto: true, memes: false, forex: false, ai: false, metals:true}},
+    {id: 'eurc', name: 'EURC', symbol:'EURC', iconPath: '/images/eurc.png', pythSymbol: 'Crypto.EURC/USD', category: {crypto: true, memes: false, forex: true, ai: false, metals:false}},
 ]
 
 interface CryptoNavProps {

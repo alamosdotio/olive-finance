@@ -80,5 +80,12 @@ export const PRICE_FEEDS: priceFeed[] = [
         token: 'Crypto.PNUT/USD',
         id: '0x116da895807f81f6b5c5f01b109376e7f6834dc8b51365ab7cdfa66634340e54'
     },
-
+    {
+        token: 'Crypto.PAXG/USD',
+        id: '0x273717b49430906f4b0c230e99aa1007f83758e3199edbc887c0d06c3e332494'
+    },
+    {
+        token: 'Crypto.EURC/USD',
+        id: '0x76fa85158bf14ede77087fe3ae472f66213f6ea2f5b411cb2de472794990fa5c'
+    }
 ]

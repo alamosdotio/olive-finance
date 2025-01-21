@@ -72,7 +72,7 @@ export default function LeaderboardTable() {
                             <TableCell className="text-foreground text-center px-[10px] py-3">{row.liquidityPoints}</TableCell>
                             <TableCell className="text-foreground text-center px-[10px] py-3">{row.referralPoints}</TableCell>
                             <TableCell className="flex justify-center px-[10px] py-3">
-                              <div className="flex items-center gap-2 bg-[#2F2B32] px-2 py-1 rounded-[10px]">
+                              <div className="flex items-center gap-2 bg-shade px-2 py-1 rounded-[10px]">
                                   <StarIcon />
                                   <span className="text-sm font-normal text-foreground">{row.totalPoints}</span>
                               </div>

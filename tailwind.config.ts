@@ -10,6 +10,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        shade: 'var(--shade)',
         background: 'var(--background)',
         backgroundSecondary: 'var(--background-secondary)',
         foreground: 'var(--foreground)',
@@ -51,6 +52,9 @@ export default {
           4: 'var(--chart-4)',
           5: 'var(--chart-5)',
         },
+      },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(to left, var(--gradient-start), var(--gradient-middle), var(--gradient-end))',
       },
       borderRadius: {
         lg: 'var(--radius)',

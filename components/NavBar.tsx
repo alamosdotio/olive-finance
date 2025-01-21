@@ -62,7 +62,7 @@ export default function NavBar(){
                     > 
                          <OptionsIcon />
                          <h1 className="text-sm font-medium group-hover:text-primary">Options</h1>
-                         <Badge className={cn((active === 'Options' ? 'border-primary text-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                     </Link>
                     <Link 
                         href='/earn'
@@ -71,7 +71,7 @@ export default function NavBar(){
                     > 
                          <EarnIcon />
                          <h1 className="text-sm font-medium">Earn</h1>
-                         <Badge className="rounded-[4px] bg-gradient-to-l from-[#A899F4] via-[#A899F4] to-[#DAD1FF] px-1 py-[3px] text-background h-4 text-[8px]">48% APY</Badge>
+                         <Badge className="rounded-[4px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
                     </Link>
                     
                     
@@ -95,7 +95,7 @@ export default function NavBar(){
                                 
                             ].map((item) => (
                                 <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
-                                    <DropdownMenuItem className="focus:bg-primary focus:text-white px-4 py-2 cursor-pointer">
+                                    <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
                                     </DropdownMenuItem>
                                 </Link>
@@ -107,7 +107,7 @@ export default function NavBar(){
                                 "Feedback",
                             ].map((item) => (
                                 <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
-                                    <DropdownMenuItem className="focus:bg-primary focus:text-white px-4 py-2 cursor-pointer">
+                                    <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item}
                                     </DropdownMenuItem>
                                 </Link>
@@ -138,7 +138,7 @@ export default function NavBar(){
                 </Link> */}
                 <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
                     <DropdownMenuTrigger asChild>
-                        <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[#2F2A28]' : 'border bg-inherit'),"border rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[#2F2A28]")}>
+                        <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[rgb(254,237,203,0.2)]")}>
                             <PointsIcon />
                         </div>
                     </DropdownMenuTrigger>

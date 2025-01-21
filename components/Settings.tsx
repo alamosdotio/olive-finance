@@ -122,12 +122,18 @@ export default function Settings(){
                             Color Theme
                         </Label>
                         <div className="flex space-x-3">
-                            <Button className="bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border border-transparent hover:border-primary">
+                            <Button
+                                 className={cn((theme === 'light-green' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                onClick={()=>setTheme('light-green')}
+                            >
                                 <SunIcon />
                                 <GreenCircleIcon />
                                 <span className="text-xs text-foreground font-normal">Light Green</span>
                             </Button>
-                            <Button className="bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border border-transparent hover:border-primary">
+                            <Button 
+                                className={cn((theme === 'dark-green' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                onClick={()=>setTheme('dark-green')}
+                            >
                                 <MoonIcon />
                                 <GreenCircleIcon />
                                 <span className="text-xs text-foreground font-normal">Dark Green</span>
@@ -135,16 +141,16 @@ export default function Settings(){
                         </div>
                         <div className="flex space-x-3">
                             <Button
-                                 className={cn((theme === 'light' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
-                                onClick={()=>setTheme('light')}
+                                 className={cn((theme === 'light-purple' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                onClick={()=>setTheme('light-purple')}
                             >
                                 <SunIcon />
                                 <PurpleCircleIcon />
                                 <span className="text-xs text-foreground font-normal">Light Purple</span>
                             </Button>
                             <Button 
-                                className={cn((theme === 'dark' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
-                                onClick={()=>setTheme('dark')}
+                                className={cn((theme === 'dark-purple' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                onClick={()=>setTheme('dark-purple')}
                             >
                                 <MoonIcon />
                                 <PurpleCircleIcon />

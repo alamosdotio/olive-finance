@@ -21,7 +21,8 @@ import { formatPrice } from "@/utils/formatter";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
-import { format } from "date-fns"
+import { useTheme } from "next-themes";
+import { SwapDarkGreen, SwapDarkPurple, SwapLightGreen, SwapLightPurple } from "@/public/svgs/icons";
 
 interface OptionsCardProps{
     chartToken: string
@@ -40,6 +41,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
     const [date, setDate] = useState<Date>()
     const { priceData, loading: priceLoading, error: priceError } = usePythPrice(chartToken);
+    const { theme } = useTheme()
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
         buying: { type: string; amount: string };
@@ -167,12 +169,12 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         </div>
                             <div className="w-full flex gap-1">
                                 <Button
-                                    className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-auto text-secondary-foreground bg-inherit shadow-none"
+                                    className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
                                 >
                                     Max
                                 </Button>
                                 <Button
-                                    className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-auto text-secondary-foreground bg-inherit shadow-none"
+                                    className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
                                 >
                                     Half
                                 </Button>
@@ -184,10 +186,22 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 <div className="relative flex justify-center">
                     <div className="absolute top-1/2 w-full border-t bg-border"/>
                     <Button
-                        className="bg-background border rounded-full p-3 w-14 h-14 z-50 hover:border-primary"
+                        className="bg-background border rounded-full p-3 w-14 h-14 z-50 hover:border-primary [&_svg]:size-8 flex items-center"
                         onClick={handleSwap}
                     >
-                        <Image src={swap} alt="swap button" className="w-8 h-8"/>
+                        {theme === 'dark-purple' && (
+                            <SwapDarkPurple />
+                        )}
+
+                        {theme === 'light-purple' && (
+                            <SwapLightPurple />
+                        )}
+                        {theme === 'dark-green' && (
+                            <SwapDarkGreen />
+                        )}
+                        {theme === 'light-green' && (
+                            <SwapLightGreen />
+                        )}
                     </Button>
                 </div>
                 <div className="px-6 pb-7 flex flex-col justify-between space-y-[84px]">

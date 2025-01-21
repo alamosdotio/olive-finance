@@ -42,7 +42,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   }, [symbol, logo]);
 
   useEffect(() => {
-    setChartTheme(resolvedTheme === 'dark' ? 'Dark' : 'Light');
+    setChartTheme(resolvedTheme === 'dark-purple' || resolvedTheme === 'dark-green' ? 'Dark' : 'Light');
   }, [resolvedTheme]);
 
   useEffect(() => {
