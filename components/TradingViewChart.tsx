@@ -3,6 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import datafeed, { setSymbolLogo } from '@/lib/datafeed';
+import { Button } from './ui/button';
+import { Activity, ArrowUpDown, BarChart, BarChart3, CandlestickChart, ChevronDown, LineChart, PlusCircle, Search, TrendingUp } from 'lucide-react';
+import { Separator } from './ui/separator';
+import { AreaIcon, BarsIcon, CandleStickIcon, IndicatorsIcon } from '@/public/svgs/icons';
+import { cn } from '@/lib/utils';
 
 declare global {
   interface Window {
@@ -26,6 +31,44 @@ const getFormatConfig = (price: number) => {
   return { precision: 2, minMove: 0.01 };
 };
 
+const INTERVALS = [
+  { label: '1m', value: '1' },
+  { label: '30m', value: '30' },
+  { label: '1h', value: '60' },
+  { label: 'D', value: 'D' },
+];
+
+const ALL_INTERVALS = [
+  { label: '1m', value: '1' },
+  { label: '5m', value: '5' },
+  { label: '15m', value: '15' },
+  { label: '30m', value: '30' },
+  { label: '1h', value: '60' },
+  { label: '4h', value: '240' },
+  { label: 'D', value: 'D' },
+];
+
+const CHART_TYPES = [
+  { label: 'Bars', value: 0, icon: BarsIcon },
+  { label: 'Candles', value: 1, icon: CandleStickIcon },
+  { label: 'Line', value: 2, icon: AreaIcon },
+];
+
+const ALL_CHART_TYPES = [
+  { label: 'Bars', value: 0, icon: BarChart3 },
+  { label: 'Candles', value: 1, icon: CandlestickChart },
+  { label: 'Hollow candles', value: 9, icon: CandlestickChart },
+  { label: 'Line', value: 2, icon: LineChart },
+  { label: 'Line with markers', value: 3, icon: Activity },
+  { label: 'Step line', value: 4, icon: TrendingUp },
+  { label: 'Area', value: 5, icon: LineChart },
+  { label: 'HLC area', value: 6, icon: LineChart },
+  { label: 'Baseline', value: 7, icon: TrendingUp },
+  { label: 'Columns', value: 8, icon: BarChart },
+  { label: 'High-low', value: 10, icon: ArrowUpDown },
+  { label: 'Heikin Ashi', value: 11, icon: CandlestickChart },
+];
+
 const TradingViewChart: React.FC<TradingViewChartProps> = ({ 
   symbol = 'Crypto.BTC/USD', 
   logo = '/images/bitcoin.png' 
@@ -36,14 +79,50 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   const { resolvedTheme } = useTheme();
   const [chartTheme, setChartTheme] = useState<'Light' | 'Dark'>('Dark');
   const [isChartReady, setIsChartReady] = useState(false);
+  const [selectedInterval, setSelectedInterval] = useState('D');
+  const [chartType, setChartType] = useState(1);
+  const [displaySymbol, setDisplaySymbol] = useState(symbol.replace('Crypto.', ''));
 
   useEffect(() => {
     setSymbolLogo(symbol, logo);
+    setDisplaySymbol(symbol.replace('Crypto.', ''));
   }, [symbol, logo]);
 
   useEffect(() => {
     setChartTheme(resolvedTheme === 'dark-purple' || resolvedTheme === 'dark-green' ? 'Dark' : 'Light');
   }, [resolvedTheme]);
+
+  const handleIntervalChange = (interval: string) => {
+    setSelectedInterval(interval);
+    if (chartRef.current) {
+      chartRef.current.setResolution(interval);
+    }
+  };
+
+  const handleChartTypeChange = (type: number) => {
+    setChartType(type);
+    if (chartRef.current) {
+      chartRef.current.setChartType(type);
+    }
+  };
+
+  const handleSymbolSearch = () => {
+    if (widgetRef.current) {
+      widgetRef.current.chart().executeActionById('symbolSearch');
+    }
+  };
+
+  const handleCompareSymbol = () => {
+    if (widgetRef.current) {
+      widgetRef.current.chart().executeActionById('compareOrAdd');
+    }
+  };
+
+  const handleIndicators = () => {
+    if (widgetRef.current) {
+      widgetRef.current.chart().executeActionById('insertIndicator');
+    }
+  };
 
   useEffect(() => {
     if (typeof window.TradingView === 'undefined' || !containerRef.current || widgetRef.current) return;
@@ -57,7 +136,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
 
         const widgetOptions: any = {
           symbol: symbol,
-          interval: '15',
+          interval: selectedInterval,
           container: containerRef.current,
           datafeed: datafeed,
           library_path: "/charting_library/",
@@ -72,6 +151,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
             "control_bar",
             "timeframes_toolbar",
             "create_volume_indicator_by_default",
+            "header_widget",
           ],
           enabled_features: [
             "hide_left_toolbar_by_default",
@@ -113,7 +193,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
 
         widget.onChartReady(() => {
           chartRef.current = widget.chart();
-          chartRef.current.setChartType(1);
+          chartRef.current.setChartType(chartType);
           setIsChartReady(true);
         });
       } catch (error) {
@@ -131,11 +211,12 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         setIsChartReady(false);
       }
     };
-  }, [chartTheme]);
+  }, [chartTheme, selectedInterval]);
 
   useEffect(() => {
     if (isChartReady && chartRef.current) {
       chartRef.current.setSymbol(symbol);
+      setDisplaySymbol(symbol.replace('Crypto.', ''));
     }
   }, [symbol, isChartReady]);
 
@@ -157,7 +238,61 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   }, []);
 
   return (
-    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-full border border-border">
+    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-full border border-border flex flex-col">
+      <div className='px-2 py-1 w-full flex border-b border-border items-center'>
+        <div className='w-[140px] flex justify-between'>
+          <Button 
+            className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal [&_svg]:size-5 hover:text-primary'
+            onClick={handleSymbolSearch}
+          >
+            <Search size={20}/>
+            <span>{displaySymbol}</span>
+          </Button>
+          <Button 
+            className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal [&_svg]:size-5 hover:text-primary'
+            onClick={handleCompareSymbol}
+          >
+            <PlusCircle size={20}/>
+          </Button>
+        </div>
+
+        <Separator orientation='vertical' className='mx-2 h-8'/>
+
+        {INTERVALS.map((interval) => (
+          <Button 
+            key={interval.value}
+            className={cn((selectedInterval===interval.value ? 'text-primary' : 'text-secondary-foreground'),'bg-inherit p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary')}
+            onClick={() => handleIntervalChange(interval.value)}
+          >
+            {interval.label}
+          </Button>
+        ))}
+        <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary'>
+          <ChevronDown />
+        </Button>
+
+        <Separator orientation='vertical' className='mx-2 h-8'/>
+
+        {CHART_TYPES.map((type) => (
+          <Button 
+            key={type.value}
+            className={cn((chartType === type.value ? 'text-primary' : 'text-secondary-foreground'),'bg-inherit p-2 flex gap-2 shadow-none text-sm font-normal [&_svg]:size-5 hover:text-primary')}
+            onClick={() => handleChartTypeChange(type.value)}
+          >
+            <type.icon />
+          </Button>
+        ))}
+        <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary'>
+          <ChevronDown />
+        </Button>
+
+        <Separator orientation='vertical' className='mx-2 h-8'/>
+
+        <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal [&_svg]:size-5 hover:text-primary'>
+          <IndicatorsIcon />
+          <span>Indicators</span>
+        </Button>
+      </div>
       <div 
         id="tv_chart_container" 
         ref={containerRef} 

@@ -702,3 +702,45 @@ export function SwapDarkGreen(){
   </defs>
 </svg>
 }
+
+export function CompareIcon(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path d="M9.99984 18.3327C14.5832 18.3327 18.3332 14.5827 18.3332 9.99935C18.3332 5.41602 14.5832 1.66602 9.99984 1.66602C5.4165 1.66602 1.6665 5.41602 1.6665 9.99935C1.6665 14.5827 5.4165 18.3327 9.99984 18.3327Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M6.6665 10H13.3332" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 13.3327V6.66602" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+}
+
+export function BarsIcon(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path d="M6.6665 3.33398L6.6665 16.6673" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M4.1665 15L6.6665 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M6.6665 5.83398L9.1665 5.83398" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M10.8335 9.16602L13.3335 9.16602" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M13.3335 13.334L15.8335 13.334" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M13.3335 3.33398L13.3335 16.6673" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+</svg>
+}
+
+export function CandleStickIcon(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="12" height="18" viewBox="0 0 12 18" fill="none">
+  <path d="M2.6665 1.5V4M2.6665 14V16.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M3.66667 4H1.66667C1.29848 4 1 4.25584 1 4.57143V13.4286C1 13.7442 1.29848 14 1.66667 14H3.66667C4.03486 14 4.33333 13.7442 4.33333 13.4286V4.57143C4.33333 4.25584 4.03486 4 3.66667 4Z" stroke="currentColor" stroke-width="1.2"/>
+  <path d="M9.3335 4V6.5M9.3335 11.5V14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M10.3332 6.5H8.33317C7.96498 6.5 7.6665 6.79848 7.6665 7.16667V10.8333C7.6665 11.2015 7.96498 11.5 8.33317 11.5H10.3332C10.7014 11.5 10.9998 11.2015 10.9998 10.8333V7.16667C10.9998 6.79848 10.7014 6.5 10.3332 6.5Z" stroke="currentColor" stroke-width="1.2"/>
+</svg>
+}
+
+export function AreaIcon(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path d="M10.3113 12.3282C10.9291 12.9461 11.9422 12.9072 12.5108 12.2438L16.5664 7.51226C16.863 7.16625 17.43 7.36498 17.4457 7.82043L17.6788 14.5782C17.6885 14.8609 17.462 15.0954 17.1791 15.0954H3.58087C3.12888 15.0954 2.90887 14.5433 3.237 14.2324L7.49428 10.1992C7.69092 10.0129 8.00016 10.0171 8.1917 10.2087L10.3113 12.3282Z" fill="currentColor" stroke="currentColor"/>
+  <path d="M2.14258 11.9051L7.11528 6.93243C7.51901 6.5287 8.17826 6.54439 8.56233 6.96686L10.6631 9.27773C11.0688 9.72403 11.7744 9.71227 12.165 9.25271L17.4997 2.97656" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+</svg>
+}
+
+export function IndicatorsIcon(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
+  <path d="M12.0711 16.8664V12.1978M12.0711 12.1978V8.5293C12.0711 7.97701 12.5188 7.5293 13.0711 7.5293H14.4395C14.9918 7.5293 15.4395 7.97701 15.4395 8.5293V16.3332C15.4395 16.8855 14.9918 17.3332 14.4395 17.3332H8.43667M12.0711 12.1978H8.43667M8.43667 12.1978V11.3304C8.43667 10.7781 7.98896 10.3304 7.43667 10.3304H6.06832C5.51604 10.3304 5.06832 10.7781 5.06832 11.3304V12.6647M8.43667 12.1978V17.3332M5.06832 12.6647H2.3335C1.78121 12.6647 1.3335 13.1124 1.3335 13.6647V16.3332C1.3335 16.8855 1.78121 17.3332 2.3335 17.3332H5.06832M5.06832 12.6647V17.3332M5.06832 17.3332H8.43667" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M1.3335 7.33268L5.42665 2.92996C5.83808 2.48742 6.54497 2.50805 6.92988 2.97383L9.04701 5.53574C9.42174 5.98919 10.105 6.02281 10.5224 5.60834L15.5002 0.666016" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+</svg>
+}
