@@ -443,9 +443,9 @@ export function Rank1Icon(){
   <path d="M10.6841 8.14799V7H13.3161V17H12.0281V8.14799H10.6841Z" fill="#141519"/>
   <defs>
     <linearGradient id="paint0_linear_2075_10832" x1="22.5" y1="4" x2="3" y2="19" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFBF35"/>
-      <stop offset="0.575865" stop-color="#FFF2D5"/>
-      <stop offset="0.985" stop-color="#FFBF35"/>
+      <stop stopColor="#FFBF35"/>
+      <stop offset="0.575865" stopColor="#FFF2D5"/>
+      <stop offset="0.985" stopColor="#FFBF35"/>
     </linearGradient>
   </defs>
 </svg>
@@ -457,9 +457,9 @@ export function Rank2Icon(){
   <path d="M8.63281 16.1071C9.81815 15.1731 10.7468 14.4084 11.4188 13.8132C12.0908 13.2088 12.6555 12.5815 13.1128 11.9313C13.5795 11.272 13.8128 10.6264 13.8128 9.99451C13.8128 9.39927 13.6635 8.93224 13.3648 8.59341C13.0755 8.24542 12.6041 8.07143 11.9508 8.07143C11.3161 8.07143 10.8215 8.26832 10.4668 8.66209C10.1215 9.0467 9.93481 9.5641 9.90681 10.2143H8.67481C8.71215 9.18865 9.02948 8.39652 9.62681 7.83791C10.2241 7.2793 10.9941 7 11.9368 7C12.8981 7 13.6588 7.26099 14.2188 7.78297C14.7881 8.30495 15.0728 9.02381 15.0728 9.93956C15.0728 10.6996 14.8395 11.4414 14.3728 12.1648C13.9155 12.8791 13.3928 13.511 12.8048 14.0604C12.2168 14.6007 11.4655 15.2326 10.5508 15.956H15.3668V17H8.63281V16.1071Z" fill="#141519"/>
   <defs>
     <linearGradient id="paint0_linear_2075_2684" x1="22.5" y1="4" x2="3" y2="19" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#AEAEAE"/>
-      <stop offset="0.575865" stop-color="#FEFEFE"/>
-      <stop offset="0.985" stop-color="#AEAEAE"/>
+      <stop stopColor="#AEAEAE"/>
+      <stop offset="0.575865" stopColor="#FEFEFE"/>
+      <stop offset="0.985" stopColor="#AEAEAE"/>
     </linearGradient>
   </defs>
 </svg>
@@ -471,9 +471,9 @@ export function Rank3Icon(){
   <path d="M8.80097 9.64151C8.86631 8.81491 9.19764 8.16801 9.79497 7.70081C10.3923 7.2336 11.167 7 12.119 7C12.7536 7 13.2996 7.11231 13.757 7.33693C14.2236 7.55256 14.5736 7.84906 14.807 8.22642C15.0496 8.60377 15.171 9.03055 15.171 9.50674C15.171 10.0638 15.003 10.5445 14.667 10.9488C14.3403 11.3531 13.911 11.6137 13.379 11.7305V11.7978C13.9856 11.9416 14.4663 12.2246 14.821 12.6469C15.1756 13.0692 15.353 13.6217 15.353 14.3046C15.353 14.8167 15.2316 15.2794 14.989 15.6927C14.7463 16.097 14.3823 16.416 13.897 16.6496C13.4116 16.8832 12.8283 17 12.147 17C11.1576 17 10.3456 16.7529 9.71097 16.2588C9.07631 15.7556 8.72164 15.0458 8.64697 14.1294H9.87897C9.94431 14.6685 10.173 15.1087 10.565 15.4501C10.957 15.7916 11.4796 15.9623 12.133 15.9623C12.7863 15.9623 13.281 15.8005 13.617 15.4771C13.9623 15.1447 14.135 14.7179 14.135 14.1968C14.135 13.5229 13.9016 13.0377 13.435 12.7412C12.9683 12.4447 12.2636 12.2965 11.321 12.2965H10.999V11.2722H11.335C12.1936 11.2633 12.8423 11.1285 13.281 10.8679C13.7196 10.5984 13.939 10.1851 13.939 9.62803C13.939 9.15184 13.7756 8.76999 13.449 8.48248C13.1316 8.19497 12.6743 8.05121 12.077 8.05121C11.4983 8.05121 11.0316 8.19497 10.677 8.48248C10.3223 8.76999 10.1123 9.15633 10.047 9.64151H8.80097Z" fill="#141519"/>
   <defs>
     <linearGradient id="paint0_linear_2075_14916" x1="22.5" y1="4" x2="3" y2="19" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A36E33"/>
-      <stop offset="0.575865" stop-color="#DCCCAA"/>
-      <stop offset="0.985" stop-color="#A36E33"/>
+      <stop stopColor="#A36E33"/>
+      <stop offset="0.575865" stopColor="#DCCCAA"/>
+      <stop offset="0.985" stopColor="#A36E33"/>
     </linearGradient>
   </defs>
 </svg>
@@ -485,9 +485,9 @@ export function Rank1Big(){
   <path d="M32.0518 24.444V21H39.9478V51H36.0838V24.444H32.0518Z" fill="#141519"/>
   <defs>
     <linearGradient id="paint0_linear_305_25231" x1="67.5" y1="12" x2="9" y2="57" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFBF35"/>
-      <stop offset="0.575865" stop-color="#FFF2D5"/>
-      <stop offset="0.985" stop-color="#FFBF35"/>
+      <stop stopColor="#FFBF35"/>
+      <stop offset="0.575865" stopColor="#FFF2D5"/>
+      <stop offset="0.985" stopColor="#FFBF35"/>
     </linearGradient>
   </defs>
 </svg>
@@ -499,9 +499,9 @@ export function Rank2Big(){
   <path d="M25.8989 48.3214C29.4549 45.5192 32.2409 43.2253 34.2569 41.4396C36.2729 39.6264 37.9669 37.7445 39.3389 35.794C40.7389 33.8159 41.4389 31.8791 41.4389 29.9835C41.4389 28.1978 40.9909 26.7967 40.0949 25.7802C39.2269 24.7363 37.8129 24.2143 35.8529 24.2143C33.9489 24.2143 32.4649 24.8049 31.4009 25.9863C30.3649 27.1401 29.8049 28.6923 29.7209 30.6429H26.0249C26.1369 27.5659 27.0889 25.1896 28.8809 23.5137C30.6729 21.8379 32.9829 21 35.8109 21C38.6949 21 40.9769 21.783 42.6569 23.3489C44.3649 24.9148 45.2189 27.0714 45.2189 29.8187C45.2189 32.0989 44.5189 34.3242 43.1189 36.4945C41.7469 38.6374 40.1789 40.533 38.4149 42.1813C36.6509 43.8022 34.3969 45.6978 31.6529 47.8681H46.1009V51H25.8989V48.3214Z" fill="#141519"/>
   <defs>
     <linearGradient id="paint0_linear_305_25228" x1="67.5" y1="12" x2="9" y2="57" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#AEAEAE"/>
-      <stop offset="0.575865" stop-color="#FEFEFE"/>
-      <stop offset="0.985" stop-color="#AEAEAE"/>
+      <stop stopColor="#AEAEAE"/>
+      <stop offset="0.575865" stopColor="#FEFEFE"/>
+      <stop offset="0.985" stopColor="#AEAEAE"/>
     </linearGradient>
   </defs>
 </svg>
@@ -513,9 +513,9 @@ export function Rank3Big(){
   <path d="M26.4029 28.9245C26.5989 26.4447 27.5929 24.504 29.3849 23.1024C31.1769 21.7008 33.5009 21 36.3569 21C38.2609 21 39.8989 21.3369 41.2709 22.0108C42.6709 22.6577 43.7209 23.5472 44.4209 24.6792C45.1489 25.8113 45.5129 27.0916 45.5129 28.5202C45.5129 30.1914 45.0089 31.6334 44.0009 32.8464C43.0209 34.0593 41.7329 34.841 40.1369 35.1914V35.3935C41.9569 35.8248 43.3989 36.6739 44.4629 37.9407C45.5269 39.2075 46.0589 40.8652 46.0589 42.9137C46.0589 44.4501 45.6949 45.8383 44.9669 47.0782C44.2389 48.2911 43.1469 49.248 41.6909 49.9488C40.2349 50.6496 38.4849 51 36.4409 51C33.4729 51 31.0369 50.2588 29.1329 48.7763C27.2289 47.2668 26.1649 45.1375 25.9409 42.3881H29.6369C29.8329 44.0054 30.5189 45.3261 31.6949 46.3504C32.8709 47.3747 34.4389 47.8868 36.3989 47.8868C38.3589 47.8868 39.8429 47.4016 40.8509 46.4313C41.8869 45.434 42.4049 44.1536 42.4049 42.5903C42.4049 40.5687 41.7049 39.1132 40.3049 38.2237C38.9049 37.3342 36.7909 36.8895 33.9629 36.8895H32.9969V33.8167H34.0049C36.5809 33.7898 38.5269 33.3854 39.8429 32.6038C41.1589 31.7951 41.8169 30.5553 41.8169 28.8841C41.8169 27.4555 41.3269 26.31 40.3469 25.4474C39.3949 24.5849 38.0229 24.1536 36.2309 24.1536C34.4949 24.1536 33.0949 24.5849 32.0309 25.4474C30.9669 26.31 30.3369 27.469 30.1409 28.9245H26.4029Z" fill="#141519"/>
   <defs>
     <linearGradient id="paint0_linear_305_25234" x1="67.5" y1="12" x2="9" y2="57" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A36E33"/>
-      <stop offset="0.575865" stop-color="#DCCCAA"/>
-      <stop offset="0.985" stop-color="#A36E33"/>
+      <stop stopColor="#A36E33"/>
+      <stop offset="0.575865" stopColor="#DCCCAA"/>
+      <stop offset="0.985" stopColor="#A36E33"/>
     </linearGradient>
   </defs>
 </svg>
@@ -526,8 +526,8 @@ export function Rank3Big(){
   <path d="M9.15858 2.24957L10.3337 4.49719C10.492 4.80803 10.917 5.10293 11.2754 5.1667L13.4005 5.50145C14.759 5.71665 15.0756 6.65714 14.1006 7.59763L12.4421 9.18372C12.1671 9.44674 12.0088 9.96481 12.1004 10.3394L12.5755 12.3001C12.9505 13.8463 12.0838 14.4521 10.6587 13.6391L8.66688 12.5073C8.30852 12.3001 7.70848 12.3001 7.35012 12.5073L5.35832 13.6391C3.93322 14.4441 3.06649 13.8463 3.44152 12.3001L3.91655 10.3394C3.99156 9.95683 3.83321 9.43877 3.55819 9.17575L1.89975 7.58966C0.92468 6.65714 1.24137 5.71665 2.59979 5.49348L4.72494 5.15873C5.0833 5.10293 5.50833 4.80006 5.66667 4.48922L6.84175 2.2416C7.48346 1.03012 8.51687 1.03012 9.15858 2.24957Z" fill="url(#paint0_linear_250_10233)"/>
   <defs>
     <linearGradient id="paint0_linear_250_10233" x1="12.4446" y1="3.10504" x2="0.220612" y2="4.59003" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F4CA99"/>
-      <stop offset="1" stop-color="#FFF0D1"/>
+      <stop stopColor="#F4CA99"/>
+      <stop offset="1" stopColor="#FFF0D1"/>
     </linearGradient>
   </defs>
 </svg>
@@ -539,12 +539,12 @@ export function Rank2BoxDark(){
   <path d="M50 0H216L266 20H0L50 0Z" fill="url(#paint1_linear_0_1)"/>
   <defs>
   <linearGradient id="paint0_linear_0_1" x1="154" y1="126" x2="154" y2="20" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#141519"/>
-  <stop offset="1" stop-color="#262430"/>
+  <stop stopColor="#141519"/>
+  <stop offset="1" stopColor="#262430"/>
   </linearGradient>
   <linearGradient id="paint1_linear_0_1" x1="154" y1="20" x2="154.5" y2="-6.59888e-07" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#141519"/>
-  <stop offset="1" stop-color="#262430"/>
+  <stop stopColor="#141519"/>
+  <stop offset="1" stopColor="#262430"/>
   </linearGradient>
   </defs>
   </svg>
@@ -556,12 +556,12 @@ export function Rank1BoxDark(){
   <path d="M50 0H216L266 20H0L50 0Z" fill="url(#paint1_linear_0_1)"/>
   <defs>
   <linearGradient id="paint0_linear_0_1" x1="154" y1="126" x2="154" y2="20" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#141519"/>
-  <stop offset="1" stop-color="#262430"/>
+  <stop stopColor="#141519"/>
+  <stop offset="1" stopColor="#262430"/>
   </linearGradient>
   <linearGradient id="paint1_linear_0_1" x1="154" y1="20" x2="154.5" y2="-6.59888e-07" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#141519"/>
-  <stop offset="1" stop-color="#262430"/>
+  <stop stopColor="#141519"/>
+  <stop offset="1" stopColor="#262430"/>
   </linearGradient>
   </defs>
 </svg>
@@ -573,12 +573,12 @@ export function Rank3BoxDark(){
       <path d="M50 0H216L266 20H0L50 0Z" fill="url(#paint1_linear_0_1)"/>
       <defs>
       <linearGradient id="paint0_linear_0_1" x1="154" y1="126" x2="154" y2="20" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#141519"/>
-      <stop offset="1" stop-color="#262430"/>
+      <stop stopColor="#141519"/>
+      <stop offset="1" stopColor="#262430"/>
       </linearGradient>
       <linearGradient id="paint1_linear_0_1" x1="154" y1="20" x2="154.5" y2="-6.59888e-07" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#141519"/>
-      <stop offset="1" stop-color="#262430"/>
+      <stop stopColor="#141519"/>
+      <stop offset="1" stopColor="#262430"/>
       </linearGradient>
       </defs>
   </svg>
@@ -590,12 +590,12 @@ export function Rank2BoxLight(){
 <path d="M50 0H216L266 20H0L50 0Z" fill="url(#paint1_linear_0_1)"/>
 <defs>
 <linearGradient id="paint0_linear_0_1" x1="154" y1="126" x2="154" y2="20" gradientUnits="userSpaceOnUse">
-<stop stop-color="#E2DDFE" stop-opacity="0"/>
-<stop offset="1" stop-color="#E2DDFE"/>
+<stop stopColor="#E2DDFE" stop-opacity="0"/>
+<stop offset="1" stopColor="#E2DDFE"/>
 </linearGradient>
 <linearGradient id="paint1_linear_0_1" x1="154" y1="20" x2="154" y2="0" gradientUnits="userSpaceOnUse">
-<stop stop-color="#E2DDFE" stop-opacity="0.4"/>
-<stop offset="1" stop-color="#E2DDFE"/>
+<stop stopColor="#E2DDFE" stop-opacity="0.4"/>
+<stop offset="1" stopColor="#E2DDFE"/>
 </linearGradient>
 </defs>
 </svg>
@@ -607,12 +607,12 @@ export function Rank1BoxLight(){
   <path d="M50 0H216L266 20H0L50 0Z" fill="url(#paint1_linear_0_1)"/>
   <defs>
   <linearGradient id="paint0_linear_0_1" x1="154" y1="126" x2="154" y2="20" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#E2DDFE" stop-opacity="0"/>
-  <stop offset="1" stop-color="#E2DDFE"/>
+  <stop stopColor="#E2DDFE" stop-opacity="0"/>
+  <stop offset="1" stopColor="#E2DDFE"/>
   </linearGradient>
   <linearGradient id="paint1_linear_0_1" x1="154" y1="20" x2="154" y2="0" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#E2DDFE" stop-opacity="0.4"/>
-  <stop offset="1" stop-color="#E2DDFE"/>
+  <stop stopColor="#E2DDFE" stop-opacity="0.4"/>
+  <stop offset="1" stopColor="#E2DDFE"/>
   </linearGradient>
   </defs>
   </svg>
@@ -624,12 +624,12 @@ export function Rank3BoxLight(){
   <path d="M50 0H216L266 20H0L50 0Z" fill="url(#paint1_linear_0_1)"/>
   <defs>
   <linearGradient id="paint0_linear_0_1" x1="154" y1="126" x2="154" y2="20" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#E2DDFE" stop-opacity="0"/>
-  <stop offset="1" stop-color="#E2DDFE"/>
+  <stop stopColor="#E2DDFE" stop-opacity="0"/>
+  <stop offset="1" stopColor="#E2DDFE"/>
   </linearGradient>
   <linearGradient id="paint1_linear_0_1" x1="154" y1="20" x2="154" y2="0" gradientUnits="userSpaceOnUse">
-  <stop stop-color="#E2DDFE" stop-opacity="0.4"/>
-  <stop offset="1" stop-color="#E2DDFE"/>
+  <stop stopColor="#E2DDFE" stop-opacity="0.4"/>
+  <stop offset="1" stopColor="#E2DDFE"/>
   </linearGradient>
   </defs>
   </svg>  
@@ -637,16 +637,16 @@ export function Rank3BoxLight(){
 
 export function SwapLightPurple(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.0919C18.8506 9.94581 17.998 7.88759 16.4805 6.37006C14.963 4.85252 12.9048 3.99998 10.7586 3.99998C8.61252 3.99998 6.5543 4.85252 5.03676 6.37006C3.51923 7.88759 2.66669 9.94581 2.66669 12.0919L2.66669 19.6322" stroke="url(#paint0_linear_139_10327)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13.0575 13.3793L10.4828 10.8046M10.4828 10.8046L7.90808 13.3793M10.4828 10.8046V18.7126C10.4828 20.8587 11.3353 22.9169 12.8529 24.4345C14.3704 25.952 16.4286 26.8046 18.5747 26.8046C20.7209 26.8046 22.7791 25.952 24.2966 24.4345C25.8141 22.9169 26.6667 20.8587 26.6667 18.7126L26.6667 11.1724" stroke="url(#paint1_linear_139_10327)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.0919C18.8506 9.94581 17.998 7.88759 16.4805 6.37006C14.963 4.85252 12.9048 3.99998 10.7586 3.99998C8.61252 3.99998 6.5543 4.85252 5.03676 6.37006C3.51923 7.88759 2.66669 9.94581 2.66669 12.0919L2.66669 19.6322" stroke="url(#paint0_linear_139_10327)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M13.0575 13.3793L10.4828 10.8046M10.4828 10.8046L7.90808 13.3793M10.4828 10.8046V18.7126C10.4828 20.8587 11.3353 22.9169 12.8529 24.4345C14.3704 25.952 16.4286 26.8046 18.5747 26.8046C20.7209 26.8046 22.7791 25.952 24.2966 24.4345C25.8141 22.9169 26.6667 20.8587 26.6667 18.7126L26.6667 11.1724" stroke="url(#paint1_linear_139_10327)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   <defs>
     <linearGradient id="paint0_linear_139_10327" x1="3.8391" y1="5.17645" x2="7.26234" y2="21.9494" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#806AF1"/>
-      <stop offset="1" stop-color="#A697F4"/>
+      <stop stopColor="#806AF1"/>
+      <stop offset="1" stopColor="#A697F4"/>
     </linearGradient>
     <linearGradient id="paint1_linear_139_10327" x1="25.4943" y1="25.6281" x2="22.071" y2="8.85517" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#806AF1"/>
-      <stop offset="1" stop-color="#A697F4"/>
+      <stop stopColor="#806AF1"/>
+      <stop offset="1" stopColor="#A697F4"/>
     </linearGradient>
   </defs>
 </svg>
@@ -654,16 +654,16 @@ export function SwapLightPurple(){
 
 export function SwapDarkPurple(){
  return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" className="w-8 h-8">
-  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_262_16688)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_262_16688)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_262_16688)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_262_16688)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   <defs>
     <linearGradient id="paint0_linear_262_16688" x1="3.8391" y1="5.17648" x2="7.26234" y2="21.9494" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A899F4"/>
-      <stop offset="1" stop-color="#DAD1FF"/>
+      <stop stopColor="#A899F4"/>
+      <stop offset="1" stopColor="#DAD1FF"/>
     </linearGradient>
     <linearGradient id="paint1_linear_262_16688" x1="25.4943" y1="25.6282" x2="22.071" y2="8.8553" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A899F4"/>
-      <stop offset="1" stop-color="#DAD1FF"/>
+      <stop stopColor="#A899F4"/>
+      <stop offset="1" stopColor="#DAD1FF"/>
     </linearGradient>
   </defs>
 </svg>
@@ -671,16 +671,16 @@ export function SwapDarkPurple(){
 
 export function SwapLightGreen(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_189_13523)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_189_13523)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_189_13523)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_189_13523)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   <defs>
     <linearGradient id="paint0_linear_189_13523" x1="21.0555" y1="4.00001" x2="21.3763" y2="19.9936" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#AADE12"/>
-      <stop offset="1" stop-color="#24D338"/>
+      <stop stopColor="#AADE12"/>
+      <stop offset="1" stopColor="#24D338"/>
     </linearGradient>
     <linearGradient id="paint1_linear_189_13523" x1="8.27788" y1="26.8047" x2="7.95706" y2="10.8111" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#AADE12"/>
-      <stop offset="1" stop-color="#24D338"/>
+      <stop stopColor="#AADE12"/>
+      <stop offset="1" stopColor="#24D338"/>
     </linearGradient>
   </defs>
 </svg>
@@ -688,16 +688,16 @@ export function SwapLightGreen(){
 
 export function SwapDarkGreen(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_184_4519)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_184_4519)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_184_4519)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_184_4519)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   <defs>
     <linearGradient id="paint0_linear_184_4519" x1="3.77013" y1="3.36843" x2="7.11347" y2="21.6729" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#D6FD62"/>
-      <stop offset="1" stop-color="#69FD73"/>
+      <stop stopColor="#D6FD62"/>
+      <stop offset="1" stopColor="#69FD73"/>
     </linearGradient>
     <linearGradient id="paint1_linear_184_4519" x1="25.5632" y1="27.4363" x2="22.2199" y2="9.13179" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#D6FD62"/>
-      <stop offset="1" stop-color="#69FD73"/>
+      <stop stopColor="#D6FD62"/>
+      <stop offset="1" stopColor="#69FD73"/>
     </linearGradient>
   </defs>
 </svg>
@@ -705,42 +705,42 @@ export function SwapDarkGreen(){
 
 export function CompareIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-  <path d="M9.99984 18.3327C14.5832 18.3327 18.3332 14.5827 18.3332 9.99935C18.3332 5.41602 14.5832 1.66602 9.99984 1.66602C5.4165 1.66602 1.6665 5.41602 1.6665 9.99935C1.6665 14.5827 5.4165 18.3327 9.99984 18.3327Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M6.6665 10H13.3332" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M10 13.3327V6.66602" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9.99984 18.3327C14.5832 18.3327 18.3332 14.5827 18.3332 9.99935C18.3332 5.41602 14.5832 1.66602 9.99984 1.66602C5.4165 1.66602 1.6665 5.41602 1.6665 9.99935C1.6665 14.5827 5.4165 18.3327 9.99984 18.3327Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M6.6665 10H13.3332" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M10 13.3327V6.66602" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 }
 
 export function BarsIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-  <path d="M6.6665 3.33398L6.6665 16.6673" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M4.1665 15L6.6665 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M6.6665 5.83398L9.1665 5.83398" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M10.8335 9.16602L13.3335 9.16602" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M13.3335 13.334L15.8335 13.334" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M13.3335 3.33398L13.3335 16.6673" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M6.6665 3.33398L6.6665 16.6673" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M4.1665 15L6.6665 15" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M6.6665 5.83398L9.1665 5.83398" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M10.8335 9.16602L13.3335 9.16602" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M13.3335 13.334L15.8335 13.334" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M13.3335 3.33398L13.3335 16.6673" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
 </svg>
 }
 
 export function CandleStickIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="12" height="18" viewBox="0 0 12 18" fill="none">
-  <path d="M2.6665 1.5V4M2.6665 14V16.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M3.66667 4H1.66667C1.29848 4 1 4.25584 1 4.57143V13.4286C1 13.7442 1.29848 14 1.66667 14H3.66667C4.03486 14 4.33333 13.7442 4.33333 13.4286V4.57143C4.33333 4.25584 4.03486 4 3.66667 4Z" stroke="currentColor" stroke-width="1.2"/>
-  <path d="M9.3335 4V6.5M9.3335 11.5V14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M10.3332 6.5H8.33317C7.96498 6.5 7.6665 6.79848 7.6665 7.16667V10.8333C7.6665 11.2015 7.96498 11.5 8.33317 11.5H10.3332C10.7014 11.5 10.9998 11.2015 10.9998 10.8333V7.16667C10.9998 6.79848 10.7014 6.5 10.3332 6.5Z" stroke="currentColor" stroke-width="1.2"/>
+  <path d="M2.6665 1.5V4M2.6665 14V16.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M3.66667 4H1.66667C1.29848 4 1 4.25584 1 4.57143V13.4286C1 13.7442 1.29848 14 1.66667 14H3.66667C4.03486 14 4.33333 13.7442 4.33333 13.4286V4.57143C4.33333 4.25584 4.03486 4 3.66667 4Z" stroke="currentColor" strokeWidth="1.2"/>
+  <path d="M9.3335 4V6.5M9.3335 11.5V14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M10.3332 6.5H8.33317C7.96498 6.5 7.6665 6.79848 7.6665 7.16667V10.8333C7.6665 11.2015 7.96498 11.5 8.33317 11.5H10.3332C10.7014 11.5 10.9998 11.2015 10.9998 10.8333V7.16667C10.9998 6.79848 10.7014 6.5 10.3332 6.5Z" stroke="currentColor" strokeWidth="1.2"/>
 </svg>
 }
 
 export function AreaIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
   <path d="M10.3113 12.3282C10.9291 12.9461 11.9422 12.9072 12.5108 12.2438L16.5664 7.51226C16.863 7.16625 17.43 7.36498 17.4457 7.82043L17.6788 14.5782C17.6885 14.8609 17.462 15.0954 17.1791 15.0954H3.58087C3.12888 15.0954 2.90887 14.5433 3.237 14.2324L7.49428 10.1992C7.69092 10.0129 8.00016 10.0171 8.1917 10.2087L10.3113 12.3282Z" fill="currentColor" stroke="currentColor"/>
-  <path d="M2.14258 11.9051L7.11528 6.93243C7.51901 6.5287 8.17826 6.54439 8.56233 6.96686L10.6631 9.27773C11.0688 9.72403 11.7744 9.71227 12.165 9.25271L17.4997 2.97656" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M2.14258 11.9051L7.11528 6.93243C7.51901 6.5287 8.17826 6.54439 8.56233 6.96686L10.6631 9.27773C11.0688 9.72403 11.7744 9.71227 12.165 9.25271L17.4997 2.97656" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
 </svg>
 }
 
 export function IndicatorsIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
-  <path d="M12.0711 16.8664V12.1978M12.0711 12.1978V8.5293C12.0711 7.97701 12.5188 7.5293 13.0711 7.5293H14.4395C14.9918 7.5293 15.4395 7.97701 15.4395 8.5293V16.3332C15.4395 16.8855 14.9918 17.3332 14.4395 17.3332H8.43667M12.0711 12.1978H8.43667M8.43667 12.1978V11.3304C8.43667 10.7781 7.98896 10.3304 7.43667 10.3304H6.06832C5.51604 10.3304 5.06832 10.7781 5.06832 11.3304V12.6647M8.43667 12.1978V17.3332M5.06832 12.6647H2.3335C1.78121 12.6647 1.3335 13.1124 1.3335 13.6647V16.3332C1.3335 16.8855 1.78121 17.3332 2.3335 17.3332H5.06832M5.06832 12.6647V17.3332M5.06832 17.3332H8.43667" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-  <path d="M1.3335 7.33268L5.42665 2.92996C5.83808 2.48742 6.54497 2.50805 6.92988 2.97383L9.04701 5.53574C9.42174 5.98919 10.105 6.02281 10.5224 5.60834L15.5002 0.666016" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M12.0711 16.8664V12.1978M12.0711 12.1978V8.5293C12.0711 7.97701 12.5188 7.5293 13.0711 7.5293H14.4395C14.9918 7.5293 15.4395 7.97701 15.4395 8.5293V16.3332C15.4395 16.8855 14.9918 17.3332 14.4395 17.3332H8.43667M12.0711 12.1978H8.43667M8.43667 12.1978V11.3304C8.43667 10.7781 7.98896 10.3304 7.43667 10.3304H6.06832C5.51604 10.3304 5.06832 10.7781 5.06832 11.3304V12.6647M8.43667 12.1978V17.3332M5.06832 12.6647H2.3335C1.78121 12.6647 1.3335 13.1124 1.3335 13.6647V16.3332C1.3335 16.8855 1.78121 17.3332 2.3335 17.3332H5.06832M5.06832 12.6647V17.3332M5.06832 17.3332H8.43667" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <path d="M1.3335 7.33268L5.42665 2.92996C5.83808 2.48742 6.54497 2.50805 6.92988 2.97383L9.04701 5.53574C9.42174 5.98919 10.105 6.02281 10.5224 5.60834L15.5002 0.666016" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
 </svg>
 }
