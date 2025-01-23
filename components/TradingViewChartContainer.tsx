@@ -53,7 +53,7 @@ export default function TradingViewChartContainer({symbol, logo} : TradingViewCh
                         <TradingViewChart symbol={symbol} logo={logo}/>
                     )}
                     {activeTab === 'options' && (
-                        <OptionsPriceChart symbol={symbol}/>
+                        <OptionsPriceChart symbol={symbol} logo={logo}/>
                     )}
                     {activeTab === 'trades' && (
                         <RecentTrades /> 

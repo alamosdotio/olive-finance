@@ -5,7 +5,7 @@ const API_ENDPOINT = 'https://benchmarks.pyth.network/v1/shims/tradingview';
 const lastBarsCache = new Map<string, Bar>();
 const logoCache = new Map<string, string>();
 
-// Function to set logo for a symbol
+
 export const setSymbolLogo = (symbol: string, logoPath: string) => {
   logoCache.set(symbol, logoPath);
 };

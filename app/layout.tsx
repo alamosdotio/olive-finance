@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <ThemeProvider attribute="data-theme" defaultTheme="light-purple"
+        <ThemeProvider attribute="data-theme" defaultTheme="dark-purple"
         >
           <WalletProvider>
             <div className="px-6 max-w-screen-2xl mx-auto">

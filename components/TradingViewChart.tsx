@@ -8,6 +8,7 @@ import { Activity, ArrowUpDown, BarChart, BarChart3, CandlestickChart, ChevronDo
 import { Separator } from './ui/separator';
 import { AreaIcon, BarsIcon, CandleStickIcon, IndicatorsIcon } from '@/public/svgs/icons';
 import { cn } from '@/lib/utils';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 
 declare global {
   interface Window {
@@ -85,7 +86,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
 
   useEffect(() => {
     setSymbolLogo(symbol, logo);
-    setDisplaySymbol(symbol.replace('Crypto.', ''));
+    setDisplaySymbol(symbol.replace('Crypto.', '').replace('/USD', ''));
   }, [symbol, logo]);
 
   useEffect(() => {
@@ -211,12 +212,12 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         setIsChartReady(false);
       }
     };
-  }, [chartTheme, selectedInterval]);
+  }, [chartTheme]);
 
   useEffect(() => {
     if (isChartReady && chartRef.current) {
       chartRef.current.setSymbol(symbol);
-      setDisplaySymbol(symbol.replace('Crypto.', ''));
+      setDisplaySymbol(symbol.replace('Crypto.', '').replace('/USD', ''));
     }
   }, [symbol, isChartReady]);
 
@@ -267,9 +268,24 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
             {interval.label}
           </Button>
         ))}
-        <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary'>
-          <ChevronDown />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary focus-visible:ring-0'>
+              <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end'>
+            {ALL_INTERVALS.map((interval) => (
+              <DropdownMenuItem
+                key={interval.value}
+                className={cn((selectedInterval === interval.value ? 'text-primary' : 'text-secondary-foreground'), 'focus:bg-inherit focus:text-primary-foreground cursor-pointer')}
+                onClick={() => handleIntervalChange(interval.value)}
+              >
+                {interval.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Separator orientation='vertical' className='mx-2 h-8'/>
 
@@ -282,13 +298,30 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
             <type.icon />
           </Button>
         ))}
-        <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary'>
-          <ChevronDown />
-        </Button>
-
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal hover:text-primary focus-visible:ring-0'>
+              <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end'>
+            {ALL_CHART_TYPES.map((type) => (
+              <DropdownMenuItem
+                key={type.value}
+                className={cn((chartType === type.value ? 'text-primary' : 'text-secondary-foreground'), 'focus:bg-inherit focus:text-primary-foreground cursor-pointer')}
+                onClick={() => handleChartTypeChange(type.value)}
+              >
+                {type.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Separator orientation='vertical' className='mx-2 h-8'/>
 
-        <Button className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal [&_svg]:size-5 hover:text-primary'>
+        <Button 
+          className='bg-inherit text-secondary-foreground p-2 flex gap-2 shadow-none text-sm font-normal [&_svg]:size-5 hover:text-primary'
+          onClick={handleIndicators}
+        >
           <IndicatorsIcon />
           <span>Indicators</span>
         </Button>
@@ -296,7 +329,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
       <div 
         id="tv_chart_container" 
         ref={containerRef} 
-        className={`tradingview-chart ${chartTheme === 'Dark' ? 'theme-dark' : ''} w-full h-full`}
+        className={`tradingview-chart ${chartTheme === 'Dark' ? 'theme-dark' : ''} w-full h-full py-2`}
         style={{ backgroundColor: chartTheme === 'Dark' ? "#141519" : "#FFFFFF" }}
       />
     </div>
