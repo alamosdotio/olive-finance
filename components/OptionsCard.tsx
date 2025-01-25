@@ -1,14 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Card, CardContent, CardFooter} from "./ui/card";
 import { Label } from "./ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-
-import swap from '@/public/svgs/swap.svg'
-import { CalendarIcon, ChevronDown, Wallet} from 'lucide-react';
-
-import Image from "next/image";
+import { ChevronDown, Wallet} from 'lucide-react';
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import WalletModal from "./WalletModal";
@@ -19,10 +14,12 @@ import { usePythPrice } from "@/hooks/usePythPrice";
 import OptionsCardTokenList from "./OptionsCardTokenList";
 import { formatPrice } from "@/utils/formatter";
 import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { useTheme } from "next-themes";
 import { SwapDarkGreen, SwapDarkPurple, SwapLightGreen, SwapLightPurple } from "@/public/svgs/icons";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { format } from "date-fns";
+import * as Portal from "@radix-ui/react-portal";
 
 interface OptionsCardProps{
     chartToken: string
@@ -40,8 +37,11 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
     const [date, setDate] = useState<Date>()
-    const { priceData, loading: priceLoading, error: priceError } = usePythPrice(chartToken);
+    const { priceData, loading: priceLoading } = usePythPrice(chartToken);
     const { theme } = useTheme()
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const calendarRef = useRef<HTMLDivElement>(null);
+    const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0 });
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
         buying: { type: string; amount: string };
@@ -57,6 +57,40 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     const [isSwapped , setIsSwapped] = useState(false)
     const [userEditedStrikePrice, setUserEditedStrikePrice] = useState(false)
 
+    useEffect(() => {
+        if (isCalendarOpen && triggerRef.current) {
+            const updatePosition = () => {
+                if (triggerRef.current) {
+                    const rect = triggerRef.current.getBoundingClientRect();
+                    setCalendarPosition({
+                        top: rect.top - 6,
+                        left: rect.right - 250,
+                    });
+                }
+            };
+
+            // Initial position
+            updatePosition();
+            window.addEventListener('scroll', updatePosition, { passive: true });
+            window.addEventListener('resize', updatePosition, { passive: true });
+
+            // Add click outside listener
+            const handleClickOutside = (event: MouseEvent) => {
+                if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+                    setIsCalendarOpen(false);
+                }
+            };
+
+            document.addEventListener('mousedown', handleClickOutside);
+
+            return () => {
+                window.removeEventListener('scroll', updatePosition);
+                window.removeEventListener('resize', updatePosition);
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }
+    }, [isCalendarOpen]);
+
     const handleSwap = () => {
         setIsSwapped(!isSwapped)
         const tempAmount = formValues.selling.amount
@@ -68,17 +102,14 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     }
 
     const handleExpiryChange = (value: string) => {
-        if (value === 'custom') {
+        const option = expiryOptions.find(opt => opt.value === value);
+        if (option) {
             setFormValues(prev => ({ 
                 ...prev, 
                 expiry: value,
             }));
-            setIsCalendarOpen(true);
-        } else {
-            setFormValues(prev => ({ 
-                ...prev, 
-                expiry: value,
-            }));
+            setDate(option.date);
+            setIsExpiry(false);
         }
     }
 
@@ -95,11 +126,8 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
         setFormValues(prev => ({ ...prev, strikePrice: value }))
     }
     
-
     const { isConnected } = useWallet();
     const expiryOptions = getExpiryOptions() as ExpiryOption[];
-
-
 
     useEffect(() => {
         if (priceData.price !== null && !userEditedStrikePrice) {
@@ -109,6 +137,36 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
             }));
         }
     }, [priceData.price, userEditedStrikePrice]);
+
+    const handleDateSelect = (selectedDate: Date | undefined) => {
+        if (selectedDate) {
+            setDate(selectedDate);
+            setFormValues(prev => ({
+                ...prev,
+                expiry: 'custom',
+            }));
+            setIsCalendarOpen(false);
+        }
+    }
+
+    const handlePickDate = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsExpiry(false);
+        setTimeout(() => {
+            setIsCalendarOpen(true);
+        }, 100);
+    };
+
+    const getSelectedExpiryOption = () => {
+        if (date) {
+            return {
+                label: format(date, 'ddMMMyy').toUpperCase(),
+                date: date
+            };
+        }
+        return expiryOptions.find(opt => opt.value === formValues.expiry);
+    };
 
     const renderSection = (type: 'buy' | 'sell') => {
         const isSelling = (type === 'sell' && !isSwapped) || (type === 'buy' && isSwapped)
@@ -189,19 +247,10 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         className="bg-background border rounded-full p-3 w-14 h-14 z-50 hover:border-primary [&_svg]:size-8 flex items-center"
                         onClick={handleSwap}
                     >
-                        {theme === 'dark-purple' && (
-                            <SwapDarkPurple />
-                        )}
-
-                        {theme === 'light-purple' && (
-                            <SwapLightPurple />
-                        )}
-                        {theme === 'dark-green' && (
-                            <SwapDarkGreen />
-                        )}
-                        {theme === 'light-green' && (
-                            <SwapLightGreen />
-                        )}
+                        {theme === 'dark-purple' && <SwapDarkPurple />}
+                        {theme === 'light-purple' && <SwapLightPurple />}
+                        {theme === 'dark-green' && <SwapDarkGreen />}
+                        {theme === 'light-green' && <SwapLightGreen />}
                     </Button>
                 </div>
                 <div className="px-6 pb-7 flex flex-col justify-between space-y-[84px]">
@@ -225,7 +274,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
             <CardFooter className="px-6 py-7 flex flex-col space-y-8 border-t">
                 <div className="w-full flex gap-4">
                     <div className="flex flex-col gap-[6px] w-full">
-                        <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
+                        <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center whitespace-nowrap">
                             Strike Price
                         </Label>
                         <div className="relative">
@@ -238,66 +287,89 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                 onChange={(e) => handleStrikePriceChange(e.target.value)}
                             />
                         </div>
-                        {/* {priceError && (
-                            <span className="text-sm text-red-500">Failed to load SOL price</span>
-                        )} */}
                     </div>
-                    <div className="flex flex-col gap-[6px] w-full">
+                    <div className="flex flex-col gap-[6px] w-full h-[74px]">
                         <Label className="text-foreground text-sm font-medium gap-1 flex justify-between items-center">
                             Expiry
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M7.99984 14.6665C11.6732 14.6665 14.6665 11.6732 14.6665 7.99984C14.6665 4.3265 11.6732 1.33317 7.99984 1.33317C4.3265 1.33317 1.33317 4.3265 1.33317 7.99984C1.33317 11.6732 4.3265 14.6665 7.99984 14.6665ZM8.49984 10.6665C8.49984 10.9398 8.27317 11.1665 7.99984 11.1665C7.7265 11.1665 7.49984 10.9398 7.49984 10.6665V7.33317C7.49984 7.05984 7.7265 6.83317 7.99984 6.83317C8.27317 6.83317 8.49984 7.05984 8.49984 7.33317V10.6665ZM7.3865 5.07984C7.41984 4.99317 7.4665 4.9265 7.5265 4.85984C7.59317 4.79984 7.6665 4.75317 7.7465 4.71984C7.8265 4.6865 7.91317 4.6665 7.99984 4.6665C8.0865 4.6665 8.17317 4.6865 8.25317 4.71984C8.33317 4.75317 8.4065 4.79984 8.47317 4.85984C8.53317 4.9265 8.57984 4.99317 8.61317 5.07984C8.6465 5.15984 8.6665 5.2465 8.6665 5.33317C8.6665 5.41984 8.6465 5.5065 8.61317 5.5865C8.57984 5.6665 8.53317 5.73984 8.47317 5.8065C8.4065 5.8665 8.33317 5.91317 8.25317 5.9465C8.09317 6.01317 7.9065 6.01317 7.7465 5.9465C7.6665 5.91317 7.59317 5.8665 7.5265 5.8065C7.4665 5.73984 7.41984 5.6665 7.3865 5.5865C7.35317 5.5065 7.33317 5.41984 7.33317 5.33317C7.33317 5.2465 7.35317 5.15984 7.3865 5.07984Z" fill="#808693"/>
                             </svg>
                         </Label>
-                        <Select
-                            value={formValues.expiry}
-                            onValueChange={(value) => (handleExpiryChange(value))}
-                            open={isExpiry}
-                            onOpenChange={() => setIsExpiry(!isExpiry)}
-                        >
-                            <SelectTrigger className={cn((isExpiry === true ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-[42px] rounded-[12px] text-sm border")}>
-                                <SelectValue />
-                                <ChevronDown className="opacity-50" size={14}/>
-                            </SelectTrigger>
-                            <SelectContent>
-                                {expiryOptions.map((option) => (
-                                    <SelectItem
-                                        key={option.value}
-                                        value={option.value}
-                                        className="flex justify-between items-center"
+                        <div className="relative">
+                            <DropdownMenu
+                                open={isExpiry}
+                                onOpenChange={setIsExpiry}
+                            >
+                                <DropdownMenuTrigger asChild>
+                                    <Button 
+                                        ref={triggerRef}
+                                        className={cn((isExpiry === true || isCalendarOpen ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-[42px] rounded-[12px] text-sm border px-3 py-2 focus-visible:ring-0")}
                                     >
-                                        <span>{option.label} • </span>
-                                        {option.date && (
-                                            <CountdownTimer targetDate={option.date} />
-                                        )}
-                                    </SelectItem>
-                                ))}
-                                <SelectItem
-                                    value="custom"
-                                    onClick={() => {
-                                        setIsCalendarOpen(true)
-                                    }}
-                                >
-                                    Pick a Date
-                                </SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-                            <PopoverTrigger asChild>
-                                <div className="h-0"></div>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                mode="single"
-                                selected={date}
-                                onSelect={() => {
-                                    setDate(date)
-                                    setIsExpiry(false)
-                                }}
-                                initialFocus
-                                />
-                            </PopoverContent>
-                        </Popover>
+                                        <div className="flex justify-between items-center w-full">
+                                            <div className="flex items-center gap-0.5">
+                                                <span className="text-foreground">
+                                                    {getSelectedExpiryOption()?.label || "Pick a date..."}
+                                                </span>
+                                                {getSelectedExpiryOption()?.date && (
+                                                    <>
+                                                        <span className="text-secondary-foreground">•</span>
+                                                        <CountdownTimer targetDate={getSelectedExpiryOption()!.date} />
+                                                    </>
+                                                )}
+                                            </div>
+                                            <ChevronDown className="text-secondary-foreground" size={14}/>
+                                        </div>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-52" align="start">
+                                    {expiryOptions.map((option) => (
+                                        <DropdownMenuItem
+                                            key={option.value}
+                                            className="flex justify-start items-center w-full cursor-pointer"
+                                            onClick={() => handleExpiryChange(option.value)}
+                                        >
+                                            <span className="text-foreground">{option.label}</span>
+                                            <span className="text-secondary-foreground">•</span>
+                                            {option.date && (
+                                                <CountdownTimer targetDate={option.date} />
+                                            )}
+                                        </DropdownMenuItem>
+                                    ))}
+                                    <DropdownMenuItem
+                                        onSelect={(e) => {
+                                            e.preventDefault();
+                                        }}
+                                        onClick={handlePickDate}
+                                        className="cursor-pointer"
+                                    >
+                                        <span className="text-foreground">Pick a date</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+
+                            {isCalendarOpen && (
+                                <Portal.Root>
+                                    <div
+                                        ref={calendarRef}
+                                        className="fixed z-50"
+                                        style={{
+                                            transform: 'translateY(-100%)',
+                                            top: `${calendarPosition.top}px`,
+                                            left: `${calendarPosition.left}px`,
+                                        }}
+                                    >
+                                        <div className="bg-popover rounded-md border shadow-md">
+                                            <Calendar
+                                                mode="single"
+                                                selected={date}
+                                                onSelect={handleDateSelect}
+                                                initialFocus
+                                            />
+                                        </div>
+                                    </div>
+                                </Portal.Root>
+                            )}
+                        </div>
                     </div>
                 </div>
                 {!isConnected && (
