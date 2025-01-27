@@ -77,7 +77,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
     }
 
     useEffect(() => {
-        const tokensList = generateTokens(19);
+        const tokensList = generateTokens(20);
         setAllTokens(tokensList);
         if (!selectedToken && tokensList.length > 0) {
             setSelectedToken(tokensList[0]);
@@ -94,6 +94,13 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
     }, [])
 
     const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
+
+    const reorderedTokens = [...allTokens];
+    const chartTokenIndex = reorderedTokens.findIndex(token => `Crypto.${token.symbol}/USD` === chartToken);
+    if (chartTokenIndex > 1) {
+        const [chartTokenItem] = reorderedTokens.splice(chartTokenIndex, 1);
+        reorderedTokens.splice(1, 0, chartTokenItem);
+    }
 
     return (
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -225,16 +232,22 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                             </div>
                         </div>
                         <ScrollArea className="w-full h-[242px]">
-                            {allTokens.map((token, index) => (
+                            {reorderedTokens.map((token, index) => (
                                 <div 
                                     key={index}
                                     onClick={()=>handleClick(token)}
                                     className="w-full h-fit rounded-[8px] p-2 flex justify-between space-x-4 hover:bg-secondary">
                                     <div className="flex items-center space-x-[6px]">
-                                        <Image src={token.logo} alt={token.name} width={28} height={28} className="w-7 h-7 rounded-full bg-white" />
+                                        <Image src={token.logo} alt={token.name} width={28} height={28} className="w-7 h-7 rounded-full" />
                                         <div className="flex flex-col justify-center space-y-0 h-8">
                                             <div className="flex space-x-1 items-center h-fit">
                                                 <span className="text-base text-foreground font-medium">{token.symbol}</span>
+                                                {(token.symbol === 'USDC' || chartToken === `Crypto.${token.symbol}/USD`) &&(
+                                                    <>
+                                                        <span className="border border-primary text-primary text-[8px] px-1 py-0.5 rounded-[3px]">Zero Fees</span>
+                                                    </>
+                                                )}
+                                                
                                             </div>
                                             <span className="text-xs text-secondary-foreground font-medium">{token.name}</span>
                                         </div>

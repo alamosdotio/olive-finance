@@ -69,12 +69,10 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 }
             };
 
-            // Initial position
             updatePosition();
             window.addEventListener('scroll', updatePosition, { passive: true });
             window.addEventListener('resize', updatePosition, { passive: true });
 
-            // Add click outside listener
             const handleClickOutside = (event: MouseEvent) => {
                 if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
                     setIsCalendarOpen(false);
@@ -282,7 +280,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                             <Input 
                                 type="number"
                                 placeholder={priceLoading ? "Loading..." : "0.00"}
-                                className="border border-transparent bg-backgroundSecondary pl-6 pr-3 py-2 text-foreground rounded-[12px] w-full focus-visible:border-primary"
+                                className="border border-transparent bg-backgroundSecondary pl-6 pr-3 py-2 text-sm text-foreground rounded-[12px] w-full focus-visible:border-primary h-10"
                                 value={formValues.strikePrice}
                                 onChange={(e) => handleStrikePriceChange(e.target.value)}
                             />
@@ -303,21 +301,21 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                 <DropdownMenuTrigger asChild>
                                     <Button 
                                         ref={triggerRef}
-                                        className={cn((isExpiry === true || isCalendarOpen ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-[42px] rounded-[12px] text-sm border px-3 py-2 focus-visible:ring-0")}
+                                        className={cn((isExpiry === true || isCalendarOpen ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-10 rounded-[12px] text-sm border px-3 py-2 focus-visible:ring-0 shadow-none")}
                                     >
                                         <div className="flex justify-between items-center w-full">
-                                            <div className="flex items-center gap-0.5">
-                                                <span className="text-foreground">
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-foreground text-xs font-normal">
                                                     {getSelectedExpiryOption()?.label || "Pick a date..."}
                                                 </span>
                                                 {getSelectedExpiryOption()?.date && (
                                                     <>
-                                                        <span className="text-secondary-foreground">•</span>
+                                                        <span className="text-secondary-foreground text-xs font-normal">•</span>
                                                         <CountdownTimer targetDate={getSelectedExpiryOption()!.date} />
                                                     </>
                                                 )}
                                             </div>
-                                            <ChevronDown className="text-secondary-foreground" size={14}/>
+                                            <ChevronDown className="text-secondary-foreground" size={12}/>
                                         </div>
                                     </Button>
                                 </DropdownMenuTrigger>

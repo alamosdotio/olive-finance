@@ -25,5 +25,5 @@ export function CountdownTimer({ targetDate }: CountdownTimerProps) {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  return <span className="text-xs text-secondary-foreground">{timeLeft}</span>;
+  return <span className="text-xs font-normal text-secondary-foreground">{timeLeft}</span>;
 }
