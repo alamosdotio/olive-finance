@@ -134,6 +134,11 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         const data = await response.json();
         const currentPrice = parseFloat(data.last_price) || 0;
         const formatConfig = getFormatConfig(currentPrice);
+        const tempEl = document.createElement('div');
+        tempEl.className = 'text-primary';
+        document.body.appendChild(tempEl);
+        const primaryColor = window.getComputedStyle(tempEl).color;
+        document.body.removeChild(tempEl);
 
         const widgetOptions: any = {
           symbol: symbol,
@@ -173,6 +178,13 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
             "mainSeriesProperties.candleStyle.wickDownColor": "#FF6889",
             "mainSeriesProperties.candleStyle.borderUpColor": "#53C08D",
             "mainSeriesProperties.candleStyle.borderDownColor": "#FF6889",
+            "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesVisible":false,
+            "mainSeriesProperties.highLowAvgPrice.highLowPriceLabelsVisible": true,
+            "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesColor": primaryColor,
+          },
+          studies_overrides: {
+            "Moving Average.plot.color": primaryColor,
+            "Moving Average.plot.linewidth": 2,
           },
           fullscreen: false,
           autosize: true,
@@ -195,6 +207,20 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         widget.onChartReady(() => {
           chartRef.current = widget.chart();
           chartRef.current.setChartType(chartType);
+          chartRef.current.createStudy(
+            'Moving Average',
+            true,
+            false,
+            {
+              length: 9,
+              source: "close",
+              offset: 0,
+            },
+            {
+              "plot.color": primaryColor,
+              "plot.linewidth": 2
+            }
+          );
           setIsChartReady(true);
         });
       } catch (error) {
