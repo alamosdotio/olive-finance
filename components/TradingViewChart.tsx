@@ -181,6 +181,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
             "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesVisible":false,
             "mainSeriesProperties.highLowAvgPrice.highLowPriceLabelsVisible": true,
             "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesColor": primaryColor,
+            "mainSeriesProperties.showPriceLine": false
           },
           studies_overrides: {
             "Moving Average.plot.color": primaryColor,
