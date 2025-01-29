@@ -58,7 +58,7 @@ export default function Homepage(){
                   <div className="w-2/6">
                     <OptionsCard 
                       chartToken={selectedSymbol}
-                      onValueChange={(value) => console.log('Value changed:', value)}
+                      onValueChange={(value) => handleSellingAmountChange(value)}
                       priceData={priceData}
                       marketData={marketData}
                       priceLoading={priceLoading}
