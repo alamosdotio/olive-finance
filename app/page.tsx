@@ -8,6 +8,8 @@ import TradingPositionsFallback from "@/components/TradingPositionsFallback";
 import TradingPositions from "@/components/TradingPositions";
 import PriceQuote from "@/components/PriceQuote";
 import GreekPopup from "@/components/GreekPopup";
+import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
+import { usePythMarketData, type MarketDataState } from '@/hooks/usePythMarketData';
 
 export default function Homepage(){
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
@@ -24,18 +26,43 @@ export default function Homepage(){
         selling: { ...prev.selling, amount: newValue }
       }));
     };
+
+    const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
+    const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
+    
+    const handleSymbolChange = (newSymbol: string) => {
+      setSelectedSymbol(newSymbol);
+    };
+  
+    const handleIconChange = (newIcon: string) => {
+      setSelectedLogo(newIcon);
+    };
   
     
     return (
         <>
-            <CryptoNav onSymbolChange={setSelectedSymbol} onIconChange={setSelectedLogo}/>
+            <CryptoNav 
+              onSymbolChange={handleSymbolChange} 
+              onIconChange={handleIconChange}
+              selectedSymbol={selectedSymbol}
+              priceData={priceData}
+              marketData={marketData}
+              priceLoading={priceLoading}
+              marketLoading={marketLoading}
+            />
             <div className="flex flex-col w-full justify-evenly h-full space-y-4">
                 <div className="flex w-full h-[700px] pt-4 pb-6 space-x-4 justify-between">
                   <div className="w-4/6">
                     <TradingViewChartContainer symbol={selectedSymbol} logo={selectedLogo}/>
                   </div>
                   <div className="w-2/6">
-                    <OptionsCard chartToken={selectedSymbol} onValueChange={handleSellingAmountChange}/>
+                    <OptionsCard 
+                      chartToken={selectedSymbol}
+                      onValueChange={(value) => console.log('Value changed:', value)}
+                      priceData={priceData}
+                      marketData={marketData}
+                      priceLoading={priceLoading}
+                    />
                   </div>
                     
                 </div>

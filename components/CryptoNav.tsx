@@ -6,6 +6,8 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import TradingViewTopNav from "./TradingViewTopNav";
 import { usePythMarketData } from "@/hooks/usePythMarketData";
+import type { PythPriceState } from "@/hooks/usePythPrice";
+import type { MarketDataState } from "@/hooks/usePythMarketData";
 
 type CryptoData = {
     id: string
@@ -44,11 +46,16 @@ const cryptoData: CryptoData[] = [
     {id: 'pnut', name: 'Peanut the Squirrel', symbol:'PNUT', iconPath: '/images/pnut.png', pythSymbol: 'Crypto.PNUT/USD', category: {crypto: true, memes: true, forex: false, ai: false, metals:false}},
     {id: 'paxg', name: 'PAX Gold', symbol:'PAXG', iconPath: '/images/paxg.png', pythSymbol: 'Crypto.PAXG/USD', category: {crypto: true, memes: false, forex: false, ai: false, metals:true}},
     {id: 'eurc', name: 'EURC', symbol:'EURC', iconPath: '/images/eurc.png', pythSymbol: 'Crypto.EURC/USD', category: {crypto: true, memes: false, forex: true, ai: false, metals:false}},
-]
+];
 
 interface CryptoNavProps {
     onSymbolChange: (symbol: string) => void;
     onIconChange: (symbol: string) => void;
+    selectedSymbol: string;
+    priceData: PythPriceState;
+    marketData: MarketDataState;
+    priceLoading: boolean;
+    marketLoading: boolean;
 }
 
 type MarketChanges = {
@@ -113,7 +120,15 @@ const CryptoNavItem = React.memo(({ crypto, isActive, onClick, onMarketChange }:
 
 CryptoNavItem.displayName = 'CryptoNavItem';
 
-export default function CryptoNav({ onSymbolChange, onIconChange } : CryptoNavProps) {
+export default function CryptoNav({ 
+    onSymbolChange, 
+    onIconChange, 
+    selectedSymbol,
+    priceData,
+    marketData,
+    priceLoading,
+    marketLoading 
+}: CryptoNavProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<Map<string, HTMLDivElement>>(new Map());
     const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -137,13 +152,10 @@ export default function CryptoNav({ onSymbolChange, onIconChange } : CryptoNavPr
             const containerRect = container.getBoundingClientRect();
             const elementRect = element.getBoundingClientRect();
             
-          
             const elementRelativeLeft = elementRect.left - containerRect.left;
             const elementRelativeRight = elementRelativeLeft + elementRect.width;
             
-            
             if (elementRelativeLeft < 0 || elementRelativeRight > containerRect.width) {
-               
                 const scrollLeft = container.scrollLeft + elementRelativeLeft - (containerRect.width - elementRect.width) / 2;
                 
                 container.scrollTo({
@@ -259,6 +271,10 @@ export default function CryptoNav({ onSymbolChange, onIconChange } : CryptoNavPr
                 tokens={cryptoData}
                 marketChanges={marketChanges}
                 onTokenSelect={handleTokenSelect}
+                priceData={priceData}
+                marketData={marketData}
+                priceLoading={priceLoading}
+                marketLoading={marketLoading}
             />
         </>
     );

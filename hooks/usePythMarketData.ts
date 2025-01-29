@@ -5,7 +5,7 @@ import { PRICE_FEEDS } from '@/lib/data/price-feed';
 
 const API_ENDPOINT = 'https://benchmarks.pyth.network/v1/shims/tradingview';
 
-interface MarketDataState {
+export interface MarketDataState {
   high24h: number | null;
   low24h: number | null;
   lastUpdated: number | null;

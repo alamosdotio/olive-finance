@@ -6,9 +6,7 @@ import { Separator } from "./ui/separator";
 import { DollarIcon, SortIcon } from "@/public/svgs/icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
-import { usePythPrice } from "@/hooks/usePythPrice";
 import { formatPrice } from "@/utils/formatter";
-import { usePythMarketData } from "@/hooks/usePythMarketData";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import TokenList from "./TokenList";
@@ -33,12 +31,16 @@ type MarketChanges = {
 }
 
 interface TradingViewTopNavProps {
-    symbol: string | null,
-    pythSymbol: string,
-    logo: string
-    tokens: CryptoData[]
-    marketChanges: MarketChanges
+    symbol: string | null;
+    pythSymbol: string;
+    logo: string;
+    tokens: CryptoData[];
+    marketChanges: MarketChanges;
     onTokenSelect: (token: CryptoData) => void;
+    priceData: any;
+    marketData: any;
+    priceLoading: boolean;
+    marketLoading: boolean;
 }
 
 export default function TradingViewTopNav({
@@ -47,11 +49,13 @@ export default function TradingViewTopNav({
     logo, 
     tokens, 
     marketChanges,
-    onTokenSelect
+    onTokenSelect,
+    priceData,
+    marketData,
+    priceLoading,
+    marketLoading
 }: TradingViewTopNavProps) {
-    const [active, setActive] =  useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals'>('all');
-    const {priceData, loading: priceLoading} = usePythPrice(pythSymbol)
-    const {marketData, loading} = usePythMarketData(pythSymbol)
+    const [active, setActive] = useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals'>('all');
 
     return (
         <div className="border border-t-0 rounded-b-[14px] p-1 w-full flex h-fit">
@@ -87,14 +91,6 @@ export default function TradingViewTopNav({
                                         <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
                                     )}
                                 </button>
-                                {/* <button className={cn((active === 'crypto' ? 'text-primary' : ''),"px-1 relative")}
-                                    onClick={()=>setActive('crypto')}
-                                >
-                                    <span>Crypto</span>
-                                    {active === 'crypto' && (
-                                        <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
-                                    )}
-                                </button> */}
                                 <button className={cn((active === 'memes' ? 'text-primary' : ''),"px-1 relative")}
                                     onClick={()=>setActive('memes')}
                                 >
@@ -168,14 +164,14 @@ export default function TradingViewTopNav({
             </div>
             <div className="flex flex-col">
                 <span className="text-secondary-foreground font-normal text-[10px] h-3">24h high</span>
-                <span className="text-foreground text-xs font-medium">${marketData.high24h ? formatPrice(marketData.high24h) : loading}</span>
+                <span className="text-foreground text-xs font-medium">${marketData.high24h ? formatPrice(marketData.high24h) : marketLoading}</span>
             </div>
             <div className="px-4 py-1">
                 <Separator orientation="vertical"/>
             </div>
             <div className="flex flex-col">
                 <span className="text-secondary-foreground font-normal text-[10px] h-3">24h low</span>
-                <span className="text-foreground text-xs font-medium">${marketData.low24h ? formatPrice(marketData.low24h) : loading}</span>
+                <span className="text-foreground text-xs font-medium">${marketData.low24h ? formatPrice(marketData.low24h) : marketLoading}</span>
             </div>
             <div className="px-4 py-1">
                 <Separator orientation="vertical"/>

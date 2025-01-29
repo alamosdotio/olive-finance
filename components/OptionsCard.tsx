@@ -10,7 +10,6 @@ import WalletModal from "./WalletModal";
 import { useWallet } from "@/contexts/walletprovider";
 import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
-import { usePythPrice } from "@/hooks/usePythPrice";
 import OptionsCardTokenList from "./OptionsCardTokenList";
 import { formatPrice } from "@/utils/formatter";
 import { cn } from "@/lib/utils";
@@ -20,10 +19,31 @@ import { SwapDarkGreen, SwapDarkPurple, SwapLightGreen, SwapLightPurple } from "
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { format } from "date-fns";
 import * as Portal from "@radix-ui/react-portal";
+import { useHistoricalPrices } from "@/hooks/useHistoricalPrices";
+import { useOptionsPricing } from "@/hooks/useOptionsPricing";
+import { calculateOptionsQuantity, calculateTokensNeeded } from "@/utils/optionsPricing";
+import { Token } from "@/lib/data/tokens";
+import { usePythPrice } from "@/hooks/usePythPrice";
 
-interface OptionsCardProps{
-    chartToken: string
+interface PythPriceState {
+  price: number | null;
+  confidence: number | null;
+  timestamp: number | null;
+}
+
+interface MarketDataState {
+  high24h: number | null;
+  low24h: number | null;
+  lastUpdated: number | null;
+  change24h: number | null;
+}
+
+interface OptionsCardProps {
+    chartToken: string;
     onValueChange: (newValue: string) => void;
+    priceData: PythPriceState;
+    marketData: MarketDataState;
+    priceLoading: boolean;
 }
 
 interface ExpiryOption {
@@ -32,16 +52,30 @@ interface ExpiryOption {
     label: string;
 }
 
-export default function OptionsCard({onValueChange, chartToken} : OptionsCardProps){
+const OptionsCard = ({
+    chartToken,
+    onValueChange,
+    priceData,
+    marketData,
+    priceLoading
+}: OptionsCardProps) => {
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
-    const [date, setDate] = useState<Date>()
-    const { priceData, loading: priceLoading } = usePythPrice(chartToken);
     const { theme } = useTheme()
     const triggerRef = useRef<HTMLButtonElement>(null);
     const calendarRef = useRef<HTMLDivElement>(null);
     const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0 });
+    const { prices: historicalPrices } = useHistoricalPrices(chartToken);
+
+    const [selectedSellingToken, setSelectedSellingToken] = useState<Token | null>(null);
+    const [selectedBuyingToken, setSelectedBuyingToken] = useState<Token | null>(null);
+
+  
+    const expiryOptions = getExpiryOptions().filter((opt): opt is ExpiryOption => opt !== null);
+    const defaultExpiryOption = expiryOptions.find(opt => opt.value === '14') ?? expiryOptions[0];
+    
+    const [date, setDate] = useState<Date>(defaultExpiryOption.date);
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
         buying: { type: string; amount: string };
@@ -50,12 +84,39 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     }>({
         selling: { currency: 'usdc', amount: '' },
         buying: { type: 'call', amount: '' },
-        strikePrice: '',
-        expiry: '14'
-    })
+        strikePrice: priceData.price ? formatPrice(priceData.price) : '',
+        expiry: defaultExpiryOption.value
+    });
 
-    const [isSwapped , setIsSwapped] = useState(false)
-    const [userEditedStrikePrice, setUserEditedStrikePrice] = useState(false)
+   
+    const [userEditedStrikePrice, setUserEditedStrikePrice] = useState(false);
+
+    useEffect(() => {
+        if (priceData.price && !userEditedStrikePrice) {
+            setFormValues(prev => ({
+                ...prev,
+                strikePrice: priceData.price ? formatPrice(priceData.price) : ''
+            }));
+        }
+    }, [priceData.price, userEditedStrikePrice]);
+
+    const [isSwapped, setIsSwapped] = useState(false);
+
+   
+    const { priceData: sellingTokenPrice } = usePythPrice(
+        selectedSellingToken ? `Crypto.${selectedSellingToken.symbol}/USD` : 'Crypto.USDC/USD'
+    );
+    const { priceData: buyingTokenPrice } = usePythPrice(
+        selectedBuyingToken ? `Crypto.${selectedBuyingToken.symbol}/USD` : chartToken
+    );
+
+    const { premium } = useOptionsPricing({
+        type: formValues.buying.type as 'call' | 'put',
+        strikePrice: parseFloat(formValues.strikePrice) || 0,
+        currentPrice: priceData.price || 0,
+        expiryDate: date,
+        historicalPrices
+    });
 
     useEffect(() => {
         if (isCalendarOpen && triggerRef.current) {
@@ -90,14 +151,14 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
     }, [isCalendarOpen]);
 
     const handleSwap = () => {
-        setIsSwapped(!isSwapped)
-        const tempAmount = formValues.selling.amount
+        setIsSwapped(!isSwapped);
+        const tempAmount = formValues.selling.amount;
         setFormValues(prev => ({
             ...prev,
-            selling:{ ...prev.selling, amount:prev.buying.amount},
-            buying: {...prev.buying, amount:tempAmount}
-        }))
-    }
+            selling: { ...prev.selling, amount: prev.buying.amount },
+            buying: { ...prev.buying, amount: tempAmount }
+        }));
+    };
 
     const handleExpiryChange = (value: string) => {
         const option = expiryOptions.find(opt => opt.value === value);
@@ -109,33 +170,44 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
             setDate(option.date);
             setIsExpiry(false);
         }
-    }
-
-    const handleSellingAmountChange = (newAmount: string) => {
-        setFormValues(prev => ({
-          ...prev,
-          selling: { ...prev.selling, amount: newAmount }
-        }));
-        onValueChange(newAmount)
     };
 
-    const handleStrikePriceChange = (value:string) => {
-        setUserEditedStrikePrice(true)
-        setFormValues(prev => ({ ...prev, strikePrice: value }))
-    }
+    const handleSellingAmountChange = (newAmount: string) => {
+        const numAmount = parseFloat(newAmount) || 0;
+        const amountInUSD = sellingTokenPrice.price 
+            ? numAmount * sellingTokenPrice.price 
+            : numAmount;
+        const optionsQuantity = calculateOptionsQuantity(amountInUSD, premium);
+        
+        setFormValues(prev => ({
+            ...prev,
+            selling: { ...prev.selling, amount: newAmount },
+            buying: { ...prev.buying, amount: optionsQuantity.toFixed(8) }
+        }));
+        onValueChange(newAmount);
+    };
+
+    const handleBuyingAmountChange = (newAmount: string) => {
+        const numAmount = parseFloat(newAmount) || 0;
+        const tokensNeededUSD = calculateTokensNeeded(numAmount, premium);
+        const tokensNeeded = sellingTokenPrice.price 
+            ? tokensNeededUSD / sellingTokenPrice.price 
+            : tokensNeededUSD;
+        
+        setFormValues(prev => ({
+            ...prev,
+            buying: { ...prev.buying, amount: newAmount },
+            selling: { ...prev.selling, amount: tokensNeeded.toFixed(8) }
+        }));
+    };
+
+    const handleStrikePriceChange = (value: string) => {
+        setUserEditedStrikePrice(true);
+        setFormValues(prev => ({ ...prev, strikePrice: value }));
+    };
     
     const { isConnected } = useWallet();
-    const expiryOptions = getExpiryOptions() as ExpiryOption[];
-
-    useEffect(() => {
-        if (priceData.price !== null && !userEditedStrikePrice) {
-            setFormValues(prev => ({
-                ...prev,
-                strikePrice: formatPrice(priceData.price!)
-            }));
-        }
-    }, [priceData.price, userEditedStrikePrice]);
-
+    
     const handleDateSelect = (selectedDate: Date | undefined) => {
         if (selectedDate) {
             setDate(selectedDate);
@@ -145,7 +217,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
             }));
             setIsCalendarOpen(false);
         }
-    }
+    };
 
     const handlePickDate = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -156,14 +228,30 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
         }, 100);
     };
 
-    const getSelectedExpiryOption = () => {
-        if (date) {
+    const getSelectedExpiryOption = (): ExpiryOption => {
+        if (formValues.expiry === 'custom' && date) {
             return {
                 label: format(date, 'ddMMMyy').toUpperCase(),
-                date: date
+                date: date,
+                value: 'custom'
             };
         }
-        return expiryOptions.find(opt => opt.value === formValues.expiry);
+        const option = expiryOptions.find(opt => opt.value === formValues.expiry);
+        return option ?? defaultExpiryOption;
+    };
+
+    const handleSellingTokenSelect = (token: Token) => {
+        setSelectedSellingToken(token);
+        if (formValues.selling.amount) {
+            handleSellingAmountChange(formValues.selling.amount);
+        }
+    };
+
+    const handleBuyingTokenSelect = (token: Token) => {
+        setSelectedBuyingToken(token);
+        if (formValues.buying.amount) {
+            handleBuyingAmountChange(formValues.buying.amount);
+        }
     };
 
     const renderSection = (type: 'buy' | 'sell') => {
@@ -175,13 +263,21 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 <div className="flex flex-col p-0 space-y-[13px] justify-center w-full">
                     <div className="w-full flex p-0">
                         {isSelling ? (
-                            <OptionsCardTokenList type={isSelling} chartToken={chartToken}/>
+                            <OptionsCardTokenList 
+                                type={isSelling} 
+                                chartToken={chartToken}
+                                onTokenSelect={handleSellingTokenSelect}
+                            />
                         ) : (
-                            <OptionsCardTokenList type={isSelling} chartToken={chartToken}/>
+                            <OptionsCardTokenList 
+                                type={isSelling} 
+                                chartToken={chartToken}
+                                onTokenSelect={handleBuyingTokenSelect}
+                            />
                         )}
                     </div>
                     <span className="text-sm font-normal text-secondary-foreground p-0">
-                        {isSelling ? 'USDC' : 'Call Option'}
+                        {isSelling ? selectedSellingToken?.symbol || 'USDC' : 'Call Option'}
                     </span>
                 </div>
                 <div className="w-full items-end flex flex-col p-0 space-y-3">
@@ -193,19 +289,20 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                             if(isSelling){
                                 handleSellingAmountChange(e.target.value)
                             } else {
-                                setFormValues(prev => ({
-                                    ...prev,
-                                    buying: {...prev.buying, amount: e.target.value}
-                                }))
+                                handleBuyingAmountChange(e.target.value)
                             }
                         }}
                         className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground h-[52px] w-full"
                     />
-                    <span className="text-sm font-normal text-secondary-foreground">$10.75</span>
+                    <span className="text-sm font-normal text-secondary-foreground">
+                        ${premium ? premium.toFixed(2) : '0.00'}
+                    </span>
                 </div>
             </div>
         )
     }
+
+    const selectedOption = getSelectedExpiryOption();
 
     return (
         <Card className="rounded-[26px] h-fit">
@@ -216,13 +313,13 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                             <Label className="text-sm font-medium text-foreground whitespace-nowrap overflow-hidden text-ellipsis">You Sell</Label>
                         </div>
                         <div className="flex justify-between gap-2 w-full items-center">
-                        <div className="w-full flex gap-1">
-                            <Wallet className="w-4 h-4 text-secondary-foreground"/>
-                            <div className="text-sm font-normal text-secondary-foreground w-full flex gap-1">
-                                <span>0.004185199</span>
-                                <span>BTC</span>
+                            <div className="w-full flex gap-1">
+                                <Wallet className="w-4 h-4 text-secondary-foreground"/>
+                                <div className="text-sm font-normal text-secondary-foreground w-full flex gap-1">
+                                    <span>0.004185199</span>
+                                    <span>{selectedSellingToken?.symbol || 'USDC'}</span>
+                                </div>
                             </div>
-                        </div>
                             <div className="w-full flex gap-1">
                                 <Button
                                     className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
@@ -261,7 +358,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                 <Wallet className="w-4 h-4 text-secondary-foreground"/>
                                 <div className="text-sm font-normal text-secondary-foreground w-full flex gap-1">
                                     <span>0.004185199</span>
-                                    <span>BTC</span>
+                                    <span>{selectedBuyingToken?.symbol || 'BTC'}</span>
                                 </div>
                             </div>
                         </div>
@@ -306,12 +403,12 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                         <div className="flex justify-between items-center w-full">
                                             <div className="flex items-center gap-1">
                                                 <span className="text-foreground text-xs font-normal">
-                                                    {getSelectedExpiryOption()?.label || "Pick a date..."}
+                                                    {selectedOption.label}
                                                 </span>
-                                                {getSelectedExpiryOption()?.date && (
+                                                {selectedOption.date && (
                                                     <>
                                                         <span className="text-secondary-foreground text-xs font-normal">•</span>
-                                                        <CountdownTimer targetDate={getSelectedExpiryOption()!.date} />
+                                                        <CountdownTimer targetDate={selectedOption.date} />
                                                     </>
                                                 )}
                                             </div>
@@ -328,9 +425,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                                         >
                                             <span className="text-foreground">{option.label}</span>
                                             <span className="text-secondary-foreground">•</span>
-                                            {option.date && (
-                                                <CountdownTimer targetDate={option.date} />
-                                            )}
+                                            <CountdownTimer targetDate={option.date} />
                                         </DropdownMenuItem>
                                     ))}
                                     <DropdownMenuItem
@@ -393,7 +488,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                         onClick={() => console.log('Initiate Trade')}
                     >
                         <span className="text-sm font-semibold">
-                            {formValues.buying.amount === '' && formValues.selling.amount === '' ? 'Enter Amount' : 'Trade'}
+                            {formValues .buying.amount === '' && formValues.selling.amount === '' ? 'Enter Amount' : 'Trade'}
                         </span>
                     </Button>
                 )}
@@ -403,5 +498,7 @@ export default function OptionsCard({onValueChange, chartToken} : OptionsCardPro
                 />
             </CardFooter>
         </Card>
-    )
+    );
 }
+
+export default OptionsCard;

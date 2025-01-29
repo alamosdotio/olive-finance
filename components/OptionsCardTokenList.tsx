@@ -2,30 +2,29 @@
 
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { ChevronDown, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
-import { tokens, Token } from "@/lib/data/tokens";
 import { Badge } from "./ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Separator } from "./ui/separator";
 import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategies";
 import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark } from "@/public/svgs/icons";
+import { usePythPrice } from "@/hooks/usePythPrice";
+import { convertPrice } from "@/utils/optionsPricing";
+import { Token, tokens } from "@/lib/data/tokens";
 
-
-
-
-interface OptionsCardTokenListProps{
+interface OptionsCardTokenListProps {
     chartToken: string
     type: boolean
+    onTokenSelect: (token: Token) => void
 }
 
-
-export default function OptionsCardTokenList({chartToken, type} : OptionsCardTokenListProps){
+export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
-    const generateTokens = (count: number) :  Token[] =>{
+    const generateTokens = (count: number) :  Token[] => {
         return Array(count).fill(null).map((_, index) => {
             const token = tokens[index % tokens.length]
             return {
@@ -55,15 +54,16 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
     const [selectedStrategy, setSelectedStrategy] = useState<TradingStrategy | null>(null)
     const [isOpen, setIsOpen] = useState(false)
 
-    const handleClick = (value: Token) =>{
-        if(selectedToken !== value){
+    const handleClick = (value: Token) => {
+        if(selectedToken !== value) {
             setSelectedToken(value)
+            onTokenSelect(value)
         }
         setIsOpen(false)
     }
 
-    const handleClickOptions = (value: TradingStrategy) =>{
-        if(selectedStrategy !== value){
+    const handleClickOptions = (value: TradingStrategy) => {
+        if(selectedStrategy !== value) {
             setSelectedStrategy(value)
         }
         setIsOpen(false)
@@ -90,7 +90,6 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
         if(!selectedStrategy && strategyList.length > 0) {
             setSelectedStrategy(strategyList[0])
         }
-
     }, [])
 
     const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
@@ -157,7 +156,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                 {activeTab === 'options' && (
                     <div className="space-y-5">
                         <div className="flex justify-between items-center">
-                            <ChevronLeft className="w-7 h-7 text-secondary-foreground"/>
+                            <div className="w-7 h-7" />
                             <div className="w-full flex justify-center gap-1 px-4">
                                 <Button className="w-full px-2 py-1 border-b border-b-primary rounded-none bg-inherit shadow-none text-secondary-foreground">
                                     <AmericanIcon /> 
@@ -172,7 +171,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                                     <span className="text-xs font-medium">Bermudan</span>
                                 </Button>
                             </div>
-                            <ChevronRight className="w-7 h-7 text-secondary-foreground"/>
+                            <div className="w-7 h-7" />
                         </div>
                         <div className="grid grid-cols-3 gap-x-[6px] gap-y-[14px]">
                             {allStrategies.map((strategy, index) => (
@@ -180,7 +179,6 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                                     key={index}
                                     onClick={()=>handleClickOptions(strategy)}
                                     className="flex flex-col space-y-[6px] cursor-pointer"
-                                
                                 >
                                     <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
                                         <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
@@ -189,7 +187,6 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                                         <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
                                         <span className="text-[8px] px-1 py-[3px] w-fit rounded-[3px] bg-primary text-background h-3 flex items-center font-semibold">{strategy.type}</span>
                                     </div>
-                                    
                                 </div>
                             ))}
                         </div>   
@@ -247,7 +244,6 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                                                         <span className="border border-primary text-primary text-[8px] px-1 py-0.5 rounded-[3px]">Zero Fees</span>
                                                     </>
                                                 )}
-                                                
                                             </div>
                                             <span className="text-xs text-secondary-foreground font-medium">{token.name}</span>
                                         </div>
@@ -264,55 +260,7 @@ export default function OptionsCardTokenList({chartToken, type} : OptionsCardTok
                             ))}
                         </ScrollArea>
                     </>
-                    
                 )}
-                
-                
-                {/* <div className="flex flex-col space-y-6 justify-between">
-                    <div className="w-full flex flex-col space-y-6 h-auto">
-                        <DialogTitle className="p-0">
-                            Tokens
-                        </DialogTitle>
-                        <div className="flex w-full h-fit space-x-2 items-center px-[10px] py-[6px] border rounded-[10px] text-secondary-foreground">
-                            <Search size={20} className="w-5 h-5"/>
-                            <Input 
-                                type="text"
-                                placeholder="Search"
-                                className="h-full border-none p-0 shadow-none rounded-none placeholder:text-secondary-foreground"
-                            />
-                        </div>
-                    </div>
-                    <ScrollArea className="w-full h-[500px]">
-                        <div className="space-y-3 h-full flex flex-col pr-1.5">
-                            {allTokens.map((token, index) => (
-                                <Button 
-                                    key={index}
-                                    onClick={()=>handleClick(token)}
-                                    className="flex w-full shadow-none justify-start space-x-2 pr-1 pl-1 py-6 bg-inherit text-foreground hover:bg-backgroundSecondary"
-                                >
-                                    <div className="flex items-center">
-                                        <Image src={token.logo} alt={token.name} height={36} width={36} className="rounded-full bg-inherit"/>
-                                    </div>
-                                    <div className="flex justify-between w-full">
-                                        <div className="flex flex-col space-y-0 items-start">
-                                            <div className="flex space-x-1.5 items-center">
-                                                <h3 className="text-sm">{token.symbol}</h3>
-                                                {(chartToken === `Crypto.${token.symbol}/USD` || token.symbol === 'USDC') &&(
-                                                    <Badge variant="outline" className="p-0 px-1 h-4 text-[8px]">Zero Fees</Badge>
-                                                )}
-                                            </div>
-                                            <span className="text-xs">{token.name}</span>
-                                        </div>
-                                        <div className="flex flex-col space-y-0">
-                                            <h3 className="text-sm text-end">0</h3>
-                                            <span className="text-xs">EPjFWd...yTDt1v</span>
-                                        </div>
-                                    </div>
-                                </Button>
-                            ))}
-                        </div>
-                    </ScrollArea>
-                </div> */}
             </DialogContent>
         </Dialog>
     )

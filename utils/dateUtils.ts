@@ -1,12 +1,9 @@
-import { addWeeks, nextFriday, endOfDay, isSameDay, lastDayOfMonth, subDays, addMonths } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
+import { addWeeks, nextFriday, endOfDay, isSameDay, lastDayOfMonth, subDays, addMonths, isBefore, startOfDay } from 'date-fns';
 import { formatExpiryLabel } from './formatter';
 
 export function getLondonMidnight(date: Date): Date {
-  const londonTime = toZonedTime(date, 'Europe/London');
-  const midnight = endOfDay(londonTime);
-  const offset = londonTime.getTimezoneOffset() * 60000;
-  return new Date(midnight.getTime() - offset);
+  const midnight = endOfDay(date);
+  return new Date(midnight.getTime());
 }
 
 export function getNextFridayDate(weeksToAdd: number = 0): Date {
@@ -33,16 +30,21 @@ export function addHours(date: Date, hours: number): Date {
 
 export function getExpiryOptions() {
   const today = new Date();
+  const now = startOfDay(today);
+
   const hourlyDates = [
     { hours: 0, value: '1' },
     { hours: 24, value: '2' },
     { hours: 48, value: '3' },
     { hours: 72, value: '4' }
-  ].map(({ hours, value }) => ({
-    value,
-    date: getLondonMidnight(addHours(today, hours)),
-    label: formatExpiryLabel(addHours(today, hours))
-  }));
+  ].map(({ hours, value }) => {
+    const date = getLondonMidnight(addHours(today, hours));
+    return {
+      value,
+      date,
+      label: formatExpiryLabel(addHours(today, hours))
+    };
+  }).filter(option => !isBefore(option.date, now));
 
   const fridayDates = [
     { weeks: 0, value: '7' },
@@ -58,15 +60,14 @@ export function getExpiryOptions() {
       date,
       label: formatExpiryLabel(getNextFridayDate(weeks))
     };
-  }).filter(Boolean);
+  }).filter(option => option && !isBefore(option.date, now));
 
   const lastFridayDates = [
     { months: 1, value: '28' },
     { months: 2, value: '35' },
     { months: 3, value: '42' },
     { months: 6, value: '49' },
-    { months: 9, value: '56' },
-    
+    { months: 9, value: '56' }
   ].map(({ months, value }) => {
     const date = getLondonMidnight(getLastFridayOfMonth(months));
     const isDuplicate = [...hourlyDates, ...fridayDates].some(existingDate => 
@@ -77,7 +78,7 @@ export function getExpiryOptions() {
       date,
       label: formatExpiryLabel(getLastFridayOfMonth(months))
     };
-  }).filter(Boolean);
+  }).filter(option => option && !isBefore(option.date, now));
 
   return [...hourlyDates, ...fridayDates, ...lastFridayDates];
 }

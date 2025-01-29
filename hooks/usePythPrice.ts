@@ -7,7 +7,7 @@ import { PRICE_FEEDS, priceFeed } from '../lib/data/price-feed';
 const PYTH_ENDPOINT = 'https://hermes.pyth.network';
 const POLLING_INTERVAL = 15000;
 
-interface PythPriceState {
+export interface PythPriceState {
   price: number | null;
   confidence: number | null;
   timestamp: number | null;
