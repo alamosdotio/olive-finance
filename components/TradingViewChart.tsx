@@ -22,6 +22,7 @@ interface TradingViewChartProps {
   logo?: string;
 }
 
+
 const getFormatConfig = (price: number) => {
   if (price < 0.0001) return { precision: 8, minMove: 0.00000001 };
   if (price < 0.01) return { precision: 8, minMove: 0.00000001 };
@@ -181,7 +182,8 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
             "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesVisible":false,
             "mainSeriesProperties.highLowAvgPrice.highLowPriceLabelsVisible": true,
             "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesColor": primaryColor,
-            "mainSeriesProperties.showPriceLine": false
+            "mainSeriesProperties.showPriceLine": false,
+            "scalesProperties.showSymbolLabels": false,
           },
           studies_overrides: {
             "Moving Average.plot.color": primaryColor,
@@ -206,22 +208,24 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         widgetRef.current = widget;
 
         widget.onChartReady(() => {
+          const priceScale = widget.activeChart().getPanes()[0].getMainSourcePriceScale();
+          priceScale.setAutoScale(false)
           chartRef.current = widget.chart();
           chartRef.current.setChartType(chartType);
-          chartRef.current.createStudy(
-            'Moving Average',
-            true,
-            false,
-            {
-              length: 9,
-              source: "close",
-              offset: 0,
-            },
-            {
-              "plot.color": primaryColor,
-              "plot.linewidth": 2
-            }
-          );
+          // chartRef.current.createStudy(
+          //   'Moving Average',
+          //   true,
+          //   false,
+          //   {
+          //     length: 9,
+          //     source: "close",
+          //     offset: 0,
+          //   },
+          //   {
+          //     "plot.color": primaryColor,
+          //     "plot.linewidth": 2
+          //   }
+          // );
           setIsChartReady(true);
         });
       } catch (error) {
