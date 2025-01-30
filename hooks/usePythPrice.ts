@@ -1,11 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PriceServiceConnection } from '@pythnetwork/price-service-client';
-import { PRICE_FEEDS, priceFeed } from '../lib/data/price-feed';
+import { PRICE_FEEDS } from '../lib/data/price-feed';
 
 const PYTH_ENDPOINT = 'https://hermes.pyth.network';
-const POLLING_INTERVAL = 15000;
+const POLLING_INTERVAL = 15000; // 15 seconds polling interval
+const CACHE_DURATION = 10000; // 10 seconds cache duration
+
+interface CachedPrice {
+  data: PythPriceState;
+  timestamp: number;
+}
+
+const priceCache = new Map<string, CachedPrice>();
 
 export interface PythPriceState {
   price: number | null;
@@ -25,14 +33,17 @@ const initialPriceState: PythPriceState = {
   timestamp: null,
 };
 
+let globalConnection: PriceServiceConnection | null = null;
+
 export function usePythPrice(token: string): UsePythPriceResult {
   const [priceData, setPriceData] = useState<PythPriceState>(initialPriceState);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const requestCountRef = useRef<number>(0);
+  const lastRequestTimeRef = useRef<number>(0);
 
   useEffect(() => {
     let mounted = true;
-    let connection: PriceServiceConnection | null = null;
     let intervalId: NodeJS.Timeout;
 
     const priceFeed = PRICE_FEEDS.find(feed => feed.token === token);
@@ -41,21 +52,46 @@ export function usePythPrice(token: string): UsePythPriceResult {
       setLoading(false);
       return;
     }
+
     const feedId = priceFeed.id;
 
     async function fetchPrice() {
-      if (!mounted || !connection) return;
+      if (!mounted) return;
+
+      const now = Date.now();
+      const cachedResult = priceCache.get(token);
+      
+      // Check cache first
+      if (cachedResult && (now - cachedResult.timestamp) < CACHE_DURATION) {
+        setPriceData(cachedResult.data);
+        setLoading(false);
+        return;
+      }
+
+      // Rate limiting check
+      if (now - lastRequestTimeRef.current < 10000) { // 10 second window
+        if (requestCountRef.current >= 25) { // Keep below 30 req/10s limit
+          return;
+        }
+      } else {
+        requestCountRef.current = 0;
+        lastRequestTimeRef.current = now;
+      }
 
       try {
-        const priceFeeds = await connection.getLatestPriceFeeds([feedId]);
-        const feed = priceFeeds?.[0];
+        if (!globalConnection) {
+          globalConnection = new PriceServiceConnection(PYTH_ENDPOINT);
+        }
+
+        const priceFeeds = await globalConnection.getLatestPriceFeeds([feedId]);
+        requestCountRef.current++;
         
+        const feed = priceFeeds?.[0];
         if (!feed) {
           throw new Error('No price feed data available');
         }
 
         const priceInfo = feed.getPriceNoOlderThan(60);
-
         if (!priceInfo) {
           setError('Price data is stale');
           return;
@@ -63,15 +99,27 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
         const price = parseFloat(priceInfo.price) * Math.pow(10, priceInfo.expo);
         const confidence = parseFloat(priceInfo.conf) * Math.pow(10, priceInfo.expo);
-
-        setPriceData({
+        
+        const newPriceData = {
           price,
           confidence,
           timestamp: priceInfo.publishTime,
+        };
+
+        // Update cache
+        priceCache.set(token, {
+          data: newPriceData,
+          timestamp: now,
         });
-        setError(null);
+
+        if (mounted) {
+          setPriceData(newPriceData);
+          setError(null);
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch price data');
+        if (mounted) {
+          setError(err instanceof Error ? err.message : 'Failed to fetch price data');
+        }
       } finally {
         if (mounted) {
           setLoading(false);
@@ -79,26 +127,13 @@ export function usePythPrice(token: string): UsePythPriceResult {
       }
     }
 
-    async function initialize() {
-      try {
-        connection = new PriceServiceConnection(PYTH_ENDPOINT);
-        await fetchPrice();
-        intervalId = setInterval(fetchPrice, POLLING_INTERVAL);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to connect to Pyth network');
-        setLoading(false);
-      }
-    }
-
-    initialize();
+    fetchPrice();
+    intervalId = setInterval(fetchPrice, POLLING_INTERVAL);
 
     return () => {
       mounted = false;
       if (intervalId) {
         clearInterval(intervalId);
-      }
-      if (connection) {
-        connection.closeWebSocket();
       }
     };
   }, [token]);

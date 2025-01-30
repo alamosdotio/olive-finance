@@ -10,7 +10,7 @@ export default function PriceQuote({value}:PriceQuoteProps){
 
 
     return (
-        <div className={value === '' ? 'hidden' : 'w-full border rounded-[26px] flex flex-col'}>
+        <div className={(value === '' || 0) ? 'hidden' : 'w-full border rounded-[26px] flex flex-col'}>
             <div 
                 className="w-full flex justify-between items-center px-6 py-[18px]"
                 onClick={() => setDropDownActive(!dropDownActive)}

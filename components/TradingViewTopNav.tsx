@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ChevronDown, Search } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { DollarIcon, SortIcon } from "@/public/svgs/icons";
+import { DollarIcon, PythIcon, SortIcon } from "@/public/svgs/icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
 import { formatPrice } from "@/utils/formatter";
@@ -158,6 +158,18 @@ export default function TradingViewTopNav({
                 <span className="text-sm font-medium text-foreground">
                     {priceData.price ? formatPrice(priceData.price) : priceLoading}
                 </span>
+            </div>
+            <div className="px-4 py-1">
+                <Separator orientation="vertical"/>
+            </div>
+            <div className="flex flex-col">
+                <span className="text-secondary-foreground font-normal text-[10px] h-3">Oracle Price</span>
+                <div className="flex space-x-0.5">
+                    <span>
+                        <PythIcon />
+                    </span>
+                    <span className="text-foreground text-xs font-medium">$180.26</span>
+                </div>
             </div>
             <div className="px-4 py-1">
                 <Separator orientation="vertical"/>

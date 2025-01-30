@@ -19,24 +19,11 @@ import { SwapDarkGreen, SwapDarkPurple, SwapLightGreen, SwapLightPurple } from "
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { format } from "date-fns";
 import * as Portal from "@radix-ui/react-portal";
-import { useHistoricalPrices } from "@/hooks/useHistoricalPrices";
 import { useOptionsPricing } from "@/hooks/useOptionsPricing";
 import { calculateOptionsQuantity, calculateTokensNeeded } from "@/utils/optionsPricing";
 import { Token } from "@/lib/data/tokens";
-import { usePythPrice } from "@/hooks/usePythPrice";
-
-interface PythPriceState {
-  price: number | null;
-  confidence: number | null;
-  timestamp: number | null;
-}
-
-interface MarketDataState {
-  high24h: number | null;
-  low24h: number | null;
-  lastUpdated: number | null;
-  change24h: number | null;
-}
+import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
+import { type MarketDataState } from '@/hooks/usePythMarketData';
 
 interface OptionsCardProps {
     chartToken: string;
@@ -66,12 +53,10 @@ const OptionsCard = ({
     const triggerRef = useRef<HTMLButtonElement>(null);
     const calendarRef = useRef<HTMLDivElement>(null);
     const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0 });
-    const { prices: historicalPrices } = useHistoricalPrices(chartToken);
 
     const [selectedSellingToken, setSelectedSellingToken] = useState<Token | null>(null);
     const [selectedBuyingToken, setSelectedBuyingToken] = useState<Token | null>(null);
 
-  
     const expiryOptions = getExpiryOptions().filter((opt): opt is ExpiryOption => opt !== null);
     const defaultExpiryOption = expiryOptions.find(opt => opt.value === '14') ?? expiryOptions[0];
     
@@ -88,7 +73,6 @@ const OptionsCard = ({
         expiry: defaultExpiryOption.value
     });
 
-   
     const [userEditedStrikePrice, setUserEditedStrikePrice] = useState(false);
 
     useEffect(() => {
@@ -102,7 +86,6 @@ const OptionsCard = ({
 
     const [isSwapped, setIsSwapped] = useState(false);
 
-   
     const { priceData: sellingTokenPrice } = usePythPrice(
         selectedSellingToken ? `Crypto.${selectedSellingToken.symbol}/USD` : 'Crypto.USDC/USD'
     );
@@ -115,7 +98,7 @@ const OptionsCard = ({
         strikePrice: parseFloat(formValues.strikePrice) || 0,
         currentPrice: priceData.price || 0,
         expiryDate: date,
-        historicalPrices
+        historicalPrices: marketData.historicalPrices
     });
 
     useEffect(() => {
