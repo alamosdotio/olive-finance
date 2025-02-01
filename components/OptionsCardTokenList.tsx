@@ -2,18 +2,15 @@
 
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Separator } from "./ui/separator";
 import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategies";
-import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark } from "@/public/svgs/icons";
-import { usePythPrice } from "@/hooks/usePythPrice";
-import { convertPrice } from "@/utils/optionsPricing";
+import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark, TrendUp } from "@/public/svgs/icons";
 import { Token, tokens } from "@/lib/data/tokens";
 
 interface OptionsCardTokenListProps {
@@ -101,6 +98,8 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
         reorderedTokens.splice(1, 0, chartTokenItem);
     }
 
+    const [isDropped, setIsDropped] = useState(false)
+
     return (
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
             {type === true && (
@@ -155,47 +154,103 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                 <Separator className="my-[14px]"/>
                 {activeTab === 'options' && (
                     <div className="space-y-5">
-                        <div className="flex justify-between items-center">
-                            <div className="w-7 h-7" />
-                            <div className="w-full flex justify-center gap-1 px-4">
-                                <Button className="w-full px-2 py-1 border-b border-b-primary rounded-none bg-inherit shadow-none text-secondary-foreground">
+                        <div className="w-full h-7 flex justify-between items-center space-x-2">
+                            <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
+                                <ChevronLeft className="w-5 h-5 p-1 text-secondary-foreground"/>
+                            </div>
+                            <div className="w-full flex justify-center">
+                                <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-primary rounded-none bg-inherit shadow-none text-secondary-foreground [&_svg]:size-[10px]">
                                     <AmericanIcon /> 
-                                    <span className="text-xs font-medium text-primary">American</span>
+                                    <span className="text-[11px] font-medium text-primary">American</span>
                                 </Button>
-                                <Button className="w-full px-2 py-1 border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary-foreground">
+                                <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary-foreground [&_svg]:size-[10px]">
                                     <EuropeanIcon />
-                                    <span className="text-xs font-medium">European</span>
+                                    <span className="text-[11px] font-medium">European</span>
                                 </Button>
-                                <Button className="w-full px-2 py-1 border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary-foreground">
+                                <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary flex items-center [&_svg]:size-[10px]">
                                     <BermudanIcon />
-                                    <span className="text-xs font-medium">Bermudan</span>
+                                    <span className="text-[11px] font-medium">Bermudan</span>
+                                    <span className="w-fit p-1 h-3 border border-primary text-[8px] text-primary flex items-center rounded-[3px]">Coming Soon</span>
                                 </Button>
                             </div>
-                            <div className="w-7 h-7" />
+                            <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
+                                <ChevronRight className="w-5 h-5 p-1 text-secondary-foreground"/>
+                            </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-x-[6px] gap-y-[14px]">
-                            {allStrategies.map((strategy, index) => (
-                                <div 
-                                    key={index}
-                                    onClick={()=>handleClickOptions(strategy)}
-                                    className="flex flex-col space-y-[6px] cursor-pointer"
-                                >
-                                    <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
-                                        <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
-                                    </div>
-                                    <div className="flex flex-col space-y-1">
-                                        <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
-                                        <span className="text-[8px] px-1 py-[3px] w-fit rounded-[3px] bg-primary text-background h-3 flex items-center font-semibold">{strategy.type}</span>
-                                    </div>
+                        <div className="flex flex-col">
+                            <div className="w-full space-y-2">
+                                <div className="flex space-x-[6px] items-center">
+                                    <TrendUp />
+                                    <span className="text-[11px] font-medium text-secondary-foreground">Bullish Advanced</span>
                                 </div>
-                            ))}
-                        </div>   
+                                <div className="grid grid-cols-3 gap-x-[6px] gap-y-[14px]">
+                                    {allStrategies.map((strategy, index) => (
+                                        <div 
+                                            key={index}
+                                            onClick={()=>handleClickOptions(strategy)}
+                                            className="flex flex-col space-y-[6px] cursor-pointer"
+                                        >
+                                            <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
+                                                <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
+                                            </div>
+                                            <div className="flex flex-col space-y-1">
+                                                <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
+                                                <span className="text-[8px] px-1 py-[3px] w-fit rounded-[3px] bg-primary text-background h-3 flex items-center font-semibold">{strategy.type}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            {isDropped &&(
+                                <>
+                                    <Separator className="my-4"/>
+                                    <div className="w-full space-y-2">
+                                        <div className="flex space-x-[6px] items-center">
+                                            <TrendUp />
+                                            <span className="text-[11px] font-medium text-secondary-foreground">Neutral Advanced</span>
+                                        </div>
+                                    
+                                        <div className="grid grid-cols-3 gap-x-[6px] gap-y-[14px]">
+                                            {allStrategies.slice(0, 3).map((strategy, index) => (
+                                                <div 
+                                                    key={index}
+                                                    onClick={()=>handleClickOptions(strategy)}
+                                                    className="flex flex-col space-y-[6px] cursor-pointer"
+                                                >
+                                                    <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
+                                                        <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
+                                                    </div>
+                                                    <div className="flex flex-col space-y-1">
+                                                        <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
+                                                        <span className="text-[8px] px-1 py-[3px] w-fit rounded-[3px] bg-primary text-background h-3 flex items-center font-semibold">{strategy.type}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </>
+                                
+                            )}
+                            
+
+                        </div>
                         <div className="w-full flex justify-center">
                             <Button
                                 className="border bg-inherit text-foreground shadow-none py-2 px-4 rounded-[12px]"
+                                onClick={() => setIsDropped(!isDropped)}
                             >
-                                <span className="text-xs">More Strategies</span>
-                                <ChevronDown className="w-3 h-3"/>
+                                {isDropped ? (
+                                    <>
+                                        <span className="text-xs">Less Strategies</span>
+                                        <ChevronUp className="w-3 h-3"/>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="text-xs">More Strategies</span>
+                                        <ChevronDown  className="w-3 h-3"/>
+                                    </>
+                                )}
+                                
                             </Button>
                         </div>
                     </div>

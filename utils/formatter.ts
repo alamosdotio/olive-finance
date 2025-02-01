@@ -14,7 +14,7 @@ export function formatCountdown(timeLeft: number): string {
 }
 
 export function formatPrice(price: number): string {
-  if (price < 10) {
+  if (price < 10 && price!=0) {
     const priceString = price.toString();
     const [, decimalPart] = priceString.split('.');
     const firstNonZeroIndex = decimalPart.search(/[1-9]/);

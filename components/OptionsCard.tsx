@@ -165,7 +165,7 @@ const OptionsCard = ({
         setFormValues(prev => ({
             ...prev,
             selling: { ...prev.selling, amount: newAmount },
-            buying: { ...prev.buying, amount: optionsQuantity.toFixed(8) }
+            buying: { ...prev.buying, amount: formatPrice(optionsQuantity) }
         }));
         onValueChange(newAmount);
     };
@@ -180,7 +180,7 @@ const OptionsCard = ({
         setFormValues(prev => ({
             ...prev,
             buying: { ...prev.buying, amount: newAmount },
-            selling: { ...prev.selling, amount: tokensNeeded.toFixed(8) }
+            selling: { ...prev.selling, amount: formatPrice(tokensNeeded) }
         }));
     };
 
@@ -278,7 +278,7 @@ const OptionsCard = ({
                         className="border-none text-right shadow-none p-0 text-[52px] font-normal text-foreground h-[52px] w-full"
                     />
                     <span className="text-sm font-normal text-secondary-foreground">
-                        ${premium ? premium.toFixed(2) : '0.00'}
+                        ${premium ? formatPrice(premium) : '0.00'}
                     </span>
                 </div>
             </div>
