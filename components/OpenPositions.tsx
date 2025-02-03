@@ -8,6 +8,7 @@ import { Button } from './ui/button';
 import PositionOverview from './PositionOverview';
 import PositionGreeks from './PositionGreeks';
 import { ArrowDown, ArrowUp, SendIcon } from '@/public/svgs/icons';
+import PositionDetails from './PositionDetails';
 
 interface OpenPositionProps{
     token: string
@@ -73,6 +74,13 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                                 >
                                     Greeks
                                 </TabsTrigger>
+                                <TabsTrigger 
+                                    value="Details"
+                                    className="py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    onClick={() => setActiveTab('Details')}
+                                >
+                                    Details
+                                </TabsTrigger>
                             </TabsList>
                         </Tabs>
                         <div className='flex space-x-3'>
@@ -89,6 +97,9 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                     )}
                     {activeTab === 'Greeks' &&(
                         <PositionGreeks delta={greeks.delta} gamma={greeks.gamma} theta={greeks.theta} vega={greeks.vega}/>
+                    )}
+                    {activeTab === 'Details' &&(
+                        <PositionDetails />
                     )}
                 </div>
             )}

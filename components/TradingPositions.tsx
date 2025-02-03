@@ -6,6 +6,7 @@ import OpenPositions from "./OpenPositions"
 import OpenOrders from "./OpenOrders"
 import OrderHistory from "./OrderHistory"
 import { Position, positions } from '@/lib/data/Positions';
+import ExpiredOptions from "./ExpiredOptions"
 
 export default function TradingPositions(){
     const [activeTab, setActiveTab] = useState<string>("Positions")
@@ -56,11 +57,11 @@ export default function TradingPositions(){
                             Open Positions
                         </TabsTrigger>
                         <TabsTrigger 
-                            value="Orders"
+                            value="Expired"
                             className="px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
-                            onClick={()=>handleClickTab('Orders')}
+                            onClick={()=>handleClickTab('Expired')}
                         >
-                            Open Orders
+                            Expired Positions
                         </TabsTrigger>
                         <TabsTrigger 
                             value="History"
@@ -104,8 +105,8 @@ export default function TradingPositions(){
                         
                     </div>
                 )}
-                {activeTab === 'Orders' && (
-                    <OpenOrders />
+                {activeTab === 'Expired' && (
+                    <ExpiredOptions />
                 )}
                 {activeTab === 'History' && (
                     <OrderHistory />
