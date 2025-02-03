@@ -1,6 +1,6 @@
 import { PriceIcon, PurchaseDateIcon, PurchasePriceIcon } from "@/public/svgs/icons";
 
-export default function(){
+export default function PositionDetails(){
     return (
             <div className='w-full flex flex-col space-y-1'>
                 <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
