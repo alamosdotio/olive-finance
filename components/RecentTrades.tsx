@@ -192,7 +192,7 @@ const RecentTradesData = [
 export default function RecentTrades(){
     return (
         <div className="border w-full h-full rounded-b-[26px] flex flex-col justify-between">
-            <ScrollArea className="h-[600px] rounded-b-[20px] w-full">
+            <ScrollArea className="h-[660px] rounded-b-[20px] w-full">
                 <Table className="whitespace-nowrap overflow-hidden">
                     <TableHeader className="w-full">
                         <TableRow className="p-0">
@@ -218,9 +218,16 @@ export default function RecentTrades(){
                                     
                                 </TableCell>
                                 <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
-                                    <span className="px-2 py-[6px] bg-[#23293E] text-[#A3BFFB] rounded-[8px]">
-                                        {row.tx}
-                                    </span>
+                                    {row.tx === 'Bought' ? (
+                                        <span className="px-2 py-[6px] bg-[#23293E] text-[#A3BFFB] rounded-[8px]">
+                                            {row.tx}
+                                        </span>
+                                    ) : (
+                                        <span className="px-2 py-[6px] bg-[#2B2825] text-[#FFD08E] rounded-[8px]">
+                                            {row.tx}
+                                        </span>
+                                    )}
+                                    
                                 </TableCell>
                                 <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.quantity}</TableCell>
                                 <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.option}</TableCell>

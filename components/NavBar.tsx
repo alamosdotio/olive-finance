@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 
 export default function NavBar(){
     const [active, setActive] = useState<string>("Options");
-    const { theme, setTheme } = useTheme()
+    const { theme } = useTheme()
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const { isConnected } = useWallet();
     const router = useRouter()
@@ -51,7 +51,11 @@ export default function NavBar(){
         <header className="flex justify-between max-w-full">
             <div className="flex justify-between py-2 gap-6">
                 <div className="flex items-center justify-center gap-2">
-                    <Image src={logo} alt="logo pic" className="w-full h-7 mb-1" />
+                    {(theme === 'light-purple' || theme === 'light-green') ? (
+                        <Image src="/images/logo-light.png" alt="logo pic" width={1465} height={437} className="w-full h-7 mb-1" />
+                    ) : (
+                        <Image src="/images/logo-dark.png" alt="logo pic" width={1465} height={437} className="w-full h-7 mb-1" />
+                    )}
                     {/* <h1 className="text-sm font-normal">Olive Finance</h1> */}
                 </div>
                 <nav className="flex justify-evenly items-center gap-8">

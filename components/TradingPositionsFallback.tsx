@@ -24,7 +24,7 @@ export default function TradingPositionsFallback() {
                             value="Orders"
                             className="px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
                         >
-                            Open Orders
+                            Expired Options
                         </TabsTrigger>
                         <TabsTrigger 
                             value="History"

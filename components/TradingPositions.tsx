@@ -86,32 +86,34 @@ export default function TradingPositions(){
                     </Button>
                 </div>
             </div>
-            <div className="px-6 py-4 pb-[10px]">
-                {activeTab === 'Positions' && (
-                    <div className="space-y-[10px]">
-                        {allPositions.map((position, index) => (
-                            <OpenPositions 
-                                key={index} 
-                                token={position.token} 
-                                logo={position.logo} 
-                                symbol={position.symbol} 
-                                type={position.type} 
-                                expiry={position.expiry} 
-                                size={position.size} 
-                                pnl={position.pnl} 
-                                greeks={position.greeks}
-                            />
-                        ))}
-                        
-                    </div>
-                )}
-                {activeTab === 'Expired' && (
+            {activeTab === 'Positions' && (
+                <div className="px-6 py-4 pb-[10px] space-y-[10px]">
+                    {allPositions.map((position, index) => (
+                        <OpenPositions 
+                            key={index} 
+                            token={position.token} 
+                            logo={position.logo} 
+                            symbol={position.symbol} 
+                            type={position.type} 
+                            expiry={position.expiry} 
+                            size={position.size} 
+                            pnl={position.pnl} 
+                            greeks={position.greeks}
+                        />
+                    ))}
+                    
+                </div>
+            )}
+            {activeTab === 'Expired' && (
+                <div className="pb-[44px]">
                     <ExpiredOptions />
-                )}
-                {activeTab === 'History' && (
+                </div>
+            )}
+            {activeTab === 'History' && (
+                <div className="px-6 py-4 pb-[10px]">
                     <OrderHistory />
-                )}
-            </div>
+                </div>
+            )}
             <div className="px-6 pb-4 flex justify-end">
                 <div className="flex items-center gap-5">
                     <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
