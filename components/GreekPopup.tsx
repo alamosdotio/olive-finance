@@ -11,11 +11,11 @@ export default function GreekPopup({value} : GreekPopupProps){
     return (
         <div className={value === '' ? 'hidden' : 'w-full border rounded-[26px] flex flex-col'}>
             <div 
-                className="w-full flex justify-between items-center px-6 py-[18px]"
+                className="w-full flex justify-between items-center px-6 py-4"
                 onClick={() => setDropDownActive(!dropDownActive)}
             >
                 <span className="text-sm font-medium text-secondary-foreground h-fit">Greeks</span>
-                {dropDownActive ? <ChevronUp className="text-secondary-foreground text-sm"/> : <ChevronDown className="text-secondary-foreground text-sm"/>}
+                {dropDownActive ? <ChevronUp className="text-secondary-foreground text-sm w-4 h-4"/> : <ChevronDown className="text-secondary-foreground text-sm w-4 h-4"/>}
             </div>
             {dropDownActive && (
                 <div className="border-t px-6 py-5 space-y-4">

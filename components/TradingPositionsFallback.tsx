@@ -36,12 +36,12 @@ export default function TradingPositionsFallback() {
                 </Tabs>
                 <div className="flex gap-3 items-center">
                     <Button
-                        className="bg-secondary p-2 w-full h-auto"
+                        className="bg-secondary p-2 w-full h-auto rounded-[10px]"
                     >
                         <RotateCw className="text-secondary-foreground"/>
                     </Button>
                     <Button
-                        className="bg-secondary w-full h-auto py-[6px] px-[10px]"
+                        className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-[10px]"
                     >
                         <Ban className="text-secondary-foreground p-0"/>
                         <span className="text-sm font-normal text-secondary-foreground p-0">Cancel all</span>

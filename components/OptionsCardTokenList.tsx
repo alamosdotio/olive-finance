@@ -131,7 +131,7 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                 </div>
             )}
             
-            <DialogContent className="max-w-[420px] px-3 py-5 bg-accent gap-0 sm:rounded-[20px]">
+            <DialogContent className="max-w-[524px] px-3 py-5 bg-accent gap-0 sm:rounded-[20px]">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
                     <DialogTitle className="p-0 text-base font-medium text-foreground">You&apos;re Selling</DialogTitle>
                     <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
@@ -152,7 +152,7 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                     </Tabs>
                 </div>
                 <Separator className="my-[14px]"/>
-                {activeTab === 'options' && (
+                {activeTab === 'options' && type === false && (
                     <div className="space-y-5">
                         <div className="w-full h-7 flex justify-between items-center space-x-2">
                             <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
@@ -252,6 +252,48 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                                 )}
                                 
                             </Button>
+                        </div>
+                    </div>
+                )}
+                {activeTab === 'options' && type === true && (
+                    <div className="w-full flex flex-col space-y-[10px]">
+                        <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
+                            <div className="flex space-x-[10px] items-center">
+                                <Image src='/images/ethereum.png' alt="usdc" width={32} height={32} className="rounded-full"/>
+                                <div className="flex flex-col space-y-0.5">
+                                    <span className="text-xs font-medium h-fit">ETH-19JAN25-97000-P</span>
+                                    <span className="text-xs text-secondary-foreground font-normal flex items-center">
+                                        Ethereum • Put option • 
+                                    <span className="px-1">
+                                        <AmericanIcon />
+                                    </span>
+                                        American
+                                </span>
+                                </div>
+                            </div>
+                            <div className="flex flex-col justify-center">
+                                <span className="text-secondary-foreground text-xs font-medium">$152.26</span>
+                                <span className="text-secondary-foreground text-xs font-normal">0.809232976 SOL</span>
+                            </div>
+                        </div>
+                        <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
+                            <div className="flex space-x-[10px] items-center">
+                                <Image src='/images/ethereum.png' alt="usdc" width={32} height={32} className="rounded-full"/>
+                                <div className="flex flex-col space-y-0.5">
+                                    <span className="text-xs font-medium h-fit">ETH-19JAN25-97000-P</span>
+                                    <span className="text-xs text-secondary-foreground font-normal flex items-center">
+                                        Ethereum • Put option • 
+                                    <span className="px-1">
+                                        <AmericanIcon />
+                                    </span>
+                                        American
+                                </span>
+                                </div>
+                            </div>
+                            <div className="flex flex-col justify-center">
+                                <span className="text-secondary-foreground text-xs font-medium">$152.26</span>
+                                <span className="text-secondary-foreground text-xs font-normal">0.809232976 SOL</span>
+                            </div>
                         </div>
                     </div>
                 )}

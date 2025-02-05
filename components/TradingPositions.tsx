@@ -3,7 +3,6 @@ import { Button } from "./ui/button"
 import { useEffect, useState } from "react"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 import OpenPositions from "./OpenPositions"
-import OpenOrders from "./OpenOrders"
 import OrderHistory from "./OrderHistory"
 import { Position, positions } from '@/lib/data/Positions';
 import ExpiredOptions from "./ExpiredOptions"
@@ -74,12 +73,12 @@ export default function TradingPositions(){
                 </Tabs>
                 <div className="flex gap-3 items-center">
                     <Button
-                        className="bg-secondary p-2 w-full h-auto"
+                        className="bg-secondary p-2 w-full h-auto rounded-[10px]"
                     >
                         <RotateCw className="text-secondary-foreground"/>
                     </Button>
                     <Button
-                        className="bg-secondary w-full h-auto py-[6px] px-[10px]"
+                        className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-[10px]"
                     >
                         <Ban className="text-secondary-foreground p-0"/>
                         <span className="text-sm font-normal text-secondary-foreground p-0">Cancel all</span>

@@ -898,3 +898,27 @@ export function PurchaseDateIcon(){
   <path d="M4.83827 9.74186H4.84351" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 }
+
+export function GreenDot(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
+  <circle cx="2" cy="2" r="2" fill="#53C08D"/>
+</svg>
+}
+
+export function PurpleDot(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
+  <circle cx="2" cy="2" r="2" fill="#B1A3FB"/>
+</svg>
+}
+
+export function GrayDot(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
+  <circle cx="2" cy="2" r="2" fill="#808693"/>
+</svg>
+}
+
+export function OrangeDot(){
+  return <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
+  <circle cx="2" cy="2" r="2" fill="#FFD08E"/>
+</svg>
+}
