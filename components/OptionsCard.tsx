@@ -27,6 +27,7 @@ import { type MarketDataState } from '@/hooks/usePythMarketData';
 
 interface OptionsCardProps {
     chartToken: string;
+    chartTokenLogo: string;
     onValueChange: (newValue: string) => void;
     priceData: PythPriceState;
     marketData: MarketDataState;
@@ -41,6 +42,7 @@ interface ExpiryOption {
 
 const OptionsCard = ({
     chartToken,
+    chartTokenLogo,
     onValueChange,
     priceData,
     marketData,
@@ -249,12 +251,14 @@ const OptionsCard = ({
                             <OptionsCardTokenList 
                                 type={isSelling} 
                                 chartToken={chartToken}
+                                chartTokenLogo={chartTokenLogo}
                                 onTokenSelect={handleSellingTokenSelect}
                             />
                         ) : (
                             <OptionsCardTokenList 
                                 type={isSelling} 
                                 chartToken={chartToken}
+                                chartTokenLogo={chartTokenLogo}
                                 onTokenSelect={handleBuyingTokenSelect}
                             />
                         )}

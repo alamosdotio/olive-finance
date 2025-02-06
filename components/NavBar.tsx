@@ -200,7 +200,7 @@ export default function NavBar(){
                         </div>
                         <div className="w-full p-5">
                             <div className="w-full flex space-x-3">
-                                <div className="p-[9px] bg-secondary rounded-[8px] h-fit">
+                                <div className="p-[9px] bg-secondary rounded-[8px] h-fit text-primary">
                                     <InfoIcon />
                                 </div>
                                 <span className="text-xs font-normal text-foreground">Lorem ipsum dolor sit amet conse. Urna dui enim turpis gravida. Elementum fermentum tin posuere.</span>

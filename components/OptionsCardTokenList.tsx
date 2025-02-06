@@ -12,15 +12,18 @@ import { Separator } from "./ui/separator";
 import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategies";
 import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark, TrendUp } from "@/public/svgs/icons";
 import { Token, tokens } from "@/lib/data/tokens";
+import { cn } from "@/lib/utils";
 
 interface OptionsCardTokenListProps {
     chartToken: string
+    chartTokenLogo: string
     type: boolean
     onTokenSelect: (token: Token) => void
 }
 
-export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }: OptionsCardTokenListProps) {
+export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect }: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
+    const [optionStyle, setOptionStyle] = useState("American")
     const generateTokens = (count: number) :  Token[] => {
         return Array(count).fill(null).map((_, index) => {
             const token = tokens[index % tokens.length]
@@ -119,11 +122,31 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                 <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
                     <DialogTrigger className="py-2">
                         <div className="flex items-center space-x-2 py-2 px-0 text-[28px] justify-evenly">
-                            {selectedStrategy?.transaction === 'Call' ? (
-                                <CallIconDark width="48" height="48" />
-                            ):(
-                                <PutIconDark width="48" height="48" />
-                            )}
+                            <div className="relative">
+                                {selectedStrategy?.transaction === 'Call' ? (
+                                    <CallIconDark width="48" height="48" />
+                                ):(
+                                    <PutIconDark width="48" height="48" />
+                                )}
+                                <div className="absolute left-[19px] top-[33px] h-fit w-fit rounded-full">
+                                    <div className="flex -space-x-0.5">
+                                        <div className="h-4 w-4 rounded-full overflow-hidden flex items-center justify-center ring ring-background">
+                                            {optionStyle === 'American' ? (
+                                                <div>
+                                                    <AmericanIcon width="25" height="24"/>
+                                                </div>
+                                            ):(
+                                                <div>
+                                                    <EuropeanIcon width="25" height="24"/>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <Image src={chartTokenLogo} alt="selected token" height={48} width={48} className="rounded-full w-4 h-4 bg-white ring ring-background"/>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            
                             <span>{selectedStrategy?.transaction}</span>
                             <ChevronDown className="opacity-50" size={28}/>
                         </div>
@@ -159,12 +182,18 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                                 <ChevronLeft className="w-5 h-5 p-1 text-secondary-foreground"/>
                             </div>
                             <div className="w-full flex justify-center">
-                                <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-primary rounded-none bg-inherit shadow-none text-secondary-foreground [&_svg]:size-[10px]">
-                                    <AmericanIcon /> 
-                                    <span className="text-[11px] font-medium text-primary">American</span>
+                                <Button
+                                    className={cn(optionStyle === 'American' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
+                                    onClick={() => setOptionStyle('American')}
+                                >
+                                    <AmericanIcon width="13" height="12"/> 
+                                    <span className="text-[11px] font-medium">American</span>
                                 </Button>
-                                <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary-foreground [&_svg]:size-[10px]">
-                                    <EuropeanIcon />
+                                <Button 
+                                    className={cn(optionStyle === 'European' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
+                                    onClick={() => setOptionStyle('European')}
+                                >
+                                    <EuropeanIcon width="13" height="12"/>
                                     <span className="text-[11px] font-medium">European</span>
                                 </Button>
                                 <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary flex items-center [&_svg]:size-[10px]">
@@ -265,7 +294,7 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                                     <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                         Ethereum • Put option • 
                                     <span className="px-1">
-                                        <AmericanIcon />
+                                        <AmericanIcon width="13" height="12"/>
                                     </span>
                                         American
                                 </span>
@@ -284,7 +313,7 @@ export default function OptionsCardTokenList({ chartToken, type, onTokenSelect }
                                     <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                         Ethereum • Put option • 
                                     <span className="px-1">
-                                        <AmericanIcon />
+                                        <AmericanIcon width="13" height="12"/>
                                     </span>
                                         American
                                 </span>

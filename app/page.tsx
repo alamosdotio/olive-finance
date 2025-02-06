@@ -58,6 +58,7 @@ export default function Homepage(){
                   <div className="w-2/6">
                     <OptionsCard 
                       chartToken={selectedSymbol}
+                      chartTokenLogo={selectedLogo}
                       onValueChange={(value) => handleSellingAmountChange(value)}
                       priceData={priceData}
                       marketData={marketData}
