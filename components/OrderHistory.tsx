@@ -34,10 +34,10 @@ export default function OrderHistory(){
                                 {tx.token.name} • {tx.transactionType} Option • 
                                 <span className="px-1">
                                     {tx.optionType === 'American' &&(
-                                        <AmericanIcon />
+                                        <AmericanIcon width="13" height="12"/>
                                     )}
                                     {tx.optionType === 'European' &&(
-                                        <EuropeanIcon />
+                                        <EuropeanIcon width="13" height="12"/>
                                     )}
                                     {tx.optionType === 'Bermudan' &&(
                                         <BermudanIcon />
