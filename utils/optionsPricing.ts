@@ -1,7 +1,7 @@
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, differenceInSeconds } from 'date-fns';
 
 export function calculateVolatility(prices: number[], windowSize: number = 30): number {
-    if (prices.length < 2) return 0.5;
+    if (prices.length < 2) return 0.6;
     
 
     const returns = [];
@@ -11,7 +11,7 @@ export function calculateVolatility(prices: number[], windowSize: number = 30): 
       }
     }
   
-    if (returns.length === 0) return 0.5;
+    if (returns.length === 0) return 0.6;
   
 
     const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
@@ -20,7 +20,7 @@ export function calculateVolatility(prices: number[], windowSize: number = 30): 
   
 
     const annualizedVol = stdDev * Math.sqrt(252);
-    return Math.max(annualizedVol, 0.1); 
+    return Math.max(annualizedVol, 0.6); 
   }
   
  
@@ -34,17 +34,19 @@ export function calculateVolatility(prices: number[], windowSize: number = 30): 
     if (!strikePrice || !currentPrice || !expiryDate || !volatility) return 0;
   
     const today = new Date();
-    const daysToExpiry = Math.max(1, differenceInDays(expiryDate, today));
-    const period = daysToExpiry / 365;
+    const daysToExpiry = Math.max(differenceInSeconds(expiryDate, today));
+    const period = daysToExpiry / 86400;
+    console.log(expiryDate)
+    console.log(period)
   
-    const basePrice = currentPrice * volatility * Math.sqrt(period);
+    const base = Math.sqrt(period) * 0.6; //volatility and time period
     
     if (type === 'call') {
-      const moneyness = currentPrice / strikePrice;
-      return basePrice * moneyness;
+      const price = currentPrice / strikePrice;
+      return base * price;
     } else {
-      const moneyness = strikePrice / currentPrice;
-      return basePrice * moneyness;
+      const price = strikePrice / currentPrice;
+      return base * price;
     }
   }
   

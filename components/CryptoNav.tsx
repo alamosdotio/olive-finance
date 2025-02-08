@@ -95,10 +95,7 @@ const CryptoNavItem = React.memo(({ crypto, isActive, onClick, onMarketChange }:
                         alt={crypto.name} 
                         width={12} 
                         height={12} 
-                        className={cn(
-                            crypto.name === 'Helium' || crypto.name === 'Arweave' ? 'bg-white rounded-full' : 'rounded-full',
-                            'w-4 h-4'
-                        )}
+                        className='w-4 h-4 rounded-full'
                     />
                     <span className="font-medium text-sm">{crypto.symbol}</span>
                 </div>

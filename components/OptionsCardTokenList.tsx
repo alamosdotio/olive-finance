@@ -110,7 +110,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                     <DialogTrigger className="py-2">
                         <div className="flex items-center space-x-2 text-[28px] bg-inherit p-0 w-full h-[52px] shadow-none">
                             {selectedToken && selectedToken.logo ? (
-                                <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full bg-white"/>
+                                <Image src={selectedToken.logo} alt="selected token" height={48} width={48} className="rounded-full"/>
                             ) : null}
                             <h1>{selectedToken ? selectedToken.symbol : "Loading..."}</h1>
                             <ChevronDown className="opacity-50" size={28}/>
@@ -128,20 +128,9 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                 ):(
                                     <PutIconDark width="48" height="48" />
                                 )}
-                                <div className="absolute left-[19px] top-[33px] h-fit w-fit rounded-full">
-                                    <div className="flex -space-x-0.5">
-                                        <div className="h-4 w-4 rounded-full overflow-hidden flex items-center justify-center ring ring-background">
-                                            {optionStyle === 'American' ? (
-                                                <div>
-                                                    <AmericanIcon width="25" height="24"/>
-                                                </div>
-                                            ):(
-                                                <div>
-                                                    <EuropeanIcon width="25" height="24"/>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <Image src={chartTokenLogo} alt="selected token" height={48} width={48} className="rounded-full w-4 h-4 bg-white ring ring-background"/>
+                                <div className="absolute left-7 top-8 rounded-[6px]">
+                                    <div className="flex">
+                                        <Image src={chartTokenLogo} alt="selected token" height={48} width={48} className="rounded-[6px] bg-black w-[18px] h-[18px] bg-background ring ring-background"/>
                                     </div>
                                 
                                 </div>
@@ -220,7 +209,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                             className="flex flex-col space-y-[6px] cursor-pointer"
                                         >
                                             <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
-                                                <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
+                                                <Image src={strategy.image} width={1620} height={800} alt={strategy.name} className="w-[162px] h-[80px] rounded-[10px]" />                               
                                             </div>
                                             <div className="flex flex-col space-y-1">
                                                 <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
@@ -247,7 +236,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                                     className="flex flex-col space-y-[6px] cursor-pointer"
                                                 >
                                                     <div className="bg-secondary rounded-[10px] border border-transparent hover:border-primary w-fit h-fit flex justify-center items-center">
-                                                        <Image src={strategy.image} width={1280} height={800} alt={strategy.name} className="w-[128px] h-[80px] rounded-[10px]" />                              
+                                                        <Image src={strategy.image} width={1620} height={800} alt={strategy.name} className="w-[162px] h-[80px] rounded-[10px]" />                              
                                                     </div>
                                                     <div className="flex flex-col space-y-1">
                                                         <span className="text-[10px] text-secondary-foreground font-medium">{strategy.name}</span>
