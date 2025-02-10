@@ -150,61 +150,63 @@ export default function TradingViewTopNav({
                     </div>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="py-1 space-x-[6px] flex items-center">
-                <DollarIcon />
-                <span className="text-sm font-medium text-foreground">
-                    {priceData.price ? formatPrice(priceData.price) : priceLoading}
-                </span>
-            </div>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="flex flex-col">
-                <span className="text-secondary-foreground font-normal text-[10px] h-3">Oracle Price</span>
-                <div className="flex space-x-0.5">
-                    <span>
-                        <PythIcon />
-                    </span>
-                    <span className="text-foreground text-xs font-medium">$180.26</span>
+            <div className="hidden lg:flex">
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
                 </div>
-            </div>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="flex flex-col">
-                <span className="text-secondary-foreground font-normal text-[10px] h-3">24h high</span>
-                <span className="text-foreground text-xs font-medium">${marketData.high24h ? formatPrice(marketData.high24h) : marketLoading}</span>
-            </div>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="flex flex-col">
-                <span className="text-secondary-foreground font-normal text-[10px] h-3">24h low</span>
-                <span className="text-foreground text-xs font-medium">${marketData.low24h ? formatPrice(marketData.low24h) : marketLoading}</span>
-            </div>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="flex flex-col">
-                <span className="text-secondary-foreground font-normal text-[10px] h-3">24h volume</span>
-                <span className="text-foreground text-xs font-medium">$</span>
-            </div>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="flex flex-col">
-                <span className="text-secondary-foreground font-normal text-[10px] h-3">Open Interest</span>
-                <span className="text-foreground text-xs font-medium">$</span>
-            </div>
-            <div className="px-4 py-1">
-                <Separator orientation="vertical"/>
-            </div>
-            <div className="flex flex-col">
-                <span className="text-secondary-foreground font-normal text-[10px] h-3">Available Liquidity</span>
-                <span className="text-foreground text-xs font-medium">$</span>
+                <div className="py-1 space-x-[6px] flex items-center">
+                    <DollarIcon />
+                    <span className="text-sm font-medium text-foreground">
+                        {priceData.price ? formatPrice(priceData.price) : priceLoading}
+                    </span>
+                </div>
+                <div className="hidden md:flex px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="hidden md:flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Oracle Price</span>
+                    <div className="flex space-x-0.5">
+                        <span>
+                            <PythIcon />
+                        </span>
+                        <span className="text-foreground text-xs font-medium">$180.26</span>
+                    </div>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">24h high</span>
+                    <span className="text-foreground text-xs font-medium">${marketData.high24h ? formatPrice(marketData.high24h) : marketLoading}</span>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">24h low</span>
+                    <span className="text-foreground text-xs font-medium">${marketData.low24h ? formatPrice(marketData.low24h) : marketLoading}</span>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">24h volume</span>
+                    <span className="text-foreground text-xs font-medium">$</span>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Open Interest</span>
+                    <span className="text-foreground text-xs font-medium">$</span>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Available Liquidity</span>
+                    <span className="text-foreground text-xs font-medium">$</span>
+                </div>
             </div>
         </div>
     )

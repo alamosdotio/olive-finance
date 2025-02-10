@@ -31,7 +31,7 @@ export default function Settings(){
 
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger className="hidden md:flex">
                 <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                     <SettingsIcon />
                 </div>

@@ -653,7 +653,7 @@ export function SwapLightPurple(){
 }
 
 export function SwapDarkPurple(){
- return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" className="w-8 h-8">
+ return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
   <path d="M16.2759 17.4253L18.8506 20M18.8506 20L21.4253 17.4253M18.8506 20V12.092C18.8506 9.94584 17.998 7.88762 16.4805 6.37009C14.963 4.85256 12.9048 4.00001 10.7586 4.00001C8.61252 4.00001 6.5543 4.85256 5.03676 6.37009C3.51923 7.88762 2.66669 9.94584 2.66669 12.092L2.66669 19.6322" stroke="url(#paint0_linear_262_16688)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   <path d="M13.0575 13.3794L10.4828 10.8047M10.4828 10.8047L7.90808 13.3794M10.4828 10.8047V18.7127C10.4828 20.8588 11.3353 22.9171 12.8529 24.4346C14.3704 25.9521 16.4286 26.8047 18.5747 26.8047C20.7209 26.8047 22.7791 25.9521 24.2966 24.4346C25.8141 22.9171 26.6667 20.8588 26.6667 18.7127L26.6667 11.1725" stroke="url(#paint1_linear_262_16688)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   <defs>

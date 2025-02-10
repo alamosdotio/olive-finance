@@ -12,7 +12,7 @@ export default function TradingPositionsFallback() {
     return (
         <div className="w-full h-[300px] border-[1px] rounded-[26px] flex flex-col">
             <div className="w-full flex justify-between px-6 py-3 border-b-[1px]">
-                <Tabs defaultValue="Positions" className="p-0"> 
+                <Tabs defaultValue="Positions" className="p-0 whitespace-nowrap overflow-hidden"> 
                     <TabsList className="w-full bg-inherit text-secondary-foreground p-0 gap-6">
                         <TabsTrigger 
                             value='Positions'
@@ -34,7 +34,7 @@ export default function TradingPositionsFallback() {
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
-                <div className="flex gap-3 items-center">
+                <div className="hidden md:flex gap-3 items-center">
                     <Button
                         className="bg-secondary p-2 w-full h-auto rounded-[10px]"
                     >

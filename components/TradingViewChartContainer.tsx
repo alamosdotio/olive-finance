@@ -25,21 +25,21 @@ export default function TradingViewChartContainer({symbol, logo} : TradingViewCh
                         <TabsList className="grid grid-cols-3 rounded-full p-0 w-full h-8 bg-inherit">
                         <TabsTrigger
                             value="chart"
-                            className="border border-transparent text-secondary-foreground rounded-full hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
+                            className="border border-transparent px-2 text-secondary-foreground rounded-full hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
                             onClick={()=>handleClick('chart')}
                         >
                             Chart
                         </TabsTrigger>
                         <TabsTrigger
                             value="pnl"
-                            className="border border-transparent text-secondary-foreground rounded-full hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
+                            className="border border-transparent px-2 text-secondary-foreground rounded-full hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
                             onClick={()=>handleClick('pnl')}
                         >
                             PNL
                         </TabsTrigger>
                         <TabsTrigger
                             value="trades"
-                            className="border border-transparent text-secondary-foreground rounded-full hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
+                            className="border border-transparent px-2 text-secondary-foreground rounded-full hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
                             onClick={()=>handleClick('trades')}
                         >
                             Recent Trades

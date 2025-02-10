@@ -20,6 +20,7 @@ import Settings from "./Settings";
 import { ArrowDown, BoostIcon, EarnIcon, GrayPointsIcon, InfoIcon, MoreIcon, NotificationIcon, OptionsIcon, PointsIcon, RankingIcon, RedCircle } from "@/public/svgs/icons";
 import { Separator } from "./ui/separator";
 import { useRouter } from "next/navigation";
+import { MenuIcon } from "lucide-react";
 
 
 export default function NavBar(){
@@ -58,7 +59,7 @@ export default function NavBar(){
                     )}
                     {/* <h1 className="text-sm font-normal">Olive Finance</h1> */}
                 </div>
-                <nav className="flex justify-evenly items-center gap-8">
+                <nav className="hidden md:flex justify-evenly items-center gap-8">
                     <Link 
                         href='/'
                         className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary group')}
@@ -228,6 +229,18 @@ export default function NavBar(){
                         <span className="text-sm font-semibold">Connect Wallet</span>
                     </Button>
                 )}
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="focus:outline-none md:hidden">
+                        <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
+                            <MenuIcon size={18} />
+                        </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-[392px] bg-accent rounded-[16px] flex flex-col p-0">
+                        <div className="w-full px-5 py-3 shadow-lg">
+                            <span className="text-foreground text-xs font-semibold">In progress</span>
+                        </div>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 
                 <WalletModal 
                     isOpen={isWalletModalOpen} 

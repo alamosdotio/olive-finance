@@ -292,7 +292,7 @@ const OptionsCard = ({
     const selectedOption = getSelectedExpiryOption();
 
     return (
-        <Card className="rounded-[26px] h-fit">
+        <Card className="w-full rounded-[26px] h-fit">
             <CardContent className="p-0">
                 <div className="px-6 pt-7 flex flex-col justify-between space-y-[84px]">
                     <div className="w-full flex justify-between items-center">
@@ -329,7 +329,7 @@ const OptionsCard = ({
                         className="bg-background border rounded-full p-3 w-14 h-14 z-50 hover:border-primary [&_svg]:size-8 flex items-center"
                         onClick={handleSwap}
                     >
-                        {theme === 'dark-purple' && <SwapDarkPurple />}
+                        {theme === 'dark-purple' && (<SwapDarkPurple />)}
                         {theme === 'light-purple' && <SwapLightPurple />}
                         {theme === 'dark-green' && <SwapDarkGreen />}
                         {theme === 'light-green' && <SwapLightGreen />}
