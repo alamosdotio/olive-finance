@@ -10,6 +10,7 @@ import { formatPrice } from "@/utils/formatter";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import TokenList from "./TokenList";
+import MarketDetails from "./MarketDetails";
 
 type CryptoData = {
     id: string
@@ -208,6 +209,10 @@ export default function TradingViewTopNav({
                     <span className="text-foreground text-xs font-medium">$</span>
                 </div>
             </div>
+            <div className="flex justify-end w-full px-2 lg:hidden">
+                <MarketDetails logo={logo} symbol={symbol!} tokenPrice={priceData.price} high={marketData.high24h} low={marketData.low24h}/>
+            </div>
+            
         </div>
     )
 }
