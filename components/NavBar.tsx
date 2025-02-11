@@ -20,7 +20,8 @@ import Settings from "./Settings";
 import { ArrowDown, BoostIcon, EarnIcon, GrayPointsIcon, InfoIcon, MoreIcon, NotificationIcon, OptionsIcon, PointsIcon, RankingIcon, RedCircle } from "@/public/svgs/icons";
 import { Separator } from "./ui/separator";
 import { useRouter } from "next/navigation";
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, XIcon } from "lucide-react";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "./ui/dialog";
 
 
 export default function NavBar(){
@@ -31,6 +32,7 @@ export default function NavBar(){
     const router = useRouter()
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isNavOpen, setIsNavOpen] = useState(false)
 
     const handleClick = (state:string) =>{
         if(active!==state){
@@ -229,18 +231,44 @@ export default function NavBar(){
                         <span className="text-sm font-semibold">Connect Wallet</span>
                     </Button>
                 )}
-                <DropdownMenu>
-                    <DropdownMenuTrigger className="focus:outline-none md:hidden">
+                <Dialog open={isNavOpen} onOpenChange={setIsNavOpen}>
+                    <DialogTrigger className="focus:outline-none md:hidden">
                         <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                             <MenuIcon size={18} />
                         </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-[392px] bg-accent rounded-[16px] flex flex-col p-0">
-                        <div className="w-full px-5 py-3 shadow-lg">
-                            <span className="text-foreground text-xs font-semibold">In progress</span>
+                    </DialogTrigger>
+                    <DialogContent className="w-full h-full bg-background flex flex-col p-0">
+                        <DialogTitle className="hidden">Navigation Menu</DialogTitle>
+                        <div className="px-3 py-2 w-full flex justify-between items-center">
+                            <div className="w-[78px] h-[28px] flex items-center px-[6px] py-1">
+                                <Image src='/images/logo-dark.png' alt="logo" width={65} height={21} />
+                            </div>
+                            <Button 
+                                className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-[12px]"
+                                onClick={() => setIsNavOpen(false)}
+                            >
+                                <XIcon size={18} className="text-secondary-foreground"/>
+                            </Button>
                         </div>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                        <div className="flex flex-col w-full px-3 space-y-3">
+                            <Button className="bg-accent justify-start text-secondary-foreground">
+                                Options
+                            </Button>
+                            <Button className="bg-accent justify-start text-secondary-foreground">
+                                Earn
+                            </Button>
+                            <Button className="bg-accent justify-start text-secondary-foreground">
+                                Portfolio
+                            </Button>
+                            <Button className="bg-accent justify-start text-secondary-foreground">
+                                More
+                            </Button>
+                            <Button className="bg-accent justify-start text-secondary-foreground">
+                                Settings
+                            </Button>
+                        </div>
+                    </DialogContent>
+                </Dialog>
                 
                 <WalletModal 
                     isOpen={isWalletModalOpen} 
