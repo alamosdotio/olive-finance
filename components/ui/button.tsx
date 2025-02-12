@@ -22,7 +22,7 @@ const buttonVariants = cva(
         selected: "text-backgroundSecondary bg-primary rounded-full",
         unselected: "text-secondary-foreground shadow-sm bg-secondary",
         ghostPink: "hover:bg-primary hover:text-dark",
-        calendar: " bg-background ",
+        calendar: "bg-background ",
         paginationGhost: "text-primary-foreground hover:bg-secondary hover:text-dark",
         paginationOutline: "border border-primary bg-primary-foreground shadow-sm text-primary",
         active: 'text-primary',
