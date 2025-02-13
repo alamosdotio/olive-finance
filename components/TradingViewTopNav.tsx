@@ -62,7 +62,7 @@ export default function TradingViewTopNav({
         <div className="border border-t-0 rounded-b-[14px] p-1 w-full flex h-fit">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <div className="px-2 py-1 flex space-x-2 items-center">
+                    <div className="px-2 py-1 flex space-x-6 lg:space-x-2 items-center">
                         <div className="flex space-x-[6px] items-center">
                             <Image src={logo} alt={symbol!} width={18} height={18} className="rounded-full"/>
                             <span className="text-sm text-foreground font-medium">
