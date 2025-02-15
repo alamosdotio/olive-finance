@@ -2,13 +2,13 @@ import btc from '@/public/images/bitcoin.png'
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import { useState } from "react";
-import { Tabs, TabsList } from "./ui/tabs";
-import { TabsTrigger } from "@radix-ui/react-tabs";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Button } from './ui/button';
 import PositionOverview from './PositionOverview';
 import PositionGreeks from './PositionGreeks';
 import { ArrowDown, ArrowUp, SendIcon } from '@/public/svgs/icons';
 import PositionDetails from './PositionDetails';
+import { Separator } from './ui/separator';
 
 interface OpenPositionProps{
     token: string
@@ -59,7 +59,7 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                 <div className="px-4 pb-4 space-y-4 w-full">
                     <div className="w-full flex justify-between">
                         <Tabs defaultValue={activeTab}>
-                            <TabsList className="flex space-x-3 bg-inherit p-0 text-secondary-foreground text-sm font-medium">
+                            <TabsList className="flex md:space-x-3 bg-inherit p-0 text-secondary-foreground text-sm font-medium">
                                 <TabsTrigger 
                                     value="Overview"
                                     className="py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
@@ -83,7 +83,7 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                                 </TabsTrigger>
                             </TabsList>
                         </Tabs>
-                        <div className='flex space-x-3'>
+                        <div className='hidden md:flex space-x-3'>
                             <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
                                 <SendIcon />
                             </Button>
@@ -101,6 +101,15 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                     {activeTab === 'Details' &&(
                         <PositionDetails />
                     )}
+                    <Separator className='my-4 md:hidden'/>
+                    <div className='md:hidden flex space-x-3'>
+                        <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
+                            <SendIcon />
+                        </Button>
+                        <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'>
+                            Exercise
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>

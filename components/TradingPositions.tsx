@@ -106,7 +106,7 @@ export default function TradingPositions(){
                 </DropdownMenu>
             </div>
             {activeTab === 'Positions' && (
-                <div className="px-6 py-4 pb-[10px] space-y-[10px]">
+                <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px]">
                     {allPositions.map((position, index) => (
                         <OpenPositions 
                             key={index} 
