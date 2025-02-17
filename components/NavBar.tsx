@@ -52,9 +52,9 @@ export default function NavBar(){
             <div className="flex justify-between py-2 gap-6">
                 <div className="flex items-center justify-center gap-2 px-1">
                     {(theme === 'light-purple' || theme === 'light-green') ? (
-                        <Image src="/images/logo-color.png" alt="logo pic" width={760} height={933} className="w-full h-7 mb-1" />
+                        <Image src="/images/logo-color.png" alt="logo pic" width={760} height={933} className="w-6 h-7 mb-1" />
                     ) : (
-                        <Image src="/images/logo-color.png" alt="logo pic" width={760} height={933} className="w-full h-7 mb-1" />
+                        <Image src="/images/logo-color.png" alt="logo pic" width={760} height={933} className="w-6 h-7 mb-1" />
                     )}
                     {/* <h1 className="text-sm font-normal">Olive Finance</h1> */}
                 </div>
