@@ -57,26 +57,26 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
             </div>
             {isOpen && (
                 <div className="px-4 pb-4 space-y-4 w-full">
-                    <div className="w-full flex justify-between">
+                    <div className="w-full flex justify-center md:justify-between">
                         <Tabs defaultValue={activeTab}>
                             <TabsList className="flex md:space-x-3 bg-inherit p-0 text-secondary-foreground text-sm font-medium">
                                 <TabsTrigger 
                                     value="Overview"
-                                    className="py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
                                     onClick={() => setActiveTab('Overview')}
                                 >
                                     Overview
                                 </TabsTrigger>
                                 <TabsTrigger 
                                     value="Greeks"
-                                    className="py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
                                     onClick={() => setActiveTab('Greeks')}
                                 >
                                     Greeks
                                 </TabsTrigger>
                                 <TabsTrigger 
                                     value="Details"
-                                    className="py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
                                     onClick={() => setActiveTab('Details')}
                                 >
                                     Details
