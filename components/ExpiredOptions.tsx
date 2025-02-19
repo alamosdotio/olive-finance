@@ -156,31 +156,31 @@ export default function ExpiredOptions(){
                             </div>
                             <div className="flex space-x-[14px]">
                                 <div className="w-full flex flex-col space-y-1">
-                                    <span>Strike Price</span>
-                                    <span>{pos.strikePrice}</span>
+                                    <span className="text-xs font-medium text-secondary-foreground">Strike Price</span>
+                                    <span className="text-sm font-normal">{pos.strikePrice}</span>
                                 </div>
                                 <div className="w-full flex flex-col space-y-1">
-                                    <span>Quantity</span>
-                                    <span>{pos.qty}</span>
+                                    <span className="text-xs font-medium text-secondary-foreground">Quantity</span>
+                                    <span className="text-sm font-normal">{pos.qty}</span>
                                 </div>
                             </div>
                             <div className="flex space-x-[14px]">
                                 <div className="w-full flex flex-col space-y-1">
-                                    <span>Token Price at Expiry</span>
-                                    <span>{pos.expiryPrice}</span>
+                                    <span className="text-xs font-medium text-secondary-foreground">Token Price at Expiry</span>
+                                    <span className="text-sm font-normal">{pos.expiryPrice}</span>
                                 </div>
                                 <div className="w-full flex flex-col space-y-1">
-                                    <span>Amount in Tokens</span>
-                                    <span>{pos.tokenAmount}</span>
+                                    <span className="text-xs font-medium text-secondary-foreground">Amount in Tokens</span>
+                                    <span className="text-sm font-normal">{pos.tokenAmount}</span>
                                 </div>
                             </div>
                             <div className="flex space-x-[14px]">
                                 <div className="w-full flex flex-col space-y-1">
-                                    <span>Amount in Dollars</span>
-                                    <span>{pos.dollarAmount}</span>
+                                    <span className="text-xs font-medium text-secondary-foreground">Amount in Dollars</span>
+                                    <span className="text-sm font-normal">{pos.dollarAmount}</span>
                                 </div>
                             </div>
-                            <Button className="bg-inherit border border-primary-foreground px-[10px] py-1 w-full h-fit shadow-none rounded-[8px] text-primary text-xs font-medium">
+                            <Button className="bg-inherit border border-primary-foreground px-4 py-2 w-full h-fit shadow-none rounded-[12px] text-primary text-xs font-medium">
                                 Claim
                             </Button>
                         </div>

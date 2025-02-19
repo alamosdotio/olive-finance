@@ -64,7 +64,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
         <SheetContent className="space-y-6 sm:w-[720px] rounded-l-[26px] bg-accent">
             <SheetHeader>
                 <SheetTitle className="text-2xl flex justify-between">
-                    {name} Option Maker
+                    {name} Liquidity Pool
                 </SheetTitle>
             </SheetHeader>
             <div className="space-y-5 flex flex-col w-full">
@@ -104,7 +104,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                             </div>
                             <div className="w-full flex">
                                 <p className="text-xs tracking-tight text-justify">
-                                The {name} Option Maker ({symbol}-OM) Pool is a liquidity pool that sells covered calls and cash secured puts.
+                                The {name} Liquidity Pool ({symbol}-LP) is a liquidity pool that sells covered calls and cash secured puts.
                                 </p>
                             </div>
                         </div>
@@ -172,12 +172,12 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                         <div className="border-t pt-3">
                             <div className="flex flex-col">
                                 <div className="flex justify-between">
-                                    <span className="text-xs text-secondary-foreground font-normal">{symbol}OM Price</span>
+                                    <span className="text-xs text-secondary-foreground font-normal">{symbol}LP Price</span>
                                     <span className="text-xs text-foreground font-medium">$4,228</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-xs text-secondary-foreground font-normal">Total Supply</span>
-                                    <span className="text-xs text-foreground font-medium">375 157 373,224 {symbol}OM</span>
+                                    <span className="text-xs text-foreground font-medium">375 157 373,224 {symbol}LP</span>
                                 </div>
                             </div>
                         </div>

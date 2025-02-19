@@ -129,7 +129,7 @@ export default function TradingPositions(){
                 </div>
             )}
             {activeTab === 'History' && (
-                <div className="px-3 md:px-6 py-4 pb-[10px]">
+                <div className="px-3 md:px-6 py-4 pb-[20px] md:pb-[10px]">
                     <OrderHistory />
                 </div>
             )}
