@@ -25,7 +25,7 @@ export default ({ children }: { children: React.ReactNode }) => {
     ],
     [network]
   );
-  const endpoint = useMemo(() => clusterApiUrl("mainnet-beta"), []);
+  const endpoint = useMemo(() => clusterApiUrl("devnet"), []);
 
   return (
     <ConnectionProvider endpoint={endpoint}>

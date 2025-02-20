@@ -7,7 +7,6 @@ import { ChevronDown, Wallet} from 'lucide-react';
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import WalletModal from "./WalletModal";
-import { useWallet } from "@/contexts/walletprovider";
 import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
 import OptionsCardTokenList from "./OptionsCardTokenList";
@@ -191,7 +190,7 @@ const OptionsCard = ({
         setFormValues(prev => ({ ...prev, strikePrice: value }));
     };
     
-    const { isConnected } = useWallet();
+    const { isConnected, } = useWallet();
     
     const handleDateSelect = (selectedDate: Date | undefined) => {
         if (selectedDate) {
