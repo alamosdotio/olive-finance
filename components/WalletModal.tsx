@@ -36,7 +36,7 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
   const primaryWallets =
     installedWallets.length > 0
       ? allWallets.filter((item) => filterSet.has(item.name))
-      : allWallets.slice(0, 0);
+      : allWallets.slice(0, 1);
   const moreWallets =
     installedWallets.length > 0
       ? allWallets.filter((item) => !filterSet.has(item.name))
