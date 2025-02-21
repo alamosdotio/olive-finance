@@ -7,12 +7,13 @@ import OrderHistory from "./OrderHistory"
 import { Position, positions } from '@/lib/data/Positions';
 import ExpiredOptions from "./ExpiredOptions"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { useSmartContract } from "@/hooks/useSmartContract"
 
 export default function TradingPositions(){
     const [activeTab, setActiveTab] = useState<string>("Positions")
 
     const [allPositions, setAllPositions] = useState<Position[]>([])
-
+    const {optionIndex, getOptionDetail} = useSmartContract()
     const generatePositions = (count: number) : Position[] => {
         return Array(count).fill(null).map((_, index) =>{
             const position = positions[index % positions.length]
@@ -35,9 +36,18 @@ export default function TradingPositions(){
     }
 
     useEffect(() =>{
-        const positionList = generatePositions(5)
-        setAllPositions(positionList)
-    },[])
+        (async()=>{const positionList = generatePositions(5)
+        // TODO: Get option list
+        if (optionIndex != undefined){
+            const positioninfo =[];
+            for(let i=0; i<= optionIndex; i++){
+              const detail = await getOptionDetail(i);
+              positioninfo.push(detail)
+            }
+            // setAllPositions(positioninfo);
+        }
+        setAllPositions(positionList)})()
+    },[optionIndex])
 
     const handleClickTab = (state:string) =>{
         if(activeTab!==state){

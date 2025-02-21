@@ -49,7 +49,7 @@ const OptionsCard = ({
     marketData,
     priceLoading
 }: OptionsCardProps) => {
-    const {onBuyOption} = useSmartContract()
+    const {onBuyOption, onSellOption} = useSmartContract()
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -291,6 +291,19 @@ const OptionsCard = ({
         )
     }
 
+    const onTrade = () => {
+        console.log(
+            "formvalue", formValues, isSwapped
+        )
+        if(isSwapped) {
+            onSellOption(parseFloat(formValues.selling.amount)) // TODO: Corrent answer for sell and buy options.
+        } else {
+            onBuyOption(parseFloat(formValues.selling.amount), parseFloat(formValues.strikePrice), 
+                parseFloat(formValues.expiry), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
+
+        }
+    }
+
     const selectedOption = getSelectedExpiryOption();
 
     return (
@@ -474,7 +487,7 @@ const OptionsCard = ({
                     <Button 
                         disabled={formValues.buying.amount==="" && formValues.selling.amount === ""}
                         className={formValues.buying.amount==="" && formValues.selling.amount === "" ? "w-full h-auto rounded-xl text-background flex disabled:pointer-events-auto disabled:cursor-not-allowed" : 'w-full h-auto rounded-xl text-black flex'}
-                        onClick={() => onBuyOption(parseFloat(formValues.buying.amount), parseFloat(formValues.strikePrice), parseFloat(formValues.expiry), true, true)} // TODO: Add buy option
+                        onClick={onTrade}
                     >
                         <span className="text-sm font-semibold">
                             {formValues .buying.amount === '' && formValues.selling.amount === '' ? 'Enter Amount' : 'Trade'}

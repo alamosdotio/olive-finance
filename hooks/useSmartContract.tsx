@@ -69,20 +69,31 @@ export const useSmartContract = () => {
       }
     }
   }, [connected]);
-  const getOptionDetailAccount = useCallback(
-    (index: number) => {
-      if (connected && publicKey != null && program) {
-        const buffer = Buffer.alloc(8);
-        buffer.writeUInt32LE(index);
-        const [account] = PublicKey.findProgramAddressSync(
-          [Buffer.from("option"), publicKey?.toBuffer(), buffer],
-          program.programId
-        );
-        return account;
-      }
-    },
-    [connected, program]
-  );
+  const getOptionDetailAccount = (index: number) => {
+    if (connected && publicKey != null && program) {
+      const buffer = Buffer.alloc(8);
+      buffer.writeUInt32LE(index);
+      const [account] = PublicKey.findProgramAddressSync(
+        [Buffer.from("option"), publicKey?.toBuffer(), buffer],
+        program.programId
+      );
+      return account;
+    }
+  };
+  const getOptionDetail = async (index: number) => {
+    if (connected && publicKey != null && program) {
+      const buffer = Buffer.alloc(8);
+      buffer.writeUInt32LE(index);
+      const [account] = PublicKey.findProgramAddressSync(
+        [Buffer.from("option"), publicKey?.toBuffer(), buffer],
+        program.programId
+      );
+      const optionDetail = await program.account.optionDetail.fetch(
+        account.toBase58()
+      );
+      return optionDetail;
+    }
+  };
   const getUserInfo = useCallback(async () => {
     if (connected && publicKey != null && program) {
       const [userPDA] = PublicKey.findProgramAddressSync(
@@ -92,7 +103,7 @@ export const useSmartContract = () => {
       const userInfo = await program.account.user.fetch(userPDA.toBase58());
       setOptionIndex(userInfo.optionIndex.toNumber());
     }
-  }, []);
+  }, [connected]);
   useEffect(() => {
     GetPDAInfo();
   }, [GetPDAInfo]);
@@ -249,6 +260,8 @@ export const useSmartContract = () => {
   };
 
   return {
+    optionIndex,
+    getOptionDetail,
     onBuyOption,
     onSellOption,
     onExpireOption,
