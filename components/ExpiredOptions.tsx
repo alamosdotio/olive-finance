@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { CallIconDark, PutIconDark } from "@/public/svgs/icons";
+import { Separator } from "./ui/separator";
 
 const expiredPositions = [
     {
@@ -90,48 +91,103 @@ const expiredPositions = [
 
 export default function ExpiredOptions(){
     return (
-        <Table className="w-full">
-            <TableHeader className="w-full">
-                <TableRow className="text-xs font-medium">
-                    <TableHead className="pl-5">Option</TableHead>
-                    <TableHead>Strike Price</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Token Price at Expiry</TableHead>
-                    <TableHead>Amount in Tokens</TableHead>
-                    <TableHead>Amount in Dollars</TableHead>
-                    <TableHead className="hidden">Action</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody className="w-full">
+        <>
+            <div className="hidden md:flex">
+                <Table className="w-full">
+                    <TableHeader className="w-full">
+                        <TableRow className="text-xs font-medium">
+                            <TableHead className="pl-5">Option</TableHead>
+                            <TableHead>Strike Price</TableHead>
+                            <TableHead>Quantity</TableHead>
+                            <TableHead>Token Price at Expiry</TableHead>
+                            <TableHead>Amount in Tokens</TableHead>
+                            <TableHead>Amount in Dollars</TableHead>
+                            <TableHead className="hidden">Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className="w-full">
+                        {expiredPositions.map((pos, index) => (
+                            <TableRow key={index} className="border-none">
+                                <TableCell className="flex space-x-[10px] pl-5">
+                                    <div className="flex -space-x-1">
+                                        <Image src={pos.iconPath} alt={pos.token} width={20} height={20} className="rounded-full w-5 h-5 ring ring-background"/>
+                                        <span className="rounded-full w-fit h-fit ring ring-background">
+                                            {pos.transaction === 'Call' ? (
+                                                <CallIconDark width="20" height="20"/>
+                                            ) : (
+                                                <PutIconDark width="20" height="20"/>
+                                            )}
+                                        </span>
+                                        
+                                    </div>
+                                    <span>{pos.token[0].toUpperCase() + pos.token.slice(1)} {pos.transaction}</span>
+                                </TableCell>
+                                <TableCell>{pos.strikePrice}</TableCell>
+                                <TableCell>{pos.qty}</TableCell>
+                                <TableCell>{pos.expiryPrice}</TableCell>
+                                <TableCell>{pos.tokenAmount}</TableCell>
+                                <TableCell>{pos.dollarAmount}</TableCell>
+                                <TableCell>
+                                    <Button className="bg-inherit border border-primary-foreground px-[10px] py-1 w-fit h-fit shadow-none rounded-[8px] text-primary text-xs font-medium">
+                                        Claim
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+            <div className="w-full md:hidden flex flex-col p-3">
                 {expiredPositions.map((pos, index) => (
-                    <TableRow key={index} className="border-none">
-                        <TableCell className="flex space-x-[10px] pl-5">
-                            <div className="flex -space-x-1">
-                                <Image src={pos.iconPath} alt={pos.token} width={20} height={20} className="rounded-full w-5 h-5 ring ring-background"/>
-                                <span className="rounded-full w-fit h-fit ring ring-background">
-                                    {pos.transaction === 'Call' ? (
-                                        <CallIconDark width="20" height="20"/>
-                                    ) : (
-                                        <PutIconDark width="20" height="20"/>
-                                    )}
-                                </span>
-                                
+                    <div key={index} className="w-full flex flex-col">
+                        <div className="w-full flex flex-col space-y-[10px]">
+                            <div className="flex space-x-[10px]">
+                                <div className="flex -space-x-1">
+                                    <Image src={pos.iconPath} alt={pos.token} width={24} height={24} className="rounded-full w-6 h-6 ring ring-background"/>
+                                    <span className="rounded-full w-fit h-fit ring ring-background">
+                                        {pos.transaction === 'Call' ? (
+                                            <CallIconDark width="24" height="24"/>
+                                        ) : (
+                                            <PutIconDark width="24" height="24"/>
+                                        )}
+                                    </span>
+                                </div>
+                                <span>{pos.token[0].toUpperCase() + pos.token.slice(1)} {pos.transaction}</span>
                             </div>
-                            <span>{pos.token[0].toUpperCase() + pos.token.slice(1)} {pos.transaction}</span>
-                        </TableCell>
-                        <TableCell>{pos.strikePrice}</TableCell>
-                        <TableCell>{pos.qty}</TableCell>
-                        <TableCell>{pos.expiryPrice}</TableCell>
-                        <TableCell>{pos.tokenAmount}</TableCell>
-                        <TableCell>{pos.dollarAmount}</TableCell>
-                        <TableCell>
-                            <Button className="bg-inherit border border-primary-foreground px-[10px] py-1 w-fit h-fit shadow-none rounded-[8px] text-primary text-xs font-medium">
+                            <div className="flex space-x-[14px]">
+                                <div className="w-full flex flex-col space-y-1">
+                                    <span className="text-xs font-medium text-secondary-foreground">Strike Price</span>
+                                    <span className="text-sm font-normal">{pos.strikePrice}</span>
+                                </div>
+                                <div className="w-full flex flex-col space-y-1">
+                                    <span className="text-xs font-medium text-secondary-foreground">Quantity</span>
+                                    <span className="text-sm font-normal">{pos.qty}</span>
+                                </div>
+                            </div>
+                            <div className="flex space-x-[14px]">
+                                <div className="w-full flex flex-col space-y-1">
+                                    <span className="text-xs font-medium text-secondary-foreground">Token Price at Expiry</span>
+                                    <span className="text-sm font-normal">{pos.expiryPrice}</span>
+                                </div>
+                                <div className="w-full flex flex-col space-y-1">
+                                    <span className="text-xs font-medium text-secondary-foreground">Amount in Tokens</span>
+                                    <span className="text-sm font-normal">{pos.tokenAmount}</span>
+                                </div>
+                            </div>
+                            <div className="flex space-x-[14px]">
+                                <div className="w-full flex flex-col space-y-1">
+                                    <span className="text-xs font-medium text-secondary-foreground">Amount in Dollars</span>
+                                    <span className="text-sm font-normal">{pos.dollarAmount}</span>
+                                </div>
+                            </div>
+                            <Button className="bg-inherit border border-primary-foreground px-4 py-2 w-full h-fit shadow-none rounded-[12px] text-primary text-xs font-medium">
                                 Claim
                             </Button>
-                        </TableCell>
-                    </TableRow>
+                        </div>
+                        <Separator className="my-5"/>
+                    </div>
                 ))}
-            </TableBody>
-        </Table>
+            </div>
+        </>
     )
 }

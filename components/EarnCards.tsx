@@ -56,7 +56,7 @@ export default function EarnCards (){
                             <CardHeader className="p-5 border-b">
                                 <div className="flex justify-start space-x-2 items-center">
                                     <EarnCardlogo strategy={strategy}/>
-                                    <span className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">{strategy.symbol} Option Maker</span>
+                                    <span className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">{strategy.symbol} Liquidity Pool</span>
                                 </div>
                             </CardHeader>
                             <CardContent className="p-5">

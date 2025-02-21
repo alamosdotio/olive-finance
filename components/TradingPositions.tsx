@@ -124,17 +124,17 @@ export default function TradingPositions(){
                 </div>
             )}
             {activeTab === 'Expired' && (
-                <div className="pb-[44px]">
+                <div className="md:pb-[44px]">
                     <ExpiredOptions />
                 </div>
             )}
             {activeTab === 'History' && (
-                <div className="px-6 py-4 pb-[10px]">
+                <div className="px-3 md:px-6 py-4 pb-[20px] md:pb-[10px]">
                     <OrderHistory />
                 </div>
             )}
-            <div className="px-6 pb-4 flex justify-end">
-                <div className="flex items-center gap-5">
+            <div className="px-3 md:px-6 pb-4 flex justify-end">
+                <div className="w-full flex items-center md:gap-5 justify-between md:justify-end">
                     <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
                         <ChevronLeft className="w-fit h-fit  text-secondary-foreground" />
                     </button>

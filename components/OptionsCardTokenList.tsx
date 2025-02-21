@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Search, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
@@ -143,9 +143,17 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                 </div>
             )}
             
-            <DialogContent className="max-w-[524px] px-3 py-5 bg-accent gap-0 sm:rounded-[20px]">
+            <DialogContent className="w-full h-full md:max-w-[524px] md:h-auto px-3 py-5 bg-accent gap-0 sm:rounded-[20px] flex flex-col shadow-none">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
-                    <DialogTitle className="p-0 text-base font-medium text-foreground">You&apos;re Selling</DialogTitle>
+                    <DialogTitle className="p-0 text-base font-medium text-foreground flex justify-between items-center">
+                        <span>You&apos;re Selling</span>
+                        <Button 
+                            className="md:hidden p-[9px] bg-secondary rounded-[12px] [&_svg]:size-[18px]"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            <XIcon className="text-foreground"/>
+                        </Button>
+                    </DialogTitle>
                     <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
                         <TabsList className="p-0 flex gap-3 bg-inherit text-secondary-foreground rounded-[10px]">
                             <TabsTrigger
@@ -165,7 +173,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                 </div>
                 <Separator className="my-[14px]"/>
                 {activeTab === 'options' && type === false && (
-                    <div className="space-y-5">
+                    <div className="space-y-5 overflow-y-scroll overflow-x-hidden md:overflow-hidden h-full">
                         <div className="w-full h-7 flex justify-between items-center space-x-2">
                             <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
                                 <ChevronLeft className="w-5 h-5 p-1 text-secondary-foreground"/>
@@ -179,7 +187,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                     <span className="text-[11px] font-medium">American</span>
                                 </Button>
                                 <Button 
-                                    className={cn(optionStyle === 'European' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
+                                    className={cn(optionStyle === 'European' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("hidden md:flex w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
                                     onClick={() => setOptionStyle('European')}
                                 >
                                     <EuropeanIcon width="13" height="12"/>
@@ -221,8 +229,8 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                             </div>
                             {isDropped &&(
                                 <>
-                                    <Separator className="my-4"/>
-                                    <div className="w-full space-y-2">
+                                    <Separator className="my-4 hidden md:flex"/>
+                                    <div className="w-full space-y-2 pt-5 md:pt-0">
                                         <div className="flex space-x-[6px] items-center">
                                             <TrendUp />
                                             <span className="text-[11px] font-medium text-secondary-foreground">Neutral Advanced</span>
@@ -343,7 +351,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                 <span>Balance</span>
                             </div>
                         </div>
-                        <ScrollArea className="w-full h-[242px]">
+                        <ScrollArea className="w-full h-full md:h-[242px]">
                             {reorderedTokens.map((token, index) => (
                                 <div 
                                     key={index}
