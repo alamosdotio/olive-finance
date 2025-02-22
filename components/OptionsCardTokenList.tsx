@@ -18,10 +18,11 @@ interface OptionsCardTokenListProps {
     chartToken: string
     chartTokenLogo: string
     type: boolean
+    transaction: string
     onTokenSelect: (token: Token) => void
 }
 
-export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect }: OptionsCardTokenListProps) {
+export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect, transaction }: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const [optionStyle, setOptionStyle] = useState("American")
     const generateTokens = (count: number) :  Token[] => {
@@ -69,12 +70,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
         setIsOpen(false)
     }
 
-    const handleOpenChange = (open: boolean) => {
-        setIsOpen(open)
-        if (open) {
-            setActiveTab(type ? 'tokens' : 'options')
-        }
-    }
+    
 
     useEffect(() => {
         const tokensList = generateTokens(20);
@@ -94,6 +90,13 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
 
     const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
 
+    const handleOpenChange = (open: boolean) => {
+        setIsOpen(open)
+        if (open) {
+            setActiveTab(type ? 'tokens' : 'options')
+        }
+    }
+
     const reorderedTokens = [...allTokens];
     const chartTokenIndex = reorderedTokens.findIndex(token => `Crypto.${token.symbol}/USD` === chartToken);
     if (chartTokenIndex > 1) {
@@ -102,7 +105,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
     }
 
     const [isDropped, setIsDropped] = useState(false)
-
+    console.log(`this is the transaction: ${transaction}`)
     return (
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
             {type === true && (
@@ -172,7 +175,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                     </Tabs>
                 </div>
                 <Separator className="my-[14px]"/>
-                {activeTab === 'options' && type === false && (
+                {activeTab === 'options' && transaction === 'buy' && (
                     <div className="space-y-5 overflow-y-scroll overflow-x-hidden md:overflow-hidden h-full">
                         <div className="w-full h-7 flex justify-between items-center space-x-2">
                             <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
@@ -281,7 +284,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                         </div>
                     </div>
                 )}
-                {activeTab === 'options' && type === true && (
+                {activeTab === 'options' && transaction === 'sell' && (
                     <div className="w-full flex flex-col space-y-[10px]">
                         <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
                             <div className="flex space-x-[10px] items-center">

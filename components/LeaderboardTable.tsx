@@ -1,6 +1,5 @@
 import { Rank1Icon, Rank2Icon, Rank3Icon, StarIcon } from "@/public/svgs/icons";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
-import { ScrollArea } from "./ui/scroll-area";
 
 export default function LeaderboardTable() {
 
