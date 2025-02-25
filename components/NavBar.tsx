@@ -6,7 +6,6 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import WalletModal from "./WalletModal";
-import { useWallet } from "@/contexts/walletprovider";
 import WalletSideBar from "./WalletSidebar";
 import { useTheme } from "next-themes";
 import x from '@/public/svgs/x.svg';
@@ -20,13 +19,15 @@ import { ArrowDown, BoostIcon, EarnIcon, GrayPointsIcon, InfoIcon, MoreIcon, Not
 import { Separator } from "./ui/separator";
 import { useRouter } from "next/navigation";
 import NavBarMobile from "./NavBarMobile";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 
 export default function NavBar(){
     const [active, setActive] = useState<string>("Options");
     const { theme } = useTheme()
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
-    const { isConnected } = useWallet();
+      const { connected } = useWallet();
+    
     const router = useRouter()
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -215,7 +216,7 @@ export default function NavBar(){
                     </DropdownMenuContent>
                 </DropdownMenu>
                 
-                {isConnected ? (
+                {connected ? (
                     <WalletSideBar></WalletSideBar>
                 ) : (
                     <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">

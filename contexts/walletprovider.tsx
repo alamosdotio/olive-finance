@@ -2,7 +2,6 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-
 interface WalletContextType{
     isConnected: boolean;
     walletName: string | null;
@@ -14,7 +13,7 @@ interface WalletContextType{
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined)
 
-export const WalletProvider: React.FC<{children: React.ReactNode}> = ({children}) =>{
+export const WalletProvider1: React.FC<{children: React.ReactNode}> = ({children}) =>{
     const [isConnected, setIsConnected] = useState(false);
     const [walletName, setWalletName] = useState<string | null>(null);
     const [address, setAddress] = useState<string | null>(null)
@@ -66,9 +65,16 @@ export const WalletProvider: React.FC<{children: React.ReactNode}> = ({children}
 }
 
 export function useWallet() {
-    const context = useContext(WalletContext);
-    if(context === undefined){
-        throw new Error('useWallet must be used within a WalletProvider')
-    }
-    return context;
+    // const context = useContext(WalletContext);
+    // if(context === undefined){
+    //     throw new Error('useWallet must be used within a WalletProvider')
+    // }
+    return {
+        isConnected: false,
+        walletName: "Phantom",
+        address: "o3lodkfeo0923okjsodf9u23498weur",
+        iconPath: "",
+        connect: (name: string, iconPath: string) => {console.log(name, iconPath)},
+        disconnect: () => {console.log("disconnect")}
+    };
 }

@@ -7,7 +7,6 @@ import { ChevronDown, Wallet} from 'lucide-react';
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import WalletModal from "./WalletModal";
-import { useWallet } from "@/contexts/walletprovider";
 import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
 import OptionsCardTokenList from "./OptionsCardTokenList";
@@ -24,6 +23,8 @@ import { calculateOptionsQuantity, calculateTokensNeeded } from "@/utils/options
 import { Token } from "@/lib/data/tokens";
 import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useSmartContract } from "@/hooks/useSmartContract";
 
 interface OptionsCardProps {
     chartToken: string;
@@ -48,6 +49,7 @@ const OptionsCard = ({
     marketData,
     priceLoading
 }: OptionsCardProps) => {
+    const {onBuyOption, onSellOption} = useSmartContract()
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -191,7 +193,7 @@ const OptionsCard = ({
         setFormValues(prev => ({ ...prev, strikePrice: value }));
     };
     
-    const { isConnected } = useWallet();
+    const { connected, } = useWallet();
     
     const handleDateSelect = (selectedDate: Date | undefined) => {
         if (selectedDate) {
@@ -287,6 +289,19 @@ const OptionsCard = ({
                 </div>
             </div>
         )
+    }
+
+    const onTrade = () => {
+        console.log(
+            "formvalue", formValues, isSwapped
+        )
+        if(isSwapped) {
+            onSellOption(parseFloat(formValues.selling.amount))
+        } else {
+            onBuyOption(parseFloat(formValues.selling.amount), parseFloat(formValues.strikePrice), 
+                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
+
+        }
     }
 
     const selectedOption = getSelectedExpiryOption();
@@ -452,7 +467,7 @@ const OptionsCard = ({
                         </div>
                     </div>
                 </div>
-                {!isConnected && (
+                {!connected && (
                     <Button 
                         className="w-full h-auto rounded-xl text-background flex"
                         onClick={() => setIsWalletModalOpen(true)}
@@ -468,11 +483,11 @@ const OptionsCard = ({
                         </span>
                     </Button>
                 )}
-                {isConnected && (
+                {connected && (
                     <Button 
                         disabled={formValues.buying.amount==="" && formValues.selling.amount === ""}
                         className={formValues.buying.amount==="" && formValues.selling.amount === "" ? "w-full h-auto rounded-xl text-background flex disabled:pointer-events-auto disabled:cursor-not-allowed" : 'w-full h-auto rounded-xl text-black flex'}
-                        onClick={() => console.log('Initiate Trade')}
+                        onClick={onTrade}
                     >
                         <span className="text-sm font-semibold">
                             {formValues .buying.amount === '' && formValues.selling.amount === '' ? 'Enter Amount' : 'Trade'}

@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
-import { WalletProvider } from "@/contexts/walletprovider";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Script from 'next/script'
-
+import Script from "next/script";
+import Connectionprovider from "@/contexts/connectionprovider";
 
 export const metadata: Metadata = {
   title: "Olive Finance",
@@ -18,20 +17,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        <ThemeProvider attribute="data-theme" defaultTheme="dark-purple"
-        >
-          <WalletProvider>
+      <body className={`antialiased`}>
+        <ThemeProvider attribute="data-theme" defaultTheme="dark-purple">
+          <Connectionprovider>
             <div className="px-6 max-w-screen-2xl mx-auto">
               <NavBar></NavBar>
               {children}
             </div>
-          </WalletProvider>
+          </Connectionprovider>
         </ThemeProvider>
-        <Script src="/charting_library/charting_library.standalone.js" strategy="beforeInteractive" />
-        <Script src="/datafeeds/udf/dist/bundle.js" strategy="beforeInteractive" />
+        <Script
+          src="/charting_library/charting_library.standalone.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/datafeeds/udf/dist/bundle.js"
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );

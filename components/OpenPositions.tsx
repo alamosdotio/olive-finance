@@ -9,8 +9,11 @@ import PositionGreeks from './PositionGreeks';
 import { ArrowDown, ArrowUp, SendIcon } from '@/public/svgs/icons';
 import PositionDetails from './PositionDetails';
 import { Separator } from './ui/separator';
+import { useSmartContract } from '@/hooks/useSmartContract';
+import { BN } from '@coral-xyz/anchor';
 
 interface OpenPositionProps{
+    index: number
     token: string
     logo: string
     symbol: string
@@ -26,11 +29,13 @@ interface OpenPositionProps{
     }
 }
 
-export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks} : OpenPositionProps){
+export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks, index} : OpenPositionProps){
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<string>('Overview')
-    
-
+    const {onExerciseOption} = useSmartContract()
+    const onExercise = ()=>{
+        onExerciseOption(new BN(index));
+    }
     return (
         <div className="w-full flex flex-col bg-accent rounded-[10px]">
             <div
@@ -87,7 +92,8 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                             <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
                                 <SendIcon />
                             </Button>
-                            <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'>
+                            <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'
+                                onClick={onExercise}>
                                 Exercise
                             </Button>
                         </div>

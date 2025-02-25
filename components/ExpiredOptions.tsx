@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { CallIconDark, PutIconDark } from "@/public/svgs/icons";
 import { Separator } from "./ui/separator";
+import { useSmartContract } from "@/hooks/useSmartContract";
 
 const expiredPositions = [
     {
@@ -90,6 +91,10 @@ const expiredPositions = [
 
 
 export default function ExpiredOptions(){
+    const { expiredOptionInfos, onClaimOption } = useSmartContract()
+    const onClaim = (optionindex: number, solPrice: number)=>{
+        onClaimOption(optionindex, solPrice)
+    }
     return (
         <>
             <div className="hidden md:flex">
@@ -106,11 +111,11 @@ export default function ExpiredOptions(){
                         </TableRow>
                     </TableHeader>
                     <TableBody className="w-full">
-                        {expiredPositions.map((pos, index) => (
+                        { expiredOptionInfos && expiredOptionInfos.map((pos, index) => (
                             <TableRow key={index} className="border-none">
                                 <TableCell className="flex space-x-[10px] pl-5">
                                     <div className="flex -space-x-1">
-                                        <Image src={pos.iconPath} alt={pos.token} width={20} height={20} className="rounded-full w-5 h-5 ring ring-background"/>
+                                        <Image src={"/images/solana.png"} alt={pos.token} width={20} height={20} className="rounded-full w-5 h-5 ring ring-background"/>
                                         <span className="rounded-full w-fit h-fit ring ring-background">
                                             {pos.transaction === 'Call' ? (
                                                 <CallIconDark width="20" height="20"/>
@@ -128,7 +133,8 @@ export default function ExpiredOptions(){
                                 <TableCell>{pos.tokenAmount}</TableCell>
                                 <TableCell>{pos.dollarAmount}</TableCell>
                                 <TableCell>
-                                    <Button className="bg-inherit border border-primary-foreground px-[10px] py-1 w-fit h-fit shadow-none rounded-[8px] text-primary text-xs font-medium">
+                                    <Button className="bg-inherit border border-primary-foreground px-[10px] py-1 w-fit h-fit shadow-none rounded-[8px] text-primary text-xs font-medium"
+                                        onClick={()=> onClaim(pos.index, pos.expiryPrice)}>
                                         Claim
                                     </Button>
                                 </TableCell>
