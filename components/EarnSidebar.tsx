@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
@@ -12,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { ChevronDown, Search } from "lucide-react";
 import { ChartStrategy } from "@/public/svgs/icons";
+import { useSmartContract } from "@/hooks/useSmartContract";
 
 
 interface EarnSidebarProps {
@@ -24,12 +25,12 @@ interface EarnSidebarProps {
 
 
 export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebarProps){
-    const poolData = [
+    const poolData =(solPoolsize : number, usdcPoolsize: number) => [
         {
             img: logo,
             symbol: symbol,
             name: name,
-            poolSize: '$802,350,386.79',
+            poolSize: `${solPoolsize}sol`,
             current_weightage: '46.27%',
             target_weightage: '47%',
             utilization: '78.19%'
@@ -38,17 +39,22 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
             img: usdc,
             symbol: 'USDC',
             name: 'USD Coin',
-            poolSize: '$16,321,098,765',
+            poolSize: `${usdcPoolsize}sol`,
             current_weightage: '9.9%',
             target_weightage: '10%',
             utilization: '52.18%'
         },
     ]
-    const [activeTab, setActiveTab] = useState<string>('mint');
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedToken, setSelectedToken] = useState<number>(0);
-    const [isApr, setIsApr] = useState<boolean>(false)
 
+    const {getLpData, getUserData, onWithdrawUsdc, onWithdrawWsol, onDepositUsdc, onDepositWsol} = useSmartContract();
+    const [activeTab, setActiveTab] = useState<string>('mint');
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedToken, setSelectedToken] = useState<number>(0);
+    const [isApr, setIsApr] = useState<boolean>(false);
+    const [lpData, setLpData] = useState<any>();
+    const [UserData, setUserData] = useState<any>();
+    const [poolDatas, setPoolDatas] = useState<any>();
+    const [tokenAmount, setTokenAmount] = useState<number>(0);
     const handleOpenChange = (open: boolean) => {
         setIsOpen(open)
     }
@@ -59,7 +65,37 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
         }
         setIsOpen(false)
     }
+
+    useEffect(()=>{
+        (async()=>{
+            const lpData = await getLpData();
+            setLpData(lpData)
+            const userData = await getUserData();
+            setUserData(userData);
+            setPoolDatas(poolData(lpData?.solAmount + lpData?.lockedSolAmount, lpData?.usdcAmount+lpData?.lockedUsdcAmount))
+        })()
+    },[getLpData, getUserData])
+
+    const onSubmit = () => {
+        if(activeTab == 'mint'){
+            if (selectedToken == 0){
+                onDepositWsol(tokenAmount)
+            } else {
+                onDepositUsdc(tokenAmount)
+            }
+
+        } else if (activeTab == 'redeem'){
+            if (selectedToken == 0){
+                onWithdrawWsol(tokenAmount)
+            } else {
+                onWithdrawUsdc(tokenAmount)
+            }
+        }
+    }
     
+    const handleTokenAmount = (value: string) => {
+        setTokenAmount(parseFloat(value));
+    };
     return (
         <SheetContent className="space-y-6 sm:w-[720px] rounded-l-[26px] bg-accent">
             <SheetHeader>
@@ -139,7 +175,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {poolData.map((row) => (
+                                {poolDatas.map((row : any) => (
                                     <TableRow key={row.symbol} className="border-none">
                                         <TableCell className="flex gap-2 items-center">
                                             <div className="rounded-full bg-inherit w-6 h-6 flex items-center justify-center ring-2 ring-border">
@@ -209,8 +245,8 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                 <DropdownMenuTrigger asChild>
                                     <div className="w-full flex justify-between px-3 py-2 rounded-[12px] h-auto items-center bg-secondary cursor-pointer">
                                         <div className="flex items-center gap-2">
-                                            <Image src={poolData[selectedToken].img} alt={poolData[selectedToken].name} width={20} height={20} className="rounded-full" />
-                                            <span className="text-sm text-foreground font-normal">{poolData[selectedToken].name}</span>
+                                            <Image src={poolDatas[selectedToken].img} alt={poolDatas[selectedToken].name} width={20} height={20} className="rounded-full" />
+                                            <span className="text-sm text-foreground font-normal">{poolDatas[selectedToken].name}</span>
                                         </div>
                                         <ChevronDown size={10} className="text-secondary-foreground"/>
                                     </div>
@@ -227,7 +263,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                                 <Search size={16} className="w-4 h-4 text-foreground"/>
                                             </div>
                                             <div className="w-full flex space-x-[10px]">
-                                                {poolData.map((token, index) => (
+                                                {poolDatas.map((token : any, index : number) => (
                                                     <div 
                                                         key={index} 
                                                         className="w-fit flex items-center p-2 space-x-[6px] bg-secondary rounded-[8px] cursor-pointer"
@@ -245,7 +281,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                             <span>Balance</span>
                                         </div>
                                     </div>
-                                    {poolData.map((token, index) => (
+                                    {poolDatas.map((token : any, index: number) => (
                                         <div 
                                             key={index}
                                             onClick={() => handleClickToken(index)}
@@ -274,9 +310,10 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                             <Input
                                 type="number"
                                 className="px-3 py-2 rounded-[12px] h-auto w-full bg-secondary border-none shadow-none"
-                                placeholder="$0"
+                                placeholder={`${selectedToken == 0 ? "SOL" : "USDC"}`}
+                                onChange={(e) => handleTokenAmount(e.target.value)}
                             />
-                            <Button className="h-auto rounded-[12px] px-4 py-[10px] w-2/6">
+                            <Button className="h-auto rounded-[12px] px-4 py-[10px] w-2/6" onClick={onSubmit}>
                                 {activeTab === 'mint' ? 'Buy' : 'Sell'}
                             </Button>
                         </div>

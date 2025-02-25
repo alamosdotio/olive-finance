@@ -667,6 +667,27 @@
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -899,6 +920,27 @@
                 89
               ]
             }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
           }
         },
         {
@@ -2730,7 +2772,8 @@
           }
         },
         {
-          "name": "users",
+          "name": "user",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2739,9 +2782,12 @@
                   117,
                   115,
                   101,
-                  114,
-                  115
+                  114
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
               }
             ]
           }
@@ -2986,7 +3032,8 @@
           }
         },
         {
-          "name": "users",
+          "name": "user",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2995,9 +3042,12 @@
                   117,
                   115,
                   101,
-                  114,
-                  115
+                  114
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
               }
             ]
           }
@@ -3097,15 +3147,27 @@
   "errors": [
     {
       "code": 6000,
-      "name": "AdminAuthorityError"
+      "name": "InvalidPoolBalanceError"
     },
     {
       "code": 6001,
-      "name": "InvalidPoolBalanceError"
+      "name": "InvalidLockedBalanceError"
     },
     {
       "code": 6002,
       "name": "InvalidSignerBalanceError"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidOptionIndexError"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidTimeError"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidPriceRequirementError"
     }
   ],
   "types": [
@@ -3312,6 +3374,14 @@
         "fields": [
           {
             "name": "option_index",
+            "type": "u64"
+          },
+          {
+            "name": "liquidity_wsol",
+            "type": "u64"
+          },
+          {
+            "name": "liquidity_usdc",
             "type": "u64"
           }
         ]

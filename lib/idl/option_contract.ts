@@ -673,6 +673,27 @@ export type OptionContract = {
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -905,6 +926,27 @@ export type OptionContract = {
                 89
               ]
             }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
           }
         },
         {
@@ -2736,7 +2778,8 @@ export type OptionContract = {
           }
         },
         {
-          "name": "users",
+          "name": "user",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -2745,9 +2788,12 @@ export type OptionContract = {
                   117,
                   115,
                   101,
-                  114,
-                  115
+                  114
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
               }
             ]
           }
@@ -2992,7 +3038,8 @@ export type OptionContract = {
           }
         },
         {
-          "name": "users",
+          "name": "user",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3001,9 +3048,12 @@ export type OptionContract = {
                   117,
                   115,
                   101,
-                  114,
-                  115
+                  114
                 ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
               }
             ]
           }
@@ -3103,15 +3153,27 @@ export type OptionContract = {
   "errors": [
     {
       "code": 6000,
-      "name": "adminAuthorityError"
+      "name": "invalidPoolBalanceError"
     },
     {
       "code": 6001,
-      "name": "invalidPoolBalanceError"
+      "name": "invalidLockedBalanceError"
     },
     {
       "code": 6002,
       "name": "invalidSignerBalanceError"
+    },
+    {
+      "code": 6003,
+      "name": "invalidOptionIndexError"
+    },
+    {
+      "code": 6004,
+      "name": "invalidTimeError"
+    },
+    {
+      "code": 6005,
+      "name": "invalidPriceRequirementError"
     }
   ],
   "types": [
@@ -3318,6 +3380,14 @@ export type OptionContract = {
         "fields": [
           {
             "name": "optionIndex",
+            "type": "u64"
+          },
+          {
+            "name": "liquidityWsol",
+            "type": "u64"
+          },
+          {
+            "name": "liquidityUsdc",
             "type": "u64"
           }
         ]

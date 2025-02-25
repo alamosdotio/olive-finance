@@ -32,7 +32,7 @@ import { SYSTEM_PROGRAM_ID } from "@coral-xyz/anchor/dist/cjs/native/system";
 import { Position, positions } from "@/lib/data/Positions";
 import { getPythPrice, usePythPrice } from "./usePythPrice";
 import { formatDate, Transaction } from "@/lib/data/WalletActivity";
-import { format } from "date-fns"
+import { format } from "date-fns";
 import { coins } from "@/lib/data/coins";
 
 const clusterUrl = "https://api.devnet.solana.com";
@@ -92,31 +92,60 @@ export const useSmartContract = () => {
       }
     }
   }, [connected]);
-  const getOptionDetailAccount = (index: number) => {
+  const getOptionDetailAccount = useCallback(
+    (index: number) => {
+      if (connected && publicKey != null && program) {
+        const buffer = Buffer.alloc(8);
+        buffer.writeUInt32LE(index);
+        const [account] = PublicKey.findProgramAddressSync(
+          [Buffer.from("option"), publicKey?.toBuffer(), buffer],
+          program.programId
+        );
+        return account;
+      }
+    },
+    [connected]
+  );
+  const getOptionDetail = useCallback(
+    async (index: number) => {
+      if (connected && publicKey != null && program) {
+        const buffer = Buffer.alloc(8);
+        buffer.writeUInt32LE(index);
+        const [account] = PublicKey.findProgramAddressSync(
+          [Buffer.from("option"), publicKey?.toBuffer(), buffer],
+          program.programId
+        );
+        const optionDetail = await program.account.optionDetail.fetch(
+          account.toBase58()
+        );
+        return optionDetail;
+      }
+    },
+    [connected]
+  );
+
+  const getUserData = useCallback(async () => {
     if (connected && publicKey != null && program) {
-      const buffer = Buffer.alloc(8);
-      buffer.writeUInt32LE(index);
-      const [account] = PublicKey.findProgramAddressSync(
-        [Buffer.from("option"), publicKey?.toBuffer(), buffer],
+      const [user] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user"), publicKey?.toBuffer()],
         program.programId
       );
-      return account;
+      const userData = await program.account.user.fetch(user.toBase58());
+      return userData;
     }
-  };
-  const getOptionDetail = async (index: number) => {
+  }, [connected]);
+
+  const getLpData = useCallback(async () => {
     if (connected && publicKey != null && program) {
-      const buffer = Buffer.alloc(8);
-      buffer.writeUInt32LE(index);
-      const [account] = PublicKey.findProgramAddressSync(
-        [Buffer.from("option"), publicKey?.toBuffer(), buffer],
+      const [lp] = PublicKey.findProgramAddressSync(
+        [Buffer.from("lp")],
         program.programId
       );
-      const optionDetail = await program.account.optionDetail.fetch(
-        account.toBase58()
-      );
-      return optionDetail;
+      const lpData = await program.account.lp.fetch(lp.toBase58());
+      return lpData;
     }
-  };
+  }, [connected]);
+
   const getUserInfo = useCallback(async () => {
     if (connected && publicKey != null && program) {
       const [userPDA] = PublicKey.findProgramAddressSync(
@@ -191,7 +220,7 @@ export const useSmartContract = () => {
             transactionType: detail?.optionType ? "Call" : "Put",
             optionType: "American",
             strikePrice: detail.strikePrice,
-            expiry: format(new Date(detail.exercised), 'dd MMM, yyyy HH:mm:ss')
+            expiry: format(new Date(detail.exercised), "dd MMM, yyyy HH:mm:ss"),
           });
         }
       }
@@ -199,7 +228,7 @@ export const useSmartContract = () => {
       setExpiredOptionInfos(expiredpinfo);
       setDoneOptioninfos(doneInfo);
     }
-  }, [optionIndex]);
+  }, [optionIndex, getOptionDetail]);
   useEffect(() => {
     getOptionInfos();
   }, [getOptionInfos]);
@@ -358,6 +387,114 @@ export const useSmartContract = () => {
     await sendTransaction(transaction[0].tx, connection);
   };
 
+  const onDepositWsol = useCallback(
+    async (amount: number) => {
+      try {
+        if (!program || !publicKey || !connected || !wallet) return;
+        const transaction = await program.methods
+          .depositWsol(new BN(amount))
+          .accounts({
+            signer: publicKey,
+            wsolMint: WSOL_MINT,
+          })
+          .transaction();
+        const latestBlockHash = await connection.getLatestBlockhash();
+        const signature = await sendTransaction(transaction, connection);
+        await connection.confirmTransaction({
+          blockhash: latestBlockHash.blockhash,
+          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          signature: signature,
+        });
+        return true;
+      } catch (e) {
+        console.log("Error", e);
+        return false;
+      }
+    },
+    [connected]
+  );
+
+  const onDepositUsdc = useCallback(
+    async (amount: number) => {
+      try {
+        if (!program || !publicKey || !connected || !wallet) return;
+        const transaction = await program.methods
+          .depositUsdc(new BN(amount))
+          .accounts({
+            signer: publicKey,
+            usdcMint: USDC_MINT,
+          })
+          .transaction();
+        const latestBlockHash = await connection.getLatestBlockhash();
+        const signature = await sendTransaction(transaction, connection);
+        await connection.confirmTransaction({
+          blockhash: latestBlockHash.blockhash,
+          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          signature: signature,
+        });
+        return true;
+      } catch (e) {
+        console.log("Error", e);
+        return false;
+      }
+    },
+    [connected]
+  );
+
+  const onWithdrawWsol = useCallback(
+    async (amount: number) => {
+      try {
+        if (!program || !publicKey || !connected || !wallet) return;
+        const transaction = await program.methods
+          .withdrawWsol(new BN(amount), new BN(lpbump))
+          .accounts({
+            signer: publicKey,
+            wsolMint: WSOL_MINT,
+          })
+          .transaction();
+        const latestBlockHash = await connection.getLatestBlockhash();
+        const signature = await sendTransaction(transaction, connection);
+        await connection.confirmTransaction({
+          blockhash: latestBlockHash.blockhash,
+          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          signature: signature,
+        });
+        return true;
+      } catch (e) {
+        console.log("Error", e);
+        return false;
+      }
+    },
+    [connected]
+  );
+
+  const onWithdrawUsdc = useCallback(
+    async (amount: number) => {
+      try {
+        if (!program || !publicKey || !connected || !wallet) return;
+        const transaction = await program.methods
+          .withdrawUsdc(new BN(amount), new BN(lpbump))
+          .accounts({
+            signer: publicKey,
+            usdcMint: USDC_MINT,
+          })
+          .transaction();
+        const latestBlockHash = await connection.getLatestBlockhash();
+        const signature = await sendTransaction(transaction, connection);
+        await connection.confirmTransaction({
+          blockhash: latestBlockHash.blockhash,
+          lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+          signature: signature,
+        });
+        return true;
+      } catch (e) {
+        console.log("Error", e);
+        return false;
+      }
+    },
+    [connected]
+  );
+
   return {
     optionIndex,
     getOptionDetail,
@@ -367,6 +504,12 @@ export const useSmartContract = () => {
     onExerciseOption,
     optioninfos,
     expiredOptionInfos,
-    doneOptioninfos
+    doneOptioninfos,
+    getUserData,
+    getLpData,
+    onDepositWsol,
+    onDepositUsdc,
+    onWithdrawUsdc,
+    onWithdrawWsol,
   };
 };
