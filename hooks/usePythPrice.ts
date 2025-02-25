@@ -140,3 +140,21 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
   return { priceData, loading, error };
 }
+
+export const getPythPrice = async (token: string, timestamp: number) => {
+  const priceFeed = PRICE_FEEDS.find(feed => feed.token === token);
+  if (!globalConnection) {
+    globalConnection = new PriceServiceConnection(PYTH_ENDPOINT);
+  }
+  if (!priceFeed) return 0;
+
+  const priceData = await globalConnection.getPriceFeed(priceFeed.id, timestamp);
+  if (priceData) {
+    const price = priceData.getEmaPriceNoOlderThan(300); // Historical price data
+    if(!price) return 0;
+    // Adjust price and confidence with exponent
+    return parseFloat(price.price) * Math.pow(10, price.expo);
+  } else {
+    console.log("No price data available for that time.");
+  }
+}

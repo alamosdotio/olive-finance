@@ -1,4 +1,5 @@
 export interface Position{
+    index: number
     token: string
     logo: string
     symbol: string
@@ -16,6 +17,7 @@ export interface Position{
 
 export const positions: Position[] = [
     {
+        index:1,
         token: 'Bitcoin',
         logo: '/images/bitcoin.png',
         symbol: 'BTC',
@@ -31,6 +33,7 @@ export const positions: Position[] = [
         }
     },
     {
+        index:1,
         token: 'Solana',
         logo: '/images/solana.png',
         symbol: 'SOL',
@@ -46,6 +49,7 @@ export const positions: Position[] = [
         }
     },
     {
+        index:1,
         token: 'Dogwifhat',
         logo: '/images/wif.png',
         symbol: 'WIF',
@@ -61,6 +65,7 @@ export const positions: Position[] = [
         }
     },
     {
+        index:1,
         token: 'Ethereum',
         logo: '/images/ethereum.png',
         symbol: 'ETH',
@@ -76,6 +81,7 @@ export const positions: Position[] = [
         }
     },
     {
+        index:1,
         token: 'Chainlink',
         logo: '/images/chainlink.png',
         symbol: 'LINK',

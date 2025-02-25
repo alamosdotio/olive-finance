@@ -296,10 +296,10 @@ const OptionsCard = ({
             "formvalue", formValues, isSwapped
         )
         if(isSwapped) {
-            onSellOption(parseFloat(formValues.selling.amount)) // TODO: Corrent answer for sell and buy options.
+            onSellOption(parseFloat(formValues.selling.amount))
         } else {
             onBuyOption(parseFloat(formValues.selling.amount), parseFloat(formValues.strikePrice), 
-                parseFloat(formValues.expiry), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
+                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
 
         }
     }

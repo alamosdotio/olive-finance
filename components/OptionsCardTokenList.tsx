@@ -13,6 +13,8 @@ import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategie
 import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark, TrendUp } from "@/public/svgs/icons";
 import { Token, tokens } from "@/lib/data/tokens";
 import { cn } from "@/lib/utils";
+import { useSmartContract } from "@/hooks/useSmartContract";
+import { formatDate } from "@/lib/data/WalletActivity";
 
 interface OptionsCardTokenListProps {
     chartToken: string
@@ -24,6 +26,7 @@ interface OptionsCardTokenListProps {
 export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect }: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const [optionStyle, setOptionStyle] = useState("American")
+    const { optioninfos } = useSmartContract();
     const generateTokens = (count: number) :  Token[] => {
         return Array(count).fill(null).map((_, index) => {
             const token = tokens[index % tokens.length]
@@ -283,13 +286,14 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                 )}
                 {activeTab === 'options' && type === true && (
                     <div className="w-full flex flex-col space-y-[10px]">
-                        <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
-                            <div className="flex space-x-[10px] items-center">
+                        {optioninfos && optioninfos.map((value, index)=>(
+                            <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between" key={`optioninfos-${index}`}>
+                                <div className="flex space-x-[10px] items-center">
                                 <Image src='/images/ethereum.png' alt="usdc" width={32} height={32} className="rounded-full"/>
                                 <div className="flex flex-col space-y-0.5">
-                                    <span className="text-xs font-medium h-fit">ETH-19JAN25-97000-P</span>
+                                    <span className="text-xs font-medium h-fit">{`${value.symbol}-${formatDate(new Date(value.expiry))}-${value.size}-${value.type}`}</span>
                                     <span className="text-xs text-secondary-foreground font-normal flex items-center">
-                                        Ethereum • Put option • 
+                                        {`${value.symbol}`} • {`${value.type}`} • 
                                     <span className="px-1">
                                         <AmericanIcon width="13" height="12"/>
                                     </span>
@@ -298,29 +302,11 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center">
-                                <span className="text-secondary-foreground text-xs font-medium">$152.26</span>
-                                <span className="text-secondary-foreground text-xs font-normal">0.809232976 SOL</span>
+                                <span className="text-secondary-foreground text-xs font-medium">${value.pnl}</span>
+                                <span className="text-secondary-foreground text-xs font-normal">{`${value.size}`} SOL</span>
                             </div>
-                        </div>
-                        <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
-                            <div className="flex space-x-[10px] items-center">
-                                <Image src='/images/ethereum.png' alt="usdc" width={32} height={32} className="rounded-full"/>
-                                <div className="flex flex-col space-y-0.5">
-                                    <span className="text-xs font-medium h-fit">ETH-19JAN25-97000-P</span>
-                                    <span className="text-xs text-secondary-foreground font-normal flex items-center">
-                                        Ethereum • Put option • 
-                                    <span className="px-1">
-                                        <AmericanIcon width="13" height="12"/>
-                                    </span>
-                                        American
-                                </span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col justify-center">
-                                <span className="text-secondary-foreground text-xs font-medium">$152.26</span>
-                                <span className="text-secondary-foreground text-xs font-normal">0.809232976 SOL</span>
-                            </div>
-                        </div>
+                        </div>))
+                        }
                     </div>
                 )}
                 {activeTab === 'tokens' && (
