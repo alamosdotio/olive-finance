@@ -296,8 +296,10 @@ const OptionsCard = ({
             "formvalue", formValues, isSwapped
         )
         if(isSwapped) {
+            console.log("sell option from users")
             onSellOption(parseFloat(formValues.selling.amount))
         } else {
+            console.log("buy option from pool")
             onBuyOption(parseFloat(formValues.selling.amount), parseFloat(formValues.strikePrice), 
                 parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
 

@@ -13,6 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dro
 import { ChevronDown, Search } from "lucide-react";
 import { ChartStrategy } from "@/public/svgs/icons";
 import { useSmartContract } from "@/hooks/useSmartContract";
+import { USDC_DECIMALS, WSOL_DECIMALS } from "@/utils/const";
 
 
 interface EarnSidebarProps {
@@ -69,26 +70,30 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
     useEffect(()=>{
         (async()=>{
             const lpData = await getLpData();
+            console.log("lp", lpData?.solAmount.toNumber(),  lpData?.usdcAmount.toNumber())
             setLpData(lpData)
             const userData = await getUserData();
+            console.log("userData", userData?.liquidityWsol.toNumber(), userData?.liquidityUsdc.toNumber())
+
             setUserData(userData);
-            setPoolDatas(poolData(lpData?.solAmount + lpData?.lockedSolAmount, lpData?.usdcAmount+lpData?.lockedUsdcAmount))
+            setPoolDatas(poolData((lpData?.solAmount.toNumber()+ lpData?.lockedSolAmount.toNumber())/(10 **WSOL_DECIMALS), (lpData?.usdcAmount.toNumber()+lpData?.lockedUsdcAmount.toNumber())/(10 **WSOL_DECIMALS)))
         })()
     },[getLpData, getUserData])
 
     const onSubmit = () => {
+        console.log("selectedToken", selectedToken)
         if(activeTab == 'mint'){
             if (selectedToken == 0){
-                onDepositWsol(tokenAmount)
+                onDepositWsol(tokenAmount * 10 ** WSOL_DECIMALS)
             } else {
-                onDepositUsdc(tokenAmount)
+                onDepositUsdc(tokenAmount* 10 ** USDC_DECIMALS)
             }
 
         } else if (activeTab == 'redeem'){
             if (selectedToken == 0){
-                onWithdrawWsol(tokenAmount)
+                onWithdrawWsol(tokenAmount* 10 ** WSOL_DECIMALS)
             } else {
-                onWithdrawUsdc(tokenAmount)
+                onWithdrawUsdc(tokenAmount* 10 ** USDC_DECIMALS)
             }
         }
     }
@@ -103,7 +108,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                     {name} Liquidity Pool
                 </SheetTitle>
             </SheetHeader>
-            <div className="space-y-5 flex flex-col w-full">
+            <div className="space-y-5  flex flex-col w-full">
                 <div className="w-full flex items-center space-x-3">
                     <div className="border rounded-[26px] p-3 w-fit h-[167px]">
                         <div className="flex flex-col justify-between">
@@ -175,7 +180,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {poolDatas.map((row : any) => (
+                                {poolDatas && poolDatas.map((row : any) => (
                                     <TableRow key={row.symbol} className="border-none">
                                         <TableCell className="flex gap-2 items-center">
                                             <div className="rounded-full bg-inherit w-6 h-6 flex items-center justify-center ring-2 ring-border">
@@ -245,8 +250,8 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                 <DropdownMenuTrigger asChild>
                                     <div className="w-full flex justify-between px-3 py-2 rounded-[12px] h-auto items-center bg-secondary cursor-pointer">
                                         <div className="flex items-center gap-2">
-                                            <Image src={poolDatas[selectedToken].img} alt={poolDatas[selectedToken].name} width={20} height={20} className="rounded-full" />
-                                            <span className="text-sm text-foreground font-normal">{poolDatas[selectedToken].name}</span>
+                                            <Image src={poolDatas ? poolDatas[selectedToken].img : logo} alt={'Sol'} width={20} height={20} className="rounded-full" />
+                                            <span className="text-sm text-foreground font-normal">{poolDatas? poolDatas[selectedToken].symbol: symbol}</span>
                                         </div>
                                         <ChevronDown size={10} className="text-secondary-foreground"/>
                                     </div>
@@ -263,7 +268,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                                 <Search size={16} className="w-4 h-4 text-foreground"/>
                                             </div>
                                             <div className="w-full flex space-x-[10px]">
-                                                {poolDatas.map((token : any, index : number) => (
+                                                {poolDatas && poolDatas.map((token : any, index : number) => (
                                                     <div 
                                                         key={index} 
                                                         className="w-fit flex items-center p-2 space-x-[6px] bg-secondary rounded-[8px] cursor-pointer"
@@ -281,7 +286,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                             <span>Balance</span>
                                         </div>
                                     </div>
-                                    {poolDatas.map((token : any, index: number) => (
+                                    {poolDatas && poolDatas.map((token : any, index: number) => (
                                         <div 
                                             key={index}
                                             onClick={() => handleClickToken(index)}
