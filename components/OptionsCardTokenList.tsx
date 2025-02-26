@@ -149,7 +149,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
             <DialogContent className="w-full h-full md:max-w-[524px] md:h-auto px-3 py-5 bg-accent gap-0 sm:rounded-[20px] flex flex-col shadow-none">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
                     <DialogTitle className="p-0 text-base font-medium text-foreground flex justify-between items-center">
-                        <span>You&apos;re Selling</span>
+                        <span>You&apos;re {transaction === 'sell' ? 'Selling' : 'Buying'}</span>
                         <Button 
                             className="md:hidden p-[9px] bg-secondary rounded-[12px] [&_svg]:size-[18px]"
                             onClick={() => setIsOpen(false)}
@@ -186,19 +186,10 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                     className={cn(optionStyle === 'American' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
                                     onClick={() => setOptionStyle('American')}
                                 >
-                                    <AmericanIcon width="13" height="12"/> 
-                                    <span className="text-[11px] font-medium">American</span>
-                                </Button>
-                                <Button 
-                                    className={cn(optionStyle === 'European' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("hidden md:flex w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
-                                    onClick={() => setOptionStyle('European')}
-                                >
-                                    <EuropeanIcon width="13" height="12"/>
-                                    <span className="text-[11px] font-medium">European</span>
+                                    <span className="text-[11px] font-medium">Vanilla</span>
                                 </Button>
                                 <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary flex items-center [&_svg]:size-[10px]">
-                                    <BermudanIcon />
-                                    <span className="text-[11px] font-medium">Bermudan</span>
+                                    <span className="text-[11px] font-medium">Binary</span>
                                     <span className="w-fit p-1 h-3 border border-primary text-[8px] text-primary flex items-center rounded-[3px]">Coming Soon</span>
                                 </Button>
                             </div>

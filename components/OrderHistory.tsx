@@ -34,18 +34,8 @@ export default function OrderHistory(){
                                 <span className="text-xs text-foreground font-medium">{tx.transactionID}</span>
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
-                                    <span className="px-1">
-                                        {tx.optionType === 'American' &&(
-                                            <AmericanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'European' &&(
-                                            <EuropeanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'Bermudan' &&(
-                                            <BermudanIcon />
-                                        )}
-                                    </span>
-                                    {tx.optionType}
+                                    
+                                    Vanilla
                                 </span>
                             </div>
                         </div>
@@ -79,17 +69,9 @@ export default function OrderHistory(){
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
                                     <span className="px-1">
-                                        {tx.optionType === 'American' &&(
-                                            <AmericanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'European' &&(
-                                            <EuropeanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'Bermudan' &&(
-                                            <BermudanIcon />
-                                        )}
+                                        
                                     </span>
-                                    {tx.optionType}
+                                    Vanilla
                                 </span>
                             </div>
                         </div>

@@ -127,7 +127,7 @@ export default function NavBar(){
                 <Notifications />
                 
                 {isConnected ? (
-                    <WalletSideBar></WalletSideBar>
+                    <WalletSideBar />
                 ) : (
                     <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">
                         <WalletIcon />

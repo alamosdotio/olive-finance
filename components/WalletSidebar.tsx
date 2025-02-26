@@ -9,10 +9,12 @@ import { CopyIcon, LogOutIcon, SendIcon } from "@/public/svgs/icons";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import WalletPortfolio from "./WalletPortfolio";
 import WalletActivity from "./WalletActivity";
+import { XIcon } from "lucide-react";
 
 
 export default function WalletSideBar() {
     const { address, disconnect, iconPath } = useWallet()
+    const [isOpen, setIsOpen] = useState(false)
     const [activeTab, setActiveTab] = useState<string>('portfolio')
 
     const truncateAddress = (address: string) => {
@@ -32,7 +34,7 @@ export default function WalletSideBar() {
     }
 
     return (
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
                 <button className="w-full py-[5px] px-[15px] h-9 rounded-[12px] gap-2 text-foreground text-sm border bg-inherit hover:bg-primary-foreground hover:border-primary flex justify-center items-center">
                     {iconPath && (
@@ -41,7 +43,7 @@ export default function WalletSideBar() {
                     {address ? truncateAddress(address) : 'Connected'}
                 </button>
             </SheetTrigger>
-            <SheetContent className="bg-accent rounded-l-[26px] p-6 space-y-4 sm:w-[550px]">
+            <SheetContent className="bg-accent rounded-none md:rounded-l-[26px] p-6 space-y-4 w-full md:w-[550px]">
                 <SheetTitle className="flex justify-between">
                     <div className="flex space-x-2 items-center">
                         {iconPath && (
@@ -62,6 +64,12 @@ export default function WalletSideBar() {
                             onClick={()=>disconnect()}
                         >
                             <LogOutIcon />
+                        </Button>
+                        <Button 
+                            className="bg-secondary p-2 h-fit shadow-none rounded-[10px] md:hidden"
+                            onClick={()=>setIsOpen(false)}
+                        >
+                            <XIcon className="text-foreground"/>
                         </Button>
                     </div>
                 </SheetTitle>

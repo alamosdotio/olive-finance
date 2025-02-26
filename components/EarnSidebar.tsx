@@ -274,7 +274,7 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                             <Input
                                 type="number"
                                 className="px-3 py-2 rounded-[12px] h-auto w-full bg-secondary border-none shadow-none"
-                                placeholder="$0"
+                                placeholder="0"
                             />
                             <Button className="h-auto rounded-[12px] px-4 py-[10px] w-2/6">
                                 {activeTab === 'mint' ? 'Buy' : 'Sell'}

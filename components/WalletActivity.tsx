@@ -34,17 +34,9 @@ export default function WalletActivity(){
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
                                     <span className="px-1">
-                                        {tx.optionType === 'American' &&(
-                                            <AmericanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'European' &&(
-                                            <EuropeanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'Bermudan' &&(
-                                            <BermudanIcon />
-                                        )}
+                                        
                                     </span>
-                                    {tx.optionType}
+                                    Vanilla
                                 </span>
                             </div>
                         </div>
@@ -59,7 +51,7 @@ export default function WalletActivity(){
                     ))}
                 </div>
             </div>
-            <div className="flex items-center gap-5 justify-end pt-4 mt-auto">
+            <div className="flex items-center gap-5 justify-center md:justify-end pt-4 mt-auto">
                 <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9 hover:bg-secondary/80">
                     <ChevronLeft className="w-fit h-fit text-secondary-foreground" />
                 </button>
