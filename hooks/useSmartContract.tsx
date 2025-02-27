@@ -17,7 +17,12 @@ import {
 import * as idl from "../lib/idl/option_contract.json";
 import { OptionContract } from "@/lib/idl/option_contract";
 import { Connection, PublicKey } from "@solana/web3.js";
-import { SOL_USD_PYTH_ACCOUNT, USDC_MINT, WSOL_MINT } from "@/utils/const";
+import {
+  SOL_USD_PYTH_ACCOUNT,
+  USDC_MINT,
+  WSOL_DECIMALS,
+  WSOL_MINT,
+} from "@/utils/const";
 import { SYSTEM_PROGRAM_ID } from "@coral-xyz/anchor/dist/cjs/native/system";
 import { Position, positions } from "@/lib/data/Positions";
 import { getPythPrice, usePythPrice } from "./usePythPrice";
@@ -83,32 +88,33 @@ export const useSmartContract = () => {
   const getOptionDetailAccount = useCallback(
     (index: number) => {
       if (connected && publicKey != null && program) {
+        console.log(publicKey.toBase58())
         const [account] = PublicKey.findProgramAddressSync(
           [
             Buffer.from("option"),
             publicKey?.toBuffer(),
-            new BN(index).toArray("le", 8),
+            new BN(index + 1).toArrayLike(Buffer, "le", 8),
           ],
           program.programId
         );
-        for (let i = 255; i >= 0; i--) {
-          try {
-            const account = PublicKey.createProgramAddressSync(
-              [
-                Buffer.from("option"),
-                publicKey?.toBuffer(),
-                new BN(index).toArray("le", 8),
-                Buffer.from([i]),
-              ],
-              program.programId
-            );
-            console.log("PDA", account.toBase58(), i);
-          } catch (e) {}
-        }
+        // for (let i = 255; i >= 0; i--) {
+        //   try {
+        //     const aa = PublicKey.createProgramAddressSync(
+        //       [
+        //         Buffer.from("option"),
+        //         publicKey?.toBuffer(),
+        //         new BN(index + 1).toArrayLike(Buffer, "le", 8),
+        //         Buffer.from([i]),
+        //       ],
+        //       program.programId
+        //     );
+        //     console.log("PDA", aa.toBase58(), i);
+        //   } catch (e) {}
+        // }
         return account;
       }
     },
-    [connected]
+    [connected, wallet, program]
   );
   const getOptionDetail = useCallback(
     async (index: number) => {
@@ -246,9 +252,11 @@ export const useSmartContract = () => {
       setDoneOptioninfos(doneInfo);
     }
   }, [optionIndex, getOptionDetail]);
+
   useEffect(() => {
     getOptionInfos();
   }, [getOptionInfos]);
+
   const onBuyOption = async (
     amount: number,
     strike: number,
@@ -262,6 +270,7 @@ export const useSmartContract = () => {
     const optionDetailAccount = getOptionDetailAccount(optionIndex + 1);
     console.log("optionDetailAccount", optionDetailAccount?.toBase58());
     if (!optionDetailAccount) return;
+    console.log("value", amount, strike, period, expiredTime, optionIndex, isCall, paySol)
     const transaction = await program.methods
       .sellOption(
         new BN(amount),
@@ -286,26 +295,30 @@ export const useSmartContract = () => {
         "F4GbtQS1ZoDxpuzuZh64qPLC2ve1RUyZVRJER9xQqCTK6SRxafo1DRHBXBVLYNenzukEC9Zag9BZYHjHhhy8vTC"
       )
     );
-    const result = await connection.simulateTransaction(transaction, [key]);
-    console.log("result", result);
 
     const latestBlockHash = await connection.getLatestBlockhash();
-    const signature = await sendTransaction(transaction, connection);
-    await connection.confirmTransaction({
-      blockhash: latestBlockHash.blockhash,
-      lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-      signature: signature,
-    });
+    transaction.recentBlockhash = latestBlockHash.blockhash;
+    transaction.feePayer = wallet.publicKey;
+    const result = await connection.simulateTransaction(transaction);
+    console.log("result", result);
+    // const signature = await sendTransaction(transaction, connection);
+    // await connection.confirmTransaction({
+    //   blockhash: latestBlockHash.blockhash,
+    //   lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+    //   signature: signature,
+    // });
     return true;
   };
 
   const onSellOption = async (optionIndex: number) => {
     try {
+      console.log(program, publicKey, connected, wallet)
       if (!program || !publicKey || !connected || !wallet) return;
       const optionDetailAccount = getOptionDetailAccount(optionIndex);
       if (!optionDetailAccount) return;
+      console.log("optionDetailAccount", optionDetailAccount)
       const transaction = await program.methods
-        .buyOption(new BN(optionIndex), lpbump)
+        .buyOption(new BN(optionIndex))
         .accounts({
           signer: publicKey,
           wsolMint: WSOL_MINT,
@@ -333,7 +346,7 @@ export const useSmartContract = () => {
       const optionDetailAccount = getOptionDetailAccount(optionIndex);
       if (!optionDetailAccount) return;
       const transaction = await program.methods
-        .expireOption(new BN(optionIndex), new BN(solPrice), lpbump)
+        .expireOption(new BN(optionIndex), new BN(solPrice))
         .accounts({
           signer: publicKey,
           optionDetail: optionDetailAccount,
@@ -360,7 +373,7 @@ export const useSmartContract = () => {
     const optionDetailAccount = getOptionDetailAccount(optionIndex);
     if (!optionDetailAccount) return;
     const transaction = await program.methods
-      .exerciseOption(new BN(optionIndex), lpbump)
+      .exerciseOption(new BN(optionIndex))
       .accounts({
         signer: publicKey,
         wsolMint: WSOL_MINT,
@@ -403,7 +416,7 @@ export const useSmartContract = () => {
         return false;
       }
     },
-    [connected]
+    [connected, program, wallet]
   );
 
   const onDepositUsdc = useCallback(
@@ -414,7 +427,7 @@ export const useSmartContract = () => {
           .depositUsdc(new BN(amount))
           .accounts({
             signer: publicKey,
-            usdcMint: USDC_MINT,
+            usdcMint: USDC_MINT, 
           })
           .transaction();
         const latestBlockHash = await connection.getLatestBlockhash();
@@ -430,7 +443,7 @@ export const useSmartContract = () => {
         return false;
       }
     },
-    [connected]
+    [connected, program, wallet]
   );
 
   const onWithdrawWsol = useCallback(
@@ -439,7 +452,7 @@ export const useSmartContract = () => {
         if (!program || !publicKey || !connected || !wallet || lpbump == 0)
           return;
         const transaction = await program.methods
-          .withdrawWsol(new BN(amount), lpbump)
+          .withdrawWsol(new BN(amount))
           .accounts({
             signer: publicKey,
             wsolMint: WSOL_MINT,
@@ -458,40 +471,22 @@ export const useSmartContract = () => {
         return false;
       }
     },
-    [connected]
+    [connected, program, lpbump, wallet]
   );
 
   const onWithdrawUsdc = useCallback(
     async (amount: number) => {
       try {
         if (!program || !publicKey || !connected || !wallet) return;
-        const [lp, lpBump] = PublicKey.findProgramAddressSync(
-          [Buffer.from("lp")],
-          program.programId
-        );
-
-        const lpata = getAssociatedTokenAddressSync(USDC_MINT, lp, true);
         const transaction = await program.methods
-          .withdrawUsdc(new BN(amount), lpBump)
-          .accountsPartial({
+          .withdrawUsdc(new BN(amount))
+          .accounts({
             signer: publicKey,
             usdcMint: USDC_MINT,
-            lp: lp,
-            lpAta: lpata,
           })
           .transaction();
 
-        console.log("lp", lp.toBase58(), lpata.toBase58());
-
         const latestBlockHash = await connection.getLatestBlockhash();
-
-        const key = Keypair.fromSecretKey(
-          bs58.decode(
-            "F4GbtQS1ZoDxpuzuZh64qPLC2ve1RUyZVRJER9xQqCTK6SRxafo1DRHBXBVLYNenzukEC9Zag9BZYHjHhhy8vTC"
-          )
-        );
-        const result = await connection.simulateTransaction(transaction, [key]);
-        console.log("result", result);
         const signature = await sendTransaction(transaction, connection);
         await connection.confirmTransaction({
           blockhash: latestBlockHash.blockhash,
@@ -504,7 +499,7 @@ export const useSmartContract = () => {
         return false;
       }
     },
-    [connected]
+    [connected, publicKey, connected, wallet]
   );
 
   return {

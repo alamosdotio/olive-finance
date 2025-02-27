@@ -25,6 +25,7 @@ import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useSmartContract } from "@/hooks/useSmartContract";
+import { WSOL_DECIMALS } from "@/utils/const";
 
 interface OptionsCardProps {
     chartToken: string;
@@ -300,7 +301,7 @@ const OptionsCard = ({
             onSellOption(parseFloat(formValues.selling.amount))
         } else {
             console.log("buy option from pool")
-            onBuyOption(parseFloat(formValues.selling.amount), parseFloat(formValues.strikePrice), 
+            onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
                 parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
 
         }

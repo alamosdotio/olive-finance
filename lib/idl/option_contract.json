@@ -1,5 +1,5 @@
 {
-  "address": "8vBhep6xtD3WfgJUzZdsBwrDD1dUSnhPDAjp7f4THWNE",
+  "address": "9BCUH8rU7V3nD1syHWdEULadX5V2QZzoUi8gHHRYQJCP",
   "metadata": {
     "name": "option_contract",
     "version": "0.1.0",
@@ -448,10 +448,6 @@
         {
           "name": "option_index",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -1413,10 +1409,6 @@
         {
           "name": "option_index",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -1844,10 +1836,6 @@
         {
           "name": "price",
           "type": "f64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -2083,7 +2071,12 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "bump",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sell_option",
@@ -2507,7 +2500,8 @@
         },
         {
           "name": "option_detail",
-          "writable": true
+          "writable": true,
+          "signer": true
         },
         {
           "name": "pyth_price_account"
@@ -2789,10 +2783,6 @@
         {
           "name": "amount",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -3029,10 +3019,6 @@
         {
           "name": "amount",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     }
@@ -3081,27 +3067,15 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidPoolBalanceError"
+      "name": "InvalidWithdrawError"
     },
     {
       "code": 6001,
-      "name": "InvalidLockedBalanceError"
+      "name": "InvalidPoolBalanceError"
     },
     {
       "code": 6002,
       "name": "InvalidSignerBalanceError"
-    },
-    {
-      "code": 6003,
-      "name": "InvalidOptionIndexError"
-    },
-    {
-      "code": 6004,
-      "name": "InvalidTimeError"
-    },
-    {
-      "code": 6005,
-      "name": "InvalidPriceRequirementError"
     }
   ],
   "types": [
@@ -3127,7 +3101,7 @@
             "type": "u64"
           },
           {
-            "name": "dump",
+            "name": "bump",
             "type": "u8"
           }
         ]

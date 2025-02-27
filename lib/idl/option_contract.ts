@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/option_contract.json`.
  */
 export type OptionContract = {
-  "address": "8vBhep6xtD3WfgJUzZdsBwrDD1dUSnhPDAjp7f4THWNE",
+  "address": "9BCUH8rU7V3nD1syHWdEULadX5V2QZzoUi8gHHRYQJCP",
   "metadata": {
     "name": "optionContract",
     "version": "0.1.0",
@@ -454,10 +454,6 @@ export type OptionContract = {
         {
           "name": "optionIndex",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -1419,10 +1415,6 @@ export type OptionContract = {
         {
           "name": "optionIndex",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -1850,10 +1842,6 @@ export type OptionContract = {
         {
           "name": "price",
           "type": "f64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -2089,7 +2077,12 @@ export type OptionContract = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "bump",
+          "type": "u8"
+        }
+      ]
     },
     {
       "name": "sellOption",
@@ -2513,7 +2506,8 @@ export type OptionContract = {
         },
         {
           "name": "optionDetail",
-          "writable": true
+          "writable": true,
+          "signer": true
         },
         {
           "name": "pythPriceAccount"
@@ -2795,10 +2789,6 @@ export type OptionContract = {
         {
           "name": "amount",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -3035,10 +3025,6 @@ export type OptionContract = {
         {
           "name": "amount",
           "type": "u64"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     }
@@ -3087,27 +3073,15 @@ export type OptionContract = {
   "errors": [
     {
       "code": 6000,
-      "name": "invalidPoolBalanceError"
+      "name": "invalidWithdrawError"
     },
     {
       "code": 6001,
-      "name": "invalidLockedBalanceError"
+      "name": "invalidPoolBalanceError"
     },
     {
       "code": 6002,
       "name": "invalidSignerBalanceError"
-    },
-    {
-      "code": 6003,
-      "name": "invalidOptionIndexError"
-    },
-    {
-      "code": 6004,
-      "name": "invalidTimeError"
-    },
-    {
-      "code": 6005,
-      "name": "invalidPriceRequirementError"
     }
   ],
   "types": [
@@ -3133,7 +3107,7 @@ export type OptionContract = {
             "type": "u64"
           },
           {
-            "name": "dump",
+            "name": "bump",
             "type": "u8"
           }
         ]
