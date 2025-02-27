@@ -1,8 +1,11 @@
+'use client'
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { CallIconDark, PutIconDark } from "@/public/svgs/icons";
 import { Separator } from "./ui/separator";
+import { useState } from "react";
+import TransactionToast from "./TransactionToast";
 
 const expiredPositions = [
     {
@@ -90,6 +93,7 @@ const expiredPositions = [
 
 
 export default function ExpiredOptions(){
+    const [isToast, setIsToast] = useState(false)
     return (
         <>
             <div className="hidden md:flex">
@@ -128,9 +132,13 @@ export default function ExpiredOptions(){
                                 <TableCell>{pos.tokenAmount}</TableCell>
                                 <TableCell>{pos.dollarAmount}</TableCell>
                                 <TableCell>
-                                    <Button className="bg-inherit border border-primary-foreground px-[10px] py-1 w-fit h-fit shadow-none rounded-[8px] text-primary text-xs font-medium">
+                                    <Button 
+                                        className="bg-inherit border border-primary-foreground px-[10px] py-1 w-fit h-fit shadow-none rounded-[8px] text-primary text-xs font-medium"
+                                        onClick={() => setIsToast(!isToast)}
+                                    >
                                         Claim
                                     </Button>
+                                    
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -180,7 +188,10 @@ export default function ExpiredOptions(){
                                     <span className="text-sm font-normal">{pos.dollarAmount}</span>
                                 </div>
                             </div>
-                            <Button className="bg-inherit border border-primary-foreground px-4 py-2 w-full h-fit shadow-none rounded-[12px] text-primary text-xs font-medium">
+                            <Button 
+                                className="bg-inherit border border-primary-foreground px-4 py-2 w-full h-fit shadow-none rounded-[12px] text-primary text-xs font-medium"
+                                onClick={() => setIsToast(!isToast)}
+                            >
                                 Claim
                             </Button>
                         </div>
@@ -188,6 +199,7 @@ export default function ExpiredOptions(){
                     </div>
                 ))}
             </div>
+            <TransactionToast transaction="Claim" isOpen={isToast} setIsOpen={setIsToast}/>
         </>
     )
 }

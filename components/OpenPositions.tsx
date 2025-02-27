@@ -1,4 +1,4 @@
-import btc from '@/public/images/bitcoin.png'
+'use client'
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import PositionGreeks from './PositionGreeks';
 import { ArrowDown, ArrowUp, SendIcon } from '@/public/svgs/icons';
 import PositionDetails from './PositionDetails';
 import { Separator } from './ui/separator';
+import TransactionToast from './TransactionToast';
 
 interface OpenPositionProps{
     token: string
@@ -28,90 +29,101 @@ interface OpenPositionProps{
 
 export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks} : OpenPositionProps){
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isToast, setIsToast] = useState(false)
     const [activeTab, setActiveTab] = useState<string>('Overview')
     
 
     return (
-        <div className="w-full flex flex-col bg-accent rounded-[10px]">
-            <div
-                className="w-full px-4 py-3 flex justify-between items-center cursor-pointer"
-                onClick={()=>setIsOpen(!isOpen)}
-            >
-                <div className="flex space-x-[6px] items-center ">
-                    <Image src={logo} alt={token} width={16} height={16} className="w-4 h-4 rounded-full"/>
-                    <span className="text-sm text-foreground font-medium">{symbol}</span>
-                    <Badge className="text-[8px] bg-gradient-primary border-none text-black font-semibold py-[3px] px-1 w-7 h-3 rounded-[3px] flex items-center justify-center">{type}</Badge>
+        <>
+            <div className="w-full flex flex-col bg-accent rounded-[10px]">
+                <div
+                    className="w-full px-4 py-3 flex justify-between items-center cursor-pointer"
+                    onClick={()=>setIsOpen(!isOpen)}
+                >
+                    <div className="flex space-x-[6px] items-center ">
+                        <Image src={logo} alt={token} width={16} height={16} className="w-4 h-4 rounded-full"/>
+                        <span className="text-sm text-foreground font-medium">{symbol}</span>
+                        <Badge className="text-[8px] bg-gradient-primary border-none text-black font-semibold py-[3px] px-1 w-7 h-3 rounded-[3px] flex items-center justify-center">{type}</Badge>
+                    </div>
+                    {isOpen ? (
+                        <span className='text-secondary-foreground'>
+                            <ArrowUp />
+                        </span>
+                        
+                    ) : (
+                        <span className='text-secondary-foreground'>
+                            <ArrowDown />
+                        </span>
+                        
+                    )}
+                    
                 </div>
-                {isOpen ? (
-                    <span className='text-secondary-foreground'>
-                        <ArrowUp />
-                    </span>
-                    
-                ) : (
-                    <span className='text-secondary-foreground'>
-                        <ArrowDown />
-                    </span>
-                    
-                )}
-                
-            </div>
-            {isOpen && (
-                <div className="px-4 pb-4 space-y-4 w-full">
-                    <div className="w-full flex justify-center md:justify-between">
-                        <Tabs defaultValue={activeTab}>
-                            <TabsList className="flex md:space-x-3 bg-inherit p-0 text-secondary-foreground text-sm font-medium">
-                                <TabsTrigger 
-                                    value="Overview"
-                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
-                                    onClick={() => setActiveTab('Overview')}
+                {isOpen && (
+                    <div className="px-4 pb-4 space-y-4 w-full">
+                        <div className="w-full flex justify-center md:justify-between">
+                            <Tabs defaultValue={activeTab}>
+                                <TabsList className="flex md:space-x-3 bg-inherit p-0 text-secondary-foreground text-sm font-medium">
+                                    <TabsTrigger 
+                                        value="Overview"
+                                        className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                        onClick={() => setActiveTab('Overview')}
+                                    >
+                                        Overview
+                                    </TabsTrigger>
+                                    <TabsTrigger 
+                                        value="Greeks"
+                                        className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                        onClick={() => setActiveTab('Greeks')}
+                                    >
+                                        Greeks
+                                    </TabsTrigger>
+                                    <TabsTrigger 
+                                        value="Details"
+                                        className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                        onClick={() => setActiveTab('Details')}
+                                    >
+                                        Details
+                                    </TabsTrigger>
+                                </TabsList>
+                            </Tabs>
+                            <div className='hidden md:flex space-x-3'>
+                                <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
+                                    <SendIcon />
+                                </Button>
+                                <Button 
+                                    className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'
+                                    onClick={() => setIsToast(!isToast)}
                                 >
-                                    Overview
-                                </TabsTrigger>
-                                <TabsTrigger 
-                                    value="Greeks"
-                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
-                                    onClick={() => setActiveTab('Greeks')}
-                                >
-                                    Greeks
-                                </TabsTrigger>
-                                <TabsTrigger 
-                                    value="Details"
-                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
-                                    onClick={() => setActiveTab('Details')}
-                                >
-                                    Details
-                                </TabsTrigger>
-                            </TabsList>
-                        </Tabs>
-                        <div className='hidden md:flex space-x-3'>
+                                    Exercise
+                                </Button>
+                            </div>
+                        </div>
+                        {activeTab === 'Overview' && (
+                            <PositionOverview type={type} expiry={expiry} size={size} pnl={pnl}/>
+                        )}
+                        {activeTab === 'Greeks' &&(
+                            <PositionGreeks delta={greeks.delta} gamma={greeks.gamma} theta={greeks.theta} vega={greeks.vega}/>
+                        )}
+                        {activeTab === 'Details' &&(
+                            <PositionDetails />
+                        )}
+                        <Separator className='my-4 md:hidden'/>
+                        <div className='md:hidden flex space-x-3'>
                             <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
                                 <SendIcon />
                             </Button>
-                            <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'>
+                            <Button 
+                                className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'
+                                onClick={() => setIsToast(!isToast)}
+                            >
                                 Exercise
                             </Button>
                         </div>
                     </div>
-                    {activeTab === 'Overview' && (
-                        <PositionOverview type={type} expiry={expiry} size={size} pnl={pnl}/>
-                    )}
-                    {activeTab === 'Greeks' &&(
-                        <PositionGreeks delta={greeks.delta} gamma={greeks.gamma} theta={greeks.theta} vega={greeks.vega}/>
-                    )}
-                    {activeTab === 'Details' &&(
-                        <PositionDetails />
-                    )}
-                    <Separator className='my-4 md:hidden'/>
-                    <div className='md:hidden flex space-x-3'>
-                        <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
-                            <SendIcon />
-                        </Button>
-                        <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'>
-                            Exercise
-                        </Button>
-                    </div>
-                </div>
-            )}
-        </div>
+                    
+                )}
+            </div>
+            <TransactionToast transaction="Exercise" isOpen={isToast} setIsOpen={setIsToast}/>
+        </>
     )
 }

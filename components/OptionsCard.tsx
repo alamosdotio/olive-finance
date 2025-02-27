@@ -24,6 +24,7 @@ import { calculateOptionsQuantity, calculateTokensNeeded } from "@/utils/options
 import { Token } from "@/lib/data/tokens";
 import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
+import TransactionToast from "./TransactionToast";
 
 interface OptionsCardProps {
     chartToken: string;
@@ -51,6 +52,7 @@ const OptionsCard = ({
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+    const [isToast, setIsToast] = useState(false)
     const { theme } = useTheme()
     const triggerRef = useRef<HTMLButtonElement>(null);
     const calendarRef = useRef<HTMLDivElement>(null);
@@ -467,7 +469,7 @@ const OptionsCard = ({
                     <Button 
                         disabled={formValues.buying.amount==="" && formValues.selling.amount === ""}
                         className={formValues.buying.amount==="" && formValues.selling.amount === "" ? "w-full h-auto rounded-xl text-background flex disabled:pointer-events-auto disabled:cursor-not-allowed" : 'w-full h-auto rounded-xl text-black flex'}
-                        onClick={() => console.log('Initiate Trade')}
+                        onClick={() => setIsToast(!isToast)}
                     >
                         <span className="text-sm font-semibold">
                             {formValues .buying.amount === '' && formValues.selling.amount === '' ? 'Enter Amount' : 'Trade'}
@@ -478,6 +480,7 @@ const OptionsCard = ({
                     isOpen={isWalletModalOpen} 
                     onClose={() => setIsWalletModalOpen(false)}
                 />
+                <TransactionToast transaction="Trade" isOpen={isToast} setIsOpen={setIsToast}/>
             </CardFooter>
         </Card>
     );

@@ -20,7 +20,7 @@ export default function Homepage(){
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
     }>({
-        selling: { currency: 'usdc', amount: '' },
+        selling: { currency: 'usdc', amount: ''},
     })
 
     const handleSellingAmountChange = (newValue: string) => {
