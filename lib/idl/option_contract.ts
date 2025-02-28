@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/option_contract.json`.
  */
 export type OptionContract = {
-  "address": "9BCUH8rU7V3nD1syHWdEULadX5V2QZzoUi8gHHRYQJCP",
+  "address": "HxerQBnh4k3Dt5DT9B7U666VFh9BW1DKxm59zE9ukEKP",
   "metadata": {
     "name": "optionContract",
     "version": "0.1.0",
@@ -2441,7 +2441,7 @@ export type OptionContract = {
               },
               {
                 "kind": "account",
-                "path": "wsolMint"
+                "path": "usdcMint"
               }
             ],
             "program": {
@@ -3073,15 +3073,31 @@ export type OptionContract = {
   "errors": [
     {
       "code": 6000,
-      "name": "invalidWithdrawError"
+      "name": "invalidPoolBalanceError"
     },
     {
       "code": 6001,
-      "name": "invalidPoolBalanceError"
+      "name": "invalidLockedBalanceError"
     },
     {
       "code": 6002,
       "name": "invalidSignerBalanceError"
+    },
+    {
+      "code": 6003,
+      "name": "invalidOptionIndexError"
+    },
+    {
+      "code": 6004,
+      "name": "invalidTimeError"
+    },
+    {
+      "code": 6005,
+      "name": "invalidPriceRequirementError"
+    },
+    {
+      "code": 6006,
+      "name": "stalePriceError"
     }
   ],
   "types": [

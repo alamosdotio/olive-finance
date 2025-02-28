@@ -21,7 +21,7 @@ export const WSOL_MINT = new PublicKey(
 );
 export const WSOL_DECIMALS = 6;
 export const SOL_USD_PYTH_ACCOUNT = new PublicKey(
-  "HovQMDrbAgAYPCmHVSrezcSmkMtXSSUsLDFANExrZh2J"
+  "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
 );
 
 export const HERMES_URL = "https://hermes.pyth.network/";

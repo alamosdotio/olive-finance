@@ -34,7 +34,6 @@ import { Keypair } from "@solana/web3.js";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 const clusterUrl = "https://api.devnet.solana.com";
 const connection = new Connection(clusterUrl, "confirmed");
-
 type ExpiredOption = {
   index: any;
   token: any;
@@ -266,11 +265,8 @@ export const useSmartContract = () => {
     paySol: boolean
   ) => {
     if (!program || !publicKey || !connected || !wallet) return;
-    console.log("start here", optionIndex);
     const optionDetailAccount = getOptionDetailAccount(optionIndex + 1);
-    console.log("optionDetailAccount", optionDetailAccount?.toBase58());
     if (!optionDetailAccount) return;
-    console.log("value", amount, strike, period, expiredTime, optionIndex, isCall, paySol)
     const transaction = await program.methods
       .sellOption(
         new BN(amount),
@@ -286,7 +282,7 @@ export const useSmartContract = () => {
         wsolMint: WSOL_MINT,
         usdcMint: USDC_MINT,
         optionDetail: optionDetailAccount,
-        pythPriceAccount: SOL_USD_PYTH_ACCOUNT,
+        pythPriceAccount: SOL_USD_PYTH_ACCOUNT,      
       })
       .transaction();
 
@@ -296,17 +292,19 @@ export const useSmartContract = () => {
       )
     );
 
+
     const latestBlockHash = await connection.getLatestBlockhash();
-    transaction.recentBlockhash = latestBlockHash.blockhash;
-    transaction.feePayer = wallet.publicKey;
-    const result = await connection.simulateTransaction(transaction);
-    console.log("result", result);
-    // const signature = await sendTransaction(transaction, connection);
-    // await connection.confirmTransaction({
-    //   blockhash: latestBlockHash.blockhash,
-    //   lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-    //   signature: signature,
-    // });
+    console.log("transaction", transaction)
+    console.log("transaction.feePayer?.toBase58()", transaction.feePayer?.toBase58());
+    // console.log("transaction.signatures[0].publicKey.toBase58()", transaction.signatures[0].publicKey.toBase58(), transaction.signatures[1].publicKey.toBase58())
+    // console.log("instruction", transaction.instructions[0].programId.toBase58(),transaction.instructions[0].keys.map((v)=> ({"si": v.isSigner, "pub":v.pubkey.toBase58()})))
+    
+    const signature = await sendTransaction(transaction, connection);
+    await connection.confirmTransaction({
+      blockhash: latestBlockHash.blockhash,
+      lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+      signature: signature,
+    });
     return true;
   };
 

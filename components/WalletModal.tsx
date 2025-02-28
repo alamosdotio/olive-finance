@@ -42,6 +42,7 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
       ? allWallets.filter((item) => !filterSet.has(item.name))
       : allWallets.slice(1);
   const handleWalletConnect = (walletName: string, iconPath: string) => {
+    console.log("selected cancelled")
     select(
       wallets.filter((value) => value.adapter.name === walletName)[0].adapter
         .name
