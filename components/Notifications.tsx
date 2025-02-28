@@ -12,7 +12,7 @@ export default function Notifications(){
     return (
         <>
             <DropdownMenu>
-                <DropdownMenuTrigger className="focus:outline-none hidden md:flex">
+                <DropdownMenuTrigger className="focus:outline-none hidden sm:flex">
                     <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                         <NotificationIcon />
                     </div>
@@ -38,7 +38,7 @@ export default function Notifications(){
                 </DropdownMenuContent>
             </DropdownMenu>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogTrigger className="focus:outline-none md:hidden">
+                <DialogTrigger className="focus:outline-none sm:hidden">
                     <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                         <NotificationIcon />
                     </div>

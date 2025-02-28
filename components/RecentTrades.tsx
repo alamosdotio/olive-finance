@@ -191,66 +191,68 @@ const RecentTradesData = [
 
 export default function RecentTrades(){
     return (
-        <div className="border w-full h-full rounded-b-[26px] flex flex-col justify-between">
-            <ScrollArea className="h-[660px] rounded-b-[20px] w-full">
-                <Table className="whitespace-nowrap overflow-hidden">
-                    <TableHeader className="w-full">
-                        <TableRow className="p-0">
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify pl-5 pr-3 py-4 ">Profile</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Bought/Sold</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Quantity</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Option</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Call/Put</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Strike Price</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Expiry Date</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Trade Size</TableHead>
-                            <TableHead className="text-xs text-secondary-foreground font-medium text-justify pr-5 pl-3 py-4 ">Purchase Date</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody className="w-full">
-                        {RecentTradesData.map((row) => (
-                            <TableRow key={row.id} className="border-none w-full">
-                                <TableCell className="text-sm text-foreground font-normal text-justify pl-5 pr-3 py-3 ">
-                                    <div className="flex gap-[10px] items-center">
-                                        <AvatarIcon />
-                                        {row.profile}
-                                    </div>
-                                    
-                                </TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
-                                    {row.tx === 'Bought' ? (
-                                        <span className="px-2 py-[6px] bg-[#23293E] text-[#A3BFFB] rounded-[8px]">
-                                            {row.tx}
-                                        </span>
-                                    ) : (
-                                        <span className="px-2 py-[6px] bg-[#2B2825] text-[#FFD08E] rounded-[8px]">
-                                            {row.tx}
-                                        </span>
-                                    )}
-                                    
-                                </TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.quantity}</TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.option}</TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
-                                    <div className="flex gap-2 items-center">
-                                        {row.optionType === 'Call' ? (
-                                            <CallIconDark width="14" height="14"/>
-                                        ) : (
-                                            <PutIconDark width="14" height="14"/>
-                                        )}
-                                        {row.optionType}
-                                    </div>
-                                </TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.strikePrice}</TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.expiry}</TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">${row.size}</TableCell>
-                                <TableCell className="text-sm text-foreground font-normal text-justify pl-3 pr-5 py-[14px] ">{row.purchaseDate}</TableCell>
+        <>
+            <div className="border w-full h-full rounded-b-[26px] flex flex-col justify-between">
+                <ScrollArea className="h-[660px] rounded-b-[20px] w-full">
+                    <Table className="whitespace-nowrap overflow-hidden">
+                        <TableHeader className="w-full">
+                            <TableRow className="p-0">
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify pl-5 pr-3 py-4 ">Profile</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Bought/Sold</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Quantity</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Option</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Call/Put</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Strike Price</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Expiry Date</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">Trade Size</TableHead>
+                                <TableHead className="text-xs text-secondary-foreground font-medium text-justify pr-5 pl-3 py-4 ">Purchase Date</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <ScrollBar orientation="horizontal" />
-            </ScrollArea>
-        </div>
+                        </TableHeader>
+                        <TableBody className="w-full">
+                            {RecentTradesData.map((row) => (
+                                <TableRow key={row.id} className="border-none w-full">
+                                    <TableCell className="text-sm text-foreground font-normal text-justify pl-5 pr-3 py-3 ">
+                                        <div className="flex gap-[10px] items-center">
+                                            <AvatarIcon />
+                                            {row.profile}
+                                        </div>
+                                        
+                                    </TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
+                                        {row.tx === 'Bought' ? (
+                                            <span className="px-2 py-[6px] bg-[#23293E] text-[#A3BFFB] rounded-[8px]">
+                                                {row.tx}
+                                            </span>
+                                        ) : (
+                                            <span className="px-2 py-[6px] bg-[#2B2825] text-[#FFD08E] rounded-[8px]">
+                                                {row.tx}
+                                            </span>
+                                        )}
+                                        
+                                    </TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.quantity}</TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.option}</TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
+                                        <div className="flex gap-2 items-center">
+                                            {row.optionType === 'Call' ? (
+                                                <CallIconDark width="14" height="14"/>
+                                            ) : (
+                                                <PutIconDark width="14" height="14"/>
+                                            )}
+                                            {row.optionType}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.strikePrice}</TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">{row.expiry}</TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">${row.size}</TableCell>
+                                    <TableCell className="text-sm text-foreground font-normal text-justify pl-3 pr-5 py-[14px] ">{row.purchaseDate}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <ScrollBar orientation="horizontal" />
+                </ScrollArea>
+            </div>
+        </>
     )
 }

@@ -12,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { ChevronDown, Search } from "lucide-react";
 import { ChartStrategy } from "@/public/svgs/icons";
+import TransactionToast from "./TransactionToast";
 
 
 interface EarnSidebarProps {
@@ -44,9 +45,11 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
             utilization: '52.18%'
         },
     ]
+
     const [activeTab, setActiveTab] = useState<string>('mint');
     const [isOpen, setIsOpen] = useState(false)
     const [selectedToken, setSelectedToken] = useState<number>(0);
+    const [isToast, setIsToast] = useState(false)
     const [isApr, setIsApr] = useState<boolean>(false)
 
     const handleOpenChange = (open: boolean) => {
@@ -276,13 +279,18 @@ export default function EarnSidebar({name, symbol, logo, apy, apr} : EarnSidebar
                                 className="px-3 py-2 rounded-[12px] h-auto w-full bg-secondary border-none shadow-none"
                                 placeholder="0"
                             />
-                            <Button className="h-auto rounded-[12px] px-4 py-[10px] w-2/6">
+                            <Button 
+                                className="h-auto rounded-[12px] px-4 py-[10px] w-2/6"
+                                onClick={() => setIsToast(!isToast)}
+                            >
                                 {activeTab === 'mint' ? 'Buy' : 'Sell'}
                             </Button>
+                            <TransactionToast transaction={activeTab === 'mint' ? 'Mint' : 'Redeem'} isOpen={isToast} setIsOpen={setIsToast} />
                         </div>
                     </div>
                 </div>
             </div>
+            
         </SheetContent>
     )
 }

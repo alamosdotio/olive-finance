@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 export default function LeaderBoardTopRanks(){
     const {theme} = useTheme()
     return (
-        <div className="flex mx-auto gap-4 justify-center">
+        <div className="hidden lg:flex mx-auto gap-4 justify-center">
             <div className="flex flex-col space-y-5">
                 <div className="flex flex-col space-y-[14px] items-center mt-[30px]">
                     <div>

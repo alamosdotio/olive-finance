@@ -30,12 +30,12 @@ export default function PointsDropDown({setActive} : PointsDropDownProps){
     return (
         <div>
             <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
-                <DropdownMenuTrigger asChild className="hidden md:flex">
+                <DropdownMenuTrigger asChild className="hidden sm:flex">
                     <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[rgb(254,237,203,0.2)]")}>
                         <PointsIcon />
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-[280px] p-5 bg-accent rounded-[20px] space-y-4 md:flex flex-col hidden">
+                <DropdownMenuContent align="end" className="w-[280px] p-5 bg-accent rounded-[20px] space-y-4 sm:flex flex-col hidden">
                     <div className="w-full flex flex-col p-3 border rounded-[12px]">
                         <div className="w-full flex flex-col justify-center items-center space-y-[6px]">
                             <span className="text-secondary-foreground text-xs font-medium">Season 1 Points</span>
@@ -74,7 +74,7 @@ export default function PointsDropDown({setActive} : PointsDropDownProps){
                 </DropdownMenuContent>
             </DropdownMenu>
             <Dialog open={isMobileOpen} onOpenChange={setIsMobileOpen}>
-                <DialogTrigger asChild className="md:hidden">
+                <DialogTrigger asChild className="sm:hidden">
                     <div className={cn((isMobileOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[rgb(254,237,203,0.2)]")}>
                         <PointsIcon />
                     </div>

@@ -27,7 +27,7 @@ export default function NavBarMobile(){
     }
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger className="focus:outline-none md:hidden">
+            <DialogTrigger className="focus:outline-none sm:hidden">
                 <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
                     <MenuIcon size={18} />
                 </div>
