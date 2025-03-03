@@ -48,7 +48,7 @@ export default function EarnCards (){
     return (
         <div className="space-y-5 flex flex-col">
             <EarnNav sortBy={sortBy} setSortBy={setSortBy}/>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4">
             {currentCards.map((strategy, index) => (
                 <Sheet key={index}>
                     <SheetTrigger>

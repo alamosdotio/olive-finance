@@ -1,7 +1,7 @@
 'use client'
 
-import { Transaction, transactions } from "@/lib/data/WalletActivity"
-import { AmericanIcon, BermudanIcon, CallIconDark, CopyIcon, EuropeanIcon, PutIconDark, SendIcon } from "@/public/svgs/icons"
+import { Transaction, } from "@/lib/data/WalletActivity"
+import { CallIconDark, CopyIcon, PutIconDark, SendIcon } from "@/public/svgs/icons"
 import Image from "next/image"
 import { Separator } from "./ui/separator"
 
@@ -27,17 +27,8 @@ export default function OrderHistory({doneOptioninfos}:{doneOptioninfos:Transact
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
                                     <span className="px-1">
-                                        {tx.optionType === 'American' &&(
-                                            <AmericanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'European' &&(
-                                            <EuropeanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'Bermudan' &&(
-                                            <BermudanIcon />
-                                        )}
+                                        Vanilla
                                     </span>
-                                    {tx.optionType}
                                 </span>
                             </div>
                         </div>
@@ -71,17 +62,8 @@ export default function OrderHistory({doneOptioninfos}:{doneOptioninfos:Transact
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
                                     <span className="px-1">
-                                        {tx.optionType === 'American' &&(
-                                            <AmericanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'European' &&(
-                                            <EuropeanIcon width="13" height="12"/>
-                                        )}
-                                        {tx.optionType === 'Bermudan' &&(
-                                            <BermudanIcon />
-                                        )}
+                                        Vanilla
                                     </span>
-                                    {tx.optionType}
                                 </span>
                             </div>
                         </div>
