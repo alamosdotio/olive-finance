@@ -1,13 +1,12 @@
 'use client'
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useContext } from "react"
 import { Card, CardContent, CardFooter} from "./ui/card";
 import { Label } from "./ui/label";
 import { ChevronDown, Wallet} from 'lucide-react';
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import WalletModal from "./WalletModal";
-import { useWallet } from "@/contexts/walletprovider";
 import { CountdownTimer } from "./Timer";
 import { getExpiryOptions } from "@/utils/dateUtils";
 import OptionsCardTokenList from "./OptionsCardTokenList";
@@ -24,6 +23,10 @@ import { calculateOptionsQuantity, calculateTokensNeeded } from "@/utils/options
 import { Token } from "@/lib/data/tokens";
 import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WSOL_DECIMALS } from "@/utils/const";
+import { ContractContext } from "@/contexts/contractProvider";
+
 import TransactionToast from "./TransactionToast";
 
 interface OptionsCardProps {
@@ -49,6 +52,7 @@ const OptionsCard = ({
     marketData,
     priceLoading
 }: OptionsCardProps) => {
+    const { onBuyOption, onSellOption } = useContext(ContractContext);
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -193,7 +197,7 @@ const OptionsCard = ({
         setFormValues(prev => ({ ...prev, strikePrice: value }));
     };
     
-    const { isConnected } = useWallet();
+    const { connected, } = useWallet();
     
     const handleDateSelect = (selectedDate: Date | undefined) => {
         if (selectedDate) {
@@ -291,6 +295,22 @@ const OptionsCard = ({
                 </div>
             </div>
         )
+    }
+
+    const onTrade = () => {
+        console.log(
+            "formvalue", formValues, isSwapped
+        )
+        if(isSwapped) {
+            console.log("sell option from users")
+            onSellOption(parseFloat(formValues.selling.amount))
+        } else {
+            console.log("buy option from pool")
+            onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
+                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
+
+        }
+        setIsToast(!isToast)
     }
 
     const selectedOption = getSelectedExpiryOption();
@@ -454,7 +474,7 @@ const OptionsCard = ({
                         </div>
                     </div>
                 </div>
-                {!isConnected && (
+                {!connected && (
                     <Button 
                         className="w-full h-auto rounded-xl text-background flex"
                         onClick={() => setIsWalletModalOpen(true)}
@@ -465,11 +485,11 @@ const OptionsCard = ({
                         </span>
                     </Button>
                 )}
-                {isConnected && (
+                {connected && (
                     <Button 
                         disabled={formValues.buying.amount==="" && formValues.selling.amount === ""}
                         className={formValues.buying.amount==="" && formValues.selling.amount === "" ? "w-full h-auto rounded-xl text-background flex disabled:pointer-events-auto disabled:cursor-not-allowed" : 'w-full h-auto rounded-xl text-black flex'}
-                        onClick={() => setIsToast(!isToast)}
+                        onClick={onTrade}
                     >
                         <span className="text-sm font-semibold">
                             {formValues .buying.amount === '' && formValues.selling.amount === '' ? 'Enter Amount' : 'Trade'}

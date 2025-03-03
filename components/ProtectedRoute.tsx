@@ -1,6 +1,6 @@
 'use client'
 
-import { useWallet } from "@/contexts/walletprovider"
+import { useWallet } from "@solana/wallet-adapter-react";
 import React from "react"
 
 interface ProtectedRouteProps {
@@ -9,9 +9,9 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({children, fallback} : ProtectedRouteProps){
-    const { isConnected } = useWallet()
+    const { connected } = useWallet()
 
-    if (!isConnected){
+    if (!connected){
         return <>{fallback}</>
     }
 

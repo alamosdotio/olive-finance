@@ -1,23 +1,15 @@
 'use client'
 
-import { Transaction, transactions } from "@/lib/data/WalletActivity"
-import { AmericanIcon, BermudanIcon, CallIconDark, CopyIcon, EuropeanIcon, PutIconDark, SendIcon } from "@/public/svgs/icons"
+import { Transaction, } from "@/lib/data/WalletActivity"
+import { CallIconDark, CopyIcon, PutIconDark, SendIcon } from "@/public/svgs/icons"
 import Image from "next/image"
-import { useEffect, useState } from "react"
 import { Separator } from "./ui/separator"
 
-export default function OrderHistory(){
-    const [generateTx, setGenerateTx] = useState<Transaction[]>([])
-    
-    useEffect(() => {
-        setGenerateTx(transactions)
-    }, [])
-
-    const allTx = generateTx.slice(0, 9)
+export default function OrderHistory({doneOptioninfos}:{doneOptioninfos:Transaction[]}){
     return (
         <>
             <div className="w-full hidden md:flex flex-col space-y-[14px]">
-                {allTx.map((tx) => (
+                {doneOptioninfos && doneOptioninfos.map((tx) => (
                     <div className="w-full flex justify-between items-center" key={tx.transactionID}>
                         <div className="w-full flex space-x-[10px] items-center">
                             <div className="flex flex-col -space-y-0.5 justify-center items-center h-9">
@@ -34,8 +26,9 @@ export default function OrderHistory(){
                                 <span className="text-xs text-foreground font-medium">{tx.transactionID}</span>
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
-                                    
-                                    Vanilla
+                                    <span className="px-1">
+                                        Vanilla
+                                    </span>
                                 </span>
                             </div>
                         </div>
@@ -50,7 +43,7 @@ export default function OrderHistory(){
                 ))}
             </div>
             <div className="w-full md:hidden flex flex-col">
-                {allTx.map((tx, index) => (
+                {doneOptioninfos && doneOptioninfos.map((tx, index) => (
                     <>
                     <div className="w-full flex flex-col space-y-3 items-center" key={tx.transactionID}>
                         <div className="w-full flex space-x-[10px] items-center">
@@ -69,9 +62,8 @@ export default function OrderHistory(){
                                 <span className="text-xs text-secondary-foreground font-normal flex items-center">
                                     {tx.token.name} • {tx.transactionType} Option • 
                                     <span className="px-1">
-                                        
+                                        Vanilla
                                     </span>
-                                    Vanilla
                                 </span>
                             </div>
                         </div>

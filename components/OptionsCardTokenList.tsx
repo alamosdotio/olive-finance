@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Search, XIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
@@ -13,6 +13,9 @@ import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategie
 import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark, TrendUp } from "@/public/svgs/icons";
 import { Token, tokens } from "@/lib/data/tokens";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/data/WalletActivity";
+import { ContractContext } from "@/contexts/contractProvider";
+import { Position } from "@/lib/data/Positions";
 
 interface OptionsCardTokenListProps {
     chartToken: string
@@ -22,9 +25,10 @@ interface OptionsCardTokenListProps {
     onTokenSelect: (token: Token) => void
 }
 
-export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect, transaction }: OptionsCardTokenListProps) {
+export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect, transaction}: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const [optionStyle, setOptionStyle] = useState("American")
+    const {getDetailInfos, program, pub} = useContext(ContractContext);
     const generateTokens = (count: number) :  Token[] => {
         return Array(count).fill(null).map((_, index) => {
             const token = tokens[index % tokens.length]
@@ -54,6 +58,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
     const [selectedToken, setSelectedToken] = useState<Token | null>(null)
     const [selectedStrategy, setSelectedStrategy] = useState<TradingStrategy | null>(null)
     const [isOpen, setIsOpen] = useState(false)
+    const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
 
     const handleClick = (value: Token) => {
         if(selectedToken !== value) {
@@ -70,7 +75,12 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
         setIsOpen(false)
     }
 
-    
+    const handleOpenChange = (open: boolean) => {
+        setIsOpen(open)
+        if (open) {
+            setActiveTab(type ? 'tokens' : 'options')
+        }
+    }
 
     useEffect(() => {
         const tokensList = generateTokens(20);
@@ -87,15 +97,21 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
             setSelectedStrategy(strategyList[0])
         }
     }, [])
+    const [optioninfos, setOptionInfos] = useState<Position[]>([]);
 
-    const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
+    useEffect(() => {
+        (async () => {
+          if (program && pub) {
+            const [pinfo, expiredpinfo, doneinfo] = await getDetailInfos(
+              program,
+              pub
+            );
+            setOptionInfos(pinfo);
+          }
+        })();
+      }, [program]);
 
-    const handleOpenChange = (open: boolean) => {
-        setIsOpen(open)
-        if (open) {
-            setActiveTab(type ? 'tokens' : 'options')
-        }
-    }
+    
 
     const reorderedTokens = [...allTokens];
     const chartTokenIndex = reorderedTokens.findIndex(token => `Crypto.${token.symbol}/USD` === chartToken);
@@ -103,9 +119,8 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
         const [chartTokenItem] = reorderedTokens.splice(chartTokenIndex, 1);
         reorderedTokens.splice(1, 0, chartTokenItem);
     }
-
     const [isDropped, setIsDropped] = useState(false)
-    console.log(`this is the transaction: ${transaction}`)
+
     return (
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
             {type === true && (
@@ -175,7 +190,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                     </Tabs>
                 </div>
                 <Separator className="my-[14px]"/>
-                {activeTab === 'options' && transaction === 'buy' && (
+                {activeTab === 'options' && transaction === 'buy' &&(
                     <div className="space-y-5 overflow-y-scroll overflow-x-hidden md:overflow-hidden h-full">
                         <div className="w-full h-7 flex justify-between items-center space-x-2">
                             <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
@@ -277,13 +292,14 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                 )}
                 {activeTab === 'options' && transaction === 'sell' && (
                     <div className="w-full flex flex-col space-y-[10px]">
-                        <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
-                            <div className="flex space-x-[10px] items-center">
+                        {optioninfos && optioninfos.map((value, index)=>(
+                            <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between" key={`optioninfos-${index}`}>
+                                <div className="flex space-x-[10px] items-center">
                                 <Image src='/images/ethereum.png' alt="usdc" width={32} height={32} className="rounded-full"/>
                                 <div className="flex flex-col space-y-0.5">
-                                    <span className="text-xs font-medium h-fit">ETH-19JAN25-97000-P</span>
+                                    <span className="text-xs font-medium h-fit">{`${value.symbol}-${formatDate(new Date(value.expiry))}-${value.size}-${value.type}`}</span>
                                     <span className="text-xs text-secondary-foreground font-normal flex items-center">
-                                        Ethereum • Put option • 
+                                        {`${value.symbol}`} • {`${value.type}`} • 
                                     <span className="px-1">
                                         <AmericanIcon width="13" height="12"/>
                                     </span>
@@ -292,29 +308,11 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center">
-                                <span className="text-secondary-foreground text-xs font-medium">$152.26</span>
-                                <span className="text-secondary-foreground text-xs font-normal">0.809232976 SOL</span>
+                                <span className="text-secondary-foreground text-xs font-medium">${value.pnl}</span>
+                                <span className="text-secondary-foreground text-xs font-normal">{`${value.size}`} SOL</span>
                             </div>
-                        </div>
-                        <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between">
-                            <div className="flex space-x-[10px] items-center">
-                                <Image src='/images/ethereum.png' alt="usdc" width={32} height={32} className="rounded-full"/>
-                                <div className="flex flex-col space-y-0.5">
-                                    <span className="text-xs font-medium h-fit">ETH-19JAN25-97000-P</span>
-                                    <span className="text-xs text-secondary-foreground font-normal flex items-center">
-                                        Ethereum • Put option • 
-                                    <span className="px-1">
-                                        <AmericanIcon width="13" height="12"/>
-                                    </span>
-                                        American
-                                </span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col justify-center">
-                                <span className="text-secondary-foreground text-xs font-medium">$152.26</span>
-                                <span className="text-secondary-foreground text-xs font-normal">0.809232976 SOL</span>
-                            </div>
-                        </div>
+                        </div>))
+                        }
                     </div>
                 )}
                 {activeTab === 'tokens' && (
