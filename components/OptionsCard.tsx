@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useContext } from "react"
 import { Card, CardContent, CardFooter} from "./ui/card";
 import { Label } from "./ui/label";
 import { ChevronDown, Wallet} from 'lucide-react';
@@ -24,7 +24,8 @@ import { Token } from "@/lib/data/tokens";
 import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useSmartContract } from "@/hooks/useSmartContract";
+import { WSOL_DECIMALS } from "@/utils/const";
+import { ContractContext } from "@/contexts/contractProvider";
 
 interface OptionsCardProps {
     chartToken: string;
@@ -49,7 +50,7 @@ const OptionsCard = ({
     marketData,
     priceLoading
 }: OptionsCardProps) => {
-    const {onBuyOption, onSellOption} = useSmartContract()
+    const { onBuyOption, onSellOption } = useContext(ContractContext);
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -296,9 +297,11 @@ const OptionsCard = ({
             "formvalue", formValues, isSwapped
         )
         if(isSwapped) {
+            console.log("sell option from users")
             onSellOption(parseFloat(formValues.selling.amount))
         } else {
-            onBuyOption(parseFloat(formValues.selling.amount), parseFloat(formValues.strikePrice), 
+            console.log("buy option from pool")
+            onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
                 parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
 
         }

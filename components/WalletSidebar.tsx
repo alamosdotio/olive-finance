@@ -12,7 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { allWallets } from "./WalletModal";
 
 export default function WalletSideBar() {
-  const { wallet, publicKey, disconnect } = useWallet();
+  const { wallet, publicKey, disconnect, connected } = useWallet();
   const [activeTab, setActiveTab] = useState<string>("portfolio");
   const [iconPath, setIconPath] = useState<string>("");
   const truncateAddress = (address: string) => {
@@ -32,7 +32,7 @@ export default function WalletSideBar() {
     if (wallet) {
         setIconPath(allWallets.filter((value) => value.name === wallet.adapter.name)[0].iconPath);
     }
-  }, [publicKey]);
+  }, [publicKey, connected]);
   return (
     <Sheet>
       <SheetTrigger asChild>

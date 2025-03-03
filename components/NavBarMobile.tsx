@@ -10,15 +10,15 @@ import { useRouter } from "next/navigation";
 import { Separator } from "./ui/separator";
 import SettingsMobile from "./SettingsMobile";
 import WalletSideBar from "./WalletSidebar";
-import { useWallet } from "@/contexts/walletprovider";
 import WalletModal from "./WalletModal";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function NavBarMobile(){
     const [isOpen, setIsOpen] = useState(false)
     const [active, setActive] = useState<string>("Options");
     const [isDropped, setIsDropped] = useState(false)
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
-    const { isConnected } = useWallet();
+    const { connected } = useWallet();
     const router = useRouter()
     const handleClick = (state:string) =>{
         if(active!==state){
@@ -91,7 +91,7 @@ export default function NavBarMobile(){
                     </div>
                 </div>
                 <div className="w-full pb-10 px-3">
-                    {isConnected ? (
+                    {connected ? (
                         <WalletSideBar></WalletSideBar>
                     ) : (
                         <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">

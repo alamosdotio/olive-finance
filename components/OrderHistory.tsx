@@ -3,18 +3,9 @@
 import { Transaction, transactions } from "@/lib/data/WalletActivity"
 import { AmericanIcon, BermudanIcon, CallIconDark, CopyIcon, EuropeanIcon, PutIconDark, SendIcon } from "@/public/svgs/icons"
 import Image from "next/image"
-import { useEffect, useState } from "react"
 import { Separator } from "./ui/separator"
-import { useSmartContract } from "@/hooks/useSmartContract"
 
-export default function OrderHistory(){
-    const [generateTx, setGenerateTx] = useState<Transaction[]>([])
-    const {doneOptioninfos} = useSmartContract()
-    // useEffect(() => {
-    //     setGenerateTx(transactions)
-    // }, [])
-
-    const allTx = generateTx.slice(0, 9)
+export default function OrderHistory({doneOptioninfos}:{doneOptioninfos:Transaction[]}){
     return (
         <>
             <div className="w-full hidden md:flex flex-col space-y-[14px]">
