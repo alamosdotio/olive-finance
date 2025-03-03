@@ -150,7 +150,9 @@ export const getPythPrice = async (token: string, timestamp: number) => {
 
   const priceData = await globalConnection.getPriceFeed(priceFeed.id, timestamp);
   if (priceData) {
-    const price = priceData.getEmaPriceNoOlderThan(300); // Historical price data
+    //TODO: to update on Mainnet
+    // const price = priceData.getEmaPriceNoOlderThan(300); // Historical price data
+    const price = priceData.getPriceUnchecked();
     if(!price) return 0;
     // Adjust price and confidence with exponent
     return parseFloat(price.price) * Math.pow(10, price.expo);

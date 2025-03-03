@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   ConnectionProvider,
   WalletProvider,
@@ -12,6 +12,7 @@ import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { TorusWalletAdapter } from "@solana/wallet-adapter-torus";
 import { clusterApiUrl } from "@solana/web3.js";
 import { useMemo } from "react";
+import { ContractProvider } from "./contractProvider";
 
 export default ({ children }: { children: React.ReactNode }) => {
   const network = WalletAdapterNetwork.Mainnet;
@@ -30,7 +31,7 @@ export default ({ children }: { children: React.ReactNode }) => {
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
-        {children}
+        <ContractProvider>{children}</ContractProvider>
       </WalletProvider>
     </ConnectionProvider>
   );

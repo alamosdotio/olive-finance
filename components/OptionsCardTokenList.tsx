@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Search, XIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
@@ -13,8 +13,9 @@ import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategie
 import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark, TrendUp } from "@/public/svgs/icons";
 import { Token, tokens } from "@/lib/data/tokens";
 import { cn } from "@/lib/utils";
-import { useSmartContract } from "@/hooks/useSmartContract";
 import { formatDate } from "@/lib/data/WalletActivity";
+import { ContractContext } from "@/contexts/contractProvider";
+import { Position } from "@/lib/data/Positions";
 
 interface OptionsCardTokenListProps {
     chartToken: string
@@ -26,7 +27,7 @@ interface OptionsCardTokenListProps {
 export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect }: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const [optionStyle, setOptionStyle] = useState("American")
-    const { optioninfos } = useSmartContract();
+    const {getDetailInfos, program, pub} = useContext(ContractContext);
     const generateTokens = (count: number) :  Token[] => {
         return Array(count).fill(null).map((_, index) => {
             const token = tokens[index % tokens.length]
@@ -94,6 +95,19 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
             setSelectedStrategy(strategyList[0])
         }
     }, [])
+    const [optioninfos, setOptionInfos] = useState<Position[]>([]);
+
+    useEffect(() => {
+        (async () => {
+          if (program && pub) {
+            const [pinfo, expiredpinfo, doneinfo] = await getDetailInfos(
+              program,
+              pub
+            );
+            setOptionInfos(pinfo);
+          }
+        })();
+      }, [program]);
 
     const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
 

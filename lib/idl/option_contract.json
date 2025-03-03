@@ -1,5 +1,5 @@
 {
-  "address": "HxerQBnh4k3Dt5DT9B7U666VFh9BW1DKxm59zE9ukEKP",
+  "address": "6h756PU3oXMfQhUXkvcUjspGf9BpYqRUvYPhgQgc3owQ",
   "metadata": {
     "name": "option_contract",
     "version": "0.1.0",
@@ -429,7 +429,30 @@
         },
         {
           "name": "option_detail",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "option_index"
+              }
+            ]
+          }
         },
         {
           "name": "token_program",
@@ -1387,10 +1410,34 @@
         },
         {
           "name": "option_detail",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "option_index"
+              }
+            ]
+          }
         },
         {
-          "name": "pyth_price_account"
+          "name": "pyth_price_account",
+          "address": "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
         },
         {
           "name": "token_program",
@@ -1432,7 +1479,30 @@
         },
         {
           "name": "option_detail",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "option_index"
+              }
+            ]
+          }
         },
         {
           "name": "wsol_mint"
@@ -2501,10 +2571,33 @@
         {
           "name": "option_detail",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "option_index"
+              }
+            ]
+          }
         },
         {
-          "name": "pyth_price_account"
+          "name": "pyth_price_account",
+          "address": "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
         },
         {
           "name": "token_program",
@@ -2521,6 +2614,10 @@
       ],
       "args": [
         {
+          "name": "option_index",
+          "type": "u64"
+        },
+        {
           "name": "amount",
           "type": "u64"
         },
@@ -2534,10 +2631,6 @@
         },
         {
           "name": "expired_time",
-          "type": "u64"
-        },
-        {
-          "name": "option_index",
           "type": "u64"
         },
         {
@@ -3067,31 +3160,15 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidPoolBalanceError"
+      "name": "InvalidWithdrawError"
     },
     {
       "code": 6001,
-      "name": "InvalidLockedBalanceError"
+      "name": "InvalidPoolBalanceError"
     },
     {
       "code": 6002,
       "name": "InvalidSignerBalanceError"
-    },
-    {
-      "code": 6003,
-      "name": "InvalidOptionIndexError"
-    },
-    {
-      "code": 6004,
-      "name": "InvalidTimeError"
-    },
-    {
-      "code": 6005,
-      "name": "InvalidPriceRequirementError"
-    },
-    {
-      "code": 6006,
-      "name": "StalePriceError"
     }
   ],
   "types": [

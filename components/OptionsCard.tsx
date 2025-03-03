@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useContext } from "react"
 import { Card, CardContent, CardFooter} from "./ui/card";
 import { Label } from "./ui/label";
 import { ChevronDown, Wallet} from 'lucide-react';
@@ -24,8 +24,8 @@ import { Token } from "@/lib/data/tokens";
 import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useSmartContract } from "@/hooks/useSmartContract";
 import { WSOL_DECIMALS } from "@/utils/const";
+import { ContractContext } from "@/contexts/contractProvider";
 
 interface OptionsCardProps {
     chartToken: string;
@@ -50,7 +50,7 @@ const OptionsCard = ({
     marketData,
     priceLoading
 }: OptionsCardProps) => {
-    const {onBuyOption, onSellOption} = useSmartContract()
+    const { onBuyOption, onSellOption } = useContext(ContractContext);
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)

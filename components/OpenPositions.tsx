@@ -9,8 +9,6 @@ import PositionGreeks from './PositionGreeks';
 import { ArrowDown, ArrowUp, SendIcon } from '@/public/svgs/icons';
 import PositionDetails from './PositionDetails';
 import { Separator } from './ui/separator';
-import { useSmartContract } from '@/hooks/useSmartContract';
-import { BN } from '@coral-xyz/anchor';
 
 interface OpenPositionProps{
     index: number
@@ -27,15 +25,12 @@ interface OpenPositionProps{
         theta: number
         vega: number
     }
+    onExercise: ()=>void
 }
 
-export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks, index} : OpenPositionProps){
+export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks, index, onExercise} : OpenPositionProps){
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<string>('Overview')
-    const {onExerciseOption} = useSmartContract()
-    const onExercise = ()=>{
-        onExerciseOption(new BN(index));
-    }
     return (
         <div className="w-full flex flex-col bg-accent rounded-[10px]">
             <div

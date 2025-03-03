@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/option_contract.json`.
  */
 export type OptionContract = {
-  "address": "HxerQBnh4k3Dt5DT9B7U666VFh9BW1DKxm59zE9ukEKP",
+  "address": "6h756PU3oXMfQhUXkvcUjspGf9BpYqRUvYPhgQgc3owQ",
   "metadata": {
     "name": "optionContract",
     "version": "0.1.0",
@@ -435,7 +435,30 @@ export type OptionContract = {
         },
         {
           "name": "optionDetail",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "optionIndex"
+              }
+            ]
+          }
         },
         {
           "name": "tokenProgram",
@@ -1393,10 +1416,34 @@ export type OptionContract = {
         },
         {
           "name": "optionDetail",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "optionIndex"
+              }
+            ]
+          }
         },
         {
-          "name": "pythPriceAccount"
+          "name": "pythPriceAccount",
+          "address": "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
         },
         {
           "name": "tokenProgram",
@@ -1438,7 +1485,30 @@ export type OptionContract = {
         },
         {
           "name": "optionDetail",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "optionIndex"
+              }
+            ]
+          }
         },
         {
           "name": "wsolMint"
@@ -2507,10 +2577,33 @@ export type OptionContract = {
         {
           "name": "optionDetail",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              },
+              {
+                "kind": "arg",
+                "path": "optionIndex"
+              }
+            ]
+          }
         },
         {
-          "name": "pythPriceAccount"
+          "name": "pythPriceAccount",
+          "address": "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
         },
         {
           "name": "tokenProgram",
@@ -2527,6 +2620,10 @@ export type OptionContract = {
       ],
       "args": [
         {
+          "name": "optionIndex",
+          "type": "u64"
+        },
+        {
           "name": "amount",
           "type": "u64"
         },
@@ -2540,10 +2637,6 @@ export type OptionContract = {
         },
         {
           "name": "expiredTime",
-          "type": "u64"
-        },
-        {
-          "name": "optionIndex",
           "type": "u64"
         },
         {
@@ -3073,31 +3166,15 @@ export type OptionContract = {
   "errors": [
     {
       "code": 6000,
-      "name": "invalidPoolBalanceError"
+      "name": "invalidWithdrawError"
     },
     {
       "code": 6001,
-      "name": "invalidLockedBalanceError"
+      "name": "invalidPoolBalanceError"
     },
     {
       "code": 6002,
       "name": "invalidSignerBalanceError"
-    },
-    {
-      "code": 6003,
-      "name": "invalidOptionIndexError"
-    },
-    {
-      "code": 6004,
-      "name": "invalidTimeError"
-    },
-    {
-      "code": 6005,
-      "name": "invalidPriceRequirementError"
-    },
-    {
-      "code": 6006,
-      "name": "stalePriceError"
     }
   ],
   "types": [

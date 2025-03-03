@@ -1,4 +1,7 @@
-import { PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
+
+export const clusterUrl = "https://api.devnet.solana.com";
+export const connection = new Connection(clusterUrl, "confirmed");
 
 // Mainnet
 // export const USDC_MINT = new PublicKey(
