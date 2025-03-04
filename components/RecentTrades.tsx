@@ -1,4 +1,3 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { AvatarIcon, CallIconDark, PutIconDark } from "@/public/svgs/icons";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";

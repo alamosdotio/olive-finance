@@ -1,4 +1,3 @@
-import btc from '@/public/images/bitcoin.png'
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import { useState } from "react";

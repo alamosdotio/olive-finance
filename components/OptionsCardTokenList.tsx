@@ -21,10 +21,11 @@ interface OptionsCardTokenListProps {
     chartToken: string
     chartTokenLogo: string
     type: boolean
+    transaction: string
     onTokenSelect: (token: Token) => void
 }
 
-export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect }: OptionsCardTokenListProps) {
+export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect, transaction}: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const [optionStyle, setOptionStyle] = useState("American")
     const {getDetailInfos, program, pub} = useContext(ContractContext);
@@ -57,6 +58,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
     const [selectedToken, setSelectedToken] = useState<Token | null>(null)
     const [selectedStrategy, setSelectedStrategy] = useState<TradingStrategy | null>(null)
     const [isOpen, setIsOpen] = useState(false)
+    const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
 
     const handleClick = (value: Token) => {
         if(selectedToken !== value) {
@@ -109,7 +111,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
         })();
       }, [program]);
 
-    const [activeTab, setActiveTab] = useState(type ? 'tokens' : 'options')
+    
 
     const reorderedTokens = [...allTokens];
     const chartTokenIndex = reorderedTokens.findIndex(token => `Crypto.${token.symbol}/USD` === chartToken);
@@ -117,7 +119,6 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
         const [chartTokenItem] = reorderedTokens.splice(chartTokenIndex, 1);
         reorderedTokens.splice(1, 0, chartTokenItem);
     }
-
     const [isDropped, setIsDropped] = useState(false)
 
     return (
@@ -163,7 +164,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
             <DialogContent className="w-full h-full md:max-w-[524px] md:h-auto px-3 py-5 bg-accent gap-0 sm:rounded-[20px] flex flex-col shadow-none">
                 <div className="py-0 px-2 w-full flex flex-col space-y-4">
                     <DialogTitle className="p-0 text-base font-medium text-foreground flex justify-between items-center">
-                        <span>You&apos;re Selling</span>
+                        <span>You&apos;re {transaction === 'sell' ? 'Selling' : 'Buying'}</span>
                         <Button 
                             className="md:hidden p-[9px] bg-secondary rounded-[12px] [&_svg]:size-[18px]"
                             onClick={() => setIsOpen(false)}
@@ -189,7 +190,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                     </Tabs>
                 </div>
                 <Separator className="my-[14px]"/>
-                {activeTab === 'options' && type === false && (
+                {activeTab === 'options' && transaction === 'buy' &&(
                     <div className="space-y-5 overflow-y-scroll overflow-x-hidden md:overflow-hidden h-full">
                         <div className="w-full h-7 flex justify-between items-center space-x-2">
                             <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center">
@@ -200,19 +201,10 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                                     className={cn(optionStyle === 'American' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
                                     onClick={() => setOptionStyle('American')}
                                 >
-                                    <AmericanIcon width="13" height="12"/> 
-                                    <span className="text-[11px] font-medium">American</span>
-                                </Button>
-                                <Button 
-                                    className={cn(optionStyle === 'European' ? 'border-b-primary text-primary' : 'border-b-transparent text-secondary-foreground',("hidden md:flex w-full px-2 py-1 gap-[6px] border-b  rounded-none bg-inherit shadow-none [&_svg]:size-[10px]"))}
-                                    onClick={() => setOptionStyle('European')}
-                                >
-                                    <EuropeanIcon width="13" height="12"/>
-                                    <span className="text-[11px] font-medium">European</span>
+                                    <span className="text-[11px] font-medium">Vanilla</span>
                                 </Button>
                                 <Button className="w-full px-2 py-1 gap-[6px] border-b border-b-transparent rounded-none bg-inherit shadow-none text-secondary flex items-center [&_svg]:size-[10px]">
-                                    <BermudanIcon />
-                                    <span className="text-[11px] font-medium">Bermudan</span>
+                                    <span className="text-[11px] font-medium">Binary</span>
                                     <span className="w-fit p-1 h-3 border border-primary text-[8px] text-primary flex items-center rounded-[3px]">Coming Soon</span>
                                 </Button>
                             </div>
@@ -298,7 +290,7 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                         </div>
                     </div>
                 )}
-                {activeTab === 'options' && type === true && (
+                {activeTab === 'options' && transaction === 'sell' && (
                     <div className="w-full flex flex-col space-y-[10px]">
                         {optioninfos && optioninfos.map((value, index)=>(
                             <div className="w-full flex border rounded-[20px] p-4 pt-3 justify-between" key={`optioninfos-${index}`}>
