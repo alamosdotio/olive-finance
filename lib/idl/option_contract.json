@@ -2614,10 +2614,6 @@
       ],
       "args": [
         {
-          "name": "option_index",
-          "type": "u64"
-        },
-        {
           "name": "amount",
           "type": "u64"
         },
@@ -2860,6 +2856,27 @@
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -3096,6 +3113,27 @@
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -3160,15 +3198,31 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidWithdrawError"
+      "name": "InvalidPoolBalanceError"
     },
     {
       "code": 6001,
-      "name": "InvalidPoolBalanceError"
+      "name": "InvalidLockedBalanceError"
     },
     {
       "code": 6002,
       "name": "InvalidSignerBalanceError"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidOptionIndexError"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidTimeError"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidPriceRequirementError"
+    },
+    {
+      "code": 6006,
+      "name": "StalePriceError"
     }
   ],
   "types": [

@@ -2620,10 +2620,6 @@ export type OptionContract = {
       ],
       "args": [
         {
-          "name": "optionIndex",
-          "type": "u64"
-        },
-        {
           "name": "amount",
           "type": "u64"
         },
@@ -2866,6 +2862,27 @@ export type OptionContract = {
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -3102,6 +3119,27 @@ export type OptionContract = {
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -3166,15 +3204,31 @@ export type OptionContract = {
   "errors": [
     {
       "code": 6000,
-      "name": "invalidWithdrawError"
+      "name": "invalidPoolBalanceError"
     },
     {
       "code": 6001,
-      "name": "invalidPoolBalanceError"
+      "name": "invalidLockedBalanceError"
     },
     {
       "code": 6002,
       "name": "invalidSignerBalanceError"
+    },
+    {
+      "code": 6003,
+      "name": "invalidOptionIndexError"
+    },
+    {
+      "code": 6004,
+      "name": "invalidTimeError"
+    },
+    {
+      "code": 6005,
+      "name": "invalidPriceRequirementError"
+    },
+    {
+      "code": 6006,
+      "name": "stalePriceError"
     }
   ],
   "types": [

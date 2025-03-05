@@ -234,7 +234,6 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!optionDetailAccount) return;
     const transaction = await program.methods
       .sellOption(
-        new BN(optionIndex + 1),
         new BN(amount),
         strike,
         new BN(period),
