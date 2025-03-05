@@ -39,6 +39,7 @@ import {
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import { OptionContract } from "@/lib/idl/option_contract";
 import * as idl from "../lib/idl/option_contract.json";
+import { getPythPrice, usePythPrice } from "@/hooks/usePythPrice";
 
 interface EarnSidebarProps {
   name: string;
@@ -55,26 +56,53 @@ export default function EarnSidebar({
   apy,
   apr,
 }: EarnSidebarProps) {
-  const poolData = (solPoolsize: number, usdcPoolsize: number) => [
-    {
-      img: logo,
-      symbol: symbol,
-      name: name,
-      poolSize: `${solPoolsize}sol`,
-      current_weightage: "46.27%",
-      target_weightage: "47%",
-      utilization: "78.19%",
-    },
-    {
-      img: usdc,
-      symbol: "USDC",
-      name: "USD Coin",
-      poolSize: `${usdcPoolsize}sol`,
-      current_weightage: "9.9%",
-      target_weightage: "10%",
-      utilization: "52.18%",
-    },
-  ];
+
+  const poolData = (pooldata: any, price:number) => {
+    const solPoolsize =
+      (pooldata.solAmount.toNumber() + pooldata.lockedSolAmount.toNumber()) /
+      10 ** WSOL_DECIMALS;
+    const usdcPoolsize =
+      (pooldata.usdcAmount.toNumber() + pooldata.lockedUsdcAmount.toNumber()) /
+      10 ** USDC_DECIMALS;
+    const total = solPoolsize * price + usdcPoolsize;
+    return [
+      {
+        img: logo,
+        symbol: symbol,
+        name: name,
+        poolSize: `${solPoolsize} SOL`,
+        current_weightage: `${Math.round(
+          ((solPoolsize * price) / total) * 100
+        )}%`,
+        target_weightage: "65%",
+        utilization: `${
+          Math.round(
+            (pooldata.lockedSolAmount.toNumber() /
+              (pooldata.solAmount.toNumber() +
+                pooldata.lockedSolAmount.toNumber())) *
+              100
+          ) ?? 0
+        }%`,
+      },
+      {
+        img: usdc,
+        symbol: "USDC",
+        name: "USD Coin",
+        poolSize: `${usdcPoolsize} USDC`,
+        current_weightage: `${
+          100 - Math.round(((solPoolsize * price) / total) * 100)
+        }%`,
+        target_weightage: "35%",
+        utilization: `${
+          Math.round(
+            pooldata.lockedUsdcAmount.toNumber() /
+              (pooldata.usdcAmount.toNumber() +
+                pooldata.lockedUsdcAmount.toNumber() * 100)
+          ) ?? 0
+        }%`,
+      },
+    ];
+  };
   const sc = useContext(ContractContext);
   const [activeTab, setActiveTab] = useState<string>("mint");
   const [isOpen, setIsOpen] = useState(false);
@@ -111,35 +139,42 @@ export default function EarnSidebar({
           provider
         );
         setProgram(program);
+        const price = await getPythPrice("Crypto.SOL/USD", Date.now())
         const data = await sc?.getLpUserData(program);
-        setPoolDatas(
-          poolData(
-            (data[0]?.solAmount.toNumber() +
-              data[0]?.lockedSolAmount.toNumber()) /
-              10 ** WSOL_DECIMALS,
-            (data[0]?.usdcAmount.toNumber() +
-              data[0]?.lockedUsdcAmount.toNumber()) /
-              10 ** WSOL_DECIMALS
-          )
-        );
+        setPoolDatas(poolData(data[0], price));
       }
     })();
   }, [connected]);
 
   const onSubmit = () => {
     if (connected) {
-      console.log("process")
       if (activeTab == "mint") {
         if (selectedToken == 0) {
-          sc?.onDepositWsol(tokenAmount * 10 ** WSOL_DECIMALS, program, publicKey);
+          sc?.onDepositWsol(
+            tokenAmount * 10 ** WSOL_DECIMALS,
+            program,
+            publicKey
+          );
         } else {
-          sc?.onDepositUsdc(tokenAmount * 10 ** USDC_DECIMALS, program, publicKey);
+          sc?.onDepositUsdc(
+            tokenAmount * 10 ** USDC_DECIMALS,
+            program,
+            publicKey
+          );
         }
       } else if (activeTab == "redeem") {
         if (selectedToken == 0) {
-          sc?.onWithdrawWsol(tokenAmount * 10 ** WSOL_DECIMALS, program, publicKey);
+          sc?.onWithdrawWsol(
+            tokenAmount * 10 ** WSOL_DECIMALS,
+            program,
+            publicKey
+          );
         } else {
-          sc?.onWithdrawUsdc(tokenAmount * 10 ** USDC_DECIMALS, program, publicKey);
+          sc?.onWithdrawUsdc(
+            tokenAmount * 10 ** USDC_DECIMALS,
+            program,
+            publicKey
+          );
         }
       }
     }

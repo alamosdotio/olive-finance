@@ -61,7 +61,7 @@ export default function TradingPositions() {
     onClaimOption(optionindex, solPrice);
   };
   const onExercise =(index: number)=>{
-    onExerciseOption(new BN(index));
+    onExerciseOption(index);
   }
   useEffect(() => {
     (async () => {
@@ -151,7 +151,7 @@ export default function TradingPositions() {
                 size={position.size}
                 pnl={position.pnl}
                 greeks={position.greeks}
-                onExercise={()=>onExercise(index)}
+                onExercise={()=>onExercise(position.index)}
               />
             ))}
         </div>

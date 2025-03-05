@@ -2589,8 +2589,9 @@
                 "path": "signer"
               },
               {
-                "kind": "arg",
-                "path": "option_index"
+                "kind": "account",
+                "path": "user.option_index",
+                "account": "User"
               }
             ]
           }
@@ -2613,10 +2614,6 @@
         }
       ],
       "args": [
-        {
-          "name": "option_index",
-          "type": "u64"
-        },
         {
           "name": "amount",
           "type": "u64"
@@ -2860,6 +2857,27 @@
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -3093,6 +3111,27 @@
                 89
               ]
             }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
           }
         },
         {

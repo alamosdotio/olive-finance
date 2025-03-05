@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PriceServiceConnection } from '@pythnetwork/price-service-client';
 import { PRICE_FEEDS } from '../lib/data/price-feed';
-
+import { HermesClient } from "@pythnetwork/hermes-client";
 const PYTH_ENDPOINT = 'https://hermes.pyth.network';
 const POLLING_INTERVAL = 15000; // 15 seconds polling interval
 const CACHE_DURATION = 10000; // 10 seconds cache duration
@@ -60,7 +60,7 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
       const now = Date.now();
       const cachedResult = priceCache.get(token);
-      
+
       // Check cache first
       if (cachedResult && (now - cachedResult.timestamp) < CACHE_DURATION) {
         setPriceData(cachedResult.data);
@@ -85,7 +85,7 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
         const priceFeeds = await globalConnection.getLatestPriceFeeds([feedId]);
         requestCountRef.current++;
-        
+
         const feed = priceFeeds?.[0];
         if (!feed) {
           throw new Error('No price feed data available');
@@ -99,7 +99,7 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
         const price = parseFloat(priceInfo.price) * Math.pow(10, priceInfo.expo);
         const confidence = parseFloat(priceInfo.conf) * Math.pow(10, priceInfo.expo);
-        
+
         const newPriceData = {
           price,
           confidence,
@@ -143,20 +143,19 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
 export const getPythPrice = async (token: string, timestamp: number) => {
   const priceFeed = PRICE_FEEDS.find(feed => feed.token === token);
-  if (!globalConnection) {
-    globalConnection = new PriceServiceConnection(PYTH_ENDPOINT);
-  }
+  const globalConnection = new HermesClient(PYTH_ENDPOINT);
   if (!priceFeed) return 0;
-
-  const priceData = await globalConnection.getPriceFeed(priceFeed.id, timestamp);
+  const priceData = await globalConnection.getPriceUpdatesAtTimestamp(Math.round(timestamp / 1000), [priceFeed.id], { parsed: true, ignoreInvalidPriceIds: true });
   if (priceData) {
     //TODO: to update on Mainnet
     // const price = priceData.getEmaPriceNoOlderThan(300); // Historical price data
-    const price = priceData.getPriceUnchecked();
-    if(!price) return 0;
+    const price = priceData.parsed?.find(feed => priceFeed.id.includes(feed.id));
+
+    if (!price) return 0;
     // Adjust price and confidence with exponent
-    return parseFloat(price.price) * Math.pow(10, price.expo);
+    return parseFloat(price.price.price) * Math.pow(10, price.price.expo);
   } else {
     console.log("No price data available for that time.");
+    return 0;
   }
 }

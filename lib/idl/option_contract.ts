@@ -2595,8 +2595,9 @@ export type OptionContract = {
                 "path": "signer"
               },
               {
-                "kind": "arg",
-                "path": "optionIndex"
+                "kind": "account",
+                "path": "user.option_index",
+                "account": "user"
               }
             ]
           }
@@ -2619,10 +2620,6 @@ export type OptionContract = {
         }
       ],
       "args": [
-        {
-          "name": "optionIndex",
-          "type": "u64"
-        },
         {
           "name": "amount",
           "type": "u64"
@@ -2866,6 +2863,27 @@ export type OptionContract = {
           }
         },
         {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
           "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
@@ -3099,6 +3117,27 @@ export type OptionContract = {
                 89
               ]
             }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
           }
         },
         {

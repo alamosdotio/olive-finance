@@ -24,7 +24,7 @@ import { Token } from "@/lib/data/tokens";
 import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { type MarketDataState } from '@/hooks/usePythMarketData';
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WSOL_DECIMALS } from "@/utils/const";
+import { USDC_DECIMALS, WSOL_DECIMALS } from "@/utils/const";
 import { ContractContext } from "@/contexts/contractProvider";
 
 import TransactionToast from "./TransactionToast";
@@ -297,7 +297,7 @@ const OptionsCard = ({
         )
     }
 
-    const onTrade = () => {
+    const onTrade = async () => {
         console.log(
             "formvalue", formValues, isSwapped
         )
@@ -306,11 +306,19 @@ const OptionsCard = ({
             onSellOption(parseFloat(formValues.selling.amount))
         } else {
             console.log("buy option from pool")
-            onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
-                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), formValues.buying.type === "call" ? true : false, formValues.selling.currency === "usdc" ? false : true)
-
+            if (formValues.buying.type === "call" ) {
+                const result = await onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
+                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), true, false)
+                //formValues.selling.currency === "usdc" check to premium payent unit
+                setIsToast(!isToast)
+            } else {
+               const result = await onBuyOption(parseFloat(formValues.selling.amount) * 10 ** USDC_DECIMALS, parseFloat(formValues.strikePrice), 
+                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), false, false)
+                // TODO: result == true ? contgratulation toast : faild/retry toast
+                setIsToast(!isToast)
+            }
+            
         }
-        setIsToast(!isToast)
     }
 
     const selectedOption = getSelectedExpiryOption();

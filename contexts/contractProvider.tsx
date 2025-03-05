@@ -35,7 +35,6 @@ interface ContractContextType {
   pub: PublicKey | undefined;
   getLpUserData: Function;
   getDetailInfos: Function;
-
   onBuyOption: Function;
   onSellOption: Function;
   onClaimOption: Function;
@@ -51,7 +50,7 @@ export const ContractContext = createContext<ContractContextType>({
   pub: undefined,
   getLpUserData: () => {},
   getDetailInfos: () => {},
-  onBuyOption: () => {},
+  onBuyOption: async () => {},
   onSellOption: () => {},
   onClaimOption: () => {},
   onExerciseOption: () => {},
@@ -149,12 +148,15 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     if (optionIndex == 0) return;
     for (let i = 1; i <= optionIndex; i++) {
       const detail = await getOptionDetail(i, program);
-      if(!detail) continue;
+      if (!detail) continue;
       const pnl =
         priceData.price && detail.strikePrice
           ? priceData.price - detail.strikePrice
           : 0;
-      if ((detail?.expiredDate.toNumber() > Math.round(Date.now() / 1000)) && detail?.valid) {
+      if (
+        detail?.expiredDate.toNumber() > Math.round(Date.now() / 1000) &&
+        detail?.valid
+      ) {
         pinfo.push({
           index: detail?.index.toNumber(),
           token: detail?.optionType ? "SOL" : "USDC",
@@ -173,8 +175,10 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
             vega: 0.0619,
           },
         });
-      } else if ((detail?.expiredDate.toNumber() < Math.round(Date.now() / 1000)) && detail?.valid) {
-        console.log("detail", detail);
+      } else if (
+        detail?.expiredDate.toNumber() < Math.round(Date.now() / 1000) &&
+        detail?.valid
+      ) {
         const expiryPrice = await getPythPrice(
           "Crypto.SOL/USD",
           detail?.expiredDate.toNumber()
@@ -189,8 +193,8 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
           expiryPrice: expiryPrice!,
           transaction: detail?.optionType ? "Call" : "Put",
           tokenAmount: detail?.optionType
-            ? (detail.solAmount.toNumber()! / WSOL_DECIMALS)
-            : (detail?.usdcAmount.toNumber()! / USDC_DECIMALS),
+            ? detail.solAmount.toNumber()! / WSOL_DECIMALS
+            : detail?.usdcAmount.toNumber()! / USDC_DECIMALS,
           dollarAmount: detail?.solAmount.toNumber() * (expiryPrice ?? 1),
         });
       } else {
@@ -217,40 +221,46 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     isCall: boolean,
     paySol: boolean
   ) => {
-    if (!program || !publicKey || !connected || !wallet) return;
-    const [userPDA] = PublicKey.findProgramAddressSync(
-      [Buffer.from("user"), publicKey.toBuffer()],
-      program.programId
-    );
-    const userInfo = await program.account.user.fetch(userPDA.toBase58());
-    const optionIndex = userInfo.optionIndex.toNumber();
-
-    const optionDetailAccount = getOptionDetailAccount(optionIndex + 1);
-    if (!optionDetailAccount) return;
-    const transaction = await program.methods
-      .sellOption(
-        new BN(optionIndex + 1),
-        new BN(amount),
-        strike,
-        new BN(period),
-        new BN(expiredTime),
-        isCall,
-        paySol
-      )
-      .accounts({
-        signer: publicKey,
-        wsolMint: WSOL_MINT,
-        usdcMint: USDC_MINT,
-      })
-      .transaction();
-    const latestBlockHash = await connection.getLatestBlockhash();
-    const signature = await sendTransaction(transaction, connection);
-    await connection.confirmTransaction({
-      blockhash: latestBlockHash.blockhash,
-      lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-      signature: signature,
-    });
-    return true;
+    try {
+      if (!program || !publicKey || !connected || !wallet) return false;
+      const [userPDA] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user"), publicKey.toBuffer()],
+        program.programId
+      );
+      const userInfo = await program.account.user.fetch(userPDA.toBase58());
+      const optionIndex = userInfo.optionIndex.toNumber();
+      const optionDetailAccount = getOptionDetailAccount(optionIndex);
+      if (!optionDetailAccount) return false;
+      const transaction = await program.methods
+        .sellOption(
+          new BN(amount),
+          strike,
+          new BN(period),
+          new BN(expiredTime),
+          isCall,
+          paySol
+        )
+        .accountsPartial({
+          signer: publicKey,
+          wsolMint: WSOL_MINT,
+          usdcMint: USDC_MINT,
+          optionDetail: optionDetailAccount,
+        })
+        .transaction();
+      const latestBlockHash = await connection.getLatestBlockhash();
+      // transaction.feePayer = publicKey;
+      // let result = await connection.simulateTransaction(transaction);
+      const signature = await sendTransaction(transaction, connection);
+      await connection.confirmTransaction({
+        blockhash: latestBlockHash.blockhash,
+        lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+        signature: signature,
+      });
+      return true;
+    } catch (e) {
+      console.log("error", e);
+      return false;
+    }
   };
 
   const onSellOption = async (optionIndex: number) => {
@@ -267,6 +277,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
+      transaction.feePayer = publicKey;
+      let result = await connection.simulateTransaction(transaction);
+      console.log("result", result);
       const signature = await sendTransaction(transaction, connection);
       await connection.confirmTransaction({
         blockhash: latestBlockHash.blockhash,
@@ -286,7 +299,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const optionDetailAccount = getOptionDetailAccount(optionIndex);
       if (!optionDetailAccount) return;
       const transaction = await program.methods
-        .expireOption(new BN(optionIndex), new BN(solPrice))
+        .expireOption(new BN(optionIndex), solPrice)
         .accounts({
           signer: publicKey,
           wsolMint: WSOL_MINT,
@@ -308,6 +321,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const onExerciseOption = async (optionIndex: number) => {
+    console.log("OptionIndex", optionIndex);
     if (!program || !optionIndex || !publicKey || !connected || !wallet) return;
     const optionDetailAccount = getOptionDetailAccount(optionIndex);
     if (!optionDetailAccount) return;
@@ -320,6 +334,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       })
       .transaction();
     const latestBlockHash = await connection.getLatestBlockhash();
+    // transaction.feePayer = publicKey;
+    // let result = await connection.simulateTransaction(transaction);
+    //   console.log("result", result)
     const signature = await sendTransaction(transaction, connection);
     await connection.confirmTransaction({
       blockhash: latestBlockHash.blockhash,
