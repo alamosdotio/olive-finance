@@ -2595,8 +2595,9 @@ export type OptionContract = {
                 "path": "signer"
               },
               {
-                "kind": "arg",
-                "path": "optionIndex"
+                "kind": "account",
+                "path": "user.option_index",
+                "account": "user"
               }
             ]
           }
@@ -3204,31 +3205,15 @@ export type OptionContract = {
   "errors": [
     {
       "code": 6000,
-      "name": "invalidPoolBalanceError"
+      "name": "invalidWithdrawError"
     },
     {
       "code": 6001,
-      "name": "invalidLockedBalanceError"
+      "name": "invalidPoolBalanceError"
     },
     {
       "code": 6002,
       "name": "invalidSignerBalanceError"
-    },
-    {
-      "code": 6003,
-      "name": "invalidOptionIndexError"
-    },
-    {
-      "code": 6004,
-      "name": "invalidTimeError"
-    },
-    {
-      "code": 6005,
-      "name": "invalidPriceRequirementError"
-    },
-    {
-      "code": 6006,
-      "name": "stalePriceError"
     }
   ],
   "types": [
