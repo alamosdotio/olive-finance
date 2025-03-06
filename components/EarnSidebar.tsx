@@ -268,10 +268,10 @@ export default function EarnSidebar({
           </span>
           <div className="flex flex-col gap-1">
             <span className="text-foreground text-2xl font-medium">
-              $1 586 172 686.31
+              {/* TVL goes here */}
             </span>
             <div className="flex gap-2 items-center text-xs text-foreground font-normal">
-              <span>AUM limit: $1 750 000 000</span>
+              <span>AUM limit: N/A</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

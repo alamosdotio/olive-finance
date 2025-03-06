@@ -190,7 +190,7 @@ const RecentTradesData = [
 
 export default function RecentTrades(){
     return (
-        <div className="border w-full h-full rounded-b-[26px] flex flex-col justify-between">
+        <div className="border border-t-0 w-full h-full rounded-b-[26px] flex flex-col justify-between">
             <ScrollArea className="h-[660px] rounded-b-[20px] w-full">
                 <Table className="whitespace-nowrap overflow-hidden">
                     <TableHeader className="w-full">
