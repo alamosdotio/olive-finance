@@ -5,7 +5,7 @@ import { Minus, Plus } from "lucide-react";
 
 export default function PnlChart(){
     return (
-        <div className="flex flex-col h-full border rounded-b-[26px]">
+        <div className="flex flex-col h-full border border-t-0 rounded-b-[26px]">
             <div className="w-full flex px-5 py-1 border-b">
                 <div className="w-full flex space-x-2 justify-between items-center">
                     <span className="h-6 text-base text-secondary-foreground font-medium">PNL Graph</span>

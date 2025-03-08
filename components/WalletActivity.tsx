@@ -3,6 +3,7 @@ import { Transaction, transactions } from "@/lib/data/WalletActivity"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Separator } from "./ui/separator"
 
 export default function WalletActivity(){
     const [generateTx, setGenerateTx] = useState<Transaction[]>([])
@@ -15,39 +16,42 @@ export default function WalletActivity(){
     return (
         <div className="flex flex-col h-[calc(100vh-280px)]">
             <div className="flex-grow overflow-y-auto">
-                <div className="w-full flex flex-col space-y-[14px]">
+                <div className="w-full flex flex-col md:space-y-[14px]">
                     {allTx.map((tx) => (
-                    <div className="w-full flex justify-between items-center" key={tx.transactionID}>
-                        <div className="w-full flex space-x-[10px] items-center">
-                            <div className="flex flex-col -space-y-0.5 justify-center items-center h-9">
-                                <Image src={tx.token.logo} alt='eth icon' width={20} height={20} className="rounded-full" />
-                                <div className="rounded-full ring ring-accent bg-accent">
-                                    {tx.transactionType === 'Put' ? (
-                                        <PutIconDark width="20" height="20"/>
-                                    ):(
-                                        <CallIconDark width="20" height="20"/>
-                                    )}
+                        <div className="w-full flex flex-col md:flex-row" key={tx.transactionID}>
+                            <div className="w-full flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between items-center">
+                                <div className="w-full flex space-x-[10px] items-center">
+                                    <div className="flex flex-col -space-y-0.5 justify-center items-center md:h-10 md:p-0 p-1 h-11">
+                                        <Image src={tx.token.logo} alt='eth icon' width={20} height={20} className="rounded-full ring ring-background md:ring-0" />
+                                        <div className="rounded-full ring ring-background md:ring-accent bg-accent">
+                                            {tx.transactionType === 'Put' ? (
+                                                <PutIconDark width="20" height="20"/>
+                                            ):(
+                                                <CallIconDark width="20" height="20"/>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col justify-center">
+                                        <span className="text-xs text-foreground font-medium">{tx.transactionID}</span>
+                                        <span className="text-xs text-secondary-foreground font-normal flex items-center">
+                                            {tx.token.name} • {tx.transactionType} Option • 
+                                            <span className="px-1">
+                                                
+                                            </span>
+                                            Vanilla
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="w-full flex flex-row-reverse justify-between md:w-auto md:flex-col md:justify-center">
+                                    <div className="flex justify-end space-x-2">
+                                        <CopyIcon />
+                                        <SendIcon />
+                                    </div>
+                                    <span className="text-xs text-secondary-foreground font-normal flex items-center whitespace-nowrap">{tx.expiry}</span>
                                 </div>
                             </div>
-                            <div className="flex flex-col justify-center">
-                                <span className="text-xs text-foreground font-medium">{tx.transactionID}</span>
-                                <span className="text-xs text-secondary-foreground font-normal flex items-center">
-                                    {tx.token.name} • {tx.transactionType} Option • 
-                                    <span className="px-1">
-                                        
-                                    </span>
-                                    Vanilla
-                                </span>
-                            </div>
+                            <Separator className="my-[14px] md:hidden" />
                         </div>
-                        <div className="flex flex-col justify-center">
-                            <div className="flex justify-end space-x-2">
-                                <CopyIcon />
-                                <SendIcon />
-                            </div>
-                            <span className="text-xs text-secondary-foreground font-normal flex items-center whitespace-nowrap">{tx.expiry}</span>
-                        </div>
-                    </div>
                     ))}
                 </div>
             </div>

@@ -867,9 +867,9 @@ export function WIcon(){
 export function PurchasePriceIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
   <g clip-path="url(#clip0_427_35355)">
-    <path d="M4.375 9.1875V1.3125L5.25 1.75L6.125 1.3125L6.99836 1.75L7.88348 1.3125L8.75 1.75L9.61926 1.3125L10.4923 1.75L11.375 1.3125L12.2503 1.75L13.125 1.3125V7.4375" stroke="#808693" stroke-linejoin="round"/>
-    <path d="M13.125 7.4375V10.5C13.125 11.0802 12.8945 11.6366 12.4843 12.0468C12.0741 12.457 11.5177 12.6875 10.9375 12.6875M10.9375 12.6875C10.3574 12.6875 9.80096 12.457 9.39072 12.0468C8.98049 11.6366 8.75002 11.0802 8.75002 10.5V9.1875H1.31252C1.25492 9.18699 1.1978 9.19796 1.14449 9.21976C1.09118 9.24157 1.04275 9.27377 1.00202 9.3145C0.961292 9.35523 0.929085 9.40366 0.907279 9.45697C0.885474 9.51028 0.874506 9.5674 0.875017 9.625C0.875017 11.375 1.05931 12.6875 3.06252 12.6875H10.9375Z" stroke="#808693" stroke-linejoin="round"/>
-    <path d="M6.125 3.9375H11.375M7.875 6.125H11.375" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.375 9.1875V1.3125L5.25 1.75L6.125 1.3125L6.99836 1.75L7.88348 1.3125L8.75 1.75L9.61926 1.3125L10.4923 1.75L11.375 1.3125L12.2503 1.75L13.125 1.3125V7.4375" stroke="#808693" strokeLinejoin="round"/>
+    <path d="M13.125 7.4375V10.5C13.125 11.0802 12.8945 11.6366 12.4843 12.0468C12.0741 12.457 11.5177 12.6875 10.9375 12.6875M10.9375 12.6875C10.3574 12.6875 9.80096 12.457 9.39072 12.0468C8.98049 11.6366 8.75002 11.0802 8.75002 10.5V9.1875H1.31252C1.25492 9.18699 1.1978 9.19796 1.14449 9.21976C1.09118 9.24157 1.04275 9.27377 1.00202 9.3145C0.961292 9.35523 0.929085 9.40366 0.907279 9.45697C0.885474 9.51028 0.874506 9.5674 0.875017 9.625C0.875017 11.375 1.05931 12.6875 3.06252 12.6875H10.9375Z" stroke="#808693" strokeLinejoin="round"/>
+    <path d="M6.125 3.9375H11.375M7.875 6.125H11.375" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
   </g>
   <defs>
     <clipPath id="clip0_427_35355">
@@ -881,21 +881,21 @@ export function PurchasePriceIcon(){
 
 export function PriceIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-  <path d="M10.7918 7.37891V9.53724C10.7918 11.3572 9.09433 12.8331 7.00016 12.8331C4.906 12.8331 3.2085 11.3572 3.2085 9.53724V7.37891C3.2085 9.19891 4.906 10.4997 7.00016 10.4997C9.09433 10.4997 10.7918 9.19891 10.7918 7.37891Z" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M10.7918 4.46283C10.7918 4.99366 10.646 5.48366 10.3893 5.90366C9.76516 6.93033 8.48183 7.58366 7.00016 7.58366C5.5185 7.58366 4.23516 6.93033 3.611 5.90366C3.35433 5.48366 3.2085 4.99366 3.2085 4.46283C3.2085 3.55283 3.63433 2.73033 4.31683 2.13533C5.00516 1.53449 5.95016 1.16699 7.00016 1.16699C8.05016 1.16699 8.99517 1.53449 9.6835 2.12949C10.366 2.73033 10.7918 3.55283 10.7918 4.46283Z" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M10.7918 4.46283V7.37949C10.7918 9.19949 9.09433 10.5003 7.00016 10.5003C4.906 10.5003 3.2085 9.19949 3.2085 7.37949V4.46283C3.2085 2.64283 4.906 1.16699 7.00016 1.16699C8.05016 1.16699 8.99517 1.53449 9.6835 2.12949C10.366 2.73033 10.7918 3.55283 10.7918 4.46283Z" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10.7918 7.37891V9.53724C10.7918 11.3572 9.09433 12.8331 7.00016 12.8331C4.906 12.8331 3.2085 11.3572 3.2085 9.53724V7.37891C3.2085 9.19891 4.906 10.4997 7.00016 10.4997C9.09433 10.4997 10.7918 9.19891 10.7918 7.37891Z" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M10.7918 4.46283C10.7918 4.99366 10.646 5.48366 10.3893 5.90366C9.76516 6.93033 8.48183 7.58366 7.00016 7.58366C5.5185 7.58366 4.23516 6.93033 3.611 5.90366C3.35433 5.48366 3.2085 4.99366 3.2085 4.46283C3.2085 3.55283 3.63433 2.73033 4.31683 2.13533C5.00516 1.53449 5.95016 1.16699 7.00016 1.16699C8.05016 1.16699 8.99517 1.53449 9.6835 2.12949C10.366 2.73033 10.7918 3.55283 10.7918 4.46283Z" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M10.7918 4.46283V7.37949C10.7918 9.19949 9.09433 10.5003 7.00016 10.5003C4.906 10.5003 3.2085 9.19949 3.2085 7.37949V4.46283C3.2085 2.64283 4.906 1.16699 7.00016 1.16699C8.05016 1.16699 8.99517 1.53449 9.6835 2.12949C10.366 2.73033 10.7918 3.55283 10.7918 4.46283Z" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 }
 
 export function PurchaseDateIcon(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
-  <path d="M4.6665 1.16699V2.91699" stroke="#808693" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M9.3335 1.16699V2.91699" stroke="#808693" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M2.0415 5.30273H11.9582" stroke="#808693" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12.25 4.95866V9.91699C12.25 11.667 11.375 12.8337 9.33333 12.8337H4.66667C2.625 12.8337 1.75 11.667 1.75 9.91699V4.95866C1.75 3.20866 2.625 2.04199 4.66667 2.04199H9.33333C11.375 2.04199 12.25 3.20866 12.25 4.95866Z" stroke="#808693" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M6.99745 7.99186H7.00269" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M4.83827 7.99186H4.84351" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M4.83827 9.74186H4.84351" stroke="#808693" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M4.6665 1.16699V2.91699" stroke="#808693" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M9.3335 1.16699V2.91699" stroke="#808693" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M2.0415 5.30273H11.9582" stroke="#808693" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M12.25 4.95866V9.91699C12.25 11.667 11.375 12.8337 9.33333 12.8337H4.66667C2.625 12.8337 1.75 11.667 1.75 9.91699V4.95866C1.75 3.20866 2.625 2.04199 4.66667 2.04199H9.33333C11.375 2.04199 12.25 3.20866 12.25 4.95866Z" stroke="#808693" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M6.99745 7.99186H7.00269" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M4.83827 7.99186H4.84351" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M4.83827 9.74186H4.84351" stroke="#808693" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 }
 
@@ -934,11 +934,11 @@ export function WalletIcon(){
 
 export function ToastCircle(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
-  <circle cx="28" cy="28" r="27" stroke="url(#paint0_linear_262_18773)" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="28" cy="28" r="27" stroke="url(#paint0_linear_262_18773)" strokeOpacity="0.5" strokeWidth="2"/>
   <defs>
       <linearGradient id="paint0_linear_262_18773" x1="51.8824" y1="3.49999" x2="-5.95657" y2="17.3398" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#53C08D"/>
-      <stop offset="1" stop-color="#D0FFE9"/>
+      <stop stopColor="#53C08D"/>
+      <stop offset="1" stopColor="#D0FFE9"/>
       </linearGradient>
   </defs>
 </svg>
@@ -946,6 +946,6 @@ export function ToastCircle(){
 
 export function ToastCheck(){
   return <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-  <path d="M26.4099 12.8031L15.8033 23.4097L10.5 18.1064" stroke="#53C08D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26.4099 12.8031L15.8033 23.4097L10.5 18.1064" stroke="#53C08D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 }
