@@ -53,7 +53,7 @@ export default function Homepage(){
               priceLoading={priceLoading}
               marketLoading={marketLoading}
             />
-            <div className="flex flex-col w-full justify-evenly h-full space-y-4">
+            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full")}>
                 <div className="flex w-full h-[700px] pt-4 pb-6 lg:space-x-4 justify-between">
                   <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:w-4/6 lg:flex")}>
                     <TradingViewChartContainer symbol={selectedSymbol} logo={selectedLogo}/>
@@ -71,7 +71,7 @@ export default function Homepage(){
                 </div>
                 {active === 'trade' && (
                 <>
-                  <div className="w-full flex flex-col space-y-4">
+                  <div className="w-full flex flex-col space-y-4 pt-4">
                     <PriceQuote value={formValues.selling.amount}/>
                     <GreekPopup value={formValues.selling.amount}/>
                   </div>

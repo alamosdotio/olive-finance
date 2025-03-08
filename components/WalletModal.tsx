@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, XIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { cn } from "@/lib/utils";
 import WalletButton from "./WalletButton";
@@ -51,13 +51,19 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[90%] p-[40px]">
-        <DialogHeader className="flex flex-row items-center justify-between pb-[20px]">
+      <DialogContent className="w-full h-full flex flex-col md:h-auto md:max-w-2xl md:max-h-[90%] p-[40px]">
+        <DialogHeader className="space-y-0 h-fit md:h-auto flex flex-row items-center justify-between md:pb-[20px]">
           <DialogTitle className="text-2xl">Connect Wallet</DialogTitle>
+          <Button 
+            className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-[12px] border md:hidden"
+            onClick={() => onClose()}
+          >
+            <XIcon size={18} className="text-secondary-foreground"/>
+          </Button>
         </DialogHeader>
-        <div className="space-y-10">
+        <div className="w-full flex flex-col justify-between space-y-10">
           <div className="space-y-5 flex flex-col justify-between">
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {primaryWallets.map((wallet) => (
                 <WalletButton
                   key={wallet.name}
@@ -71,7 +77,7 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
             <div
               id="more-wallets"
               className={cn(
-                "grid grid-cols-3 gap-4 transition-all duration-200 mb-4",
+                "grid grid-cols-1 md:grid-cols-3 gap-4 transition-all duration-200 mb-4",
                 isMoreWalletOpen ? "opacity-100" : "hidden opacity-0"
               )}
             >
