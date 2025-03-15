@@ -1,65 +1,281 @@
-import { DeltaIcon, GammaIcon, GreenDot, InfoIcon, OrangeDot, PurpleDot, ThetaIcon, VegaIcon } from "@/public/svgs/icons";
-import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
-import { Minus, Plus } from "lucide-react";
+"use client";
 
-export default function PnlChart(){
-    return (
-        <div className="flex flex-col h-full border border-t-0 rounded-b-[26px]">
-            <div className="w-full flex px-5 py-1 border-b">
-                <div className="w-full flex space-x-2 justify-between items-center">
-                    <span className="h-6 text-base text-secondary-foreground font-medium">PNL Graph</span>
-                    <div className="flex space-x-2 items-center">
-                        <div className="flex space-x-1 items-center">
-                            <PurpleDot />
-                            <GreenDot />
-                        </div>
-                        <span className="text-sm text-secondary-foreground">Expiry</span>
-                    </div>
-                </div>
-                <Separator orientation='vertical' className='mx-2 h-8 bg-backgroundSecondary'/>
-                <div className="flex space-x-2 items-center">
-                    <div className="flex space-x-1 items-center">
-                        <OrangeDot />
-                    </div>
-                    <span className="text-sm text-secondary-foreground whitespace-nowrap">Theoretical Payoff</span>
-                </div>
-            </div>
-            <div className="m-auto flex justify-center items-center">
-                chart goes here
-            </div>
-            <div className="w-full flex px-5 py-2 border-t justify-between">
-                <div className="w-full flex space-x-6 items-center">
-                    <div className="flex space-x-2 items-center text-secondary-foreground">
-                        <DeltaIcon />
-                        <span className="text-sm text-secondary-foreground font-medium">54.68</span>
-                        <InfoIcon />
-                    </div>
-                    <div className="flex space-x-2 items-center text-secondary-foreground">
-                        <GammaIcon />
-                        <span className="text-sm text-secondary-foreground font-medium">-3514.27</span>
-                        <InfoIcon />
-                    </div>
-                    <div className="flex space-x-2 items-center text-secondary-foreground">
-                        <ThetaIcon />
-                        <span className="text-sm text-secondary-foreground font-medium">0.19</span>
-                        <InfoIcon />
-                    </div>
-                    <div className="flex space-x-2 items-center text-secondary-foreground">
-                        <VegaIcon />
-                        <span className="text-sm text-secondary-foreground font-medium">501.98</span>
-                        <InfoIcon />
-                    </div>
-                </div>
-                <div className="w-full flex justify-end space-x-2 items-center">
-                    <span className="text-sm text-secondary-foreground font-medium">Standard Deviation</span>
-                    <Button className="bg-backgroundSecondary px-2 py-1 space-x-4 shadow-none text-secondary-foreground rounded-[10px]">
-                        <Minus />
-                        <span>01</span>
-                        <Plus />
-                    </Button>
-                </div>
-            </div>
-        </div>
-    )
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+  ChartOptions,
+  ScriptableLineSegmentContext,
+} from "chart.js";
+import annotationPlugin from 'chartjs-plugin-annotation';
+import { Line } from "react-chartjs-2";
+import { useId } from "react";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+  annotationPlugin
+);
+
+interface PnLChartProps {
+  strikePrice: number;
+  premium: number;
+  contractType: 'call' | 'put';
+  positionType: 'long' | 'short';
+  currentPrice?: number;
+  multiplier?: number;
+}
+
+const calculatePnL = (
+  price: number,
+  strikePrice: number,
+  premium: number,
+  contractType: 'call' | 'put',
+  positionType: 'long' | 'short',
+  multiplier: number = 1
+) => {
+  let pnl = 0;
+  const premiumPerContract = premium / multiplier;
+
+  if (contractType === 'call') {
+    if (positionType === 'long') {
+      // Long Call: PnL = (max(Price - Strike, 0) - Premium) × Multiplier
+      pnl = (Math.max(price - strikePrice, 0) - premiumPerContract) * multiplier;
+    } else {
+      // Short Call: PnL = (Premium - max(Price - Strike, 0)) × Multiplier
+      pnl = (premiumPerContract - Math.max(price - strikePrice, 0)) * multiplier;
+    }
+  } else {
+    if (positionType === 'long') {
+      // Long Put: PnL = (max(Strike - Price, 0) - Premium) × Multiplier
+      pnl = (Math.max(strikePrice - price, 0) - premiumPerContract) * multiplier;
+    } else {
+      // Short Put: PnL = (Premium - max(Strike - Price, 0)) × Multiplier
+      pnl = (premiumPerContract - Math.max(strikePrice - price, 0)) * multiplier;
+    }
+  }
+  return pnl;
+};
+
+const generatePnLData = ({
+  strikePrice,
+  premium,
+  contractType,
+  positionType,
+  currentPrice = strikePrice,
+  multiplier = 1,
+}: PnLChartProps) => {
+  // Generate price range ±20% of strike price
+  const range = strikePrice * 0.2;
+  const minPrice = strikePrice - range;
+  const maxPrice = strikePrice + range;
+  const numPoints = 400;
+  const priceStep = (maxPrice - minPrice) / (numPoints - 1);
+  
+  const priceRange = Array.from(
+    { length: numPoints },
+    (_, i) => minPrice + i * priceStep
+  );
+
+  const pnlData = priceRange.map(price =>
+    calculatePnL(price, strikePrice, premium, contractType, positionType, multiplier)
+  );
+
+  const maxPnL = Math.max(...pnlData);
+  const minPnL = Math.min(...pnlData);
+  const pnlRange = Math.max(Math.abs(maxPnL), Math.abs(minPnL));
+
+  return {
+    labels: priceRange,
+    priceRange,
+    datasets: [
+      {
+        label: "Option P&L",
+        data: pnlData,
+        segment: {
+          borderColor: (ctx: ScriptableLineSegmentContext) => {
+            const value = ctx.p1.parsed.y;
+            return value < 0 
+              ? "rgba(177, 163, 251, 1)" // Red for negative
+              : "rgba(83, 192, 141, 1)"; // Green for positive
+          },
+          backgroundColor: (ctx: ScriptableLineSegmentContext) => {
+            const value = ctx.p1.parsed.y;
+            return value < 0 
+              ? "rgba(177, 163, 251, 0.2)" // Transparent red for negative
+              : "rgba(83, 192, 141, 0.2)"; // Transparent green for positive
+          },
+        },
+        fill: true,
+        tension: 0.4,
+        pointRadius: 0,
+        pointHoverRadius: 3,
+        pointBackgroundColor: 'white',
+        pointBorderColor: 'white',
+        pointHoverBackgroundColor: 'white',
+        pointHoverBorderColor: 'white',
+      }
+    ],
+    pnlRange,
+  };
+};
+
+export function PnLChart({
+  strikePrice,
+  premium,
+  contractType,
+  positionType,
+  currentPrice,
+  multiplier = 1,
+}: PnLChartProps) {
+  const chartId = useId();
+  const { datasets, labels, priceRange, pnlRange } = generatePnLData({
+    strikePrice,
+    premium,
+    contractType,
+    positionType,
+    currentPrice,
+    multiplier,
+  });
+
+  const premiumPerContract = premium / multiplier;
+  const breakEvenPrice = contractType === 'call' 
+    ? strikePrice + premiumPerContract
+    : strikePrice - premiumPerContract;
+
+  const options: ChartOptions<"line"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      intersect: false,
+      mode: "index",
+    },
+    animation: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: "rgba(255, 255, 255, 0.7)",
+          maxTicksLimit: 10,
+          callback: (value) => {
+            const price = labels[value as number];
+            return `$${Math.round(price).toLocaleString()}`;
+          },
+        },
+        title: {
+          display: false,
+          text: "SOL Price",
+          color: "rgba(255, 255, 255, 0.7)",
+        },
+      },
+      y: {
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+        ticks: {
+          color: "rgba(255, 255, 255, 0.7)",
+          callback: (value) => `$${value.toLocaleString()}`,
+        },
+        title: {
+          display: true,
+          text: "Profit/Loss ($)",
+          color: "rgba(255, 255, 255, 0.7)",
+        },
+        min: -pnlRange,
+        max: pnlRange,
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          title: (context) => {
+            const price = labels[context[0].dataIndex];
+            return `SOL Price: $${Math.round(price).toLocaleString()}`;
+          },
+          label: (context) => {
+            return `P&L: $${context.parsed.y.toLocaleString()}`;
+          },
+        },
+      },
+      annotation: {
+        annotations: {
+          strikePrice: {
+            type: 'line',
+            xMin: priceRange.findIndex(p => p >= strikePrice),
+            xMax: priceRange.findIndex(p => p >= strikePrice),
+            borderColor: 'rgba(255, 255, 255, 0.5)',
+            borderWidth: 2,
+            borderDash: [5, 5],
+            label: {
+              display: true,
+              content: `Strike: $${strikePrice.toLocaleString()}`,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              color: 'white',
+              padding: 4,
+              position: 'start',
+              yAdjust: -10,
+            }
+          },
+          currentPrice: currentPrice ? {
+            type: 'line',
+            xMin: priceRange.findIndex(p => p >= (currentPrice || 0)),
+            xMax: priceRange.findIndex(p => p >= (currentPrice || 0)),
+            borderColor: 'white',
+            borderWidth: 2,
+            label: {
+              display: true,
+              content: `Current: $${currentPrice.toLocaleString()}`,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              color: 'white',
+              padding: 4,
+              position: 'end',
+              yAdjust: 10,
+            }
+          } : undefined,
+          // breakEven: {
+          //   type: 'line',
+          //   xMin: priceRange.findIndex(p => p >= breakEvenPrice),
+          //   xMax: priceRange.findIndex(p => p >= breakEvenPrice),
+          //   borderColor: 'rgba(255, 255, 255, 0.5)',
+          //   borderWidth: 1,
+          //   borderDash: [2, 2],
+          //   label: {
+          //     display: true,
+          //     content: `Break-even: $${breakEvenPrice.toLocaleString()}`,
+          //     backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          //     color: 'white',
+          //     padding: 4,
+          //     position: 'start',
+          //     yAdjust: 20,
+          //   }
+          // }
+        }
+      }
+    },
+  };
+
+  return (
+    <div className="w-full h-full bg-background rounded-lg px-1">
+      <div className="h-full">
+        <Line id={chartId} options={options} data={{ labels, datasets }} />
+      </div>
+    </div>
+  );
 }

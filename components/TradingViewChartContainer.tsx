@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import TradingViewChart from "./TradingViewChart";
 import RecentTrades from "./RecentTrades";
-import PnlChart from "./PnlChart";
+import PnlChartContainer from "./PnlChartContainer";
 
 interface TradingViewChartContainerProps{
     symbol: string
@@ -52,7 +52,7 @@ export default function TradingViewChartContainer({symbol, logo} : TradingViewCh
                         <TradingViewChart symbol={symbol} logo={logo}/>
                     )}
                     {activeTab === 'pnl' && (
-                        <PnlChart />
+                        <PnlChartContainer />
                     )}
                     {activeTab === 'trades' && (
                         <RecentTrades /> 
