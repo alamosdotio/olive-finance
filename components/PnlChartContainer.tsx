@@ -1,15 +1,22 @@
-import { DeltaIcon, GammaIcon, GreenDot, InfoIcon, OrangeDot, PurpleDot, ThetaIcon, VegaIcon } from "@/public/svgs/icons";
-import { Separator } from "./ui/separator";
+import { DeltaIcon, GammaIcon, InfoIcon, ThetaIcon, VegaIcon } from "@/public/svgs/icons";
 import { Button } from "./ui/button";
 import { Minus, Plus } from "lucide-react";
 import { PnLChart } from "./PnlChart";
+import { formatPrice } from "@/utils/formatter";
+
+interface PnlChartContainerProps{
+    investment:string
+    numContracts:string
+    strikePrice:string
+    currentPrice:number
+    contractType:string
+    positionType:string
+}
 
 
-export default function PnlChartContainer(){
-    const currentPrice = 132.72;
-    const investment = 100;
-    const premiumPerContract = 2.1893; // Premium per contract
-    const numContracts = investment / premiumPerContract;
+export default function PnlChartContainer({investment, numContracts, strikePrice, currentPrice, contractType, positionType} : PnlChartContainerProps){
+    // const currentPrice = 132.72;
+    console.log(investment, numContracts, strikePrice)
     return (
         <div className="flex flex-col h-full border border-t-0 rounded-b-[26px]">
             {/* <div className="w-full flex px-5 py-1 border-b">
@@ -33,12 +40,12 @@ export default function PnlChartContainer(){
             </div> */}
             <div className="w-full h-full">
             <PnLChart 
-                strikePrice={currentPrice}
-                premium={investment}
-                contractType="call"
-                positionType="long"
-                currentPrice={currentPrice}
-                multiplier={numContracts}
+                strikePrice={parseFloat(strikePrice)}
+                premium={parseFloat(investment)}
+                contractType={contractType.toLowerCase()}
+                positionType={positionType.toLowerCase()}
+                currentPrice={parseFloat(formatPrice(currentPrice))}
+                multiplier={parseFloat(numContracts)}
                 />
             </div>
             <div className="w-full flex px-5 py-2 border-t justify-between">

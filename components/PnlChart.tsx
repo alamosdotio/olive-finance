@@ -32,8 +32,8 @@ ChartJS.register(
 interface PnLChartProps {
   strikePrice: number;
   premium: number;
-  contractType: 'call' | 'put';
-  positionType: 'long' | 'short';
+  contractType: string;
+  positionType: string;
   currentPrice?: number;
   multiplier?: number;
 }
@@ -42,8 +42,8 @@ const calculatePnL = (
   price: number,
   strikePrice: number,
   premium: number,
-  contractType: 'call' | 'put',
-  positionType: 'long' | 'short',
+  contractType: string,
+  positionType: string,
   multiplier: number = 1
 ) => {
   let pnl = 0;

@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Separator } from "./ui/separator";
 import { tradingStrategies, TradingStrategy } from "@/lib/data/trading-strategies";
-import { AmericanIcon, BermudanIcon, CallIconDark, EuropeanIcon, PutIconDark, TrendUp } from "@/public/svgs/icons";
+import { AmericanIcon, CallIconDark, PutIconDark, TrendUp } from "@/public/svgs/icons";
 import { Token, tokens } from "@/lib/data/tokens";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/data/WalletActivity";
@@ -23,9 +23,11 @@ interface OptionsCardTokenListProps {
     type: boolean
     transaction: string
     onTokenSelect: (token: Token) => void
+    onPositionTypeChange: (value: string) => void
+    onContractTypeChange: (value: string) => void
 }
 
-export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect, transaction}: OptionsCardTokenListProps) {
+export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type, onTokenSelect, transaction, onContractTypeChange, onPositionTypeChange}: OptionsCardTokenListProps) {
     const [allTokens, setAllTokens] = useState<Token[]>([])
     const [optionStyle, setOptionStyle] = useState("American")
     const {getDetailInfos, program, pub} = useContext(ContractContext);
@@ -50,7 +52,8 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
                 image: strategy.image,
                 name: strategy.name,
                 type: strategy.type,
-                transaction: strategy.transaction
+                transaction: strategy.transaction,
+                position: strategy.position
             }
         })
     }
@@ -71,6 +74,8 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
     const handleClickOptions = (value: TradingStrategy) => {
         if(selectedStrategy !== value) {
             setSelectedStrategy(value)
+            onPositionTypeChange(value.position)
+            onContractTypeChange(value.transaction)
         }
         setIsOpen(false)
     }

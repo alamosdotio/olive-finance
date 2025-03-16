@@ -191,7 +191,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
           },
           fullscreen: false,
           autosize: true,
-          debug: true,
+          debug: false,
           custom_formatters: {
             priceFormatterFactory: () => {
               return {

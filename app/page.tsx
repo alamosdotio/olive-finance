@@ -12,16 +12,33 @@ import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { usePythMarketData, type MarketDataState } from '@/hooks/usePythMarketData';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { formatPrice } from "@/utils/formatter";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
+    const [positionType, setPositionType] = useState<string>('long')
+    const [contractType, setContractType] = useState<string>('call')
     const [selectedLogo, setSelectedLogo] = useState<string>('/images/solana.png')
+    const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
+    const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
     const [formValues, setFormValues] = useState<{
         selling: { currency: string; amount: string };
+        buying: {type: string; amount: string};
+        strikePrice: string
     }>({
         selling: { currency: 'usdc', amount: '' },
+        buying: {type: 'call', amount: ''},
+        strikePrice: priceData.price ? formatPrice(priceData.price) : '',
     })
+    console.log(positionType, contractType)
+
+    const handleBuyingAmountChange = (newValue: string) => {
+      setFormValues(prev => ({
+        ...prev,
+        buying: {...prev.buying, amount: newValue}
+      }))
+    }
 
     const handleSellingAmountChange = (newValue: string) => {
       setFormValues(prev => ({
@@ -30,8 +47,13 @@ export default function Homepage(){
       }));
     };
 
-    const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
-    const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
+    const handleStrikePriceChange = (newValue: string) => {
+      setFormValues(prev => ({
+        ...prev,
+        strikePrice: newValue
+      }))
+    }
+    
     
     const handleSymbolChange = (newSymbol: string) => {
       setSelectedSymbol(newSymbol);
@@ -56,13 +78,26 @@ export default function Homepage(){
             <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full")}>
                 <div className="flex w-full h-[700px] pt-4 pb-6 lg:space-x-4 justify-between">
                   <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:w-4/6 lg:flex")}>
-                    <TradingViewChartContainer symbol={selectedSymbol} logo={selectedLogo}/>
+                    <TradingViewChartContainer 
+                      symbol={selectedSymbol} 
+                      logo={selectedLogo}
+                      investment={formValues.selling.amount}
+                      numContracts={formValues.buying.amount}
+                      strikePrice={formValues.strikePrice}
+                      currentPrice={priceData.price!}
+                      positionType={positionType}
+                      contractType={contractType}
+                    />
                   </div>
                   <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:w-2/6")}>
                     <OptionsCard 
                       chartToken={selectedSymbol}
                       chartTokenLogo={selectedLogo}
+                      onBuyingChange={(value) => handleBuyingAmountChange(value)}
                       onValueChange={(value) => handleSellingAmountChange(value)}
+                      onStrikePriceChange={(value) => handleStrikePriceChange(value)}
+                      onPositionTypeChange={(value) => setPositionType(value)}
+                      onContractTypeChange={(value) => setContractType(value)}
                       priceData={priceData}
                       marketData={marketData}
                       priceLoading={priceLoading}
