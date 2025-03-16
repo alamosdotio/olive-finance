@@ -208,6 +208,20 @@ export default function TradingViewTopNav({
                     <span className="text-secondary-foreground font-normal text-[10px] h-3">Available Liquidity</span>
                     <span className="text-foreground text-xs font-medium">$</span>
                 </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Volatility</span>
+                    <span className="text-foreground text-xs font-medium"></span>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Interest Rate</span>
+                    <span className="text-foreground text-xs font-medium"></span>
+                </div>
             </div>
             <div className="flex justify-end w-full px-2 lg:hidden">
                 <MarketDetails logo={logo} symbol={symbol!} tokenPrice={priceData.price} high={marketData.high24h} low={marketData.low24h}/>

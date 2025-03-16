@@ -32,7 +32,11 @@ import TransactionToast from "./TransactionToast";
 interface OptionsCardProps {
     chartToken: string;
     chartTokenLogo: string;
+    onBuyingChange: (newValue: string) => void;
     onValueChange: (newValue: string) => void;
+    onStrikePriceChange: (newValue: string) => void;
+    onPositionTypeChange: (newValue: string) => void;
+    onContractTypeChange: (newValue: string) => void;
     priceData: PythPriceState;
     marketData: MarketDataState;
     priceLoading: boolean;
@@ -47,7 +51,11 @@ interface ExpiryOption {
 const OptionsCard = ({
     chartToken,
     chartTokenLogo,
+    onBuyingChange,
     onValueChange,
+    onStrikePriceChange,
+    onContractTypeChange,
+    onPositionTypeChange,
     priceData,
     marketData,
     priceLoading
@@ -89,6 +97,7 @@ const OptionsCard = ({
                 ...prev,
                 strikePrice: priceData.price ? formatPrice(priceData.price) : ''
             }));
+            onStrikePriceChange(formatPrice(priceData.price))
         }
     }, [priceData.price, userEditedStrikePrice]);
 
@@ -175,7 +184,8 @@ const OptionsCard = ({
             selling: { ...prev.selling, amount: newAmount },
             buying: { ...prev.buying, amount: formatPrice(optionsQuantity) }
         }));
-        onValueChange(newAmount);
+        onValueChange(numAmount.toString());
+        onBuyingChange(optionsQuantity.toString())
     };
 
     const handleBuyingAmountChange = (newAmount: string) => {
@@ -190,11 +200,14 @@ const OptionsCard = ({
             buying: { ...prev.buying, amount: newAmount },
             selling: { ...prev.selling, amount: formatPrice(tokensNeeded) }
         }));
+        onBuyingChange(numAmount.toString());
+        onValueChange(tokensNeeded.toString())
     };
 
     const handleStrikePriceChange = (value: string) => {
         setUserEditedStrikePrice(true);
         setFormValues(prev => ({ ...prev, strikePrice: value }));
+        onStrikePriceChange(value)
     };
     
     const { connected, } = useWallet();
@@ -259,6 +272,8 @@ const OptionsCard = ({
                                 transaction={type}
                                 chartToken={chartToken}
                                 chartTokenLogo={chartTokenLogo}
+                                onContractTypeChange={onContractTypeChange}
+                                onPositionTypeChange={onPositionTypeChange}
                                 onTokenSelect={handleSellingTokenSelect}
                             />
                         ) : (
@@ -266,6 +281,8 @@ const OptionsCard = ({
                                 type={isSelling}
                                 transaction={type}
                                 chartToken={chartToken}
+                                onContractTypeChange={onContractTypeChange}
+                                onPositionTypeChange={onPositionTypeChange}
                                 chartTokenLogo={chartTokenLogo}
                                 onTokenSelect={handleBuyingTokenSelect}
                             />
