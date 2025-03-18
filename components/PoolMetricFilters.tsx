@@ -7,7 +7,7 @@ export default function PoolMetricFilters(){
     return (
         <div className="w-full flex px-4 space-x-2">
             <Select>
-                <SelectTrigger className="w-fit bg-inherit border rounded-none">
+                <SelectTrigger className="w-fit bg-inherit border ">
                     <SelectValue placeholder='Select Markets'/>
                 </SelectTrigger>
                 <SelectContent>
@@ -21,7 +21,7 @@ export default function PoolMetricFilters(){
                 </SelectContent>
             </Select>
             <Select>
-                <SelectTrigger className="w-fit bg-inherit border rounded-none">
+                <SelectTrigger className="w-fit bg-inherit border ">
                     <SelectValue placeholder='Select Instruments'/>
                 </SelectTrigger>
                 <SelectContent>
@@ -35,7 +35,7 @@ export default function PoolMetricFilters(){
                 </SelectContent>
             </Select>
             <Select>
-                <SelectTrigger className="w-fit bg-inherit border rounded-none">
+                <SelectTrigger className="w-fit bg-inherit border ">
                     <SelectValue placeholder='Select Time'/>
                 </SelectTrigger>
                 <SelectContent>
@@ -49,7 +49,7 @@ export default function PoolMetricFilters(){
                 </SelectContent>
             </Select>
             <Select>
-                <SelectTrigger className="w-fit bg-inherit border rounded-none">
+                <SelectTrigger className="w-fit bg-inherit border ">
                     <SelectValue placeholder='Select Interval'/>
                 </SelectTrigger>
                 <SelectContent>

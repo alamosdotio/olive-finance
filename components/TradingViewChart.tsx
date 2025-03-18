@@ -270,7 +270,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   }, []);
 
   return (
-    <div className="tradingview-chart-container rounded-b-[26px] overflow-hidden w-full h-full border border-t-0 border-border flex flex-col">
+    <div className="tradingview-chart-container rounded-b-sm overflow-hidden w-full h-full border border-t-0 border-border flex flex-col">
       <div className='px-2 py-1 w-full flex border-b border-border items-center'>
         <div className='w-[140px] flex justify-between'>
           <Button 

@@ -53,7 +53,7 @@ export default function NavBar(){
                     > 
                          <OptionsIcon />
                          <h1 className="text-sm font-medium group-hover:text-primary">Options</h1>
-                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                     </Link>
                     <Link 
                         href='/earn'
@@ -62,7 +62,7 @@ export default function NavBar(){
                     > 
                          <EarnIcon />
                          <h1 className="text-sm font-medium">Earn</h1>
-                         <Badge className="rounded-[4px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
+                         <Badge className="rounded-[2px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
                     </Link>
                     
                     
@@ -74,7 +74,7 @@ export default function NavBar(){
                                 <h1 className="text-sm font-medium">More</h1>
                                 <ArrowDown />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="center" className="w-auto text-secondary-foreground">
+                        <DropdownMenuContent align="center" className="w-auto text-secondary-foreground rounded-sm">
                             {[
                                 "Futures",
                                 "Exotic Options",
@@ -127,7 +127,7 @@ export default function NavBar(){
                 {connected ? (
                     <WalletSideBar />
                 ) : (
-                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">
+                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-sm gap-2 text-background">
                         <WalletIcon />
                         <span className="text-sm font-semibold flex gap-2">Connect <span className="hidden md:flex">Wallet</span></span>
                     </Button>

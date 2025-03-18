@@ -22,7 +22,7 @@ export default function AnalyticSidebar(){
                     {name: 'Trader Metrics', path: 'trader-metrics'},
                 ].map((item, idx) => (
                     <li 
-                        className={cn((active === item.name ? 'text-primary border-r-2 border-primary bg-primary-foreground' : 'text-secondary-foreground border border-transparent'),"text-sm cursor-pointer p-4")} 
+                        className={cn((active === item.name ? 'text-primary border-r-2 border-primary bg-primary-foreground' : 'text-secondary-foreground border border-transparent'),"text-sm cursor-pointer p-4 rounded-l-sm")} 
                         key={idx}
                         onClick={()=>handleClick(item)}
                     >

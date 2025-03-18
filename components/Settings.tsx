@@ -32,11 +32,11 @@ export default function Settings(){
     return (
         <Dialog>
             <DialogTrigger className="hidden sm:flex">
-                <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
+                <div className="bg-secondary rounded-sm p-[9px] text-foreground hover:text-primary">
                     <SettingsIcon />
                 </div>
             </DialogTrigger>
-            <DialogContent className="w-[420px] p-5 border-none bg-accent flex flex-col sm:rounded-[20px]">
+            <DialogContent className="w-[420px] p-5 border-none bg-accent flex flex-col sm:rounded-sm">
                 <DialogTitle className="text-base font-medium text-foreground">
                     Settings
                 </DialogTitle>
@@ -64,21 +64,21 @@ export default function Settings(){
                         </Label>
                         <div className="flex space-x-3">
                             <Button
-                                className={cn((explorer === 'Solscan' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((explorer === 'Solscan' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>handleExplorer('Solscan')}
                             >
                                 <Image src={solscan} alt="solscan" width={13} height={13} className="rounded-full"/>
                                 <span className="text-xs text-foreground font-normal">Solscan</span>
                             </Button>
                             <Button 
-                                className={cn((explorer === 'Explorer' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((explorer === 'Explorer' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>handleExplorer('Explorer')}
                             >
                                 <Image src={solscan} alt="solscan" width={13} height={13} className="rounded-full"/>
                                 <span className="text-xs text-foreground font-normal">Explorer</span>
                             </Button>
                             <Button 
-                                className={cn((explorer === 'FM' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((explorer === 'FM' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>handleExplorer('FM')}
                             >
                                 <Image src={solscan} alt="solscan" width={13} height={13} className="rounded-full"/>
@@ -92,19 +92,19 @@ export default function Settings(){
                         </Label>
                         <div className="flex space-x-3">
                             <Button 
-                                className={cn((endpoint === 'Triton' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((endpoint === 'Triton' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={() => handleEndPoint('Triton')}
                             >
                                 <span className="text-xs text-foreground font-normal">Triton</span>
                             </Button>
                             <Button
-                                className={cn((endpoint === 'Helius' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((endpoint === 'Helius' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={() => handleEndPoint('Helius')}
                             >
                                 <span className="text-xs text-foreground font-normal">Helius</span>
                             </Button>
                             <Button
-                                className={cn((endpoint === 'Custom' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((endpoint === 'Custom' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={() => handleEndPoint('Custom')}
                             >
                                 <span className="text-xs text-foreground font-normal">Custom</span>
@@ -113,7 +113,7 @@ export default function Settings(){
                         <Input
                             type='string'
                             placeholder="https://raydium-raydium-5ad5.mainnet.rpcpool.com/"
-                            className="bg-secondary border-none py-2 px-3 text-xs placeholder:text-muted"
+                            className="bg-secondary border-none rounded-sm py-2 px-3 text-xs placeholder:text-muted"
                             disabled={endpoint!=='Custom'}
                         />
                     </div>
@@ -123,7 +123,7 @@ export default function Settings(){
                         </Label>
                         <div className="flex space-x-3">
                             <Button
-                                 className={cn((theme === 'light-green' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                 className={cn((theme === 'light-green' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>setTheme('light-green')}
                             >
                                 <SunIcon />
@@ -131,7 +131,7 @@ export default function Settings(){
                                 <span className="text-xs text-foreground font-normal">Light Green</span>
                             </Button>
                             <Button 
-                                className={cn((theme === 'dark-green' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((theme === 'dark-green' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>setTheme('dark-green')}
                             >
                                 <MoonIcon />
@@ -141,7 +141,7 @@ export default function Settings(){
                         </div>
                         <div className="flex space-x-3">
                             <Button
-                                 className={cn((theme === 'light-purple' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                 className={cn((theme === 'light-purple' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>setTheme('light-purple')}
                             >
                                 <SunIcon />
@@ -149,7 +149,7 @@ export default function Settings(){
                                 <span className="text-xs text-foreground font-normal">Light Purple</span>
                             </Button>
                             <Button 
-                                className={cn((theme === 'dark-purple' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-[8px] border hover:border-primary")}
+                                className={cn((theme === 'dark-purple' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
                                 onClick={()=>setTheme('dark-purple')}
                             >
                                 <MoonIcon />

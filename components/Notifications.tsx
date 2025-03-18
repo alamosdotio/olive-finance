@@ -13,17 +13,17 @@ export default function Notifications(){
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger className="focus:outline-none hidden sm:flex">
-                    <div className="bg-secondary rounded-[12px] p-[9px] text-foreground hover:text-primary">
+                    <div className="bg-secondary rounded-sm p-[9px] text-foreground hover:text-primary">
                         <NotificationIcon />
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-[392px] bg-accent rounded-[16px] flex flex-col p-0">
+                <DropdownMenuContent align="end" className="w-[392px] bg-accent rounded-sm flex flex-col p-0">
                     <div className="w-full px-5 py-3 shadow-lg">
                         <span className="text-foreground text-xs font-semibold">Notifications (2)</span>
                     </div>
                     <div className="w-full p-5">
                         <div className="w-full flex space-x-3">
-                            <div className="p-[9px] bg-secondary rounded-[8px] h-fit text-primary">
+                            <div className="p-[9px] bg-secondary rounded-sm h-fit text-primary">
                                 <InfoIcon />
                             </div>
                             <span className="text-xs font-normal text-foreground">Lorem ipsum dolor sit amet conse. Urna dui enim turpis gravida. Elementum fermentum tin posuere.</span>

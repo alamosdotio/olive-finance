@@ -341,7 +341,7 @@ const OptionsCard = ({
     const selectedOption = getSelectedExpiryOption();
 
     return (
-        <Card className="w-full rounded-[26px] h-fit">
+        <Card className="w-full rounded-sm h-fit">
             <CardContent className="p-0">
                 <div className="px-6 pt-7 flex flex-col justify-between space-y-[84px]">
                     <div className="w-full flex justify-between items-center">
@@ -358,12 +358,12 @@ const OptionsCard = ({
                             </div>
                             <div className="w-full flex gap-1">
                                 <Button
-                                    className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
+                                    className="px-[6px] py-[5px] text-[10px] rounded-[2px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
                                 >
                                     Max
                                 </Button>
                                 <Button
-                                    className="px-[6px] py-[5px] text-[10px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
+                                    className="px-[6px] py-[5px] text-[10px] rounded-[2px] font-semibold w-full h-4 text-background bg-gradient-primary shadow-none"
                                 >
                                     Half
                                 </Button>
@@ -413,7 +413,7 @@ const OptionsCard = ({
                             <Input 
                                 type="number"
                                 placeholder={priceLoading ? "Loading..." : "0.00"}
-                                className="border border-transparent bg-backgroundSecondary pl-6 pr-3 py-2 text-sm text-foreground rounded-[12px] w-full focus-visible:border-primary h-10"
+                                className="border border-transparent bg-backgroundSecondary pl-6 pr-3 py-2 text-sm text-foreground rounded-sm w-full focus-visible:border-primary h-10"
                                 value={formValues.strikePrice}
                                 onChange={(e) => handleStrikePriceChange(e.target.value)}
                             />
@@ -432,7 +432,7 @@ const OptionsCard = ({
                                 <DropdownMenuTrigger asChild>
                                     <Button 
                                         ref={triggerRef}
-                                        className={cn((isExpiry === true || isCalendarOpen ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-10 rounded-[12px] text-sm border px-3 py-2 focus-visible:ring-0 shadow-none")}
+                                        className={cn((isExpiry === true || isCalendarOpen ? 'border-primary' : 'border-transparent'),"bg-backgroundSecondary w-full h-10 rounded-sm text-sm border px-3 py-2 focus-visible:ring-0 shadow-none")}
                                     >
                                         <div className="flex justify-between items-center w-full">
                                             <div className="flex items-center gap-1">
@@ -501,7 +501,7 @@ const OptionsCard = ({
                 </div>
                 {!connected && (
                     <Button 
-                        className="w-full h-auto rounded-xl text-background flex"
+                        className="w-full h-auto rounded-sm text-background flex"
                         onClick={() => setIsWalletModalOpen(true)}
                     >
                         <WalletIcon />
@@ -513,7 +513,7 @@ const OptionsCard = ({
                 {connected && (
                     <Button 
                         disabled={formValues.buying.amount==="" && formValues.selling.amount === ""}
-                        className={formValues.buying.amount==="" && formValues.selling.amount === "" ? "w-full h-auto rounded-xl text-background flex disabled:pointer-events-auto disabled:cursor-not-allowed" : 'w-full h-auto rounded-xl text-black flex'}
+                        className={formValues.buying.amount==="" && formValues.selling.amount === "" ? "w-full h-auto rounded-sm text-background flex disabled:pointer-events-auto disabled:cursor-not-allowed" : 'w-full h-auto rounded-sm text-black flex'}
                         onClick={onTrade}
                     >
                         <span className="text-sm font-semibold">

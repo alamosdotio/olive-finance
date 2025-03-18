@@ -31,12 +31,12 @@ export default function PointsDropDown({setActive} : PointsDropDownProps){
         <div>
             <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
                 <DropdownMenuTrigger asChild className="hidden sm:flex">
-                    <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-[12px] p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[rgb(254,237,203,0.2)]")}>
+                    <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-sm p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[rgb(254,237,203,0.2)]")}>
                         <PointsIcon />
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-[280px] p-5 bg-accent rounded-[20px] space-y-4 sm:flex flex-col hidden">
-                    <div className="w-full flex flex-col p-3 border rounded-[12px]">
+                <DropdownMenuContent align="end" className="w-[280px] p-5 bg-accent rounded-sm space-y-4 sm:flex flex-col hidden">
+                    <div className="w-full flex flex-col p-3 border rounded-sm">
                         <div className="w-full flex flex-col justify-center items-center space-y-[6px]">
                             <span className="text-secondary-foreground text-xs font-medium">Season 1 Points</span>
                             <span className="text-primary text-2xl font-medium">1,953,676</span>
@@ -66,7 +66,7 @@ export default function PointsDropDown({setActive} : PointsDropDownProps){
                         </div>
                     </div>
                     <Button
-                        className="bg-inherit border rounded-[12px] text-primary py-2 px-4 w-full text-xs font-medium shadow-none hover:border-primary"
+                        className="bg-inherit border rounded-sm text-primary py-2 px-4 w-full text-xs font-medium shadow-none hover:border-primary"
                         onClick={()=>handleClickPoints()}
                     >
                         Go to leaderboard
