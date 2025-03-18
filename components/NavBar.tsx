@@ -94,10 +94,10 @@ export default function NavBar(){
                             <DropdownMenuSeparator />
                             {[
                                 "Docs",
-                                "Info",
+                                "Analytics",
                                 "Feedback",
                             ].map((item) => (
-                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
+                                <Link href={`/${item.toLowerCase()}`} key={item} className="w-full">
                                     <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item}
                                     </DropdownMenuItem>
