@@ -26,11 +26,9 @@ export default function PoolMetricFilters(){
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        <SelectLabel>Markets</SelectLabel>
-                        <SelectItem value="all">All Markets</SelectItem>
-                        <SelectItem value="sol">SOL</SelectItem>
-                        <SelectItem value="eth">ETH</SelectItem>
-                        <SelectItem value='btc'>BTC</SelectItem>
+                        <SelectLabel>Instruments</SelectLabel>
+                        <SelectItem value="all">All Instruments</SelectItem>
+                        <SelectItem value="options">Options</SelectItem>
                     </SelectGroup>
                 </SelectContent>
             </Select>
@@ -40,11 +38,11 @@ export default function PoolMetricFilters(){
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        <SelectLabel>Markets</SelectLabel>
-                        <SelectItem value="all">All Markets</SelectItem>
-                        <SelectItem value="sol">SOL</SelectItem>
-                        <SelectItem value="eth">ETH</SelectItem>
-                        <SelectItem value='btc'>BTC</SelectItem>
+                        <SelectLabel>Time</SelectLabel>
+                        <SelectItem value="all">All Time</SelectItem>
+                        <SelectItem value="30">Last 30 days</SelectItem>
+                        <SelectItem value="60">Last 60 days</SelectItem>
+                        <SelectItem value='180'>Last 180 days</SelectItem>
                     </SelectGroup>
                 </SelectContent>
             </Select>
@@ -54,11 +52,10 @@ export default function PoolMetricFilters(){
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        <SelectLabel>Markets</SelectLabel>
-                        <SelectItem value="all">All Markets</SelectItem>
-                        <SelectItem value="sol">SOL</SelectItem>
-                        <SelectItem value="eth">ETH</SelectItem>
-                        <SelectItem value='btc'>BTC</SelectItem>
+                        <SelectLabel>Intervals</SelectLabel>
+                        <SelectItem value="d">Daily</SelectItem>
+                        <SelectItem value="w">Weekly</SelectItem>
+                        <SelectItem value="m">Monthly</SelectItem>
                     </SelectGroup>
                 </SelectContent>
             </Select>

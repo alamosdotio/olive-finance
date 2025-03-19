@@ -85,7 +85,7 @@ export default function NavBar(){
                                 "Prediction Markets",
                                 
                             ].map((item) => (
-                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
+                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full" onClick={() => handleClick(item)}>
                                     <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
                                     </DropdownMenuItem>
@@ -97,7 +97,7 @@ export default function NavBar(){
                                 "Analytics",
                                 "Feedback",
                             ].map((item) => (
-                                <Link href={`/${item.toLowerCase()}`} key={item} className="w-full">
+                                <Link href={`/${item.toLowerCase()}`} key={item} className="w-full" onClick={() => handleClick(item)}>
                                     <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item}
                                     </DropdownMenuItem>

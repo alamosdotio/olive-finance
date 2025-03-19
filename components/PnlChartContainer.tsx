@@ -18,7 +18,7 @@ export default function PnlChartContainer({investment, numContracts, strikePrice
     // const currentPrice = 132.72;
     console.log(investment, numContracts, strikePrice)
     return (
-        <div className="flex flex-col h-full border border-t-0 rounded-b-[26px]">
+        <div className="flex flex-col h-full border border-t-0 rounded-b-sm">
             {/* <div className="w-full flex px-5 py-1 border-b">
                 <div className="w-full flex space-x-2 justify-between items-center">
                     <span className="h-6 text-base text-secondary-foreground font-medium">PNL Graph</span>
