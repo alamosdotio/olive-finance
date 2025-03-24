@@ -1,4 +1,4 @@
-export default function (){
+export default function BorrowingMetrics(){
     return (
         <h1>Coming Soon</h1>
     )
