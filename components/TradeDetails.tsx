@@ -139,6 +139,34 @@ export default function TradeDetails({id} : TradeDetailsProps){
             change: '',
             difference: '',
         },
+        {
+            label: 'USDC Withdrawal Fee',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
+            label: 'USDC Deposit Fee',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
+            label: 'SOL Withdrawal Fee',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
+            label: 'SOL Deposit Fee',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
     ]
     return (
         <div className="w-full border rounded-sm">
