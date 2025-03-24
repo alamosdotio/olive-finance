@@ -52,7 +52,7 @@ export default function EarnCards (){
             {currentCards.map((strategy, index) => (
                 <Sheet key={index}>
                     <SheetTrigger>
-                        <Card className="w-full hover:border-primary">
+                        <Card className="w-full hover:border-primary rounded-sm">
                             <CardHeader className="p-5 border-b">
                                 <div className="flex justify-start space-x-2 items-center">
                                     <EarnCardlogo strategy={strategy}/>

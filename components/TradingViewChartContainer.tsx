@@ -26,7 +26,7 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
     return (
         <>
             <div className="w-full h-[700px] flex flex-col">
-                <div className="bg-inherit border border-b-1 p-0 rounded-t-[26px]">
+                <div className="bg-inherit border border-b p-0 rounded-t-sm">
                     <Tabs defaultValue={activeTab}>
                         <TabsList className="grid grid-cols-3 rounded-full py-1 px-4 w-full h-10 bg-inherit">
                         <TabsTrigger

@@ -12,7 +12,7 @@ export default function TradingPositionsFallback() {
     
 
     return (
-        <div className="w-full h-[300px] border-[1px] rounded-[26px] flex flex-col">
+        <div className="w-full h-[300px] border-[1px] rounded-sm flex flex-col">
             <div className="w-full flex justify-between px-3 py-1 md:px-6 md:py-3 border-b">
                 <Tabs defaultValue="Positions" className="p-0 whitespace-nowrap overflow-hidden"> 
                     <TabsList className="w-full grid grid-cols-3 bg-inherit text-secondary-foreground p-0 gap-2 md:gap-6">
@@ -38,12 +38,12 @@ export default function TradingPositionsFallback() {
                 </Tabs>
                 <div className="hidden md:flex gap-3 items-center">
                     <Button
-                        className="bg-secondary p-2 w-full h-auto rounded-[10px]"
+                        className="bg-secondary p-2 w-full h-auto rounded-sm"
                     >
                         <RotateCw className="text-secondary-foreground"/>
                     </Button>
                     <Button
-                        className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-[10px]"
+                        className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-sm"
                     >
                         <Ban className="text-secondary-foreground p-0"/>
                         <span className="text-sm font-normal text-secondary-foreground p-0">Cancel all</span>
@@ -74,7 +74,7 @@ export default function TradingPositionsFallback() {
                     <span>To view your orders</span>
                     <Button
                         onClick={() => setIsWalletModalOpen(true)}
-                        className="text-background"
+                        className="text-background rounded-sm"
                     >
                         <WalletIcon />
                         <span className="text-sm font-semibold">Connect Wallet</span>

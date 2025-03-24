@@ -59,7 +59,7 @@ export default function TradingViewTopNav({
     const [active, setActive] = useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals'>('all');
 
     return (
-        <div className="border border-t-0 rounded-b-[14px] p-1 w-full flex h-fit">
+        <div className="border border-t-0 rounded-b-sm p-1 w-full flex h-fit">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <div className="px-2 py-1 flex space-x-6 lg:space-x-2 items-center">
@@ -72,9 +72,9 @@ export default function TradingViewTopNav({
                         <ChevronDown className="text-secondary-foreground h-3 w-3"/>
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[280px] py-2 px-1 bg-accent rounded-[14px] flex flex-col space-y-2" align="start">
+                <DropdownMenuContent className="w-[280px] py-2 px-1 bg-accent rounded-sm flex flex-col space-y-2" align="start">
                     <div className="w-full px-1 flex flex-col space-y-2">
-                        <div className="flex w-full h-fit space-x-2 items-center px-3 py-2 rounded-[10px] text-xs text-secondary-foreground bg-secondary">
+                        <div className="flex w-full h-fit space-x-2 items-center px-3 py-2 rounded-sm text-xs text-secondary-foreground bg-secondary">
                             <Input 
                                 type="text"
                                 placeholder="Search for a coin"

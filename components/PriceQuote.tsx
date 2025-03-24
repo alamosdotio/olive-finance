@@ -14,7 +14,7 @@ export default function PriceQuote({value}:PriceQuoteProps){
 
 
     return (
-        <div className={(value === '' || 0) ? 'hidden' : 'w-full border rounded-[26px] flex flex-col'}>
+        <div className={(value === '' || 0) ? 'hidden' : 'w-full border rounded-sm flex flex-col'}>
             <div 
                 className="w-full flex justify-between items-center px-6 py-4"
                 onClick={() => setDropDownActive(!dropDownActive)}
@@ -22,7 +22,7 @@ export default function PriceQuote({value}:PriceQuoteProps){
                 <span className="text-sm font-medium text-secondary-foreground h-6 items-center flex">Order Summary</span>
                 <div className="flex space-x-3 items-center">
                     <Button
-                        className="bg-secondary p-2 w-fit h-auto rounded-[10px]"
+                        className="bg-secondary p-2 w-fit h-auto rounded-sm"
                     >
                         <RotateCw className="text-secondary-foreground"/>
                     </Button>
@@ -33,7 +33,7 @@ export default function PriceQuote({value}:PriceQuoteProps){
             {dropDownActive && (
                 <div className="border-t-[1px] px-6 py-5 space-y-4">
                     <div className="w-full flex flex-col space-y-3">
-                        <div className="w-full flex items-center justify-center space-x-2 bg-accent rounded-[10px] px-3 py-2 text-base font-normal whitespace-nowrap">
+                        <div className="w-full flex items-center justify-center space-x-2 bg-accent rounded-sm px-3 py-2 text-base font-normal whitespace-nowrap">
                             <div className="flex items-center space-x-1">
                                 <span>1 ETH</span>
                                 <Image src='/images/ethereum.png' alt="eth" width={100} height={100} className="rounded-full w-4 h-4"/>

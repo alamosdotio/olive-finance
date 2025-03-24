@@ -85,7 +85,7 @@ const CryptoNavItem = React.memo(({ crypto, isActive, onClick, onMarketChange }:
                 className={cn(
                     buttonVariants({variant: 'ghost'}),
                     (isActive && 'bg-secondary hover:bg-secondary'),
-                    "flex items-center space-x-5 px-[6px] py-0 w-full h-fit rounded-full text-sm cursor-pointer"
+                    "flex items-center space-x-5 px-[6px] py-0 w-full h-fit rounded-sm text-sm cursor-pointer"
                 )}
                 onClick={onClick}
             >
@@ -207,7 +207,7 @@ export default function CryptoNav({
 
     return (
         <>
-            <div className="flex justify-between h-[30px] border rounded-[14px] rounded-b-none px-1 py-1 w-full"> 
+            <div className="flex justify-between h-[30px] border rounded-sm rounded-b-none px-1 py-1 w-full"> 
                 <div 
                     ref={scrollContainerRef}
                     className="flex items-center gap-2 overflow-x-auto scrollbar-hide min-w-0"

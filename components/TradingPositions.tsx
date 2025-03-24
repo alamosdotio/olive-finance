@@ -77,7 +77,7 @@ export default function TradingPositions() {
     })();
   }, [program]);
   return (
-    <div className="w-full h-fit border rounded-[26px] flex flex-col">
+    <div className="w-full h-fit border rounded-sm flex flex-col">
       <div className="w-full flex justify-between px-3 py-1 md:px-6 md:py-3 border-b">
         <Tabs defaultValue={activeTab} className="p-0">
           <TabsList className="w-full grid grid-cols-3 bg-inherit text-secondary-foreground p-0 gap-2 md:gap-6">
@@ -105,10 +105,10 @@ export default function TradingPositions() {
           </TabsList>
         </Tabs>
         <div className="hidden md:flex gap-3 items-center">
-          <Button className="bg-secondary p-2 w-full h-auto rounded-[10px]">
+          <Button className="bg-secondary p-2 w-full h-auto rounded-sm">
             <RotateCw className="text-secondary-foreground" />
           </Button>
-          <Button className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-[10px]">
+          <Button className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-sm">
             <Ban className="text-secondary-foreground p-0" />
             <span className="text-sm font-normal text-secondary-foreground p-0">
               Cancel all
@@ -117,7 +117,7 @@ export default function TradingPositions() {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="bg-inherit p-[6px] w-fit h-auto rounded-[10px] md:hidden shadow-none">
+            <Button className="bg-inherit p-[6px] w-fit h-auto rounded-sm md:hidden shadow-none">
               <EllipsisVertical className="text-secondary-foreground" />
             </Button>
           </DropdownMenuTrigger>

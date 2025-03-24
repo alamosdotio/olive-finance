@@ -20,6 +20,7 @@ import NavBarMobile from "./NavBarMobile";
 import Notifications from "./Notifications";
 import PointsDropDown from "./PointsDropDown";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { ChartLine } from "lucide-react";
 
 
 export default function NavBar(){
@@ -53,7 +54,16 @@ export default function NavBar(){
                     > 
                          <OptionsIcon />
                          <h1 className="text-sm font-medium group-hover:text-primary">Options</h1>
-                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                    </Link>
+                    <Link 
+                        href='/futures'
+                        className={cn(buttonVariants({variant: active === 'futures' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary group')}
+                        onClick={() => handleClick('futures')}
+                    > 
+                         <ChartLine size={16}/>
+                         <h1 className="text-sm font-medium group-hover:text-primary">Futures</h1>
+                         <Badge className={cn((active === 'futures' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                     </Link>
                     <Link 
                         href='/earn'
@@ -62,7 +72,7 @@ export default function NavBar(){
                     > 
                          <EarnIcon />
                          <h1 className="text-sm font-medium">Earn</h1>
-                         <Badge className="rounded-[4px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
+                         <Badge className="rounded-[2px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
                     </Link>
                     
                     
@@ -74,9 +84,8 @@ export default function NavBar(){
                                 <h1 className="text-sm font-medium">More</h1>
                                 <ArrowDown />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="center" className="w-auto text-secondary-foreground">
+                        <DropdownMenuContent align="center" className="w-auto text-secondary-foreground rounded-sm">
                             {[
-                                "Futures",
                                 "Exotic Options",
                                 "NFT Options",
                                 "Liquidity",
@@ -85,7 +94,7 @@ export default function NavBar(){
                                 "Prediction Markets",
                                 
                             ].map((item) => (
-                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
+                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full" onClick={() => handleClick(item)}>
                                     <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
                                     </DropdownMenuItem>
@@ -94,10 +103,10 @@ export default function NavBar(){
                             <DropdownMenuSeparator />
                             {[
                                 "Docs",
-                                "Info",
+                                "Analytics",
                                 "Feedback",
                             ].map((item) => (
-                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full">
+                                <Link href={`/${item.toLowerCase()}`} key={item} className="w-full" onClick={() => handleClick(item)}>
                                     <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
                                         {item}
                                     </DropdownMenuItem>
@@ -127,7 +136,7 @@ export default function NavBar(){
                 {connected ? (
                     <WalletSideBar />
                 ) : (
-                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">
+                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-sm gap-2 text-background">
                         <WalletIcon />
                         <span className="text-sm font-semibold flex gap-2">Connect <span className="hidden md:flex">Wallet</span></span>
                     </Button>
