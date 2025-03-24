@@ -20,6 +20,7 @@ import NavBarMobile from "./NavBarMobile";
 import Notifications from "./Notifications";
 import PointsDropDown from "./PointsDropDown";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { ChartLine } from "lucide-react";
 
 
 export default function NavBar(){
@@ -56,6 +57,15 @@ export default function NavBar(){
                          <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                     </Link>
                     <Link 
+                        href='/futures'
+                        className={cn(buttonVariants({variant: active === 'futures' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary group')}
+                        onClick={() => handleClick('futures')}
+                    > 
+                         <ChartLine size={16}/>
+                         <h1 className="text-sm font-medium group-hover:text-primary">Futures</h1>
+                         <Badge className={cn((active === 'futures' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                    </Link>
+                    <Link 
                         href='/earn'
                         className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary')}
                         onClick={() => handleClick('Earn')}
@@ -76,7 +86,6 @@ export default function NavBar(){
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="center" className="w-auto text-secondary-foreground rounded-sm">
                             {[
-                                "Futures",
                                 "Exotic Options",
                                 "NFT Options",
                                 "Liquidity",

@@ -13,6 +13,7 @@ import { usePythMarketData, type MarketDataState } from '@/hooks/usePythMarketDa
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/formatter";
+import OptionCardContainer from "@/components/OptionCardContainer";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
@@ -90,7 +91,7 @@ export default function Homepage(){
                     />
                   </div>
                   <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:w-2/6")}>
-                    <OptionsCard 
+                    {/* <OptionsCard 
                       chartToken={selectedSymbol}
                       chartTokenLogo={selectedLogo}
                       onBuyingChange={(value) => handleBuyingAmountChange(value)}
@@ -101,7 +102,8 @@ export default function Homepage(){
                       priceData={priceData}
                       marketData={marketData}
                       priceLoading={priceLoading}
-                    />
+                    /> */}
+                    <OptionCardContainer />
                   </div>
                 </div>
                 {active === 'trade' && (
