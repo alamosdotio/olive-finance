@@ -25,7 +25,7 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
     }
     return (
         <>
-            <div className="w-full h-[700px] flex flex-col">
+            <div className="w-full h-[550px] flex flex-col">
                 <div className="bg-inherit border border-b p-0 rounded-t-sm">
                     <Tabs defaultValue={activeTab}>
                         <TabsList className="grid grid-cols-3 rounded-full py-1 px-4 w-full h-10 bg-inherit">
@@ -44,16 +44,16 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
                             PNL
                         </TabsTrigger>
                         <TabsTrigger
-                            value="trades"
+                            value="price"
                             className="border-b py-2 px-0 text-secondary-foreground rounded-none hover:text-primary data-[state=active]:text-primary data-[state=active]:border-primary"
-                            onClick={()=>handleClick('trades')}
+                            onClick={()=>handleClick('price')}
                         >
-                            Recent Trades
+                            Options Price
                         </TabsTrigger>
                         </TabsList>
                     </Tabs>
                 </div>
-                <div className="h-full w-full">
+                <div className="w-full flex-grow">
                     {activeTab === 'chart' && (
                         <TradingViewChart symbol={symbol} logo={logo}/>
                     )}
@@ -67,8 +67,10 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
                             positionType={positionType}
                         />
                     )}
-                    {activeTab === 'trades' && (
-                        <RecentTrades /> 
+                    {activeTab === 'price' && (
+                        <div className="h-full w-full border border-t-0">
+                            options price goes here
+                        </div>
                     )}
                 </div>
             </div>

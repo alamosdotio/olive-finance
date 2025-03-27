@@ -167,13 +167,34 @@ export default function TradeDetails({id} : TradeDetailsProps){
             change: '',
             difference: '',
         },
+        {
+            label: 'Open Interest',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
+            label: 'Open Interest Call',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
+            label: 'Open Interest Put',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
     ]
     return (
         <div className="w-full border rounded-sm">
             <div className="w-full p-3 flex flex-col border-b">
                 <span>Transaction ID: {id}</span>
                 <span>Type: Put</span>
-                <span>Amount: 5 Call Contracts</span>
+                <span>Amount: 5 Contracts</span>
             </div>
             <Table className="w-full">
                 <TableHeader>

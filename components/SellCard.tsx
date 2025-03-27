@@ -84,7 +84,7 @@ export default function SellCard() {
             </Button>
             <div className="bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-white">W</div>
             <span className="font-semibold">WETH</span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-secondary-foreground">
               {format(selectedOption.purchaseDate, 'dd MMM yyyy')}
             </span>
           </div>
@@ -116,7 +116,7 @@ export default function SellCard() {
 
         {/* Strike Price */}
         <div className="space-y-2">
-          <label className="text-muted-foreground text-sm">Strike price</label>
+          <label className="text-secondary-foreground text-sm">Strike price</label>
           <div className="grid grid-cols-1 gap-2">
             <div className="w-full flex items-center px-4 py-2 rounded-sm bg-backgroundSecondary text-primary">
               {formatPrice(selectedOption.strikePrice)}
@@ -126,7 +126,7 @@ export default function SellCard() {
 
         {/* Expiration */}
         <div className="space-y-2">
-          <label className="text-muted-foreground text-sm">Expiration</label>
+          <label className="text-secondary-foreground text-sm">Expiration</label>
           <div className="grid grid-cols-1 gap-2">
             <div className="w-full flex items-center px-4 py-2 rounded-sm bg-backgroundSecondary text-primary">
               {format(selectedOption.expiration, 'dd MMM yyyy')}
@@ -136,7 +136,7 @@ export default function SellCard() {
 
         {/* Option Size */}
         <div className="space-y-2">
-          <label className="text-muted-foreground text-sm">Option Size</label>
+          <label className="text-secondary-foreground text-sm">Option Size</label>
           <div className="relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
               <div className="bg-blue-500 rounded-full w-5 h-5 flex items-center justify-center text-xs text-white">
@@ -201,7 +201,7 @@ export default function SellCard() {
       </ScrollArea>
 
       {options.length === 0 && (
-        <div className="text-center py-8 text-muted-foreground">
+        <div className="text-center py-8 text-secondary-foreground">
           No options found. Start trading to see your options here.
         </div>
       )}

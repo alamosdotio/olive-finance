@@ -28,7 +28,7 @@ export default function LeaderboardTable() {
   const leaderboardData = generateLeaderboardData(50);
 
     return (
-        <div className="rounded-[26px] border h-fit">
+        <div className="rounded-sm border h-fit">
           {/* <ScrollArea className="h-fit w-full rounded-[25px]"> */}
           <div className="hidden md:block">
             <Table>
@@ -73,7 +73,7 @@ export default function LeaderboardTable() {
                             <TableCell className="text-foreground text-center px-[10px] py-3">{row.liquidityPoints}</TableCell>
                             <TableCell className="text-foreground text-center px-[10px] py-3">{row.referralPoints}</TableCell>
                             <TableCell className="flex justify-center px-[10px] py-3">
-                              <div className="flex items-center gap-2 bg-shade px-2 py-1 rounded-[10px]">
+                              <div className="flex items-center gap-2 bg-shade px-2 py-1 rounded-sm">
                                   <StarIcon />
                                   <span className="text-sm font-normal text-foreground">{row.totalPoints}</span>
                               </div>
@@ -110,7 +110,7 @@ export default function LeaderboardTable() {
                     </div>
                     <div className="w-full flex flex-col space-y-1">
                       <span className="text-xs text-secondary-foreground font-medium">Total Points</span>
-                      <div className="w-fit flex items-center gap-1 bg-shade px-[6px] py-1 rounded-[7px]">
+                      <div className="w-fit flex items-center gap-1 bg-shade px-[6px] py-1 rounded-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
                           <path d="M8.51296 1.96764L9.54115 3.93431C9.67971 4.2063 10.0516 4.46433 10.3652 4.52013L12.2247 4.81303C13.4133 5.00133 13.6904 5.82426 12.8372 6.6472L11.3861 8.03502C11.1454 8.26516 11.0069 8.71847 11.0871 9.04625L11.5027 10.7619C11.8309 12.1148 11.0725 12.6448 9.82555 11.9335L8.08272 10.9432C7.76916 10.7619 7.24412 10.7619 6.93056 10.9432L5.18773 11.9335C3.94077 12.6379 3.18239 12.1148 3.51053 10.7619L3.92619 9.04625C3.99182 8.7115 3.85327 8.25819 3.61263 8.02805L2.16148 6.64022C1.3083 5.82426 1.5854 5.00133 2.77403 4.80606L4.63353 4.51315C4.94709 4.46433 5.31899 4.19932 5.45754 3.92734L6.48574 1.96067C7.04723 0.900622 7.95146 0.900623 8.51296 1.96764Z" fill="url(#paint0_linear_572_47468)"/>
                           <defs>

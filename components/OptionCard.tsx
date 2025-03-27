@@ -50,12 +50,12 @@ export default function OptionCard() {
       <div className="flex items-center space-x-2 text-foreground">
         <div className="bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-white">W</div>
         <span className="font-semibold">WETH</span>
-        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+        <ChevronDown className="w-4 h-4 text-secondary-foreground" />
       </div>
 
       {/* Trading Direction */}
       <div className="space-y-2">
-        <p className="text-muted-foreground text-sm">Price Sentiment:</p>
+        <p className="text-secondary-foreground text-sm">Price Sentiment:</p>
         <div className="grid grid-cols-2 gap-3">
           <Button
             onClick={() => setSelectedOption('Call')}
@@ -84,7 +84,7 @@ export default function OptionCard() {
 
       {/* Strike Price */}
       <div className="space-y-2">
-        <label className="text-muted-foreground text-sm">Strike price</label>
+        <label className="text-secondary-foreground text-sm">Strike price</label>
         <div className="grid grid-cols-4 gap-2">
           {isDefaultStrike ? (
             <>
@@ -95,14 +95,14 @@ export default function OptionCard() {
                   className={`flex-1 py-2 px-4 rounded-sm ${
                     strikePrice === price
                     ? 'bg-gradient-primary text-backgroundSecondary'
-                    : 'bg-backgroundSecondary text-secondary-foreground hover:bg-secondary'
+                    : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
                 }`}
                 >
                   {formatPrice(price)}
                 </Button>
               ))}
               <Button
-                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-secondary-foreground hover:bg-secondary"
+                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-foreground hover:bg-secondary"
                 onClick={() => setShowStrikePriceModal(true)}
               >
                 <MoreHorizontal className="w-4 h-4" />
@@ -117,7 +117,7 @@ export default function OptionCard() {
                 {formatPrice(strikePrice)}
               </Button>
               <Button
-                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-secondary-foreground hover:bg-secondary"
+                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-foreground hover:bg-secondary"
                 onClick={() => setShowStrikePriceModal(true)}
               >
                 <MoreHorizontal className="w-4 h-4" />
@@ -129,7 +129,7 @@ export default function OptionCard() {
 
       {/* Expiration */}
       <div className="space-y-2">
-        <label className="text-muted-foreground text-sm">Expiration</label>
+        <label className="text-secondary-foreground text-sm">Expiration</label>
         <div className="grid grid-cols-4 gap-2">
           {isDefaultExpiration ? (
             <>
@@ -140,14 +140,14 @@ export default function OptionCard() {
                   className={`flex-1 py-2 px-4 rounded-sm ${
                     format(expiration, 'yyyy-MM-dd') === format(exp.value, 'yyyy-MM-dd')
                     ? 'bg-gradient-primary text-backgroundSecondary'
-                    : 'bg-backgroundSecondary text-secondary-foreground hover:bg-secondary'
+                    : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
                 }`}
                 >
                   {exp.label}
                 </Button>
               ))}
               <Button
-                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-secondary-foreground hover:bg-secondary"
+                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-foreground hover:bg-secondary"
                 onClick={() => setShowExpirationModal(true)}
               >
                 <MoreHorizontal className="w-4 h-4" />
@@ -161,7 +161,7 @@ export default function OptionCard() {
                 {getExpirationLabel(expiration)}
               </Button>
               <Button
-                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-secondary-foreground hover:bg-secondary"
+                className="py-2 px-4 rounded-sm bg-backgroundSecondary text-foreground hover:bg-secondary"
                 onClick={() => setShowExpirationModal(true)}
               >
                 <MoreHorizontal className="w-4 h-4" />
@@ -173,11 +173,11 @@ export default function OptionCard() {
 
       {/* Option Size */}
       <div className="space-y-2">
-        <label className="text-muted-foreground text-sm">Option Size</label>
+        <label className="text-secondary-foreground text-sm">Option Size</label>
         <div className="relative">
           <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-            <div className="bg-blue-500 rounded-full w-5 h-5 flex items-center justify-center text-xs text-white">
-              W
+            <div className="bg-blue-500 rounded-full w-5 h-5 flex items-center justify-center text-xs text-white cursor-pointer">
+              W {/* Select Asset Here */}
             </div>
           </div>
           <Input

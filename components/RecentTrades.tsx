@@ -183,6 +183,66 @@ const RecentTradesData = [
         size: 750,
         purchaseDate: 'Dec 18, 2024'
     },
+    {
+        id: 15,
+        profile: 'HDG5...7XcY',
+        tx: 'Sold',
+        quantity: 60,
+        option: 'American',
+        optionType: 'Put',
+        strikePrice: 40000,
+        expiry: 'Feb 15, 2025',
+        size: 750,
+        purchaseDate: 'Dec 18, 2024'
+    },
+    {
+        id: 15,
+        profile: 'HDG5...7XcY',
+        tx: 'Sold',
+        quantity: 60,
+        option: 'American',
+        optionType: 'Put',
+        strikePrice: 40000,
+        expiry: 'Feb 15, 2025',
+        size: 750,
+        purchaseDate: 'Dec 18, 2024'
+    },
+    {
+        id: 16,
+        profile: 'HDG5...7XcY',
+        tx: 'Sold',
+        quantity: 60,
+        option: 'American',
+        optionType: 'Put',
+        strikePrice: 40000,
+        expiry: 'Feb 15, 2025',
+        size: 750,
+        purchaseDate: 'Dec 18, 2024'
+    },
+    {
+        id: 17,
+        profile: 'HDG5...7XcY',
+        tx: 'Sold',
+        quantity: 60,
+        option: 'American',
+        optionType: 'Put',
+        strikePrice: 40000,
+        expiry: 'Feb 15, 2025',
+        size: 750,
+        purchaseDate: 'Dec 18, 2024'
+    },
+    {
+        id: 18,
+        profile: 'HDG5...7XcY',
+        tx: 'Sold',
+        quantity: 60,
+        option: 'American',
+        optionType: 'Put',
+        strikePrice: 40000,
+        expiry: 'Feb 15, 2025',
+        size: 750,
+        purchaseDate: 'Dec 18, 2024'
+    },
     
 
 ];
@@ -190,8 +250,8 @@ const RecentTradesData = [
 
 export default function RecentTrades(){
     return (
-        <div className="border border-t-0 w-full h-full rounded-b-sm flex flex-col justify-between">
-            <ScrollArea className="h-[658px] rounded-b-sm w-full">
+        <div className="border-none border-t-0 w-full h-full rounded-b-sm flex flex-col justify-between">
+            <ScrollArea className="h-full rounded-b-sm w-full">
                 <Table className="whitespace-nowrap overflow-hidden">
                     <TableHeader className="w-full">
                         <TableRow className="p-0">

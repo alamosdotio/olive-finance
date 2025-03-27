@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, FileSpreadsheet, Grid3x3, Layers, Link, Search, Sheet, TableColumnsSplit } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { DollarIcon, PythIcon, SortIcon } from "@/public/svgs/icons";
+import { DollarIcon, OptionChainIcon, PythIcon, SortIcon } from "@/public/svgs/icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
 import { formatPrice } from "@/utils/formatter";
@@ -11,6 +11,9 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import TokenList from "./TokenList";
 import MarketDetails from "./MarketDetails";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+
 
 type CryptoData = {
     id: string
@@ -42,6 +45,7 @@ interface TradingViewTopNavProps {
     marketData: any;
     priceLoading: boolean;
     marketLoading: boolean;
+    type: string
 }
 
 export default function TradingViewTopNav({
@@ -54,18 +58,20 @@ export default function TradingViewTopNav({
     priceData,
     marketData,
     priceLoading,
-    marketLoading
+    marketLoading,
+    type,
 }: TradingViewTopNavProps) {
     const [active, setActive] = useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals'>('all');
+    const router = useRouter()
 
     return (
         <div className="border border-t-0 rounded-b-sm p-1 w-full flex h-fit">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <div className="px-2 py-1 flex space-x-6 lg:space-x-2 items-center">
+                    <div className="px-2 py-1 flex space-x-6 lg:space-x-2 items-center cursor-pointer group">
                         <div className="flex space-x-[6px] items-center">
                             <Image src={logo} alt={symbol!} width={18} height={18} className="rounded-full"/>
-                            <span className="text-sm text-foreground font-medium">
+                            <span className="text-sm text-foreground font-medium hover:text-primary group-hover:text-primary">
                                 {symbol}/USDC
                             </span>
                         </div>
@@ -151,16 +157,20 @@ export default function TradingViewTopNav({
                     </div>
                 </DropdownMenuContent>
             </DropdownMenu>
+                <div className={`${type==='futures' ? 'hidden' : 'flex'}`}>
+                    <div className="px-4 py-1">
+                        <Separator orientation="vertical"/>
+                    </div>
+                    <div className="py-1 flex items-center">
+                        <Button className='bg-inherit p-0 text-foreground hover:text-primary w-fit h-fit gap-[6px] flex items-center'
+                            onClick={() => router.push('/options-chain')}
+                        >
+                            <TableColumnsSplit />
+                            <span className="text-sm font-medium hidden md:flex">Options Chain</span>
+                        </Button>
+                    </div>
+                </div>
             <div className="hidden lg:flex">
-                <div className="px-4 py-1">
-                    <Separator orientation="vertical"/>
-                </div>
-                <div className="py-1 space-x-[6px] flex items-center">
-                    <DollarIcon />
-                    <span className="text-sm font-medium text-foreground">
-                        {priceData.price ? formatPrice(priceData.price) : priceLoading}
-                    </span>
-                </div>
                 <div className="hidden md:flex px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>

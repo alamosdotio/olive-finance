@@ -184,7 +184,7 @@ export default function EarnSidebar({
     setTokenAmount(parseFloat(value));
   };
   return (
-    <SheetContent className="space-y-6 sm:w-[720px] rounded-l-[26px] bg-accent">
+    <SheetContent className="space-y-6 sm:w-[720px] rounded-sm bg-accent">
       <SheetHeader>
         <SheetTitle className="text-2xl flex justify-between">
           {name} Liquidity Pool
@@ -192,7 +192,7 @@ export default function EarnSidebar({
       </SheetHeader>
       <div className="space-y-5  flex flex-col w-full">
         <div className="w-full flex items-center space-x-3">
-          <div className="border rounded-[26px] p-3 w-fit h-[167px]">
+          <div className="border rounded-sm p-3 w-fit h-[167px]">
             <div className="flex flex-col justify-between">
               <div className="flex space-x-1 text-sm font-medium ">
                 <div className="flex gap-2 items-center">
@@ -289,7 +289,7 @@ export default function EarnSidebar({
         </div>
         <div className="flex flex-col space-y-3">
           <span className="text-base font-medium">Liquidity Allocation</span>
-          <div className="p-3 pt-0 border rounded-[26px] w-full space-y-3">
+          <div className="p-3 pt-0 border rounded-sm w-full space-y-3">
             <Table>
               <TableHeader>
                 <TableRow className="w-full">
@@ -380,20 +380,20 @@ export default function EarnSidebar({
         </div>
         <div className="flex flex-col w-full space-y-[14px]">
           <Tabs value={activeTab}>
-            <TabsList className="w-full h-auto p-2 flex justify-between rounded-full bg-accent-foreground">
+            <TabsList className="w-full h-auto p-2 flex justify-between rounded-sm bg-accent-foreground">
               <TabsTrigger
                 value="mint"
-                className="rounded-full px-5 py-[6px] border border-transparent w-full data-[state=active]:border-primary"
+                className="rounded-sm px-5 py-[6px] border border-transparent w-full data-[state=active]:border-primary"
                 onClick={() => setActiveTab("mint")}
               >
-                Mint
+                Buy
               </TabsTrigger>
               <TabsTrigger
                 value="redeem"
-                className="rounded-full border px-5 py-[6px] border-transparent w-full data-[state=active]:border-primary"
+                className="rounded-sm border px-5 py-[6px] border-transparent w-full data-[state=active]:border-primary"
                 onClick={() => setActiveTab("redeem")}
               >
-                Redeem
+                Sell
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -402,7 +402,7 @@ export default function EarnSidebar({
             <div className="flex justify-between gap-2">
               <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
                 <DropdownMenuTrigger asChild>
-                  <div className="w-full flex justify-between px-3 py-2 rounded-[12px] h-auto items-center bg-secondary cursor-pointer">
+                  <div className="w-full flex justify-between px-3 py-2 rounded-sm h-auto items-center bg-secondary cursor-pointer">
                     <div className="flex items-center gap-2">
                       <Image
                         src={poolDatas ? poolDatas[selectedToken].img : logo}
@@ -423,7 +423,7 @@ export default function EarnSidebar({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"
-                  className="w-[420px] py-5 px-3 bg-accent rounded-[20px] shadow-md shadow-primary"
+                  className="w-[420px] py-5 px-3 bg-accent rounded-sm shadow-md shadow-primary"
                 >
                   <div className="w-full flex flex-col space-y-4 px-2">
                     <div className="w-full flex flex-col space-y-3">
@@ -502,12 +502,12 @@ export default function EarnSidebar({
               </DropdownMenu>
               <Input
                 type="number"
-                className="px-3 py-2 rounded-[12px] h-auto w-full bg-secondary border-none shadow-none"
+                className="px-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
                 placeholder={`${selectedToken == 0 ? "SOL" : "USDC"}`}
                 onChange={(e) => handleTokenAmount(e.target.value)}
               />
               <Button
-                className="h-auto rounded-[12px] px-4 py-[10px] w-2/6"
+                className="h-auto rounded-sm px-4 py-[10px] w-2/6"
                 onClick={onSubmit}
               >
                 {activeTab === "mint" ? "Buy" : "Sell"}

@@ -56,6 +56,7 @@ interface CryptoNavProps {
     marketData: MarketDataState;
     priceLoading: boolean;
     marketLoading: boolean;
+    type: string;
 }
 
 type MarketChanges = {
@@ -124,7 +125,8 @@ export default function CryptoNav({
     priceData,
     marketData,
     priceLoading,
-    marketLoading 
+    marketLoading,
+    type,
 }: CryptoNavProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<Map<string, HTMLDivElement>>(new Map());
@@ -272,6 +274,7 @@ export default function CryptoNav({
                 marketData={marketData}
                 priceLoading={priceLoading}
                 marketLoading={marketLoading}
+                type={type}
             />
         </>
     );
