@@ -7,6 +7,13 @@ interface TradeDetailsProps{
 export default function TradeDetails({id} : TradeDetailsProps){
     const details = [
         {
+            label: 'Total SOL',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
             label: 'Locked SOL',
             before: '',
             after: '',
@@ -15,6 +22,13 @@ export default function TradeDetails({id} : TradeDetailsProps){
         },
         {
             label: 'Unlocked SOL',
+            before: '',
+            after: '',
+            change: '',
+            difference: '',
+        },
+        {
+            label: 'Total USDC',
             before: '',
             after: '',
             change: '',

@@ -184,15 +184,15 @@ export default function EarnSidebar({
     setTokenAmount(parseFloat(value));
   };
   return (
-    <SheetContent className="space-y-6 sm:w-[720px] rounded-sm bg-accent">
+    <SheetContent className="space-y-6 w-full md:w-[720px] rounded-sm bg-accent overflow-y-auto">
       <SheetHeader>
         <SheetTitle className="text-2xl flex justify-between">
           {name} Liquidity Pool
         </SheetTitle>
       </SheetHeader>
       <div className="space-y-5  flex flex-col w-full">
-        <div className="w-full flex items-center space-x-3">
-          <div className="border rounded-sm p-3 w-fit h-[167px]">
+        <div className="grid grid-cols-1 sm:grid-cols-5 items-center sm:space-x-3 space-y-3 sm:space-y-0">
+          <div className="border rounded-sm p-3 sm:col-span-2 h-[167px]">
             <div className="flex flex-col justify-between">
               <div className="flex space-x-1 text-sm font-medium ">
                 <div className="flex gap-2 items-center">
@@ -258,7 +258,7 @@ export default function EarnSidebar({
               </div>
             </div>
           </div>
-          <div className="w-full">
+          <div className="sm:col-span-3 w-full h-[167px]">
             <ChartStrategy />
           </div>
         </div>
@@ -503,7 +503,7 @@ export default function EarnSidebar({
               <Input
                 type="number"
                 className="px-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
-                placeholder={`${selectedToken == 0 ? "SOL" : "USDC"}`}
+                placeholder={`${activeTab === 'mint' ? selectedToken == 0 ? "SOL" : "USDC" : symbol+'-LP'}`}
                 onChange={(e) => handleTokenAmount(e.target.value)}
               />
               <Button
