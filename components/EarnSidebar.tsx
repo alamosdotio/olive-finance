@@ -27,7 +27,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { ChevronDown, Search } from "lucide-react";
-import { ChartStrategy } from "@/public/svgs/icons";
 import { connection, USDC_DECIMALS, WSOL_DECIMALS } from "@/utils/const";
 import { ContractContext } from "@/contexts/contractProvider";
 import {
@@ -40,6 +39,7 @@ import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import { OptionContract } from "@/lib/idl/option_contract";
 import * as idl from "../lib/idl/option_contract.json";
 import { getPythPrice, usePythPrice } from "@/hooks/usePythPrice";
+import { ChartStrategy } from "./ChartStrategy";
 
 interface EarnSidebarProps {
   name: string;
@@ -296,7 +296,7 @@ export default function EarnSidebar({
                   <TableHead className="px-3 py-4 text-secondary-foreground font-medium">
                     Token
                   </TableHead>
-                  <TableHead className="px-3 py-4 text-secondary-foreground font-medium">
+                  <TableHead className="px-3 py-4 text-secondary-foreground font-medium whitespace-nowrap">
                     Pool Size
                   </TableHead>
                   <TableHead className="px-3 py-4 text-secondary-foreground font-medium whitespace-nowrap">

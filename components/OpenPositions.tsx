@@ -31,7 +31,7 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<string>('Overview')
     return (
-        <div className="w-full flex flex-col bg-accent rounded-[10px]">
+        <div className="w-full flex flex-col bg-accent rounded-sm">
             <div
                 className="w-full px-4 py-3 flex justify-between items-center cursor-pointer"
                 onClick={()=>setIsOpen(!isOpen)}

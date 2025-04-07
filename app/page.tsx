@@ -28,8 +28,8 @@ export default function Homepage(){
         buying: {type: string; amount: string};
         strikePrice: string
     }>({
-        selling: { currency: 'usdc', amount: '1' },
-        buying: {type: 'call', amount: '1'},
+        selling: { currency: 'usdc', amount: '' },
+        buying: {type: 'call', amount: ''},
         strikePrice: priceData.price ? formatPrice(priceData.price) : '',
     })
     console.log(positionType, contractType)

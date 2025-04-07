@@ -3,6 +3,8 @@
 import CryptoNav from "@/components/CryptoNav";
 import FutureCard from "@/components/FutureCard";
 import FutureCardContainer from "@/components/FutureCardContainer";
+import FuturesPositions from "@/components/FuturesPositions";
+import FuturesQuote from "@/components/FuturesQuote";
 import TradingViewChart from "@/components/TradingViewChart";
 import { usePythMarketData } from "@/hooks/usePythMarketData";
 import { usePythPrice } from "@/hooks/usePythPrice";
@@ -35,21 +37,21 @@ export default function Futures(){
                 />
             </div>
             <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-8 h-[600px] flex flex-col">
+                <div className="col-span-8 h-[550px] flex flex-col">
                     <div className="flex-grow border-t rounded-sm">
                         <TradingViewChart />
                     </div>
                 </div>
-                <div className="col-span-4 h-[600px]">
+                <div className="col-span-4 h-[550px]">
                     <FutureCardContainer />
                 </div>
             </div>
             <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-8 border">
-                    positions
+                <div className="col-span-8">
+                    <FuturesPositions />
                 </div>
-                <div className="col-span-4 border">
-                    summary
+                <div className="col-span-4">
+                    <FuturesQuote />
                 </div>
             </div>
         </main>

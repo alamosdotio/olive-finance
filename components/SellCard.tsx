@@ -70,7 +70,7 @@ export default function SellCard() {
 
   if (selectedOption) {
     return (
-      <div className="w-full bg-card rounded-sm rounded-t-none p-6 space-y-6 border border-t-0">
+      <div className="w-full flex flex-col flex-grow bg-card rounded-sm rounded-t-none p-6 space-y-5 border border-t-0">
         {/* Token Selection */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 text-foreground">
@@ -165,7 +165,7 @@ export default function SellCard() {
   }
 
   return (
-    <div className="w-full bg-card rounded-sm rounded-t-none p-6 space-y-6 border border-t-0">
+    <div className="w-full flex flex-col flex-grow bg-card rounded-sm rounded-t-none p-6 space-y-6 border border-t-0">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Your Options</h2>
       </div>

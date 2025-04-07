@@ -83,21 +83,21 @@ export default function TradingPositions() {
           <TabsList className="w-full grid grid-cols-3 bg-inherit text-secondary-foreground p-0 gap-2 md:gap-6">
             <TabsTrigger
               value="Positions"
-              className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+              className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
               onClick={() => handleClickTab("Positions")}
             >
               Open Positions
             </TabsTrigger>
             <TabsTrigger
               value="Expired"
-              className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+              className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
               onClick={() => handleClickTab("Expired")}
             >
               Expired Positions
             </TabsTrigger>
             <TabsTrigger
               value="History"
-              className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+              className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
               onClick={() => handleClickTab("History")}
             >
               Order History
@@ -166,7 +166,7 @@ export default function TradingPositions() {
           <OrderHistory doneOptioninfos={doneInfo} />
         </div>
       )}
-      <div className="px-3 md:px-6 pb-4 flex justify-end">
+      {/* <div className="px-3 md:px-6 pb-4 flex justify-end">
         <div className="w-full flex items-center md:gap-5 justify-between md:justify-end">
           <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
             <ChevronLeft className="w-fit h-fit  text-secondary-foreground" />
@@ -191,7 +191,7 @@ export default function TradingPositions() {
             <ChevronRight className="w-fit h-fit  text-secondary-foreground" />
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

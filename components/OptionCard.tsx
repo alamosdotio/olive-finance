@@ -45,7 +45,7 @@ export default function OptionCard() {
   }
 
   return (
-    <div className="w-full bg-card rounded-sm rounded-t-none p-6 space-y-6 border border-t-0">
+    <div className="w-full flex flex-col flex-grow bg-card rounded-sm rounded-t-none p-6 space-y-6 border border-t-0">
       {/* Token Selection */}
       <div className="flex items-center space-x-2 text-foreground">
         <div className="bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-white">W</div>
