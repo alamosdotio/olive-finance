@@ -12,7 +12,7 @@ export default function FutureCardContainer() {
   
   return (
     <div className="w-full h-full flex flex-col bg-background">
-      <section className="w-full border border-b-0 rounded-sm rounded-b-none px-4 h-[45px] flex justify-between items-center">
+      <section className="w-full border border-b-0 rounded-sm rounded-b-none px-4 h-11 flex justify-between items-center">
         <div className="flex space-x-2 h-full">
           <Button 
             

@@ -1,7 +1,6 @@
 'use client'
 
 import CryptoNav from "@/components/CryptoNav";
-import FutureCard from "@/components/FutureCard";
 import FutureCardContainer from "@/components/FutureCardContainer";
 import FuturesPositions from "@/components/FuturesPositions";
 import FuturesQuote from "@/components/FuturesQuote";
@@ -37,20 +36,14 @@ export default function Futures(){
                 />
             </div>
             <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-8 h-[550px] flex flex-col">
-                    <div className="flex-grow border-t rounded-sm">
-                        <TradingViewChart />
+                <div className="col-span-8 flex flex-col gap-4">
+                    <div className="h-[545px] border-t rounded-sm">
+                        <TradingViewChart symbol={selectedSymbol} logo={selectedLogo}/>
                     </div>
-                </div>
-                <div className="col-span-4 h-[550px]">
-                    <FutureCardContainer />
-                </div>
-            </div>
-            <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-8">
                     <FuturesPositions />
                 </div>
-                <div className="col-span-4">
+                <div className="col-span-4 h-fit flex flex-col gap-4">
+                    <FutureCardContainer />
                     <FuturesQuote />
                 </div>
             </div>

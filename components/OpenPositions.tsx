@@ -61,21 +61,21 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                             <TabsList className="flex md:space-x-3 bg-inherit p-0 text-secondary-foreground text-sm font-medium">
                                 <TabsTrigger 
                                     value="Overview"
-                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    className="w-full py-2 px-5 rounded-sm data-[state=active]:bg-background data-[state=active]:text-foreground"
                                     onClick={() => setActiveTab('Overview')}
                                 >
                                     Overview
                                 </TabsTrigger>
                                 <TabsTrigger 
                                     value="Greeks"
-                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    className="w-full py-2 px-5 rounded-sm data-[state=active]:bg-background data-[state=active]:text-foreground"
                                     onClick={() => setActiveTab('Greeks')}
                                 >
                                     Greeks
                                 </TabsTrigger>
                                 <TabsTrigger 
                                     value="Details"
-                                    className="w-full py-2 px-5 rounded-[10px] data-[state=active]:bg-background data-[state=active]:text-foreground"
+                                    className="w-full py-2 px-5 rounded-sm data-[state=active]:bg-background data-[state=active]:text-foreground"
                                     onClick={() => setActiveTab('Details')}
                                 >
                                     Details
@@ -83,10 +83,10 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                             </TabsList>
                         </Tabs>
                         <div className='hidden md:flex space-x-3'>
-                            <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
+                            <Button className='bg-secondary p-2 w-fit h-fit rounded-sm'>
                                 <SendIcon />
                             </Button>
-                            <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'
+                            <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-sm text-secondary-foreground text-sm font-normal'
                                 onClick={onExercise}>
                                 Exercise
                             </Button>
@@ -103,10 +103,10 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                     )}
                     <Separator className='my-4 md:hidden'/>
                     <div className='md:hidden flex space-x-3'>
-                        <Button className='bg-secondary p-2 w-fit h-fit rounded-[10px]'>
+                        <Button className='bg-secondary p-2 w-fit h-fit rounded-sm'>
                             <SendIcon />
                         </Button>
-                        <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-[10px] text-secondary-foreground text-sm font-normal'>
+                        <Button className='bg-secondary px-[10px] py-[6px] w-fit h-fit rounded-sm text-secondary-foreground text-sm font-normal'>
                             Exercise
                         </Button>
                     </div>

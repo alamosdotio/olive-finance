@@ -77,7 +77,7 @@ export default function Homepage(){
               marketLoading={marketLoading}
               type="options"
             />
-            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full")}>
+            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4")}>
                 <div className="flex w-full pt-4 lg:space-x-4 justify-between">
                   <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:w-4/6 lg:flex flex-col space-y-4")}>
                     <TradingViewChartContainer 
@@ -122,18 +122,18 @@ export default function Homepage(){
                   </div>
                 </div>
                 
-                <div className="flex w-full pb-6 space-x-4 h-auto">
-                  {/* <div className="w-full lg:w-4/6">
+                {/* <div className="flex w-full pb-6 space-x-4 h-auto">
+                  <div className="w-full lg:w-4/6">
                     <ProtectedRoute fallback={<TradingPositionsFallback/>}>
                         <TradingPositions />
                     </ProtectedRoute>
-                  </div> */}
+                  </div> 
   
-                  {/* <div className="w-2/6 hidden lg:flex flex-col space-y-4">
+                  <div className="w-2/6 hidden lg:flex flex-col space-y-4">
                     <PriceQuote value={formValues.selling.amount}/>
                     <GreekPopup value={formValues.selling.amount}/>
-                  </div> */}
-                </div>
+                  </div> 
+                </div> */}
             </div>
             <div className="w-full p-3 pb-10 bottom-0 sticky border-t bg-background z-10 lg:hidden">
               <div className="grid grid-cols-2 space-x-2">

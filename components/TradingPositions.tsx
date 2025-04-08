@@ -21,6 +21,7 @@ import {
 import { ContractContext, ExpiredOption } from "@/contexts/contractProvider";
 import { Transaction } from "@/lib/data/WalletActivity";
 import { BN } from "@coral-xyz/anchor";
+import Pagination from "./Pagination";
 
 export default function TradingPositions() {
   const [activeTab, setActiveTab] = useState<string>("Positions");
@@ -76,6 +77,13 @@ export default function TradingPositions() {
       }
     })();
   }, [program]);
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 5;
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const itemList = generatePositions(15).slice(indexOfFirstItem, indexOfLastItem)
+
   return (
     <div className="w-full h-fit border rounded-sm flex flex-col">
       <div className="w-full flex justify-between px-3 py-1 md:px-6 md:py-3 border-b">
@@ -154,6 +162,30 @@ export default function TradingPositions() {
                 onExercise={()=>onExercise(position.index)}
               />
             ))}
+            {/* {itemList.map((pos, idx) => (
+              <OpenPositions
+                key={idx}
+                index={pos.index}
+                token={pos.token}
+                logo={pos.logo}
+                symbol={pos.symbol}
+                type={pos.type}
+                expiry={pos.expiry}
+                size={pos.size}
+                pnl={pos.pnl}
+                greeks={pos.greeks}
+                onExercise={()=>onExercise(pos.index)}
+              />
+            ))}
+            <div className="pb-4 w-full">
+                <Pagination
+                    currentPage={currentPage}
+                    totalItems={15}
+                    itemsPerPage={itemsPerPage}
+                    onPageChange={setCurrentPage}
+                />
+            </div> */}
+            
         </div>
       )}
       {activeTab === "Expired" && (
