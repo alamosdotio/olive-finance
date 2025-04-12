@@ -10,6 +10,7 @@ import { usePythPrice } from "@/hooks/usePythPrice";
 import { useState } from "react";
 
 export default function Futures(){
+    const [tokenIdx, setTokenIdx] = useState(0)
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
     const [selectedLogo, setSelectedLogo] = useState<string>('/images/solana.png')
     const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
@@ -21,12 +22,17 @@ export default function Futures(){
       const handleIconChange = (newIcon: string) => {
         setSelectedLogo(newIcon);
       };
+      const handleIndexChange = (newIdx: number) => {
+        setTokenIdx(newIdx)
+      }
     return (
-        <main className="space-y-4 flex flex-col pb-4">
+        <main className="space-y-4 flex flex-col">
             <div className="w-full">
                 <CryptoNav
                     onSymbolChange={handleSymbolChange} 
                     onIconChange={handleIconChange}
+                    onIdxChange={handleIndexChange}
+                    active={tokenIdx}
                     selectedSymbol={selectedSymbol}
                     priceData={priceData}
                     marketData={marketData}
@@ -37,13 +43,17 @@ export default function Futures(){
             </div>
             <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-8 flex flex-col gap-4">
-                    <div className="h-[545px] border-t rounded-sm">
+                    <div className="h-[550px] border-t rounded-sm">
                         <TradingViewChart symbol={selectedSymbol} logo={selectedLogo}/>
                     </div>
                     <FuturesPositions />
                 </div>
                 <div className="col-span-4 h-fit flex flex-col gap-4">
-                    <FutureCardContainer />
+                    <FutureCardContainer
+                        active={tokenIdx}
+                        onSymbolChange={handleSymbolChange}
+                        onIdxChange={handleIndexChange}
+                    />
                     <FuturesQuote />
                 </div>
             </div>

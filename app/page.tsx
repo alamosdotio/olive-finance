@@ -17,6 +17,7 @@ import OptionCardContainer from "@/components/OptionCardContainer";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
+    const [tokenIdx, setTokenIdx] = useState(0)
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
     const [positionType, setPositionType] = useState<string>('long')
     const [contractType, setContractType] = useState<string>('call')
@@ -63,6 +64,10 @@ export default function Homepage(){
     const handleIconChange = (newIcon: string) => {
       setSelectedLogo(newIcon);
     };
+
+    const handleIndexChange = (newIdx: number) => {
+      setTokenIdx(newIdx)
+    }
   
     
     return (
@@ -70,6 +75,8 @@ export default function Homepage(){
             <CryptoNav 
               onSymbolChange={handleSymbolChange} 
               onIconChange={handleIconChange}
+              onIdxChange={handleIndexChange}
+              active={tokenIdx}
               selectedSymbol={selectedSymbol}
               priceData={priceData}
               marketData={marketData}
@@ -77,7 +84,7 @@ export default function Homepage(){
               marketLoading={marketLoading}
               type="options"
             />
-            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4")}>
+            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4 md:pb-0")}>
                 <div className="flex w-full pt-4 lg:space-x-4 justify-between">
                   <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:w-4/6 lg:flex flex-col space-y-4")}>
                     <TradingViewChartContainer 

@@ -57,7 +57,7 @@ export default function Pagination({currentPage, totalItems, itemsPerPage, onPag
       };
 
     return (
-        <div className="w-full flex items-center gap-5 justify-between pt-4 mt-auto">
+        <div className="w-full flex items-center gap-5 justify-between pt-1 mt-auto">
             <button 
                 className="p-2 rounded-sm bg-secondary flex items-center h-9 w-9 hover:bg-secondary/80 
                 disabled:opacity-50 disabled:cursor-not-allowed"

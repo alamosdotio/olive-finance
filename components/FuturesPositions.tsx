@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Button } from "./ui/button";
 import { WalletIcon } from "@/public/svgs/icons";
@@ -7,6 +7,9 @@ import WalletModal from "./WalletModal";
 import ProtectedRoute from "./ProtectedRoute";
 import OpenFutures from "./OpenFutures";
 import Pagination from "./Pagination";
+import ExpiredFutures from "./ExpiredFutures";
+import FuturesOrderHistory from "./FuturesOrderHistory";
+import { FuturesTransaction, futuresTx } from "@/lib/data/WalletActivity";
 
 const DummyFutures = [
     {
@@ -94,7 +97,7 @@ const DummyFutures = [
 const Fallback = () => {
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     return(
-        <div className="w-full m-auto p-6 flex h-[190px] justify-center items-center">
+        <div className="w-full m-auto p-6 flex h-[186px] justify-center items-center">
             <div className="flex flex-col gap-3 items-center">
                 <span>To view your orders</span>
                 <Button
@@ -116,16 +119,24 @@ const Fallback = () => {
 export default function FuturesPositions(){
     const [activeTab, setActiveTab] = useState('positions')
     const [currentPage, setCurrentPage] = useState(1)
+    const [dummyFutures, setDummyFutures] = useState<FuturesTransaction[]>([])
+
+    useEffect(() => {
+        setDummyFutures(futuresTx)
+    }, [])
+
     const itemsPerPage = 5
 
     const indexOfLastItem = currentPage * itemsPerPage
     const indexOfFirstItem = indexOfLastItem - itemsPerPage
     const currentItems = DummyFutures.slice(indexOfFirstItem, indexOfLastItem)
 
+    const orderHistoryItems = dummyFutures.slice(indexOfFirstItem, indexOfLastItem)
+
     return (
-        <div className="w-full border rounded-sm flex flex-col">
+        <div className="w-full border rounded-sm flex flex-col mb-3">
             <section className="border-b rounded-none px-6 py-3">
-                <Tabs defaultValue="positions" onValueChange={setActiveTab}>
+                <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
                     <TabsList className="bg-inherit flex justify-start text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
                         <TabsTrigger
                             value="positions"
@@ -149,19 +160,53 @@ export default function FuturesPositions(){
                 </Tabs>
             </section>
            <ProtectedRoute fallback={<Fallback />}>
-                <section className="px-6 py-3 space-y-[10px]">
-                    {currentItems.map((pos, idx) => (
-                        <OpenFutures key={idx} token={pos.token} logo={pos.logo} symbol={pos.symbol} type={pos.futureType} position={pos.position} leverage={pos.leverage}/>
-                    ))}
-                </section>
-                <div className="px-3 md:px-6 pb-4 w-full">
-                    <Pagination
-                        currentPage={currentPage}
-                        totalItems={DummyFutures.length}
-                        itemsPerPage={itemsPerPage}
-                        onPageChange={setCurrentPage}
-                    />
-                </div>
+                {activeTab === 'positions' && (
+                    <>
+                        <section className="px-6 py-3 space-y-[10px]">
+                            {currentItems.map((pos, idx) => (
+                                <OpenFutures key={idx} token={pos.token} logo={pos.logo} symbol={pos.symbol} type={pos.futureType} position={pos.position} leverage={pos.leverage}/>
+                            ))}
+                        </section>
+                        <div className="px-3 md:px-6 pb-4 w-full">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalItems={DummyFutures.length}
+                                itemsPerPage={itemsPerPage}
+                                onPageChange={setCurrentPage}
+                            />
+                        </div>
+                    </>
+                )}
+                {activeTab === 'expired' && (
+                    <>
+                        <section className="px-6 py-3 space-y-[10px]">
+                            <ExpiredFutures />
+                        </section>
+                        <div className="px-3 md:px-6 pb-4 w-full hidden">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalItems={0}
+                                itemsPerPage={itemsPerPage}
+                                onPageChange={setCurrentPage}
+                            />
+                        </div>
+                    </>
+                )}
+                {activeTab === 'history' && (
+                    <>
+                        <section className="px-6 py-3 space-y-[10px]">
+                            <FuturesOrderHistory dummyFutures={orderHistoryItems}/>
+                        </section>
+                        <div className="px-3 md:px-6 pb-4 w-full">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalItems={dummyFutures.length}
+                                itemsPerPage={itemsPerPage}
+                                onPageChange={setCurrentPage}
+                            />
+                        </div>
+                    </>
+                )}
             </ProtectedRoute>
         </div>
     )

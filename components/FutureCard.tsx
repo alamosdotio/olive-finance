@@ -1,23 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogTrigger } from "./ui/dialog";
-import { ChevronDown, MoreHorizontal, Wallet, TrendingUp, TrendingDown, Info } from "lucide-react";
+import { MoreHorizontal, TrendingUp, TrendingDown, Info } from "lucide-react";
 import { Button } from "./ui/button";
-import { Slider } from "./ui/slider";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { ExpirationDialog } from "./ExpirationDialog";
 import { addWeeks, format } from "date-fns";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { WalletIcon } from "@/public/svgs/icons";
+import CardTokenList from "./CardTokenList";
 
 interface FutureCardProps {
   type: 'perps' | 'dated';
   orderType: 'market' | 'limit';
+  onSymbolChange: (symbol: string) => void;
+  onIdxChange: (idx: number) => void;
+  active: number;
 }
 
-export default function FutureCard({ type, orderType }: FutureCardProps) {
+export default function FutureCard({ type, orderType, onSymbolChange, onIdxChange, active}: FutureCardProps) {
   const [selectedTx, setSelectedTx] = useState('long');
   const [leverage, setLeverage] = useState(1);
   const [amount, setAmount] = useState("");
@@ -25,7 +29,15 @@ export default function FutureCard({ type, orderType }: FutureCardProps) {
   const [showExpirationModal, setShowExpirationModal] = useState(false);
   const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1));
 
-  const leverageMarks = [1, 20, 40, 60, 80, 100];
+  const leverageMarks = {
+    1: '1x',
+    20: '20x',
+    40: '40x',
+    60: '60x',
+    80: '80x',
+    100: '100x'
+  };
+
   const entryPrice = 107.29;
   const priceChange = 2.5;
   const isPositive = true;
@@ -48,29 +60,11 @@ export default function FutureCard({ type, orderType }: FutureCardProps) {
   };
   
   return (
-    <div className="border rounded-sm rounded-t-none flex flex-col h-fit">
-      <div className={`flex-1 p-6 ${type === 'dated' ? 'space-y-5' : 'space-y-5'}`}>
+    <div className="border rounded-sm rounded-t-none flex flex-col h-fit py-0.5">
+      <div className={`flex-1 p-6 space-y-4`}>
         {/* Asset Selection & Price */}
-        <div className="flex justify-between items-start">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="h-12 pl-3 pr-4 border-border">
-                <Image 
-                  src="/images/solana.png" 
-                  alt="SOL" 
-                  className="rounded-full mr-3" 
-                  width={28} 
-                  height={28}
-                />
-                <div className="flex flex-col items-start mr-2">
-                  <span className="text-base font-semibold">SOL-USD</span>
-                  <span className="text-xs text-secondary-foreground">Solana</span>
-                </div>
-                <ChevronDown size={18} className="text-muted-foreground"/>
-              </Button>
-            </DialogTrigger>
-          </Dialog>
-          
+        <div className="flex justify-between gap-3 items-start">
+          <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="chart"/>
           {orderType === 'market' ? (
             <div className="text-right h-12">
               <div className="text-2xl font-bold tracking-tight">${entryPrice.toFixed(2)}</div>
@@ -207,20 +201,14 @@ export default function FutureCard({ type, orderType }: FutureCardProps) {
           </div>
           <div className="relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2">
-              <Image 
-                  src="/images/solana.png" 
-                  alt="SOL" 
-                  className="rounded-full mr-3" 
-                  width={28} 
-                  height={28}
-                />
+              <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="paying"/>
             </div>
             <Input
               type="number"
               value={amount}
               placeholder="0.00"
               onChange={(e) => setAmount(e.target.value)}
-              className="pl-12 h-11 text-base font-medium border-border placeholder:text-secondary-foreground"
+              className="pl-12 h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground"
               step="0.1"
               min="0.1"
             />
@@ -247,22 +235,50 @@ export default function FutureCard({ type, orderType }: FutureCardProps) {
               Max position: {(parseFloat(amount) * leverage).toFixed(2)} SOL
             </div>
           </div>
-          <div className="w-full">
-            <Slider
-              value={[leverage]}
-              onValueChange={([value]) => setLeverage(value)}
+          <div className="h-12 w-full px-4 pt-2 border rounded-sm">
+            <Slider 
               min={1}
               max={100}
               step={0.1}
-              className="w-full bg"
+              value={leverage}
+              onChange={(value) => setLeverage(Array.isArray(value) ? value[0]: value)}
+              marks={leverageMarks}
+              className="!transition-none"
+              styles={{
+                rail: {
+                  height: 4,
+                  backgroundColor: 'var(--secondary-foreground)',
+                  borderRadius: 0
+                },
+                track: {
+                  height: 4,
+                  backgroundImage: 'linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))',
+                  borderRadius: 0
+                },
+                handle: {
+                  height: 15,
+                  width: 15,
+                  backgroundColor: 'var(--primary-foreground)',
+                  borderWidth: 2,
+                  borderColor: 'var(--primary)',
+                  marginTop: -5,
+                  transition: 'none',
+                  opacity:'1',
+                },}}
+              dotStyle={{
+                width: 4,
+                height: 14,
+                top: -4,
+                backgroundColor: 'var(--secondary-foreground)',
+                borderRadius: 20,
+                border: 0,
+                marginLeft: -1,
+                transition: 'none'
+              }}
+              activeDotStyle={{
+                backgroundColor: 'var(--primary)'
+              }}
             />
-            <div className="w-full flex justify-between mt-2">
-              {leverageMarks.map((mark) => (
-                <span key={mark} className="text-xs text-secondary-foreground">
-                  {mark}×
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -270,7 +286,7 @@ export default function FutureCard({ type, orderType }: FutureCardProps) {
       {/* Connect Wallet Button */}
       <div className="p-6 pt-0">
         <Button 
-          className="w-full h-10 bg-gradient-primary hover:bg-primary/90 text-black"
+          className="w-full h-10 rounded-sm bg-gradient-primary hover:bg-primary/90 text-black"
         >
           <WalletIcon />
           <span className="text-base font-medium">Connect Wallet</span>

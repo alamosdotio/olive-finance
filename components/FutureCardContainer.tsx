@@ -6,7 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { ChevronDown } from "lucide-react";
 import FutureCard from "./FutureCard";
 
-export default function FutureCardContainer() {
+interface FutureCardContainerProps{
+  onSymbolChange: (symbol: string) => void;
+  onIdxChange: (idx: number) => void;
+  active: number;
+}
+
+export default function FutureCardContainer({onSymbolChange, onIdxChange, active} : FutureCardContainerProps) {
   const [selectedTrade, setSelectedTrade] = useState<'perps'|'dated'>('perps');
   const [orderType, setOrderType] = useState<'market'|'limit'>('market');
   
@@ -16,14 +22,14 @@ export default function FutureCardContainer() {
         <div className="flex space-x-2 h-full">
           <Button 
             
-            className={`bg-inherit h-full shadow-none rounded-none border-b-2 ${selectedTrade === 'perps' ? 'border-primary text-primary' : 'border-transparent text-secondary-foreground hover:text-primary'}`}
+            className={`bg-inherit h-full shadow-none rounded-none border-b ${selectedTrade === 'perps' ? 'border-primary text-primary' : 'border-transparent text-secondary-foreground hover:text-primary'}`}
             onClick={() => setSelectedTrade('perps')}
           >
             Perps
           </Button>
           <Button 
             
-            className={`bg-inherit h-full shadow-none rounded-none border-b-2 ${selectedTrade === 'dated' ? 'border-primary text-primary' : 'border-transparent text-secondary-foreground hover:text-primary'}`}
+            className={`bg-inherit h-full shadow-none rounded-none border-b ${selectedTrade === 'dated' ? 'border-primary text-primary' : 'border-transparent text-secondary-foreground hover:text-primary'}`}
             onClick={() => setSelectedTrade('dated')}
           >
             Dated
@@ -44,7 +50,7 @@ export default function FutureCardContainer() {
           </SelectContent>
         </Select>
       </section>
-      <FutureCard type={selectedTrade} orderType={orderType} />
+      <FutureCard type={selectedTrade} orderType={orderType} onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active}/>
     </div>
   );
 }

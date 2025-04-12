@@ -162,7 +162,7 @@ export default function TradingPositions() {
                 onExercise={()=>onExercise(position.index)}
               />
             ))}
-            {/* {itemList.map((pos, idx) => (
+            {itemList.map((pos, idx) => (
               <OpenPositions
                 key={idx}
                 index={pos.index}
@@ -184,7 +184,7 @@ export default function TradingPositions() {
                     itemsPerPage={itemsPerPage}
                     onPageChange={setCurrentPage}
                 />
-            </div> */}
+            </div>
             
         </div>
       )}
