@@ -170,7 +170,7 @@ export default function SellCard() {
         <h2 className="text-xl font-semibold">Your Options</h2>
       </div>
 
-      <ScrollArea className="h-[400px] w-full">
+      <ScrollArea className="flex-grow w-full">
         <div className="space-y-2">
           {options.map((option) => (
             <Button

@@ -55,6 +55,14 @@ export default function NavBarMobile(){
                             <h1 className="text-sm font-medium group-hover:text-primary">Options</h1>
                             <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                         </Button>
+                        <Button 
+                            className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 flex rounded-[12px]")}
+                            onClick={() => {handleClick('Futures'); router.push('/futures'); setIsOpen(false)}}
+                        >
+                            <OptionsIcon />
+                            <h1 className="text-sm font-medium group-hover:text-primary">Futures</h1>
+                            <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                        </Button>
                         <Button
                             className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 flex rounded-[12px]")}
                             onClick={() => {handleClick('Earn'); router.push('/earn'); setIsOpen(false)}}

@@ -25,14 +25,20 @@ import { ChartLine } from "lucide-react";
 
 export default function NavBar(){
     const [active, setActive] = useState<string>("Options");
-    const { theme } = useTheme()
-    const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
+    const { theme } = useTheme();
+    const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
     const { connected } = useWallet();
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleClick = (state:string) =>{
         if(active!==state){
-            setActive(state)
+            setActive(state);
         }
+    }
+
+    const open = () => {
+        setActive('More')
+        setIsOpen(!isOpen);
     }
 
     return (
@@ -54,7 +60,9 @@ export default function NavBar(){
                     > 
                          <OptionsIcon />
                          <h1 className="text-sm font-medium group-hover:text-primary">Options</h1>
-                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                         <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border px-1 pt-[3px] rounded-[2px] h-3 bg-transparent flex justify-center items-center group-hover:border-primary group-hover:text-primary")}>
+                            <span className="text-[8px] font-semibold">BETA</span>
+                         </Badge>
                     </Link>
                     <Link 
                         href='/futures'
@@ -63,7 +71,9 @@ export default function NavBar(){
                     > 
                          <ChartLine size={16}/>
                          <h1 className="text-sm font-medium group-hover:text-primary">Futures</h1>
-                         <Badge className={cn((active === 'futures' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[2px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
+                         <Badge className={cn((active === 'futures' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border px-1 pt-[3px] rounded-[2px] h-3 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>
+                            <span className="text-[8px] font-semibold">BETA</span>
+                         </Badge>
                     </Link>
                     <Link 
                         href='/earn'
@@ -72,19 +82,22 @@ export default function NavBar(){
                     > 
                          <EarnIcon />
                          <h1 className="text-sm font-medium">Earn</h1>
-                         <Badge className="rounded-[2px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
+                         <Badge className="rounded-[2px] bg-gradient-primary px-1 pt-[3px] h-3 border-none">
+                            <span className="text-background text-[8px] font-semibold">48% APY</span>
+                         </Badge>
                     </Link>
                     
                     
-                    <DropdownMenu>
+                    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                         <DropdownMenuTrigger
-                        className='text-secondary-foreground p-0 w-auto h-auto flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary'
+                            className={`${isOpen ? 'text-primary' : 'text-secondary-foreground'} p-0 w-auto h-auto flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary`}
+                            onClick={() => handleClick('More')}
                         >
                                 <MoreIcon />
                                 <h1 className="text-sm font-medium">More</h1>
                                 <ArrowDown />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="center" className="w-auto text-secondary-foreground rounded-sm">
+                        <DropdownMenuContent align="start" className="w-auto text-secondary-foreground rounded-sm">
                             {[
                                 "Exotic Options",
                                 "NFT Options",
@@ -136,7 +149,7 @@ export default function NavBar(){
                 {connected ? (
                     <WalletSideBar />
                 ) : (
-                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-sm gap-2 text-background">
+                    <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-sm gap-2 text-background bg-primary hover:bg-gradient-primary">
                         <WalletIcon />
                         <span className="text-sm font-semibold flex gap-2">Connect <span className="hidden md:flex">Wallet</span></span>
                     </Button>

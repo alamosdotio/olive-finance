@@ -383,14 +383,14 @@ export default function EarnSidebar({
             <TabsList className="w-full h-auto p-2 flex justify-between rounded-sm bg-accent-foreground">
               <TabsTrigger
                 value="mint"
-                className="rounded-sm px-5 py-[6px] border border-transparent w-full data-[state=active]:border-primary"
+                className="rounded-sm px-5 py-[6px] border border-transparent w-full data-[state=active]:border-primary hover:text-primary"
                 onClick={() => setActiveTab("mint")}
               >
                 Buy
               </TabsTrigger>
               <TabsTrigger
                 value="redeem"
-                className="rounded-sm border px-5 py-[6px] border-transparent w-full data-[state=active]:border-primary"
+                className="rounded-sm border px-5 py-[6px] border-transparent w-full data-[state=active]:border-primary hover:text-primary"
                 onClick={() => setActiveTab("redeem")}
               >
                 Sell
@@ -402,7 +402,7 @@ export default function EarnSidebar({
             <div className="flex justify-between gap-2">
               <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
                 <DropdownMenuTrigger asChild>
-                  <div className="w-full flex justify-between px-3 py-2 rounded-sm h-auto items-center bg-secondary cursor-pointer">
+                  <div className="w-full flex justify-between px-3 py-2 rounded-sm h-auto items-center bg-secondary cursor-pointer border hover:border-primary">
                     <div className="flex items-center gap-2">
                       <Image
                         src={poolDatas ? poolDatas[selectedToken].img : logo}
@@ -423,11 +423,11 @@ export default function EarnSidebar({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="start"
-                  className="w-[420px] py-5 px-3 bg-accent rounded-sm shadow-md shadow-primary"
+                  className="w-[420px] py-5 px-3 bg-accent rounded-sm"
                 >
                   <div className="w-full flex flex-col space-y-4 px-2">
                     <div className="w-full flex flex-col space-y-3">
-                      <div className="flex w-full h-fit space-x-2 items-center px-4 py-[10px] rounded-[10px] text-sm text-secondary-foreground bg-secondary">
+                      <div className="flex w-full h-fit space-x-2 items-center px-4 py-[10px] rounded-sm text-sm text-secondary-foreground bg-secondary border focus-within:border-primary">
                         <Input
                           type="text"
                           placeholder="Search Token"
@@ -502,12 +502,12 @@ export default function EarnSidebar({
               </DropdownMenu>
               <Input
                 type="number"
-                className="px-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
+                className="px-3 py-2 rounded-sm h-auto w-full bg-secondary border shadow-none focus:border-primary"
                 placeholder={`${activeTab === 'mint' ? selectedToken == 0 ? "SOL" : "USDC" : symbol+'-LP'}`}
                 onChange={(e) => handleTokenAmount(e.target.value)}
               />
               <Button
-                className="h-auto rounded-sm px-4 py-[10px] w-2/6"
+                className="h-auto rounded-sm px-4 py-[10px] w-2/6 text-black bg-primary hover:bg-gradient-primary"
                 onClick={onSubmit}
               >
                 {activeTab === "mint" ? "Buy" : "Sell"}

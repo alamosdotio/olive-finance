@@ -74,7 +74,7 @@ export default function TradingPositionsFallback() {
                     <span>To view your orders</span>
                     <Button
                         onClick={() => setIsWalletModalOpen(true)}
-                        className="text-background rounded-sm"
+                        className="text-background rounded-sm bg-primary hover:bg-gradient-primary"
                     >
                         <WalletIcon />
                         <span className="text-sm font-semibold">Connect Wallet</span>

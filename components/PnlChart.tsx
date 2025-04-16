@@ -173,7 +173,7 @@ export function PnLChart({
           maxTicksLimit: 10,
           callback: (value) => {
             const price = labels[value as number];
-            return `$${Math.round(price).toLocaleString()}`;
+            return price ? `$${Math.round(price).toLocaleString()}` : 0;
           },
         },
         title: {
@@ -184,16 +184,16 @@ export function PnLChart({
       },
       y: {
         grid: {
-          color: "rgba(255, 255, 255, 0.1)",
+          color: "rgba(29, 30, 34, 1)",
         },
         ticks: {
-          color: "rgba(255, 255, 255, 0.7)",
+          color: "rgba(128, 134, 147, 1)",
           callback: (value) => `$${value.toLocaleString()}`,
         },
         title: {
           display: true,
           text: "Profit/Loss ($)",
-          color: "rgba(255, 255, 255, 0.7)",
+          color: "rgba(77, 79, 88, 0.7)",
         },
         min: -pnlRange,
         max: pnlRange,

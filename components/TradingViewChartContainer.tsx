@@ -7,15 +7,15 @@ import PnlChartContainer from "./PnlChartContainer";
 interface TradingViewChartContainerProps{
     symbol: string
     logo: string
-    investment: string
-    numContracts: string
-    strikePrice: string
-    currentPrice: number
-    contractType: string
-    positionType: string
+    // investment: string
+    // numContracts: string
+    // strikePrice: string
+    // currentPrice: number
+    // contractType: string
+    // positionType: string
 }
 
-export default function TradingViewChartContainer({symbol, logo, investment, numContracts, strikePrice, currentPrice, contractType, positionType} : TradingViewChartContainerProps){
+export default function TradingViewChartContainer({symbol, logo} : TradingViewChartContainerProps){
     const [activeTab, setActiveTab] = useState<string>("chart")
     
     const handleClick = (state: string) => {
@@ -25,7 +25,7 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
     }
     return (
         <>
-            <div className="w-full h-[550px] flex flex-col">
+            <div className="w-full h-[540px] flex flex-col">
                 <div className="bg-inherit border border-b p-0 rounded-t-sm">
                     <Tabs defaultValue={activeTab}>
                         <TabsList className="grid grid-cols-3 rounded-full py-1 px-4 w-full h-10 bg-inherit">
@@ -57,7 +57,7 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
                     {activeTab === 'chart' && (
                         <TradingViewChart symbol={symbol} logo={logo}/>
                     )}
-                    {activeTab === 'pnl' && (
+                    {/* {activeTab === 'pnl' && (
                         <PnlChartContainer 
                             investment={investment}
                             numContracts={numContracts}
@@ -66,7 +66,7 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
                             contractType={contractType}
                             positionType={positionType}
                         />
-                    )}
+                    )} */}
                     {activeTab === 'price' && (
                         <div className="h-full w-full border border-t-0">
                             options price goes here

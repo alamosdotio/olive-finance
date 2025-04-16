@@ -62,7 +62,7 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPr
               value={searchStrike}
               onChange={(e) => setSearchStrike(e.target.value)}
               placeholder="Search for strike price"
-              className="pl-10 py-2 pr-2 border-border placeholder:text-muted"
+              className="pl-10 py-2 pr-2 border-border focus:border-primary rounded-sm placeholder:text-muted"
             />
           </div>
 
@@ -79,10 +79,12 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPr
                   onClick={() => {
                     onSelectPrice(strike.price)
                     onOpenChange(false)
+                    setShowCustomStrike(false)
+                    setCustomStrike('')
                   }}
                   className={`w-full justify-between h-auto py-3 ${
                     currentPrice === strike.price 
-                    ? 'bg-gradient-primary text-backgroundSecondary'
+                    ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
                     : 'bg-backgroundSecondary text-secondary-foreground hover:bg-secondary'
                   }`}
                 >
@@ -114,7 +116,7 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPr
                     placeholder="Enter price"
                     min="0"
                     step="any"
-                    className='border-border py-2 px-2 placeholder:text-muted'
+                    className='border-border rounded-sm focus:border-primary py-2 px-2 placeholder:text-muted'
                   />
                 </div>
                 <Button type="submit" className="w-full bg-inherit border py-5 px-4 text-primary hover:border-primary">

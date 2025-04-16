@@ -47,7 +47,7 @@ export default function Settings(){
                             Language
                         </Label>
                         <Select>
-                            <SelectTrigger className="w-[190px] text-xs flex justify-between bg-secondary text-foreground">
+                            <SelectTrigger className="w-[190px] text-xs flex justify-between bg-secondary text-foreground border hover:border-primary">
                                 <SelectValue placeholder='English'/>
                                 <span className="text-secondary-foreground">
                                     <ArrowDown />
@@ -113,7 +113,7 @@ export default function Settings(){
                         <Input
                             type='string'
                             placeholder="https://raydium-raydium-5ad5.mainnet.rpcpool.com/"
-                            className="bg-secondary border-none rounded-sm py-2 px-3 text-xs placeholder:text-muted"
+                            className="bg-secondary border rounded-sm py-2 px-3 text-xs placeholder:text-muted focus:border-primary"
                             disabled={endpoint!=='Custom'}
                         />
                     </div>

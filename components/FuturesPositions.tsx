@@ -102,7 +102,7 @@ const Fallback = () => {
                 <span>To view your orders</span>
                 <Button
                     onClick={() => setIsWalletModalOpen(true)}
-                    className="text-background rounded-sm"
+                    className="text-background rounded-sm bg-primary hover:bg-gradient-primary"
                 >
                     <WalletIcon />
                     <span className="text-sm font-semibold">Connect Wallet</span>
@@ -133,10 +133,15 @@ export default function FuturesPositions(){
 
     const orderHistoryItems = dummyFutures.slice(indexOfFirstItem, indexOfLastItem)
 
+    const handleClickTab = (value: string) => {
+        setActiveTab(value);
+        setCurrentPage(1);
+    }
+
     return (
         <div className="w-full border rounded-sm flex flex-col mb-3">
             <section className="border-b rounded-none px-6 py-3">
-                <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+                <Tabs defaultValue={activeTab} onValueChange={handleClickTab}>
                     <TabsList className="bg-inherit flex justify-start text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
                         <TabsTrigger
                             value="positions"

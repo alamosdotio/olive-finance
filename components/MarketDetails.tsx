@@ -23,7 +23,7 @@ export default function MarketDetails({logo, symbol, tokenPrice, high, low} : Ma
             <DialogTrigger className="text-xs font-medium text-primary">
                 Market Details
             </DialogTrigger>
-            <DialogContent className="w-full h-full bg-accent space-y-3 p-0 flex flex-col">
+            <DialogContent className="w-full h-full sm:max-w-md md:max-w-2xl sm:h-auto bg-accent space-y-3 p-0 flex flex-col">
                 <DialogTitle className="hidden">Market Details</DialogTitle>
                 <div className="px-3 py-2 w-full flex justify-between">
                     <DropdownMenu>
@@ -33,13 +33,12 @@ export default function MarketDetails({logo, symbol, tokenPrice, high, low} : Ma
                             <span className="text-sm text-foreground font-medium">
                                 {symbol}/USDC
                             </span>
-                            <ChevronDown size={16} className="text-secondary-foreground"/>
                         </div>
                         </DropdownMenuTrigger>
                     </DropdownMenu>
                     
                     <Button 
-                        className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-[12px]"
+                        className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-sm"
                         onClick={() => setIsOpen(false)}
                     >
                         <XIcon size={18} className="text-secondary-foreground"/>

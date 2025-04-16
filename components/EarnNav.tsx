@@ -15,7 +15,7 @@ export default function EarnNav({sortBy, setSortBy} : EarnNavProps){
     return (
         <div className="w-full h-8 flex justify-between gap-2">
             <div className="flex gap-2 justify-start items-center">
-                <div className="flex h-full lg:w-[200px] w-fit space-x-2 items-center px-[10px] py-[6px] border rounded-sm text-secondary-foreground">
+                <div className="flex h-full lg:w-[200px] w-fit space-x-2 items-center px-[10px] py-[6px] border rounded-sm text-secondary-foreground focus-within:border-primary">
                     <Search size={20} className="w-5 h-5"/>
                     <Input 
                         type="text"
@@ -27,7 +27,7 @@ export default function EarnNav({sortBy, setSortBy} : EarnNavProps){
             </div>
             <div className="flex gap-3 justify-between items-center">
                 <Select value={sortBy} onValueChange={setSortBy}>
-                    <SelectTrigger className="lg:w-[200px] w-fit h-full rounded-sm px-[10px] py-[6px] items-center text-foreground whitespace-nowrap overflow-hidden">
+                    <SelectTrigger className="lg:w-[200px] w-fit h-full rounded-sm px-[10px] py-[6px] items-center text-foreground whitespace-nowrap overflow-hidden border border-transparent hover:border-primary">
                         <SelectValue placeholder='Featured Strategies' className=""/>
                         <ChevronDown size={16}/>
                     </SelectTrigger>
@@ -38,7 +38,7 @@ export default function EarnNav({sortBy, setSortBy} : EarnNavProps){
                     </SelectContent>
                 </Select>
                 <Select>
-                    <SelectTrigger className="lg:w-[200px] lg:flex w-fit h-full rounded-sm px-[10px] py-[6px] items-center text-foreground hidden">
+                    <SelectTrigger className="lg:w-[200px] lg:flex w-fit h-full rounded-sm px-[10px] py-[6px] items-center text-foreground hidden border border-transparent hover:border-primary">
                         <SelectValue placeholder='All Assets'/>
                         <ChevronDown size={16}/>
                     </SelectTrigger>
