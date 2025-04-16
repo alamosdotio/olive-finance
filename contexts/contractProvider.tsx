@@ -17,11 +17,11 @@ import {
   Program,
   Provider,
 } from "@coral-xyz/anchor";
-import { OptionContract } from "@/lib/idl/option_contract";
 import { Position } from "@/lib/data/Positions";
 import { formatDate, Transaction } from "@/lib/data/WalletActivity";
 import { coins } from "@/lib/data/coins";
 import { format } from "date-fns";
+import { OptionContract } from "@/lib/idl/option_contract";
 import * as idl from "../lib/idl/option_contract.json";
 import {
   USDC_DECIMALS,
@@ -60,8 +60,8 @@ export const ContractContext = createContext<ContractContextType>({
   onWithdrawUsdc: () => {},
 });
 
-const clusterUrl = "https://api.devnet.solana.com";
-const connection = new Connection(clusterUrl, "confirmed");
+export const clusterUrl = "https://api.devnet.solana.com";
+export const connection = new Connection(clusterUrl, "confirmed");
 export type ExpiredOption = {
   index: any;
   token: any;
@@ -118,17 +118,17 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getLpUserData = async (program: Program<OptionContract>) => {
     if (connected && publicKey != null && program) {
-      const [lp] = PublicKey.findProgramAddressSync(
-        [Buffer.from("lp")],
-        program.programId
-      );
-      const lpData = await program.account.lp.fetch(lp.toBase58());
-      const [user] = PublicKey.findProgramAddressSync(
-        [Buffer.from("user"), publicKey?.toBuffer()],
-        program.programId
-      );
-      const userData = await program.account.user.fetch(user.toBase58());
-      return [lpData, userData];
+      // const [lp] = PublicKey.findProgramAddressSync(
+      //   [Buffer.from("lp")],
+      //   program.programId
+      // );
+      // const lpData = await program.account.lp.fetch(lp.toBase58());
+      // const [user] = PublicKey.findProgramAddressSync(
+      //   [Buffer.from("user"), publicKey?.toBuffer()],
+      //   program.programId
+      // );
+      // const userData = await program.account.user.fetch(user.toBase58());
+      return ["lpData", "userData"];
     }
   };
 
@@ -159,14 +159,14 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       ) {
         pinfo.push({
           index: detail?.index.toNumber(),
-          token: detail?.optionType ? "SOL" : "USDC",
+          // token: detail?.optionType ? "SOL" : "USDC",
           logo: "/images/solana.png",
           symbol: "SOL",
-          type: detail?.optionType ? "Call" : "Put",
+          // type: detail?.optionType ? "Call" : "Put",
           expiry: new Date(detail?.expiredDate.toNumber() * 1000).toISOString(),
-          size: detail?.optionType
-            ? detail.solAmount.toNumber() / WSOL_DECIMALS
-            : detail?.usdcAmount.toNumber() / USDC_DECIMALS,
+          // size: detail?.optionType
+            // ? detail.solAmount.toNumber() / WSOL_DECIMALS
+            // : detail?.usdcAmount.toNumber() / USDC_DECIMALS,
           pnl: pnl,
           greeks: {
             delta: 0.6821,
@@ -185,25 +185,25 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         );
         expiredpinfo.push({
           index: detail?.index.toNumber() ?? 1,
-          token: detail?.optionType ? "SOL" : "USDC",
+          // token: detail?.optionType ? "SOL" : "USDC",
           iconPath: "/images/solana.png",
           symbol: "SOL",
           strikePrice: detail?.strikePrice!,
           qty: 100,
           expiryPrice: expiryPrice!,
-          transaction: detail?.optionType ? "Call" : "Put",
-          tokenAmount: detail?.optionType
-            ? detail.solAmount.toNumber()! / WSOL_DECIMALS
-            : detail?.usdcAmount.toNumber()! / USDC_DECIMALS,
-          dollarAmount: detail?.solAmount.toNumber() * (expiryPrice ?? 1),
+          // transaction: detail?.optionType ? "Call" : "Put",
+          // tokenAmount: detail?.optionType
+            // ? detail.solAmount.toNumber()! / WSOL_DECIMALS
+            // : detail?.usdcAmount.toNumber()! / USDC_DECIMALS,
+          // dollarAmount: detail?.solAmount.toNumber() * (expiryPrice ?? 1),
         });
       } else {
         doneInfo.push({
-          transactionID: `SOL-${formatDate(
-            new Date(detail.exercised * 1000)
-          )}-${detail.strikePrice}-${detail?.optionType ? "C" : "P"}`,
+          // transactionID: `SOL-${formatDate(
+            // new Date(detail.exercised * 1000)
+          // )}-${detail.strikePrice}-${detail?.optionType ? "C" : "P"}`,
           token: coins[0],
-          transactionType: detail?.optionType ? "Call" : "Put",
+          // transactionType: detail?.optionType ? "Call" : "Put",
           optionType: "American",
           strikePrice: detail.strikePrice,
           expiry: format(new Date(detail.exercised), "dd MMM, yyyy HH:mm:ss"),
@@ -232,7 +232,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const optionDetailAccount = getOptionDetailAccount(optionIndex);
       if (!optionDetailAccount) return false;
       const transaction = await program.methods
-        .sellOption(
+        .openOption(
           new BN(amount),
           strike,
           new BN(period),
@@ -241,9 +241,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
           paySol
         )
         .accountsPartial({
-          signer: publicKey,
-          wsolMint: WSOL_MINT,
-          usdcMint: USDC_MINT,
+          owner: publicKey,
+          lockedCustodyMint: WSOL_MINT,
+          custodyMint: USDC_MINT,
           optionDetail: optionDetailAccount,
         })
         .transaction();
@@ -269,11 +269,11 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const optionDetailAccount = getOptionDetailAccount(optionIndex);
       if (!optionDetailAccount) return;
       const transaction = await program.methods
-        .buyOption(new BN(optionIndex))
-        .accounts({
-          signer: publicKey,
-          wsolMint: WSOL_MINT,
-          usdcMint: USDC_MINT,
+        .closeOption(new BN(optionIndex))
+        .accountsPartial({
+          owner: publicKey,
+          lockedCustody: WSOL_MINT,
+          payCustodyMint: USDC_MINT,
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
@@ -299,11 +299,10 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const optionDetailAccount = getOptionDetailAccount(optionIndex);
       if (!optionDetailAccount) return;
       const transaction = await program.methods
-        .expireOption(new BN(optionIndex), solPrice)
-        .accounts({
-          signer: publicKey,
-          wsolMint: WSOL_MINT,
-          usdcMint: USDC_MINT,
+        .claimOption(new BN(optionIndex), solPrice)
+        .accountsPartial({
+          owner: publicKey,
+          custodyMint: WSOL_MINT,
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
@@ -327,10 +326,8 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!optionDetailAccount) return;
     const transaction = await program.methods
       .exerciseOption(new BN(optionIndex))
-      .accounts({
-        signer: publicKey,
-        wsolMint: WSOL_MINT,
-        usdcMint: USDC_MINT,
+      .accountsPartial({
+        owner: publicKey,
       })
       .transaction();
     const latestBlockHash = await connection.getLatestBlockhash();
@@ -354,10 +351,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       if (!program || !publicKey) return;
       const transaction = await program.methods
-        .depositWsol(new BN(amount))
-        .accounts({
-          signer: publicKey,
-          wsolMint: WSOL_MINT,
+        .addLiquidity(new BN(amount))
+        .accountsPartial({
+          owner: publicKey,
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
@@ -382,10 +378,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       if (!program || !publicKey) return;
       const transaction = await program.methods
-        .depositUsdc(new BN(amount))
-        .accounts({
-          signer: publicKey,
-          usdcMint: USDC_MINT,
+        .addLiquidity(new BN(amount))
+        .accountsPartial({
+          owner: publicKey,
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
@@ -410,10 +405,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       if (!program || !publicKey) return;
       const transaction = await program.methods
-        .withdrawWsol(new BN(amount))
-        .accounts({
-          signer: publicKey,
-          wsolMint: WSOL_MINT,
+        .removeLiquidity(new BN(amount))
+        .accountsPartial({
+          owner: publicKey,
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
@@ -438,10 +432,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       if (!program || !publicKey) return;
       const transaction = await program.methods
-        .withdrawUsdc(new BN(amount))
-        .accounts({
-          signer: publicKey,
-          usdcMint: USDC_MINT,
+        .removeLiquidity(new BN(amount))
+        .accountsPartial({
+          owner: publicKey,
         })
         .transaction();
 
