@@ -4,14 +4,16 @@ import { Search, ArrowLeft, Plus } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScrollArea } from './ui/scroll-area'
 
 interface StrikePriceDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onSelectPrice: (price: string) => void
+  onStrikePriceChange: (amount: string) => void;
   currentPrice: string
+  marketPrice?: number
 }
 
 interface StrikePrice {
@@ -19,20 +21,47 @@ interface StrikePrice {
   liquidity: string
 }
 
-export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPrice }: StrikePriceDialogProps) {
+export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePriceChange, currentPrice, marketPrice = 0 }: StrikePriceDialogProps) {
   const [searchStrike, setSearchStrike] = useState('')
   const [customStrike, setCustomStrike] = useState('')
   const [showCustomStrike, setShowCustomStrike] = useState(false)
+  const [strikePrices, setStrikePrices] = useState<StrikePrice[]>([])
 
-  const allStrikePrices: StrikePrice[] = [
-    { price: '2000', liquidity: '384.2K' },
-    { price: '2100', liquidity: '384.2K' },
-    { price: '2200', liquidity: '384.2K' },
-    { price: '2300', liquidity: '384.2K' },
-    { price: '2400', liquidity: '384.2K' },
-  ]
+  useEffect(() => {
+    const prices: StrikePrice[] = [];
 
-  const filteredStrikePrices = allStrikePrices.filter(strike => 
+    const lowerBound = marketPrice * 0.5;
+    const upperBound = marketPrice * 2;
+
+    let currentPrice = lowerBound
+    while(currentPrice <= upperBound) {
+      let increment: number
+
+      if(currentPrice < 100) increment = 1
+      else if (currentPrice < 1000) increment = 10
+      else if (currentPrice < 10000) increment = 100
+      else if (currentPrice < 100000) increment = 1000
+      else increment = 10000
+
+      if (currentPrice === lowerBound) {
+        currentPrice = Math.ceil(currentPrice / increment) * increment
+      }
+
+      if (currentPrice <= upperBound) {
+        prices.push({
+          price: currentPrice.toString(),
+          liquidity: '384.2K'
+        })
+      }
+
+      currentPrice += increment
+    }
+
+    setStrikePrices(prices)
+  }, [marketPrice])
+  
+
+  const filteredStrikePrices = strikePrices.filter(strike => 
     strike.price.includes(searchStrike.replace(/[^0-9]/g, ''))
   )
 
@@ -45,6 +74,7 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPr
     e.preventDefault()
     if (customStrike && !isNaN(Number(customStrike))) {
       onSelectPrice(customStrike)
+      onStrikePriceChange(customStrike)
       onOpenChange(false)
     }
   }
@@ -78,6 +108,7 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPr
                   key={strike.price}
                   onClick={() => {
                     onSelectPrice(strike.price)
+                    onStrikePriceChange(strike.price)
                     onOpenChange(false)
                     setShowCustomStrike(false)
                     setCustomStrike('')

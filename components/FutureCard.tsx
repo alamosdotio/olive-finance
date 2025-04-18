@@ -12,19 +12,28 @@ import { addWeeks, format } from "date-fns";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { WalletIcon } from "@/public/svgs/icons";
 import CardTokenList from "./CardTokenList";
+import type { PythPriceState } from "@/hooks/usePythPrice";
+import type { MarketDataState } from "@/hooks/usePythMarketData"
+import { formatPrice } from "@/utils/formatter";
 
 interface FutureCardProps {
   type: 'perps' | 'dated';
   orderType: 'market' | 'limit';
+  selectedSymbol: string;
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
   active: number;
+  priceData: PythPriceState;
+  marketData: MarketDataState;
+  priceLoading: boolean;
+  marketLoading: boolean;
 }
 
-export default function FutureCard({ type, orderType, onSymbolChange, onIdxChange, active}: FutureCardProps) {
+export default function FutureCard({ type, orderType, onSymbolChange, onIdxChange, active ,selectedSymbol, priceData, marketData, priceLoading, marketLoading}: FutureCardProps) {
   const [selectedTx, setSelectedTx] = useState('long');
   const [leverage, setLeverage] = useState('1');
   const [amount, setAmount] = useState("");
+  const [payCurrency, setPayCurrency] = useState(selectedSymbol)
   const [limitPrice, setLimitPrice] = useState("");
   const [showExpirationModal, setShowExpirationModal] = useState(false);
   const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1));
@@ -40,7 +49,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
 
   const entryPrice = 107.29;
   const priceChange = 2.5;
-  const isPositive = true;
+  const isPositive = marketData.change24h !== null && marketData.change24h > 0;
 
   const defaultExpirations = [
     { label: '1 week', value: addWeeks(new Date(), 1) },
@@ -58,18 +67,23 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
     );
     return matchingDefault ? matchingDefault.label : format(date, 'dd MMM yyyy');
   };
+
+  const formatChange = (change: number | null) => {
+    if (change === null) return '0.00';
+    return Math.abs(change).toFixed(2);
+  };
   
   return (
     <div className="border rounded-sm rounded-t-none flex flex-col h-fit py-0.5">
       <div className={`flex-1 p-6 space-y-4`}>
         {/* Asset Selection & Price */}
         <div className="flex justify-between gap-3 items-start">
-          <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="chart"/>
+          <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="chart"/>
           {orderType === 'market' ? (
             <div className="text-right h-12">
-              <div className="text-2xl font-semibold tracking-tight">${entryPrice.toFixed(2)}</div>
+              <div className="text-2xl font-semibold tracking-tight">${priceData.price ? formatPrice(priceData.price) : priceLoading}</div>
               <div className={`text-sm font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                {isPositive ? '+' : '-'}{priceChange}%
+                {isPositive ? '+' : '-'}{marketData.change24h ? formatChange(marketData.change24h) : marketLoading}%
               </div>
             </div>
           ) : (
@@ -201,7 +215,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
           </div>
           <div className="relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2">
-              <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="paying"/>
+              <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="paying"/>
             </div>
             <Input
               type="number"

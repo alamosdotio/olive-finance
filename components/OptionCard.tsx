@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ArrowUpRight, ArrowDownRight, MoreHorizontal, ChevronDown, Info } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,29 +10,68 @@ import { addWeeks, format } from "date-fns"
 import { WalletIcon } from "@/public/svgs/icons"
 import CardTokenList from "./CardTokenList"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import type { PythPriceState } from "@/hooks/usePythPrice";
+import type { MarketDataState } from "@/hooks/usePythMarketData";
+import { formatPrice } from "@/utils/formatter"
 
 interface OptionCardProps{
   orderType: 'market' | 'limit';
+  selectedSymbol: string;
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
+  onStrikePriceChange: (amount: string) => void;
   onPayAmountChange: (amount: string) => void;
   active: number;
+  priceData: PythPriceState;
+  marketData: MarketDataState;
+  priceLoading: boolean;
+  marketLoading: boolean;
 }
 
-export default function OptionCard({orderType, onIdxChange, onSymbolChange, active, onPayAmountChange} : OptionCardProps) {
+export default function OptionCard(
+  {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange} 
+  : 
+  OptionCardProps) {
   const [selectedOption, setSelectedOption] = useState<'Call' | 'Put'>('Call')
-  const [strikePrice, setStrikePrice] = useState('2000')
+  const [strikePrice, setStrikePrice] = useState('0')
   const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1))
   const [payAmount, setPayAmount] = useState('')
+  const [payCurrency, setPayCurrency] = useState(selectedSymbol)
   const [showStrikePriceModal, setShowStrikePriceModal] = useState(false)
   const [showExpirationModal, setShowExpirationModal] = useState(false)
   const [limitPrice, setLimitPrice] = useState("");
+  const [hasSetInitialStrike, setHasSetInitialStrike] = useState(false)
 
-  const entryPrice = 107.29;
-  const priceChange = 2.5;
-  const isPositive = true;
+  const isPositive = marketData.change24h !== null && marketData.change24h > 0;
 
-  const defaultStrikePrices = ['2000', '2100', '2200']
+  useEffect(() => {
+    if(priceData.price) {
+      const defaultPrices = getDefaultStrikePrices(priceData.price)
+      setStrikePrice(defaultPrices[0])
+      onStrikePriceChange(defaultPrices[0])
+    }
+  }, [priceData.price])
+
+  const getDefaultStrikePrices = (currentPrice: number): string[] => {
+    let increment: number
+
+    if (currentPrice < 100) increment = 1
+    else if (currentPrice < 1000) increment = 10
+    else if (currentPrice < 10000) increment = 100
+    else if (currentPrice < 100000) increment = 1000
+    else increment = 10000
+
+    const basePrice = Math.floor(currentPrice / increment) * increment
+
+    return [
+      basePrice.toString(),
+      (basePrice + increment).toString(),
+      (basePrice + (2 * increment)).toString()
+    ]
+  }
+
+  const defaultStrikePrices = priceData.price ? getDefaultStrikePrices(priceData.price) : ['0', '0', '0']
+
   const defaultExpirations = [
     { label: '1 week', value: addWeeks(new Date(), 1) },
     { label: '2 weeks', value: addWeeks(new Date(), 2) },
@@ -44,7 +83,7 @@ export default function OptionCard({orderType, onIdxChange, onSymbolChange, acti
     format(exp.value, 'yyyy-MM-dd') === format(expiration, 'yyyy-MM-dd')
   )
 
-  const formatPrice = (price: string) => {
+  const formatStrikePrice = (price: string) => {
     const num = parseFloat(price)
     return `$${num.toLocaleString()}`
   }
@@ -60,16 +99,21 @@ export default function OptionCard({orderType, onIdxChange, onSymbolChange, acti
     return matchingDefault ? matchingDefault.label : format(date, 'dd MMM yyyy')
   }
 
+  const formatChange = (change: number | null) => {
+    if (change === null) return '0.00';
+    return Math.abs(change).toFixed(2);
+};
+
   return (
     <div className="w-full flex flex-col flex-grow bg-card rounded-sm rounded-t-none p-6 space-y-4 border border-t-0">
       {/* Token Selection */}
       <div className="flex justify-between gap-3 items-start">
-        <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="chart"/>
+        <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="chart"/>
         {orderType === 'market' ? (
           <div className="text-right h-12">
-            <div className="text-2xl font-semibold tracking-tight">${entryPrice.toFixed(2)}</div>
+            <div className="text-2xl font-semibold tracking-tight">${priceData.price ? formatPrice(priceData.price) : priceLoading}</div>
             <div className={`text-sm font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-              {isPositive ? '+' : '-'}{priceChange}%
+              {isPositive ? '+' : '-'}{marketData.change24h ? formatChange(marketData.change24h) : marketLoading}%
             </div>
           </div>
         ) : (
@@ -125,17 +169,20 @@ export default function OptionCard({orderType, onIdxChange, onSymbolChange, acti
         <div className="grid grid-cols-4 gap-2">
           {isDefaultStrike ? (
             <>
-              {defaultStrikePrices.map((price) => (
+              {defaultStrikePrices.map((price, idx) => (
                 <Button
-                  key={price}
-                  onClick={() => setStrikePrice(price)}
+                  key={idx}
+                  onClick={() => {
+                    setStrikePrice(price)
+                    onStrikePriceChange(price)
+                  }}
                   className={`flex-1 py-2 px-4 rounded-sm ${
                     strikePrice === price
                     ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
                     : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
                 }`}
                 >
-                  {formatPrice(price)}
+                  {formatStrikePrice(price)}
                 </Button>
               ))}
               <Button
@@ -151,7 +198,7 @@ export default function OptionCard({orderType, onIdxChange, onSymbolChange, acti
                 variant="default"
                 className="col-span-3 bg-gradient-primary text-backgroundSecondary rounded-sm py-2 px-4"
               >
-                {formatPrice(strikePrice)}
+                {formatStrikePrice(strikePrice)}
               </Button>
               <Button
                 className="py-2 px-4 rounded-sm bg-backgroundSecondary text-foreground hover:bg-secondary"
@@ -228,7 +275,7 @@ export default function OptionCard({orderType, onIdxChange, onSymbolChange, acti
         </div>
         <div className="relative">
           <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-            <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="paying"/>
+            <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="paying"/>
           </div>
           <Input
             type="number"
@@ -259,7 +306,9 @@ export default function OptionCard({orderType, onIdxChange, onSymbolChange, acti
         open={showStrikePriceModal}
         onOpenChange={setShowStrikePriceModal}
         onSelectPrice={setStrikePrice}
+        onStrikePriceChange={onStrikePriceChange}
         currentPrice={strikePrice}
+        marketPrice={priceData.price || 0}
       />
       <ExpirationDialog
         open={showExpirationModal}

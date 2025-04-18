@@ -54,8 +54,13 @@ export default function Futures(){
                 <div className={`${active === 'trade' ? 'lg:col-span-4 flex' : 'hidden lg:col-span-4 lg:flex'}  h-fit flex-col gap-4`}>
                     <FutureCardContainer
                         active={tokenIdx}
+                        selectedSymbol={selectedSymbol}
                         onSymbolChange={handleSymbolChange}
                         onIdxChange={handleIndexChange}
+                        priceData={priceData}
+                        marketData={marketData}
+                        priceLoading={priceLoading}
+                        marketLoading={marketLoading}
                     />
                     <FuturesQuote />
                 </div>

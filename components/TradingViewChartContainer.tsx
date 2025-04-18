@@ -7,15 +7,15 @@ import PnlChartContainer from "./PnlChartContainer";
 interface TradingViewChartContainerProps{
     symbol: string
     logo: string
-    // investment: string
-    // numContracts: string
-    // strikePrice: string
-    // currentPrice: number
-    // contractType: string
-    // positionType: string
+    investment: string
+    numContracts: string
+    strikePrice: string
+    currentPrice: number
+    contractType: string
+    positionType: string
 }
 
-export default function TradingViewChartContainer({symbol, logo} : TradingViewChartContainerProps){
+export default function TradingViewChartContainer({symbol, logo, investment, numContracts, strikePrice, currentPrice, contractType, positionType} : TradingViewChartContainerProps){
     const [activeTab, setActiveTab] = useState<string>("chart")
     
     const handleClick = (state: string) => {
@@ -57,7 +57,7 @@ export default function TradingViewChartContainer({symbol, logo} : TradingViewCh
                     {activeTab === 'chart' && (
                         <TradingViewChart symbol={symbol} logo={logo}/>
                     )}
-                    {/* {activeTab === 'pnl' && (
+                    {activeTab === 'pnl' && (
                         <PnlChartContainer 
                             investment={investment}
                             numContracts={numContracts}
@@ -66,7 +66,7 @@ export default function TradingViewChartContainer({symbol, logo} : TradingViewCh
                             contractType={contractType}
                             positionType={positionType}
                         />
-                    )} */}
+                    )}
                     {activeTab === 'price' && (
                         <div className="h-full w-full border border-t-0">
                             options price goes here

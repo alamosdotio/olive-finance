@@ -25,6 +25,7 @@ export default function Homepage(){
     const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
     const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
     const [payAmount, setPayAmount] = useState('')
+    const [strikePrice, setStrikePrice] = useState('')
 
     const handleSymbolChange = (newSymbol: string) => {
       setSelectedSymbol(newSymbol);
@@ -37,7 +38,6 @@ export default function Homepage(){
     const handleIndexChange = (newIdx: number) => {
       setTokenIdx(newIdx)
     }
-  
     
     return (
         <>
@@ -53,18 +53,18 @@ export default function Homepage(){
               marketLoading={marketLoading}
               type="options"
             />
-            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4 md:pb-0")}>
+            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4")}>
                 <div className="w-full pt-4 justify-between grid grid-cols-1 lg:grid-cols-12 gap-4">
                     <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:col-span-8 lg:flex flex-col space-y-4")}>
                       <TradingViewChartContainer 
                         symbol={selectedSymbol} 
                         logo={selectedLogo}
-                        // investment={formValues.selling.amount}
-                        // numContracts={formValues.buying.amount}
-                        // strikePrice={formValues.strikePrice}
-                        // currentPrice={priceData.price!}
-                        // positionType={positionType}
-                        // contractType={contractType}
+                        numContracts={'2.2'}
+                        investment={payAmount}
+                        strikePrice={strikePrice}
+                        currentPrice={priceData.price!}
+                        positionType={positionType}
+                        contractType={contractType}
                       />
                       <div className="w-full">
                       <ProtectedRoute fallback={<TradingPositionsFallback/>}>
@@ -86,12 +86,18 @@ export default function Homepage(){
                       priceLoading={priceLoading}
                     /> */}
                     <OptionCardContainer 
+                      selectedSymbol={selectedSymbol}
                       onSymbolChange={handleSymbolChange} 
                       onIdxChange={handleIndexChange}
                       index={tokenIdx}
+                      onStrikePriceChange={setStrikePrice}
                       onPayAmountChange={setPayAmount}
+                      priceData={priceData}
+                      marketData={marketData}
+                      priceLoading={priceLoading}
+                      marketLoading={marketLoading}
                     />
-                    <div className="w-full flex flex-col space-y-4 pb-4">
+                    <div className="w-full flex flex-col space-y-4">
                       <PriceQuote value={payAmount}/>
                       <GreekPopup value={payAmount}/>
                       {active === 'trade' && (

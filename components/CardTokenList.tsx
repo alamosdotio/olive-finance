@@ -11,12 +11,13 @@ import { tokenList, Token, USDC } from "@/lib/data/tokenlist";
 
 interface CardTokenListProps{
     onSymbolChange: (symbol: string) => void;
+    onPaymentTokenChange: (symbol: string) => void;
     onIdxChange: (idx: number) => void;
     active: number
     type: 'chart' | 'paying'
 }
 
-export default function CardTokenList({onSymbolChange, onIdxChange, active, type} : CardTokenListProps){
+export default function CardTokenList({onSymbolChange, onIdxChange, active, type, onPaymentTokenChange} : CardTokenListProps){
     const tokens = tokenList;
     const [paymentTokens, setPaymentTokens] = useState<Token[]>([tokens[active]]);
 
@@ -38,10 +39,12 @@ export default function CardTokenList({onSymbolChange, onIdxChange, active, type
             setSelectedToken(value)
             setIsOpen(false)
             onSymbolChange(value.pythSymbol)
+            onPaymentTokenChange(value.pythSymbol)
             onIdxChange(idx)
         }else{
             setIsOpen(false)
             setPayment(value)
+            onPaymentTokenChange(value.pythSymbol)
         }
     }
     return (

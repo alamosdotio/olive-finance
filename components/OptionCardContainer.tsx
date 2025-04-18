@@ -6,15 +6,23 @@ import OptionCard from '@/components/OptionCard';
 import SellCard from '@/components/SellCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ChevronDown } from 'lucide-react';
+import type { PythPriceState } from "@/hooks/usePythPrice";
+import type { MarketDataState } from "@/hooks/usePythMarketData";
 
 interface OptionCardContainerProps{
+  selectedSymbol: string;
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
+  onStrikePriceChange: (amount: string) => void;
   onPayAmountChange: (amount: string) => void;
   index: number;
+  priceData: PythPriceState;
+  marketData: MarketDataState;
+  priceLoading: boolean;
+  marketLoading: boolean;
 }
 
-export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, index}:OptionCardContainerProps) {
+export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, onStrikePriceChange, index, selectedSymbol, priceData, marketData, priceLoading, marketLoading}:OptionCardContainerProps) {
   const [active, setActive] = useState('buy')
   const [orderType, setOrderType] = useState<'market'|'limit'>('market');
   
@@ -51,12 +59,18 @@ export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayA
           </Select>
         </div>
         {active === 'buy' && (
-          <OptionCard 
+          <OptionCard
+            selectedSymbol={selectedSymbol} 
             onSymbolChange={onSymbolChange} 
             onIdxChange={onIdxChange}
+            onStrikePriceChange={onStrikePriceChange}
             onPayAmountChange={onPayAmountChange}
             active={index}
             orderType={orderType}
+            priceData={priceData}
+            marketData={marketData}
+            priceLoading={priceLoading}
+            marketLoading={marketLoading}
           />
         )}
         {active === 'sell' && (
