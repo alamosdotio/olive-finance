@@ -105,15 +105,15 @@ export default function OptionsCardTokenList({ chartToken, chartTokenLogo, type,
     const [optioninfos, setOptionInfos] = useState<Position[]>([]);
 
     useEffect(() => {
-        (async () => {
-          if (program && pub) {
-            const [pinfo, expiredpinfo, doneinfo] = await getDetailInfos(
-              program,
-              pub
-            );
-            setOptionInfos(pinfo);
-          }
-        })();
+        // (async () => {
+        //   if (program && pub) {
+        //     const [pinfo, expiredpinfo, doneinfo] = await getDetailInfos(
+        //       program,
+        //       pub
+        //     );
+        //     setOptionInfos(pinfo);
+        //   }
+        // })();
       }, [program]);
 
     

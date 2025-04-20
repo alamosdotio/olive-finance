@@ -33,7 +33,6 @@ export default function Homepage(){
         buying: {type: 'call', amount: ''},
         strikePrice: priceData.price ? formatPrice(priceData.price) : '',
     })
-    console.log(positionType, contractType)
 
     const handleBuyingAmountChange = (newValue: string) => {
       setFormValues(prev => ({

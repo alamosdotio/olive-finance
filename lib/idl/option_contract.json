@@ -241,7 +241,7 @@
             "seeds": [
               {
                 "kind": "account",
-                "path": "transfer_authority"
+                "path": "owner"
               },
               {
                 "kind": "const",
@@ -1149,10 +1149,7 @@
         {
           "name": "owner",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "funding_account"
-          ]
+          "signer": true
         },
         {
           "name": "funding_account",
@@ -1231,6 +1228,7 @@
         },
         {
           "name": "user",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1279,6 +1277,7 @@
         },
         {
           "name": "option_detail",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1341,6 +1340,7 @@
         },
         {
           "name": "pay_custody_token_account",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1404,18 +1404,21 @@
               },
               {
                 "kind": "account",
-                "path": "locked_custody.mint",
-                "account": "Custody"
+                "path": "locked_custody_mint"
               }
             ]
           }
         },
         {
-          "name": "custody_mint",
+          "name": "locked_custody_mint",
           "writable": true
         },
         {
           "name": "pay_custody_mint",
+          "writable": true
+        },
+        {
+          "name": "custody_mint",
           "writable": true
         },
         {
@@ -2087,46 +2090,7 @@
         },
         {
           "name": "pay_custody_token_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  117,
-                  115,
-                  116,
-                  111,
-                  100,
-                  121,
-                  95,
-                  116,
-                  111,
-                  107,
-                  101,
-                  110,
-                  95,
-                  97,
-                  99,
-                  99,
-                  111,
-                  117,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "pool"
-              },
-              {
-                "kind": "account",
-                "path": "pay_custody.mint",
-                "account": "Custody"
-              }
-            ]
-          }
+          "writable": true
         },
         {
           "name": "pay_custody_oracle_account"
@@ -2511,11 +2475,7 @@
         {
           "name": "owner",
           "writable": true,
-          "signer": true,
-          "relations": [
-            "receiving_account",
-            "lp_token_account"
-          ]
+          "signer": true
         },
         {
           "name": "receiving_account",
@@ -2523,7 +2483,93 @@
         },
         {
           "name": "lp_token_account",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "lp_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
         },
         {
           "name": "transfer_authority",
@@ -2619,8 +2665,7 @@
               },
               {
                 "kind": "account",
-                "path": "custody.mint",
-                "account": "Custody"
+                "path": "custody_mint"
               }
             ]
           }
@@ -2708,6 +2753,10 @@
         {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         }
       ],
       "args": [
@@ -3001,10 +3050,6 @@
         "fields": [
           {
             "name": "amount_in",
-            "type": "u64"
-          },
-          {
-            "name": "min_lp_amount_out",
             "type": "u64"
           },
           {
@@ -3457,11 +3502,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "lp_amount_in",
-            "type": "u64"
-          },
-          {
-            "name": "min_amount_out",
+            "name": "remove_amount",
             "type": "u64"
           },
           {

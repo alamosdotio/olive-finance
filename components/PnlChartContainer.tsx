@@ -16,7 +16,6 @@ interface PnlChartContainerProps{
 
 export default function PnlChartContainer({investment, numContracts, strikePrice, currentPrice, contractType, positionType} : PnlChartContainerProps){
     // const currentPrice = 132.72;
-    console.log(investment, numContracts, strikePrice)
     return (
         <div className="flex flex-col h-full border border-t-0 rounded-b-sm">
             {/* <div className="w-full flex px-5 py-1 border-b">
