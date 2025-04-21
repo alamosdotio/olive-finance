@@ -24,9 +24,17 @@ export default function Homepage(){
     const [selectedLogo, setSelectedLogo] = useState<string>('/images/solana.png')
     const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
     const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
+    const [formValues, setFormValues] = useState<{
+        selling: { currency: string; amount: string };
+        buying: {type: string; amount: string};
+        strikePrice: string
+    }>({
+        selling: { currency: 'usdc', amount: '' },
+        buying: {type: 'call', amount: ''},
+        strikePrice: priceData.price ? formatPrice(priceData.price) : '',
+    })
     const [payAmount, setPayAmount] = useState('')
     const [strikePrice, setStrikePrice] = useState('')
-
     const handleSymbolChange = (newSymbol: string) => {
       setSelectedSymbol(newSymbol);
     };

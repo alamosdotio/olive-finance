@@ -82,7 +82,7 @@ export default function PriceQuote({value}:PriceQuoteProps){
                                     <span className="text-sm font-medium text-primary">0.10%</span>
                                 </div>
                             </div>
-                            <div className="w-full flex space-x-4 justify-between">
+                            {/* <div className="w-full flex space-x-4 justify-between">
                                 <div className="w-full flex bg-backgroundSecondary rounded-[10px] justify-center items-center">
                                     chart goes here
                                 </div>
@@ -116,7 +116,7 @@ export default function PriceQuote({value}:PriceQuoteProps){
                                         <span className="text-[10px] text-foreground font-medium">$170.99</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </>
                     )}
                     <div className="w-full flex justify-start">

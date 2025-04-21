@@ -27,7 +27,13 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { ChevronDown, Search } from "lucide-react";
-import { connection, USDC_DECIMALS, WSOL_DECIMALS } from "@/utils/const";
+import {
+  connection,
+  USDC_DECIMALS,
+  USDC_MINT,
+  WSOL_DECIMALS,
+  WSOL_MINT,
+} from "@/utils/const";
 import { ContractContext } from "@/contexts/contractProvider";
 import {
   AnchorProvider,
@@ -40,6 +46,7 @@ import { OptionContract } from "@/lib/idl/option_contract";
 import * as idl from "../lib/idl/option_contract.json";
 import { getPythPrice, usePythPrice } from "@/hooks/usePythPrice";
 import { ChartStrategy } from "./ChartStrategy";
+import { PublicKey } from "@solana/web3.js";
 
 interface EarnSidebarProps {
   name: string;
@@ -56,14 +63,17 @@ export default function EarnSidebar({
   apy,
   apr,
 }: EarnSidebarProps) {
-
-  const poolData = (pooldata: any, price:number) => {
+  const poolData = (
+    pooldata: Map<string, any>,
+    ratioData: Map<string, any>,
+    price: number
+  ) => {
+    const solCustodyData = pooldata.get(WSOL_MINT.toBase58());
+    const usdcCustodyData = pooldata.get(USDC_MINT.toBase58());
     const solPoolsize =
-      (pooldata.solAmount.toNumber() + pooldata.lockedSolAmount.toNumber()) /
-      10 ** WSOL_DECIMALS;
+      solCustodyData.tokenOwned.toNumber() / 10 ** WSOL_DECIMALS;
     const usdcPoolsize =
-      (pooldata.usdcAmount.toNumber() + pooldata.lockedUsdcAmount.toNumber()) /
-      10 ** USDC_DECIMALS;
+      usdcCustodyData.tokenOwned.toNumber() / 10 ** USDC_DECIMALS;
     const total = solPoolsize * price + usdcPoolsize;
     return [
       {
@@ -74,12 +84,13 @@ export default function EarnSidebar({
         current_weightage: `${Math.round(
           ((solPoolsize * price) / total) * 100
         )}%`,
-        target_weightage: "65%",
+        target_weightage: `${ratioData
+          .get(WSOL_MINT.toBase58())
+          .target.toNumber()}%`,
         utilization: `${
           Math.round(
-            (pooldata.lockedSolAmount.toNumber() /
-              (pooldata.solAmount.toNumber() +
-                pooldata.lockedSolAmount.toNumber())) *
+            (solCustodyData.tokenLocked.toNumber() /
+              solCustodyData.tokenOwned.toNumber()) *
               100
           ) ?? 0
         }%`,
@@ -92,12 +103,13 @@ export default function EarnSidebar({
         current_weightage: `${
           100 - Math.round(((solPoolsize * price) / total) * 100)
         }%`,
-        target_weightage: "35%",
+        target_weightage: `${ratioData
+          .get(USDC_MINT.toBase58())
+          .target.toNumber()}%`,
         utilization: `${
           Math.round(
-            pooldata.lockedUsdcAmount.toNumber() /
-              (pooldata.usdcAmount.toNumber() +
-                pooldata.lockedUsdcAmount.toNumber() * 100)
+            usdcCustodyData.tokenLocked.toNumber() /
+              usdcCustodyData.tokenOwned.toNumber()
           ) ?? 0
         }%`,
       },
@@ -139,9 +151,9 @@ export default function EarnSidebar({
           provider
         );
         setProgram(program);
-        const price = await getPythPrice("Crypto.SOL/USD", Date.now())
-        const data = await sc?.getLpUserData(program);
-        setPoolDatas(poolData(data[0], price));
+        const price = await getPythPrice("Crypto.SOL/USD", Date.now());
+        const [data, ratios] = await sc?.getCustodies(program);
+        setPoolDatas(poolData(data, ratios, price));
       }
     })();
   }, [connected]);
@@ -150,30 +162,30 @@ export default function EarnSidebar({
     if (connected) {
       if (activeTab == "mint") {
         if (selectedToken == 0) {
-          sc?.onDepositWsol(
+          sc.onAddLiquidity(
             tokenAmount * 10 ** WSOL_DECIMALS,
             program,
-            publicKey
+            WSOL_MINT
           );
         } else {
-          sc?.onDepositUsdc(
+          sc.onAddLiquidity(
             tokenAmount * 10 ** USDC_DECIMALS,
             program,
-            publicKey
+            USDC_MINT
           );
         }
       } else if (activeTab == "redeem") {
         if (selectedToken == 0) {
-          sc?.onWithdrawWsol(
+          sc.onRemoveLiquidity(
             tokenAmount * 10 ** WSOL_DECIMALS,
             program,
-            publicKey
+            WSOL_MINT
           );
         } else {
-          sc?.onWithdrawUsdc(
+          sc.onRemoveLiquidity(
             tokenAmount * 10 ** USDC_DECIMALS,
             program,
-            publicKey
+            USDC_MINT
           );
         }
       }
@@ -502,8 +514,16 @@ export default function EarnSidebar({
               </DropdownMenu>
               <Input
                 type="number"
-                className="px-3 py-2 rounded-sm h-auto w-full bg-secondary border shadow-none focus:border-primary"
-                placeholder={`${activeTab === 'mint' ? selectedToken == 0 ? "SOL" : "USDC" : symbol+'-LP'}`}
+                className="px-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
+                placeholder={`${
+                  activeTab === "mint"
+                    ? selectedToken == 0
+                      ? "SOL"
+                      : "USDC"
+                    : selectedToken == 0
+                    ? "SOL"
+                    : "USDC"
+                }`}
                 onChange={(e) => handleTokenAmount(e.target.value)}
               />
               <Button

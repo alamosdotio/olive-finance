@@ -1,18 +1,28 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react"
-import { ArrowUpRight, ArrowDownRight, MoreHorizontal, ChevronDown, Info } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { StrikePriceDialog } from "./StrikePriceDialog"
-import { ExpirationDialog } from "./ExpirationDialog"
-import { addWeeks, format } from "date-fns"
+import { useContext, useEffect, useState } from "react";
+import {
+  ArrowUpRight,
+  ArrowDownRight,
+  MoreHorizontal,
+  ChevronDown,
+  Info,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { StrikePriceDialog } from "./StrikePriceDialog";
+import { ExpirationDialog } from "./ExpirationDialog";
+import { addWeeks, format } from "date-fns";
 import { WalletIcon } from "@/public/svgs/icons"
 import CardTokenList from "./CardTokenList"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 import type { PythPriceState } from "@/hooks/usePythPrice";
 import type { MarketDataState } from "@/hooks/usePythMarketData";
 import { formatPrice } from "@/utils/formatter"
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import WalletModal from "./WalletModal";
+import { ContractContext } from "@/contexts/contractProvider";
+import { WSOL_DECIMALS } from "@/utils/const";
 
 interface OptionCardProps{
   orderType: 'market' | 'limit';
@@ -28,10 +38,16 @@ interface OptionCardProps{
   marketLoading: boolean;
 }
 
+
 export default function OptionCard(
   {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange} 
   : 
   OptionCardProps) {
+    const { connected } = useWallet();
+  const wallet = useAnchorWallet();
+
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [optionSize, setOptionSize] = useState("0.1");
   const [selectedOption, setSelectedOption] = useState<'Call' | 'Put'>('Call')
   const [strikePrice, setStrikePrice] = useState('0')
   const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1))
@@ -71,17 +87,17 @@ export default function OptionCard(
   }
 
   const defaultStrikePrices = priceData.price ? getDefaultStrikePrices(priceData.price) : ['0', '0', '0']
-
   const defaultExpirations = [
-    { label: '1 week', value: addWeeks(new Date(), 1) },
-    { label: '2 weeks', value: addWeeks(new Date(), 2) },
-    { label: '3 weeks', value: addWeeks(new Date(), 3) }
-  ]
+    { label: "1 week", value: addWeeks(new Date(), 1) },
+    { label: "2 weeks", value: addWeeks(new Date(), 2) },
+    { label: "3 weeks", value: addWeeks(new Date(), 3) },
+  ];
 
-  const isDefaultStrike = defaultStrikePrices.includes(strikePrice)
-  const isDefaultExpiration = defaultExpirations.some(exp => 
-    format(exp.value, 'yyyy-MM-dd') === format(expiration, 'yyyy-MM-dd')
-  )
+  const isDefaultStrike = defaultStrikePrices.includes(strikePrice);
+  const isDefaultExpiration = defaultExpirations.some(
+    (exp) =>
+      format(exp.value, "yyyy-MM-dd") === format(expiration, "yyyy-MM-dd")
+  );
 
   const formatStrikePrice = (price: string) => {
     const num = parseFloat(price)
@@ -89,20 +105,30 @@ export default function OptionCard(
   }
 
   const handleExpirationSelect = (newExpiration: Date) => {
-    setExpiration(newExpiration)
-  }
+    setExpiration(newExpiration);
+  };
 
   const getExpirationLabel = (date: Date): string => {
-    const matchingDefault = defaultExpirations.find(exp => 
-      format(exp.value, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
-    )
-    return matchingDefault ? matchingDefault.label : format(date, 'dd MMM yyyy')
+    const matchingDefault = defaultExpirations.find(
+      (exp) => format(exp.value, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
+    );
+    return matchingDefault
+      ? matchingDefault.label
+      : format(date, "dd MMM yyyy");
+  };
+  const sc = useContext(ContractContext);
+
+  const buyOptionHandler = async () => {
+    const currentTime = Math.floor(Date.now()/1000);
+    const expTime = Math.floor(expiration.getTime()/1000)
+    const period = Math.floor((expTime - currentTime)/(3600 * 24))
+    await sc.onOpenOption(parseFloat(optionSize) * (10 ** WSOL_DECIMALS), parseFloat(strikePrice),period, expTime, selectedOption == "Call" ? true : false, true);
   }
 
   const formatChange = (change: number | null) => {
     if (change === null) return '0.00';
     return Math.abs(change).toFixed(2);
-};
+  };
 
   return (
     <div className="w-full flex flex-col flex-grow bg-card rounded-sm rounded-t-none p-6 space-y-4 border border-t-0">
@@ -165,7 +191,9 @@ export default function OptionCard(
 
       {/* Strike Price */}
       <div className="space-y-2">
-        <label className="text-secondary-foreground text-sm">Strike price</label>
+        <label className="text-secondary-foreground text-sm">
+          Strike price
+        </label>
         <div className="grid grid-cols-4 gap-2">
           {isDefaultStrike ? (
             <>
@@ -239,9 +267,7 @@ export default function OptionCard(
             </>
           ) : (
             <>
-              <Button
-                className="col-span-3 bg-gradient-primary text-backgroundSecondary rounded-sm py-2 px-4"
-              >
+              <Button className="col-span-3 bg-gradient-primary text-backgroundSecondary rounded-sm py-2 px-4">
                 {getExpirationLabel(expiration)}
               </Button>
               <Button
@@ -294,12 +320,29 @@ export default function OptionCard(
       </div>
 
       {/* Submit Button */}
-        <Button 
-          className="w-full h-10 rounded-sm bg-primary hover:bg-gradient-primary text-black my"
+      {connected ? (
+        <Button
+          onClick={() => buyOptionHandler()}
+          className="w-full rounded-sm bg-gradient-primary text-black"
+          size="lg"
+        >
+          Buy Option
+        </Button>
+      ) : (
+        <Button
+          onClick={() => setIsWalletModalOpen(true)}
+          className="w-full rounded-sm bg-gradient-primary text-black"
+          size="lg"
         >
           <WalletIcon />
           <span className="text-base font-medium">Connect Wallet</span>
         </Button>
+      )}
+
+      <WalletModal
+        isOpen={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+      />
 
       {/* Modals */}
       <StrikePriceDialog
@@ -317,5 +360,5 @@ export default function OptionCard(
         currentExpiration={expiration}
       />
     </div>
-  )
+  );
 }

@@ -29,7 +29,6 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePr
 
   useEffect(() => {
     const prices: StrikePrice[] = [];
-
     const lowerBound = marketPrice * 0.5;
     const upperBound = marketPrice * 2;
 

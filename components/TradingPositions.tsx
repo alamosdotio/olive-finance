@@ -30,29 +30,7 @@ export default function TradingPositions() {
   const [doneInfo, setDoneInfo] = useState<Transaction[]>([]);
   const { program, getDetailInfos, pub, onClaimOption, onExerciseOption } =
     useContext(ContractContext);
-  const generatePositions = (count: number): Position[] => {
-    return Array(count)
-      .fill(null)
-      .map((_, index) => {
-        const position = positions[index % positions.length];
-        return {
-          index: index,
-          token: position.token,
-          logo: position.logo,
-          symbol: position.symbol,
-          type: position.type,
-          expiry: position.expiry,
-          size: position.size,
-          pnl: position.pnl,
-          greeks: {
-            delta: position.greeks.delta,
-            gamma: position.greeks.gamma,
-            theta: position.greeks.theta,
-            vega: position.greeks.vega,
-          },
-        };
-      });
-  };
+
   const handleClickTab = (state: string) => {
     if (activeTab !== state) {
       setActiveTab(state);
@@ -82,7 +60,7 @@ export default function TradingPositions() {
   const itemsPerPage = 5;
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const itemList = generatePositions(15).slice(indexOfFirstItem, indexOfLastItem)
+  
 
   return (
     <div className="w-full h-fit border rounded-sm flex flex-col">
@@ -155,6 +133,7 @@ export default function TradingPositions() {
                 logo={position.logo}
                 symbol={position.symbol}
                 type={position.type}
+                strikePrice={position.strikePrice}
                 expiry={position.expiry}
                 size={position.size}
                 pnl={position.pnl}
@@ -162,25 +141,10 @@ export default function TradingPositions() {
                 onExercise={()=>onExercise(position.index)}
               />
             ))}
-            {itemList.map((pos, idx) => (
-              <OpenPositions
-                key={idx}
-                index={pos.index}
-                token={pos.token}
-                logo={pos.logo}
-                symbol={pos.symbol}
-                type={pos.type}
-                expiry={pos.expiry}
-                size={pos.size}
-                pnl={pos.pnl}
-                greeks={pos.greeks}
-                onExercise={()=>onExercise(pos.index)}
-              />
-            ))}
             <div className="pb-4 w-full">
                 <Pagination
                     currentPage={currentPage}
-                    totalItems={15}
+                    totalItems={optioninfos.length}
                     itemsPerPage={itemsPerPage}
                     onPageChange={setCurrentPage}
                 />

@@ -176,7 +176,6 @@ export default function CryptoNav({
         if (index !== -1) {
             handleClick(index);
             scrollToToken(index);
-            console.log(index)
         }
     };
 
