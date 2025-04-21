@@ -180,6 +180,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
             token: detail?.lockedAsset.equals(custody) ? "SOL" : "USDC",
             logo: "/images/solana.png",
             symbol: "SOL",
+            strikePrice: detail?.strikePrice!,
             type: detail?.lockedAsset.equals(custody) ? "Call" : "Put",
             expiry: new Date(
               detail?.expiredDate.toNumber() * 1000

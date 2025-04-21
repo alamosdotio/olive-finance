@@ -14,6 +14,7 @@ interface OpenPositionProps{
     token: string
     logo: string
     symbol: string
+    strikePrice: number
     type: string
     expiry: string
     size: number
@@ -27,7 +28,7 @@ interface OpenPositionProps{
     onExercise: ()=>void
 }
 
-export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks, index, onExercise} : OpenPositionProps){
+export default function OpenPositions({token, logo, symbol, type, expiry, size, pnl, greeks, strikePrice, index, onExercise} : OpenPositionProps){
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<string>('Overview')
     return (
@@ -93,7 +94,7 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                         </div>
                     </div>
                     {activeTab === 'Overview' && (
-                        <PositionOverview type={type} expiry={expiry} size={size} pnl={pnl}/>
+                        <PositionOverview type={type} expiry={expiry} size={size} pnl={pnl} strikePrice={strikePrice}/>
                     )}
                     {activeTab === 'Greeks' &&(
                         <PositionGreeks delta={greeks.delta} gamma={greeks.gamma} theta={greeks.theta} vega={greeks.vega}/>

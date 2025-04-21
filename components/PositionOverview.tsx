@@ -5,9 +5,10 @@ interface PositionOverviewProps{
     expiry: string
     size: number
     pnl: number
+    strikePrice: number
 }
 
-export default function PositionOverview({type, expiry, size, pnl} : PositionOverviewProps){
+export default function PositionOverview({type, expiry, size, pnl, strikePrice} : PositionOverviewProps){
     return (
         <div className='w-full flex flex-col space-y-1'>
             <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
@@ -36,7 +37,7 @@ export default function PositionOverview({type, expiry, size, pnl} : PositionOve
                     <StrikePriceIcon />
                     <span>Strike Price:</span>
                 </div>
-                <span>strike price</span>
+                <span>{strikePrice}</span>
             </div>
             <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
                 <div className='flex space-x-2 items-center'>

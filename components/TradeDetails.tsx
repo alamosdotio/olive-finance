@@ -564,8 +564,8 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
     <div className="w-full border rounded-sm">
       <div className="w-full p-3 flex flex-col border-b">
         <span>Transaction ID: {id}</span>
-        <span>Type: Put</span>
-        <span>Amount: 5 Contracts</span>
+        <span>Type: Put</span> {/*change to actual type if its call or put*/}
+        <span>Amount: 5 Contracts</span> {/*change to actual number/amount of contracts*/}
       </div>
       <Table className="w-full">
         <TableHeader>
