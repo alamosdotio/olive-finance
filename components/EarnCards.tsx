@@ -51,8 +51,11 @@ export default function EarnCards (){
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4">
             {currentCards.map((strategy, index) => (
                 <Sheet key={index}>
-                    <SheetTrigger>
-                        <Card className="w-full hover:border-primary rounded-sm">
+                    <SheetTrigger className="relative group cursor-pointer">
+                        <div
+                            className="absolute inset-2 blur opacity-25 group-hover:bg-gradient-primary group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+                        </div>
+                        <Card className="w-full hover:border-primary/45 rounded-sm relative">
                             <CardHeader className="p-5 border-b">
                                 <div className="flex justify-start space-x-2 items-center">
                                     <EarnCardlogo strategy={strategy}/>

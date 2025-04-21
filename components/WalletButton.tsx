@@ -21,7 +21,7 @@ export default function WalletButton({name, iconPath, onClick} : WalletButtonPro
     return (
         <Button
             variant="outline"
-            className="flex items-center justify-start w-full h-[40px] px-[16px] py-[8px]"
+            className="flex items-center justify-start w-full h-[40px] px-[16px] py-[8px] bg-inherit border-border hover:bg-secondary"
             onClick={onClick}
         >
             <Image src={iconPath} alt={name} width={24} height={24} className="rounded-full" />

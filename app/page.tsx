@@ -33,29 +33,8 @@ export default function Homepage(){
         buying: {type: 'call', amount: ''},
         strikePrice: priceData.price ? formatPrice(priceData.price) : '',
     })
-
-    const handleBuyingAmountChange = (newValue: string) => {
-      setFormValues(prev => ({
-        ...prev,
-        buying: {...prev.buying, amount: newValue}
-      }))
-    }
-
-    const handleSellingAmountChange = (newValue: string) => {
-      setFormValues(prev => ({
-        ...prev,
-        selling: { ...prev.selling, amount: newValue }
-      }));
-    };
-
-    const handleStrikePriceChange = (newValue: string) => {
-      setFormValues(prev => ({
-        ...prev,
-        strikePrice: newValue
-      }))
-    }
-    
-    
+    const [payAmount, setPayAmount] = useState('')
+    const [strikePrice, setStrikePrice] = useState('')
     const handleSymbolChange = (newSymbol: string) => {
       setSelectedSymbol(newSymbol);
     };
@@ -67,7 +46,6 @@ export default function Homepage(){
     const handleIndexChange = (newIdx: number) => {
       setTokenIdx(newIdx)
     }
-  
     
     return (
         <>
@@ -83,26 +61,26 @@ export default function Homepage(){
               marketLoading={marketLoading}
               type="options"
             />
-            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4 md:pb-0")}>
-                <div className="flex w-full pt-4 lg:space-x-4 justify-between">
-                  <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:w-4/6 lg:flex flex-col space-y-4")}>
-                    <TradingViewChartContainer 
-                      symbol={selectedSymbol} 
-                      logo={selectedLogo}
-                      investment={formValues.selling.amount}
-                      numContracts={formValues.buying.amount}
-                      strikePrice={formValues.strikePrice}
-                      currentPrice={priceData.price!}
-                      positionType={positionType}
-                      contractType={contractType}
-                    />
-                    <div className="w-full">
-                    <ProtectedRoute fallback={<TradingPositionsFallback/>}>
-                        <TradingPositions />
-                    </ProtectedRoute>
+            <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4")}>
+                <div className="w-full pt-4 justify-between grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:col-span-8 lg:flex flex-col space-y-4")}>
+                      <TradingViewChartContainer 
+                        symbol={selectedSymbol} 
+                        logo={selectedLogo}
+                        numContracts={'2.2'}
+                        investment={payAmount}
+                        strikePrice={strikePrice}
+                        currentPrice={priceData.price!}
+                        positionType={positionType}
+                        contractType={contractType}
+                      />
+                      <div className="w-full">
+                      <ProtectedRoute fallback={<TradingPositionsFallback/>}>
+                          <TradingPositions />
+                      </ProtectedRoute>
+                    </div>
                   </div>
-                  </div>
-                  <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:w-2/6 flex-col space-y-4")}>
+                  <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:col-span-4 flex-col space-y-4")}>
                     {/* <OptionsCard 
                       chartToken={selectedSymbol}
                       chartTokenLogo={selectedLogo}
@@ -115,10 +93,21 @@ export default function Homepage(){
                       marketData={marketData}
                       priceLoading={priceLoading}
                     /> */}
-                    <OptionCardContainer />
+                    <OptionCardContainer 
+                      selectedSymbol={selectedSymbol}
+                      onSymbolChange={handleSymbolChange} 
+                      onIdxChange={handleIndexChange}
+                      index={tokenIdx}
+                      onStrikePriceChange={setStrikePrice}
+                      onPayAmountChange={setPayAmount}
+                      priceData={priceData}
+                      marketData={marketData}
+                      priceLoading={priceLoading}
+                      marketLoading={marketLoading}
+                    />
                     <div className="w-full flex flex-col space-y-4">
-                      <PriceQuote value={formValues.selling.amount}/>
-                      <GreekPopup value={formValues.selling.amount}/>
+                      <PriceQuote value={payAmount}/>
+                      <GreekPopup value={payAmount}/>
                       {active === 'trade' && (
                         <ProtectedRoute fallback={<TradingPositionsFallback/>}>
                           <TradingPositions />
@@ -127,19 +116,6 @@ export default function Homepage(){
                     </div>
                   </div>
                 </div>
-                
-                {/* <div className="flex w-full pb-6 space-x-4 h-auto">
-                  <div className="w-full lg:w-4/6">
-                    <ProtectedRoute fallback={<TradingPositionsFallback/>}>
-                        <TradingPositions />
-                    </ProtectedRoute>
-                  </div> 
-  
-                  <div className="w-2/6 hidden lg:flex flex-col space-y-4">
-                    <PriceQuote value={formValues.selling.amount}/>
-                    <GreekPopup value={formValues.selling.amount}/>
-                  </div> 
-                </div> */}
             </div>
             <div className="w-full p-3 pb-10 bottom-0 sticky border-t bg-background z-10 lg:hidden">
               <div className="grid grid-cols-2 space-x-2">

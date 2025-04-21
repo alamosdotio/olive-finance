@@ -51,8 +51,8 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full h-full flex flex-col md:h-auto md:max-w-2xl md:max-h-[90%] p-[40px]">
-        <DialogHeader className="space-y-0 h-fit md:h-auto flex flex-row items-center justify-between md:pb-[20px]">
+      <DialogContent className="w-full h-full flex flex-col md:h-auto md:max-w-2xl md:max-h-[90%] p-10 bg-accent">
+        <DialogHeader className="space-y-0 h-fit md:h-auto flex flex-row items-center justify-between md:pb-5">
           <DialogTitle className="text-2xl">Connect Wallet</DialogTitle>
           <Button 
             className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-[12px] border md:hidden"
@@ -94,7 +94,7 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
           </div>
           <Button
             variant="selected"
-            className="w-full flex justify-between"
+            className="w-full flex justify-between rounded-sm"
             onClick={() => setIsMoreWalletOpen(!isMoreWalletOpen)}
           >
             {isMoreWalletOpen ? "Less" : "More"} Wallets

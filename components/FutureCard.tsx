@@ -12,19 +12,28 @@ import { addWeeks, format } from "date-fns";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { WalletIcon } from "@/public/svgs/icons";
 import CardTokenList from "./CardTokenList";
+import type { PythPriceState } from "@/hooks/usePythPrice";
+import type { MarketDataState } from "@/hooks/usePythMarketData"
+import { formatPrice } from "@/utils/formatter";
 
 interface FutureCardProps {
   type: 'perps' | 'dated';
   orderType: 'market' | 'limit';
+  selectedSymbol: string;
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
   active: number;
+  priceData: PythPriceState;
+  marketData: MarketDataState;
+  priceLoading: boolean;
+  marketLoading: boolean;
 }
 
-export default function FutureCard({ type, orderType, onSymbolChange, onIdxChange, active}: FutureCardProps) {
+export default function FutureCard({ type, orderType, onSymbolChange, onIdxChange, active ,selectedSymbol, priceData, marketData, priceLoading, marketLoading}: FutureCardProps) {
   const [selectedTx, setSelectedTx] = useState('long');
-  const [leverage, setLeverage] = useState(1);
+  const [leverage, setLeverage] = useState('1');
   const [amount, setAmount] = useState("");
+  const [payCurrency, setPayCurrency] = useState(selectedSymbol)
   const [limitPrice, setLimitPrice] = useState("");
   const [showExpirationModal, setShowExpirationModal] = useState(false);
   const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1));
@@ -40,7 +49,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
 
   const entryPrice = 107.29;
   const priceChange = 2.5;
-  const isPositive = true;
+  const isPositive = marketData.change24h !== null && marketData.change24h > 0;
 
   const defaultExpirations = [
     { label: '1 week', value: addWeeks(new Date(), 1) },
@@ -58,23 +67,28 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
     );
     return matchingDefault ? matchingDefault.label : format(date, 'dd MMM yyyy');
   };
+
+  const formatChange = (change: number | null) => {
+    if (change === null) return '0.00';
+    return Math.abs(change).toFixed(2);
+  };
   
   return (
     <div className="border rounded-sm rounded-t-none flex flex-col h-fit py-0.5">
       <div className={`flex-1 p-6 space-y-4`}>
         {/* Asset Selection & Price */}
         <div className="flex justify-between gap-3 items-start">
-          <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="chart"/>
+          <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="chart"/>
           {orderType === 'market' ? (
             <div className="text-right h-12">
-              <div className="text-2xl font-bold tracking-tight">${entryPrice.toFixed(2)}</div>
+              <div className="text-2xl font-semibold tracking-tight">${priceData.price ? formatPrice(priceData.price) : priceLoading}</div>
               <div className={`text-sm font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                {isPositive ? '+' : '-'}{priceChange}%
+                {isPositive ? '+' : '-'}{marketData.change24h ? formatChange(marketData.change24h) : marketLoading}%
               </div>
             </div>
           ) : (
             <div className="space-y-1">
-              <div className="w-32 rounded-sm p-2 h-12 flex flex-col border items-start justify-center">
+              <div className="w-32 rounded-sm p-2 h-12 flex flex-col border items-start justify-center focus-within:border-primary">
                 <span className="text-xs text-secondary-foreground">Limit Price:</span>
                 <Input
                   type="text"
@@ -95,7 +109,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
             className={`h-12 rounded-lg transition-all group ${
               selectedTx === 'long' 
                 ? 'bg-green-500/10 text-green-500 border-green-500 hover:bg-green-500/20' 
-                : 'hover:border-green-500 hover:text-green-500 border-border/40'
+                : 'hover:border-green-500 hover:text-green-500 border-border/40 hover:bg-green-500/20'
             }`}
             onClick={() => setSelectedTx('long')}
           >
@@ -109,7 +123,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
             className={`h-12 rounded-lg transition-all group ${
               selectedTx === 'short' 
                 ? 'bg-red-500/10 text-red-500 border-red-500 hover:bg-red-500/20' 
-                : 'hover:border-red-500 hover:text-red-500 border-border/40'
+                : 'hover:border-red-500 hover:text-red-500 border-border/40 hover:bg-red-500/20'
             }`}
             onClick={() => setSelectedTx('short')}
           >
@@ -147,7 +161,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
                     onClick={() => setExpiration(exp.value)}
                     className={`flex-1 py-2 px-4 rounded-sm ${
                       format(expiration, 'yyyy-MM-dd') === format(exp.value, 'yyyy-MM-dd')
-                      ? 'bg-gradient-primary text-backgroundSecondary'
+                      ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
                       : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
                   }`}
                   >
@@ -201,14 +215,14 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
           </div>
           <div className="relative">
             <div className="absolute left-3 top-1/2 -translate-y-1/2">
-              <CardTokenList onSymbolChange={onSymbolChange} onIdxChange={onIdxChange} active={active} type="paying"/>
+              <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="paying"/>
             </div>
             <Input
               type="number"
               value={amount}
               placeholder="0.00"
               onChange={(e) => setAmount(e.target.value)}
-              className="pl-12 h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground"
+              className="pl-12 h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
               step="0.1"
               min="0.1"
             />
@@ -219,7 +233,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold tracking-tight">{leverage}×</span>
+              <span className="text-sm text-secondary-foreground font-medium">Leverage</span>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -232,53 +246,80 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
               </TooltipProvider>
             </div>
             <div className="text-sm text-secondary-foreground">
-              Max position: {(parseFloat(amount) * leverage).toFixed(2)} SOL
+              Max position: {amount === '' ? 0 : (parseFloat(amount) * parseFloat(leverage)).toFixed(2)} SOL
             </div>
           </div>
-          <div className="h-12 w-full px-4 pt-2 border rounded-sm">
-            <Slider 
-              min={1}
-              max={100}
-              step={0.1}
+          <div className="w-full flex gap-2">
+            <Input
+              type="number"
               value={leverage}
-              onChange={(value) => setLeverage(Array.isArray(value) ? value[0]: value)}
-              marks={leverageMarks}
-              className="!transition-none"
-              styles={{
-                rail: {
-                  height: 4,
-                  backgroundColor: 'var(--secondary-foreground)',
-                  borderRadius: 0
-                },
-                track: {
-                  height: 4,
-                  backgroundImage: 'linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))',
-                  borderRadius: 0
-                },
-                handle: {
-                  height: 15,
-                  width: 15,
-                  backgroundColor: 'var(--primary-foreground)',
-                  borderWidth: 2,
-                  borderColor: 'var(--primary)',
-                  marginTop: -5,
-                  transition: 'none',
-                  opacity:'1',
-                },}}
-              dotStyle={{
-                width: 4,
-                height: 14,
-                top: -4,
-                backgroundColor: 'var(--secondary-foreground)',
-                borderRadius: 20,
-                border: 0,
-                marginLeft: -1,
-                transition: 'none'
+              placeholder="1"
+              onChange={(e) => {
+                const rawValue = e.target.value;
+                const num = Number(rawValue);
+
+                if (rawValue === '') {
+                  setLeverage('');
+                  return;
+                }
+
+                if (isNaN(num)) return;
+
+                const clamped = Math.min(Math.max(num, 1), 100);
+                if (clamped !== parseFloat(leverage)) {
+                  setLeverage(clamped.toString());
+                }
               }}
-              activeDotStyle={{
-                backgroundColor: 'var(--primary)'
-              }}
+              className="w-16 h-12 text-2xl text-center font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
+              step="0.1"
+              min="1"
+              max="100"
             />
+            <div className="h-12 w-full px-4 pt-2 border rounded-sm">
+              <Slider 
+                min={1}
+                max={100}
+                step={0.1}
+                value={parseFloat(leverage)}
+                onChange={(value) => setLeverage((Array.isArray(value) ? value[0]: value).toString())}
+                marks={leverageMarks}
+                className="!transition-none"
+                styles={{
+                  rail: {
+                    height: 4,
+                    backgroundColor: 'var(--secondary-foreground)',
+                    borderRadius: 0
+                  },
+                  track: {
+                    height: 4,
+                    backgroundImage: 'linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))',
+                    borderRadius: 0
+                  },
+                  handle: {
+                    height: 15,
+                    width: 15,
+                    backgroundColor: 'var(--primary-foreground)',
+                    borderWidth: 2,
+                    borderColor: 'rgb(var(--primary))',
+                    marginTop: -5,
+                    transition: 'none',
+                    opacity:'1',
+                  },}}
+                dotStyle={{
+                  width: 4,
+                  height: 14,
+                  top: -4,
+                  backgroundColor: 'var(--secondary-foreground)',
+                  borderRadius: 20,
+                  border: 0,
+                  marginLeft: -1,
+                  transition: 'none'
+                }}
+                activeDotStyle={{
+                  backgroundColor: 'rgb(var(--primary))'
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -286,7 +327,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
       {/* Connect Wallet Button */}
       <div className="p-6 pt-0">
         <Button 
-          className="w-full h-10 rounded-sm bg-gradient-primary hover:bg-primary/90 text-black"
+          className="w-full h-10 rounded-sm bg-primary hover:bg-gradient-primary text-black"
         >
           <WalletIcon />
           <span className="text-base font-medium">Connect Wallet</span>

@@ -23,7 +23,7 @@ export default {
           foreground: 'var(--popover-foreground)',
         },
         primary: {
-          DEFAULT: 'var(--primary)',
+          DEFAULT: 'rgb(var(--primary))',
           foreground: 'var(--primary-foreground)',
         },
         secondary: {

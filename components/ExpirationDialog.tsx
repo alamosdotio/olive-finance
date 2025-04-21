@@ -65,7 +65,7 @@ export function ExpirationDialog({ open, onOpenChange, onSelectExpiration, curre
               value={searchExpiration}
               onChange={(e) => setSearchExpiration(e.target.value)}
               placeholder="Search for expiration"
-              className="pl-10 py-2 pr-2 border-border placeholder:text-muted"
+              className="pl-10 py-2 pr-2 rounded-sm border-border placeholder:text-muted focus:border-primary"
             />
           </div>
 
@@ -85,7 +85,7 @@ export function ExpirationDialog({ open, onOpenChange, onSelectExpiration, curre
                   }}
                   className={`w-full justify-between h-auto py-3 ${
                     isSameDay(currentExpiration, exp.date)
-                    ? 'bg-gradient-primary text-backgroundSecondary'
+                    ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
                     : 'bg-backgroundSecondary text-secondary-foreground hover:bg-secondary'
                   }`}
                 >

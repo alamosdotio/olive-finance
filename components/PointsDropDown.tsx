@@ -31,7 +31,7 @@ export default function PointsDropDown({setActive} : PointsDropDownProps){
         <div>
             <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
                 <DropdownMenuTrigger asChild className="hidden sm:flex">
-                    <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-sm p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB] hover:bg-[rgb(254,237,203,0.2)]")}>
+                    <div className={cn((isOpen ? 'border-[#FEEDCB] bg-[rgb(254,237,203,0.2)]' : 'border bg-inherit'),"border rounded-sm p-2 cursor-pointer flex justify-center items-center hover:border-[#FEEDCB]/55")}>
                         <PointsIcon />
                     </div>
                 </DropdownMenuTrigger>
