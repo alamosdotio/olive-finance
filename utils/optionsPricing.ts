@@ -36,8 +36,6 @@ export function calculateVolatility(prices: number[], windowSize: number = 30): 
     const today = new Date();
     const daysToExpiry = Math.max(differenceInSeconds(expiryDate, today));
     const period = daysToExpiry / 86400;
-    console.log(expiryDate)
-    console.log(period)
   
     const base = Math.sqrt(period) * 0.6; //volatility and time period
     

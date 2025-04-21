@@ -13,7 +13,7 @@ export default function PositionAdvancedGreeks(){
                     <span className="text-sm font-medium text-primary">Show Advanced Greeks</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="w-full h-full md:h-auto md:w-[420px] px-3 py-5 flex flex-col space-y-3 md:space-y-[14px] bg-accent sm:rounded-[20px] gap-0">
+            <DialogContent className="w-full h-full md:h-auto md:w-[420px] px-3 py-5 flex flex-col space-y-3 md:space-y-[14px] bg-accent sm:rounded-sm gap-0">
                 <DialogTitle className="w-full h-fit p-2 md:py-0 flex items-center justify-between md:justify-start">
                     <span className="text-base font-medium text-foreground">Advanced Greeks</span>
                     <Button 
@@ -25,7 +25,7 @@ export default function PositionAdvancedGreeks(){
                 </DialogTitle>
                 <div className="w-full flex flex-col space-y-3 md:space-y-2">
                     <div className="w-full px-2">
-                        <div className="w-full border p-3 rounded-[14px] flex flex-col space-y-[6px]">
+                        <div className="w-full border p-3 rounded-sm flex flex-col space-y-[6px]">
                             <h2 className="text-sm font-medium text-foreground">
                                 Second Order 
                             </h2>
@@ -83,7 +83,7 @@ export default function PositionAdvancedGreeks(){
                         </div>
                     </div>
                     <div className="w-full px-2">
-                        <div className="w-full border p-3 rounded-[14px] flex flex-col space-y-[6px]">
+                        <div className="w-full border p-3 rounded-sm flex flex-col space-y-[6px]">
                             <h2 className="text-sm font-medium text-foreground">
                                 Third Order 
                             </h2>
@@ -136,7 +136,7 @@ export default function PositionAdvancedGreeks(){
                 </div>
                 <div className="w-full md:flex justify-end hidden">
                     <Button 
-                        className="bg-inherit border px-4 py-2 shadow-none text-sm text-foreground rounded-[12px]"
+                        className="bg-inherit border px-4 py-2 shadow-none text-sm text-foreground rounded-sm"
                         onClick={() => setIsOpen(false)}
                     >
                         Close

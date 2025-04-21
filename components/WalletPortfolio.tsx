@@ -5,7 +5,7 @@ import { Separator } from "./ui/separator";
 export default function WalletPortfolio(){
     return (
         <div className="w-full flex flex-col space-y-2">
-            <div className="w-full flex flex-col p-4 pt-3 border rounded-[20px]">
+            <div className="w-full flex flex-col p-4 pt-3 border rounded-sm">
                 <div className="w-full flex justify-between">
                     <div className="flex items-center space-x-[6px]">
                         <span className="text-sm text-foreground font-medium h-4 flex items-center">Holdings</span>
@@ -70,14 +70,14 @@ export default function WalletPortfolio(){
                     </div>
                 </div>
             </div>
-            <div className="w-full flex justify-between items-center py-3 px-4 border rounded-full h-10">
+            <div className="w-full flex justify-between items-center py-3 px-4 border rounded-sm h-10">
                 <span className="text-sm text-foreground font-medium flex items-center h-4">Options</span>
                 <div className="flex space-x-4 items-center">
                     <span className="text-sm text-foreground font-medium flex items-center h-4">$694.56</span>
                     <span className="flex items-center h-4 text-secondary-foreground"><ArrowDown /></span>
                 </div>
             </div>
-            <div className="w-full flex justify-between items-center py-3 px-4 border rounded-full h-10">
+            <div className="w-full flex justify-between items-center py-3 px-4 border rounded-sm h-10">
                 <span className="text-sm text-foreground font-medium flex items-center h-4">Futures</span>
                 <div className="flex space-x-4 items-center">
                     <span className="text-sm text-foreground font-medium flex items-center h-4">$369.67</span>

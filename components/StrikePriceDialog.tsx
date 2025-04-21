@@ -25,11 +25,11 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice, currentPr
   const [showCustomStrike, setShowCustomStrike] = useState(false)
 
   const allStrikePrices: StrikePrice[] = [
-    { price: '2000', liquidity: '384.2K' },
-    { price: '2100', liquidity: '384.2K' },
-    { price: '2200', liquidity: '384.2K' },
-    { price: '2300', liquidity: '384.2K' },
-    { price: '2400', liquidity: '384.2K' },
+    { price: '160', liquidity: '168.1K' },
+    { price: '170', liquidity: '186.7K' },
+    { price: '180', liquidity: '195.3K' },
+    { price: '190', liquidity: '205.6K' },
+    { price: '200', liquidity: '214.3K' },
   ]
 
   const filteredStrikePrices = allStrikePrices.filter(strike => 

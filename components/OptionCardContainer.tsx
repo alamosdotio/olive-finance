@@ -10,7 +10,7 @@ import { ChevronDown } from 'lucide-react';
 export default function OptionCardContainer() {
   const [active, setActive] = useState('buy')
   return (
-      <div className="w-full flex flex-col space-y-0">
+      <div className="w-full flex flex-col h-[550px] space-y-0">
         <div className='w-full flex items-center justify-between border rounded-sm rounded-b-none px-4 py-1 h-[42px]'>
           <div className="flex gap-4">
             <Button 
@@ -27,7 +27,7 @@ export default function OptionCardContainer() {
             </Button>
           </div>
           <Select defaultValue='market'>
-            <SelectTrigger className='w-fit bg-inherit px-3 gap-3 text-secondary-foreground h-[42px]'>
+            <SelectTrigger className='w-fit bg-inherit px-3 gap-3 text-secondary-foreground h-[42px] focus:outline-none'>
               <SelectValue />
               <ChevronDown size={12} />
             </SelectTrigger>

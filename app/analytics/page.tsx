@@ -2,12 +2,8 @@ import TradeDetails from "@/components/TradeDetails";
 
 export default function Analytics(){
     const transaction_ids = [
-        "TXN1234567890",
-        "TXN9876543210",
-        "TXN2468135790",
-        "TXN1122334455",
-        "TXN9988776655",
-        "TXN5566778899"
+        "5CSCCx9kpJZXVs5jW38SScSiYN2myogLNoJa6GFXTDKMzgxuUWMWCwAAiWRa1CSXRLdFhXPMSuVvNpcfa3VrZwXG",
+        // "3MZoKe9PHLCUkUg3DkkB6H6b6zMnqhP5ViFkSVGULcnmiCrDUDhKTBLjnGLYBaxr2pzVEHzQs6JnY2MwBLbQcv9"
     ]
     
     return (

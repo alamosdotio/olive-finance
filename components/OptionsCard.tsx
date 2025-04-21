@@ -60,7 +60,7 @@ const OptionsCard = ({
     marketData,
     priceLoading
 }: OptionsCardProps) => {
-    const { onBuyOption, onSellOption } = useContext(ContractContext);
+    const { onOpenOption, onCloseOption } = useContext(ContractContext);
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     const [isExpiry, setIsExpiry] = useState(false)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -320,19 +320,21 @@ const OptionsCard = ({
         )
         if(isSwapped) {
             console.log("sell option from users")
-            onSellOption(parseFloat(formValues.selling.amount))
+            // onSellOption(parseFloat(formValues.selling.amount))
         } else {
             console.log("buy option from pool")
             if (formValues.buying.type === "call" ) {
-                const result = await onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
-                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), true, false)
-                //formValues.selling.currency === "usdc" check to premium payent unit
-                setIsToast(!isToast)
+            console.log("sell option from users")
+
+                // const result = await onBuyOption(parseFloat(formValues.selling.amount) * 10 ** WSOL_DECIMALS, parseFloat(formValues.strikePrice), 
+                // parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), true, false)
+                // //formValues.selling.currency === "usdc" check to premium payent unit
+                // setIsToast(!isToast)
             } else {
-               const result = await onBuyOption(parseFloat(formValues.selling.amount) * 10 ** USDC_DECIMALS, parseFloat(formValues.strikePrice), 
-                parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), false, false)
-                // TODO: result == true ? contgratulation toast : faild/retry toast
-                setIsToast(!isToast)
+            //    const result = await onBuyOption(parseFloat(formValues.selling.amount) * 10 ** USDC_DECIMALS, parseFloat(formValues.strikePrice), 
+            //     parseFloat(formValues.expiry),Math.ceil(date.getTime()/1000), false, false)
+            //     // TODO: result == true ? contgratulation toast : faild/retry toast
+            //     setIsToast(!isToast)
             }
             
         }
