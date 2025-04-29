@@ -3,10 +3,12 @@ import { Button } from "./ui/button";
 import { Minus, Plus } from "lucide-react";
 import { PnLChart } from "./PnlChart";
 import { formatPrice } from "@/utils/formatter";
+import { convertPrice } from "@/utils/optionsPricing";
+import { usePythPrice } from "@/hooks/usePythPrice";
 
 interface PnlChartContainerProps{
     investment:string
-    numContracts:string
+    premium:string
     strikePrice:string
     currentPrice:number
     contractType:string
@@ -14,8 +16,8 @@ interface PnlChartContainerProps{
 }
 
 
-export default function PnlChartContainer({investment, numContracts, strikePrice, currentPrice, contractType, positionType} : PnlChartContainerProps){
-    // const currentPrice = 132.72;
+export default function PnlChartContainer({investment, premium, strikePrice, currentPrice, contractType, positionType} : PnlChartContainerProps){
+    const invested = convertPrice(parseFloat(investment), currentPrice)
     return (
         <div className="flex flex-col h-full border border-t-0 rounded-b-sm">
             {/* <div className="w-full flex px-5 py-1 border-b">
@@ -40,11 +42,11 @@ export default function PnlChartContainer({investment, numContracts, strikePrice
             <div className="w-full h-full">
             <PnLChart 
                 strikePrice={parseFloat(strikePrice)}
-                premium={parseFloat(investment)}
+                premium={parseFloat(premium)}
                 contractType={contractType.toLowerCase()}
                 positionType={positionType.toLowerCase()}
                 currentPrice={parseFloat(formatPrice(currentPrice))}
-                multiplier={parseFloat(numContracts)}
+                invested={invested}
                 />
             </div>
             <div className="w-full flex px-5 py-2 border-t justify-between">

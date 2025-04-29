@@ -35,7 +35,7 @@ interface PnLChartProps {
   contractType: string;
   positionType: string;
   currentPrice?: number;
-  multiplier?: number;
+  invested: number;
 }
 
 const calculatePnL = (
@@ -44,26 +44,28 @@ const calculatePnL = (
   premium: number,
   contractType: string,
   positionType: string,
-  multiplier: number = 1
+  invested: number,
 ) => {
   let pnl = 0;
-  const premiumPerContract = premium / multiplier;
+  const multiplier = Math.floor(invested/premium)
+
+  console.log(multiplier)
 
   if (contractType === 'call') {
     if (positionType === 'long') {
       // Long Call: PnL = (max(Price - Strike, 0) - Premium) × Multiplier
-      pnl = (Math.max(price - strikePrice, 0) - premiumPerContract) * multiplier;
+      pnl = (Math.max(price - strikePrice, 0) - premium);
     } else {
       // Short Call: PnL = (Premium - max(Price - Strike, 0)) × Multiplier
-      pnl = (premiumPerContract - Math.max(price - strikePrice, 0)) * multiplier;
+      pnl = (premium - Math.max(price - strikePrice, 0));
     }
   } else {
     if (positionType === 'long') {
       // Long Put: PnL = (max(Strike - Price, 0) - Premium) × Multiplier
-      pnl = (Math.max(strikePrice - price, 0) - premiumPerContract) * multiplier;
+      pnl = (Math.max(strikePrice - price, 0) - premium);
     } else {
       // Short Put: PnL = (Premium - max(Strike - Price, 0)) × Multiplier
-      pnl = (premiumPerContract - Math.max(strikePrice - price, 0)) * multiplier;
+      pnl = (premium - Math.max(strikePrice - price, 0));
     }
   }
   return pnl;
@@ -75,7 +77,7 @@ const generatePnLData = ({
   contractType,
   positionType,
   currentPrice = strikePrice,
-  multiplier = 1,
+  invested,
 }: PnLChartProps) => {
   // Generate price range ±20% of strike price
   const range = strikePrice * 0.2;
@@ -90,7 +92,7 @@ const generatePnLData = ({
   );
 
   const pnlData = priceRange.map(price =>
-    calculatePnL(price, strikePrice, premium, contractType, positionType, multiplier)
+    calculatePnL(price, strikePrice, premium, contractType, positionType, invested)
   );
 
   const maxPnL = Math.max(...pnlData);
@@ -129,6 +131,8 @@ const generatePnLData = ({
       }
     ],
     pnlRange,
+    maxPnL,
+    minPnL,
   };
 };
 
@@ -138,19 +142,18 @@ export function PnLChart({
   contractType,
   positionType,
   currentPrice,
-  multiplier = 1,
+  invested = 1,
 }: PnLChartProps) {
   const chartId = useId();
-  const { datasets, labels, priceRange, pnlRange } = generatePnLData({
+  const { datasets, labels, priceRange, pnlRange, maxPnL, minPnL } = generatePnLData({
     strikePrice,
     premium,
     contractType,
     positionType,
     currentPrice,
-    multiplier,
+    invested,
   });
-
-  const premiumPerContract = premium / multiplier;
+  const premiumPerContract = premium;
   const breakEvenPrice = contractType === 'call' 
     ? strikePrice + premiumPerContract
     : strikePrice - premiumPerContract;
@@ -195,7 +198,7 @@ export function PnLChart({
           text: "Profit/Loss ($)",
           color: "rgba(77, 79, 88, 0.7)",
         },
-        min: -pnlRange,
+        min: (-pnlRange),
         max: pnlRange,
       },
     },
@@ -210,7 +213,7 @@ export function PnLChart({
             return `SOL Price: $${Math.round(price).toLocaleString()}`;
           },
           label: (context) => {
-            return `P&L: $${context.parsed.y.toLocaleString()}`;
+            return `P&L: $${(context.parsed.y * Math.max(Math.floor(invested / premium), 1)).toLocaleString()}`;
           },
         },
       },

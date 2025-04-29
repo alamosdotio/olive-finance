@@ -9,7 +9,7 @@ interface GreekPopupProps{
 export default function GreekPopup({value} : GreekPopupProps){
     const [dropDownActive, setDropDownActive] = useState<boolean>(true);
     return (
-        <div className={value === '' ? 'hidden' : 'w-full border rounded-sm flex flex-col'}>
+        <div className={value === '' || parseFloat(value) <= 0 ? 'hidden' : 'w-full border rounded-sm flex flex-col'}>
             <div 
                 className="w-full flex justify-between items-center px-6 py-4"
                 onClick={() => setDropDownActive(!dropDownActive)}
