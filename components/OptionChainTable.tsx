@@ -19,7 +19,7 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
     const [contract, setContract] = useState<'Call' | 'Put'>('Call')
     const tokens = tokenList;
     return (
-        <main className="w-full flex flex-col space-y-4"  style={{ height: 'calc(100vh - 145px)' }}>
+        <main className="w-full flex flex-col space-y-4"  style={{ height: 'calc(100vh - 155px)' }}>
             <section className="w-full flex flex-col border rounded-sm">
                 <div className="flex flex-col space-y-1 border-b p-4">
                     <span className="text-base text-secondary-foreground font-medium">{tokens[tokenIdx].symbol} ${priceData.price ? formatPrice(priceData.price) : priceLoading}</span>

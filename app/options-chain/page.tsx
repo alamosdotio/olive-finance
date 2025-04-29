@@ -37,7 +37,7 @@ export default function OptionChain(){
                 marketLoading={marketLoading}
                 type="optionchain"
             />
-            <div className="grid grid-cols-12 gap-3 py-3">
+            <div className="grid grid-cols-12 gap-4 py-4">
                 <div className="col-span-9">
                     <OptionChainTable 
                         tokenIdx={tokenIdx}
