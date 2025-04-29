@@ -162,8 +162,8 @@ export default function TradingViewTopNav({
                         <Separator orientation="vertical"/>
                     </div>
                     <div className="py-1 flex items-center">
-                        <Button className='bg-inherit p-0 text-foreground hover:text-primary w-fit h-fit gap-[6px] flex items-center'
-                            onClick={() => router.push('/options-chain')}
+                        <Button className={`bg-inherit p-0 w-fit h-fit gap-[6px] flex items-center ${type === 'options' ? 'text-foreground hover:text-primary' : 'text-primary hover:text-foreground'}`}
+                            onClick={() => router.push(`${type === 'options' ? '/options-chain' : '/'}`)}
                         >
                             <TableColumnsSplit />
                             <span className="text-sm font-medium hidden md:flex">Options Chain</span>
@@ -180,7 +180,7 @@ export default function TradingViewTopNav({
                         <span>
                             <PythIcon />
                         </span>
-                        <span className="text-foreground text-xs font-medium">$180.26</span>
+                        <span className="text-foreground text-xs font-medium">{priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
                     </div>
                 </div>
                 <div className="px-4 py-1">

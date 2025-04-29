@@ -12,29 +12,23 @@ import { usePythPrice, type PythPriceState } from '@/hooks/usePythPrice';
 import { usePythMarketData, type MarketDataState } from '@/hooks/usePythMarketData';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { formatPrice } from "@/utils/formatter";
 import OptionCardContainer from "@/components/OptionCardContainer";
+import { addWeeks } from "date-fns";
+import { useOptionsPricing } from "@/hooks/useOptionsPricing";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
     const [tokenIdx, setTokenIdx] = useState(0)
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
     const [positionType, setPositionType] = useState<string>('long')
-    const [contractType, setContractType] = useState<string>('call')
+    const [contractType, setContractType] = useState<'Call' | 'Put'>('Call')
     const [selectedLogo, setSelectedLogo] = useState<string>('/images/solana.png')
     const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
     const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
-    const [formValues, setFormValues] = useState<{
-        selling: { currency: string; amount: string };
-        buying: {type: string; amount: string};
-        strikePrice: string
-    }>({
-        selling: { currency: 'usdc', amount: '' },
-        buying: {type: 'call', amount: ''},
-        strikePrice: priceData.price ? formatPrice(priceData.price) : '',
-    })
     const [payAmount, setPayAmount] = useState('')
     const [strikePrice, setStrikePrice] = useState('')
+    const [expiry , setExpiry] = useState<Date>(addWeeks(new Date(), 1))
+
     const handleSymbolChange = (newSymbol: string) => {
       setSelectedSymbol(newSymbol);
     };
@@ -46,7 +40,17 @@ export default function Homepage(){
     const handleIndexChange = (newIdx: number) => {
       setTokenIdx(newIdx)
     }
+
+    const s = priceData.price ?? 0;
+    const k = parseFloat(strikePrice);
     
+    const premium = useOptionsPricing({
+        type: contractType,
+        currentPrice: s,
+        strikePrice: k,
+        expiryDate: expiry
+    })
+
     return (
         <>
             <CryptoNav 
@@ -67,7 +71,7 @@ export default function Homepage(){
                       <TradingViewChartContainer 
                         symbol={selectedSymbol} 
                         logo={selectedLogo}
-                        numContracts={'2.2'}
+                        premium={premium.premium.toString()}
                         investment={payAmount}
                         strikePrice={strikePrice}
                         currentPrice={priceData.price!}
@@ -99,14 +103,22 @@ export default function Homepage(){
                       onIdxChange={handleIndexChange}
                       index={tokenIdx}
                       onStrikePriceChange={setStrikePrice}
+                      onExpiryChange={setExpiry}
                       onPayAmountChange={setPayAmount}
+                      onContractTypeChange={setContractType}
                       priceData={priceData}
                       marketData={marketData}
                       priceLoading={priceLoading}
                       marketLoading={marketLoading}
                     />
                     <div className="w-full flex flex-col space-y-4">
-                      <PriceQuote value={payAmount}/>
+                      <PriceQuote
+                        active={tokenIdx}
+                        value={payAmount}
+                        priceData={priceData}
+                        premium={premium.premium}
+                        contractType={contractType}
+                      />
                       <GreekPopup value={payAmount}/>
                       {active === 'trade' && (
                         <ProtectedRoute fallback={<TradingPositionsFallback/>}>

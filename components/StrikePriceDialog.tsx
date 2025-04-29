@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from 'react'
 import { ScrollArea } from './ui/scroll-area'
+import { formatPrice } from '@/utils/formatter'
 
 interface StrikePriceDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onSelectPrice: (price: string) => void
   onStrikePriceChange: (amount: string) => void;
+  onDefaultStrikePrices: (prices: string[]) => void;
   currentPrice: string
   marketPrice?: number
 }
@@ -21,26 +23,31 @@ interface StrikePrice {
   liquidity: string
 }
 
-export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePriceChange, currentPrice, marketPrice = 0 }: StrikePriceDialogProps) {
+export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePriceChange, onDefaultStrikePrices, currentPrice, marketPrice = 0 }: StrikePriceDialogProps) {
   const [searchStrike, setSearchStrike] = useState('')
   const [customStrike, setCustomStrike] = useState('')
   const [showCustomStrike, setShowCustomStrike] = useState(false)
   const [strikePrices, setStrikePrices] = useState<StrikePrice[]>([])
 
+  const getIncrement = (currentPrice: number) => {
+    if (typeof currentPrice !== 'number' || isNaN(currentPrice) || currentPrice <= 0) {
+        return 0;
+    }
+
+    const exponent = Math.floor(Math.log10(currentPrice));
+    return Math.pow(10, exponent - 1);
+  }
+
   useEffect(() => {
     const prices: StrikePrice[] = [];
-    const lowerBound = marketPrice * 0.5;
-    const upperBound = marketPrice * 2;
+    const lowerBound = marketPrice * 0.8;
+    const upperBound = marketPrice * 1.3;
 
     let currentPrice = lowerBound
     while(currentPrice <= upperBound) {
       let increment: number
 
-      if(currentPrice < 100) increment = 1
-      else if (currentPrice < 1000) increment = 10
-      else if (currentPrice < 10000) increment = 100
-      else if (currentPrice < 100000) increment = 1000
-      else increment = 10000
+      increment = getIncrement(currentPrice)
 
       if (currentPrice === lowerBound) {
         currentPrice = Math.ceil(currentPrice / increment) * increment
@@ -56,6 +63,16 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePr
       currentPrice += increment
     }
 
+    const priceNumbers = prices.map(p => parseFloat(p.price))
+    const closestIndex = priceNumbers.findIndex(p => p >= marketPrice);
+
+    let defaultStrikes: string[] = [];
+    if(closestIndex!== -1){
+      defaultStrikes = priceNumbers
+      .slice(closestIndex, closestIndex + 3)
+      .map(p => p.toString());
+    }
+    onDefaultStrikePrices(defaultStrikes);
     setStrikePrices(prices)
   }, [marketPrice])
   
@@ -64,7 +81,7 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePr
     strike.price.includes(searchStrike.replace(/[^0-9]/g, ''))
   )
 
-  const formatPrice = (price: string) => {
+  const formatStrikePrice = (price: string) => {
     const num = parseFloat(price)
     return `$${num.toLocaleString()}`
   }
@@ -118,7 +135,7 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePr
                     : 'bg-backgroundSecondary text-secondary-foreground hover:bg-secondary'
                   }`}
                 >
-                  <span>{formatPrice(strike.price)}</span>
+                  <span>{parseFloat(strike.price) < 1 ? '$'+formatPrice(parseFloat(strike.price)) : formatStrikePrice(strike.price) }</span>
                   <span className="text-sm opacity-80">${strike.liquidity}</span>
                 </Button>
               ))}

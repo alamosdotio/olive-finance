@@ -1,77 +1,41 @@
-import { differenceInDays, differenceInSeconds } from 'date-fns';
-
-export function calculateVolatility(prices: number[], windowSize: number = 30): number {
-    if (prices.length < 2) return 0.6;
+export function convertPrice(
+  amount: number,
+  fromTokenPrice: number,
+): number {
+  if (!amount || !fromTokenPrice) return 0;
+  return parseFloat(((amount * fromTokenPrice)).toFixed(8));
+}
+  
+function normalCdf(z: number) {
+  const beta1 = -0.0004406;
+  const beta2 = 0.0418198;
+  const beta3 = 0.9;
+  const exponent = 
+    -Math.sqrt(Math.PI) * (beta1 * Math.pow(z, 5) + beta2 * Math.pow(z, 3) + beta3 * z);
     
+  return 1.0/(1.0 + Math.exp(exponent));
+}
 
-    const returns = [];
-    for (let i = 1; i < prices.length; i++) {
-      if (prices[i] > 0 && prices[i - 1] > 0) {
-        returns.push(Math.log(prices[i] / prices[i - 1]));
-      }
-    }
-  
-    if (returns.length === 0) return 0.6;
-  
+//s = current price
+//k = strike price
+//t = time to expiration in seconds
+//isCall = true: call, false: put
 
-    const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
-    const variance = returns.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / (returns.length - 1);
-    const stdDev = Math.sqrt(variance);
-  
+export function black_scholes(s:number, k:number ,t:number , isCall:boolean){
+  const r = 0.0;
+  const sigma = 0.5;
 
-    const annualizedVol = stdDev * Math.sqrt(252);
-    return Math.max(annualizedVol, 0.6); 
-  }
-  
- 
-  export function calculateOptionPremium(
-    type: 'call' | 'put',
-    strikePrice: number,
-    currentPrice: number,
-    expiryDate: Date,
-    volatility: number
-  ): number {
-    if (!strikePrice || !currentPrice || !expiryDate || !volatility) return 0;
-  
-    const today = new Date();
-    const daysToExpiry = Math.max(differenceInSeconds(expiryDate, today));
-    const period = daysToExpiry / 86400;
-  
-    const base = Math.sqrt(period) * 0.6; //volatility and time period
-    
-    if (type === 'call') {
-      const price = currentPrice / strikePrice;
-      return base * price;
-    } else {
-      const price = strikePrice / currentPrice;
-      return base * price;
-    }
-  }
-  
-  export function calculateOptionsQuantity(
-    amount: number,
-    premium: number
-  ): number {
-    if (!amount || !premium || premium <= 0) return 0;
-    return parseFloat((amount / premium).toFixed(8));
-  }
-  
+  const d1 = (Math.log(s / k) + (r + 0.5 * sigma * sigma) * t) / (sigma * Math.sqrt(t));
+  const d2 = d1 - sigma * Math.sqrt(t);
 
-  export function calculateTokensNeeded(
-    optionsQuantity: number,
-    premium: number
-  ): number {
-    if (!optionsQuantity || !premium) return 0;
-    return parseFloat((optionsQuantity * premium).toFixed(8));
-  }
-  
+  const nd1 = normalCdf(d1);
+  const nd2 = normalCdf(d2);
+  const nNegd1 = normalCdf(-d1);
+  const nNegd2 = normalCdf(-d2);
 
-  export function convertPrice(
-    amount: number,
-    fromTokenPrice: number,
-    toTokenPrice: number
-  ): number {
-    if (!amount || !fromTokenPrice || !toTokenPrice || toTokenPrice <= 0) return 0;
-    return parseFloat(((amount * fromTokenPrice) / toTokenPrice).toFixed(8));
+  if(isCall){
+    return s * nd1 - k * Math.exp(-r * t) * nd2;
+  }else {
+    return k * Math.exp(-r * t) * nNegd2 - s * nNegd1;
   }
-  
+}

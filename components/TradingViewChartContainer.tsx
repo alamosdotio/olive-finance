@@ -8,14 +8,14 @@ interface TradingViewChartContainerProps{
     symbol: string
     logo: string
     investment: string
-    numContracts: string
+    premium: string
     strikePrice: string
     currentPrice: number
     contractType: string
     positionType: string
 }
 
-export default function TradingViewChartContainer({symbol, logo, investment, numContracts, strikePrice, currentPrice, contractType, positionType} : TradingViewChartContainerProps){
+export default function TradingViewChartContainer({symbol, logo, investment, premium, strikePrice, currentPrice, contractType, positionType} : TradingViewChartContainerProps){
     const [activeTab, setActiveTab] = useState<string>("chart")
     
     const handleClick = (state: string) => {
@@ -60,7 +60,7 @@ export default function TradingViewChartContainer({symbol, logo, investment, num
                     {activeTab === 'pnl' && (
                         <PnlChartContainer 
                             investment={investment}
-                            numContracts={numContracts}
+                            premium={premium}
                             strikePrice={strikePrice}
                             currentPrice={currentPrice}
                             contractType={contractType}

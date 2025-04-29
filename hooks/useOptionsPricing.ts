@@ -1,14 +1,14 @@
 'use client';
 
+import { black_scholes } from '@/utils/optionsPricing';
+import { differenceInSeconds, differenceInYears } from 'date-fns';
 import { useState, useEffect } from 'react';
-import { calculateVolatility, calculateOptionPremium } from '@/utils/optionsPricing';
 
 interface UseOptionsPricingProps {
-  type: 'call' | 'put';
+  type: 'Call' | 'Put';
   strikePrice: number;
   currentPrice: number;
   expiryDate: Date;
-  historicalPrices: number[];
 }
 
 export function useOptionsPricing({
@@ -16,30 +16,27 @@ export function useOptionsPricing({
   strikePrice,
   currentPrice,
   expiryDate,
-  historicalPrices
 }: UseOptionsPricingProps) {
   const [premium, setPremium] = useState<number>(0);
-  const [volatility, setVolatility] = useState<number>(0);
+  const seconds = differenceInSeconds(expiryDate, Date.now())
+  const time = seconds / (365 * 24 * 60 * 60);
+  
+  const isCall = (type: 'Call' | 'Put') => {
+    return type === 'Call' ? true : false;
+  }
 
   useEffect(() => {
-    if (!strikePrice || !currentPrice || !expiryDate || historicalPrices.length === 0) {
+    if (!strikePrice || !currentPrice || !expiryDate) {
       setPremium(0);
       return;
     }
 
-    const calculatedVolatility = calculateVolatility(historicalPrices);
-    setVolatility(calculatedVolatility);
-
-    const calculatedPremium = calculateOptionPremium(
-      type,
-      strikePrice,
-      currentPrice,
-      expiryDate,
-      calculatedVolatility
+    const calculatedPremium = black_scholes(
+      currentPrice, strikePrice, time, isCall(type) 
     );
 
     setPremium(Math.max(0, calculatedPremium));
-  }, [type, strikePrice, currentPrice, expiryDate, historicalPrices]);
+  }, [type, strikePrice, currentPrice, expiryDate]);
 
-  return { premium, volatility };
+  return { premium };
 }

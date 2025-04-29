@@ -11,10 +11,12 @@ import type { MarketDataState } from "@/hooks/usePythMarketData";
 
 interface OptionCardContainerProps{
   selectedSymbol: string;
+  onExpiryChange: (date: Date) => void
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
   onStrikePriceChange: (amount: string) => void;
   onPayAmountChange: (amount: string) => void;
+  onContractTypeChange: (type: 'Call' | 'Put') => void;
   index: number;
   priceData: PythPriceState;
   marketData: MarketDataState;
@@ -22,7 +24,7 @@ interface OptionCardContainerProps{
   marketLoading: boolean;
 }
 
-export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, onStrikePriceChange, index, selectedSymbol, priceData, marketData, priceLoading, marketLoading}:OptionCardContainerProps) {
+export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, onStrikePriceChange, onExpiryChange, onContractTypeChange, index, selectedSymbol, priceData, marketData, priceLoading, marketLoading}:OptionCardContainerProps) {
   const [active, setActive] = useState('buy')
   const [orderType, setOrderType] = useState<'market'|'limit'>('market');
   
@@ -63,8 +65,10 @@ export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayA
             selectedSymbol={selectedSymbol} 
             onSymbolChange={onSymbolChange} 
             onIdxChange={onIdxChange}
+            onExpiryChange={onExpiryChange}
             onStrikePriceChange={onStrikePriceChange}
             onPayAmountChange={onPayAmountChange}
+            onContractTypeChange={onContractTypeChange}
             active={index}
             orderType={orderType}
             priceData={priceData}

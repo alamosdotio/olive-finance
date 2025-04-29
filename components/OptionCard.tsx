@@ -5,8 +5,9 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   MoreHorizontal,
-  ChevronDown,
   Info,
+  TrendingUp,
+  TrendingDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,8 +30,10 @@ interface OptionCardProps{
   selectedSymbol: string;
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
+  onExpiryChange: (date: Date) => void;
   onStrikePriceChange: (amount: string) => void;
   onPayAmountChange: (amount: string) => void;
+  onContractTypeChange: (type: 'Call' | 'Put') => void;
   active: number;
   priceData: PythPriceState;
   marketData: MarketDataState;
@@ -40,7 +43,7 @@ interface OptionCardProps{
 
 
 export default function OptionCard(
-  {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange} 
+  {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange, onExpiryChange, onContractTypeChange} 
   : 
   OptionCardProps) {
     const { connected } = useWallet();
@@ -57,36 +60,32 @@ export default function OptionCard(
   const [showExpirationModal, setShowExpirationModal] = useState(false)
   const [limitPrice, setLimitPrice] = useState("");
   const [hasSetInitialStrike, setHasSetInitialStrike] = useState(false)
+  const [defaultStrikePrices, setDefaultStrikePrices] = useState(['0', '0', '0'])
 
   const isPositive = marketData.change24h !== null && marketData.change24h > 0;
 
+  console.log(defaultStrikePrices)
+
   useEffect(() => {
-    if(priceData.price) {
-      const defaultPrices = getDefaultStrikePrices(priceData.price)
-      setStrikePrice(defaultPrices[0])
-      onStrikePriceChange(defaultPrices[0])
+    setHasSetInitialStrike(false);
+    setStrikePrice('0');
+    setDefaultStrikePrices(['0', '0', '0']);
+  }, [selectedSymbol]);
+  
+  useEffect(() => {
+    if ( !selectedSymbol) return;
+
+    let firstStrike = defaultStrikePrices[0];
+    const isValidStrike = firstStrike && parseFloat(firstStrike) > 0 ;
+  
+    if(priceData.price && !hasSetInitialStrike && isValidStrike){
+      setStrikePrice(firstStrike);
+      onStrikePriceChange(firstStrike);
+      setHasSetInitialStrike(true)
     }
-  }, [priceData.price])
-
-  const getDefaultStrikePrices = (currentPrice: number): string[] => {
-    let increment: number
-
-    if (currentPrice < 100) increment = 1
-    else if (currentPrice < 1000) increment = 10
-    else if (currentPrice < 10000) increment = 100
-    else if (currentPrice < 100000) increment = 1000
-    else increment = 10000
-
-    const basePrice = Math.floor(currentPrice / increment) * increment
-
-    return [
-      basePrice.toString(),
-      (basePrice + increment).toString(),
-      (basePrice + (2 * increment)).toString()
-    ]
-  }
-
-  const defaultStrikePrices = priceData.price ? getDefaultStrikePrices(priceData.price) : ['0', '0', '0']
+  }, [selectedSymbol, priceData.price, defaultStrikePrices]);
+  
+  
   const defaultExpirations = [
     { label: "1 week", value: addWeeks(new Date(), 1) },
     { label: "2 weeks", value: addWeeks(new Date(), 2) },
@@ -94,6 +93,7 @@ export default function OptionCard(
   ];
 
   const isDefaultStrike = defaultStrikePrices.includes(strikePrice);
+
   const isDefaultExpiration = defaultExpirations.some(
     (exp) =>
       format(exp.value, "yyyy-MM-dd") === format(expiration, "yyyy-MM-dd")
@@ -106,6 +106,7 @@ export default function OptionCard(
 
   const handleExpirationSelect = (newExpiration: Date) => {
     setExpiration(newExpiration);
+    onExpiryChange(newExpiration);
   };
 
   const getExpirationLabel = (date: Date): string => {
@@ -164,26 +165,36 @@ export default function OptionCard(
         <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
-            onClick={() => setSelectedOption('Call')}
-            className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm border ${
+            onClick={() => {
+              setSelectedOption('Call')
+              onContractTypeChange('Call')
+            }}
+            className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm transition-all group border ${
                 selectedOption === 'Call'
                     ? 'bg-green-500/10 text-green-500 border-green-500 hover:bg-green-500/20' 
                     : 'hover:border-green-500 hover:text-green-500 border-border/40 hover:bg-green-500/20'
                 }`}
           >
-            <ArrowUpRight className="w-4 h-4 mr-2" />
+            <TrendingUp className={`w-4 h-4 mr-2 ${
+              selectedOption === 'Call' ? 'text-green-500' : 'text-muted-foreground group-hover:text-green-500'
+            }`} />
             Call
           </Button>
           <Button
             variant="outline"
-            onClick={() => setSelectedOption('Put')}
-            className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm border ${
+            onClick={() => {
+              setSelectedOption('Put')
+              onContractTypeChange('Put')
+            }}
+            className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm transition-all group border ${
                 selectedOption === 'Put'
                     ? 'bg-red-500/10 text-red-500 border-red-500 hover:bg-red-500/20' 
                     : 'hover:border-red-500 hover:text-red-500 border-border/40 hover:bg-red-500/20'
                 }`}
           >
-            <ArrowDownRight className="w-4 h-4 mr-2" />
+            <TrendingDown className={`w-4 h-4 mr-2 ${
+              selectedOption === 'Put' ? 'text-red-500' : 'text-muted-foreground group-hover:text-red-500'
+            }`} />
             Put
           </Button>
         </div>
@@ -210,7 +221,7 @@ export default function OptionCard(
                     : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
                 }`}
                 >
-                  {formatStrikePrice(price)}
+                  {selectedSymbol === 'Crypto.BONK/USD'? '$'+formatPrice(parseFloat(price)) : formatStrikePrice(price)}
                 </Button>
               ))}
               <Button
@@ -248,7 +259,10 @@ export default function OptionCard(
               {defaultExpirations.map((exp) => (
                 <Button
                   key={exp.label}
-                  onClick={() => setExpiration(exp.value)}
+                  onClick={() => {
+                    setExpiration(exp.value)
+                    onExpiryChange(exp.value)
+                  }}
                   className={`flex-1 py-2 px-4 rounded-sm ${
                     format(expiration, 'yyyy-MM-dd') === format(exp.value, 'yyyy-MM-dd')
                     ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
@@ -349,6 +363,7 @@ export default function OptionCard(
         open={showStrikePriceModal}
         onOpenChange={setShowStrikePriceModal}
         onSelectPrice={setStrikePrice}
+        onDefaultStrikePrices={setDefaultStrikePrices}
         onStrikePriceChange={onStrikePriceChange}
         currentPrice={strikePrice}
         marketPrice={priceData.price || 0}

@@ -106,7 +106,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
         <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
-            className={`h-12 rounded-lg transition-all group ${
+            className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm transition-all group border ${
               selectedTx === 'long' 
                 ? 'bg-green-500/10 text-green-500 border-green-500 hover:bg-green-500/20' 
                 : 'hover:border-green-500 hover:text-green-500 border-border/40 hover:bg-green-500/20'
@@ -120,7 +120,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
           </Button>
           <Button
             variant="outline"
-            className={`h-12 rounded-lg transition-all group ${
+            className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm transition-all group border ${
               selectedTx === 'short' 
                 ? 'bg-red-500/10 text-red-500 border-red-500 hover:bg-red-500/20' 
                 : 'hover:border-red-500 hover:text-red-500 border-border/40 hover:bg-red-500/20'
