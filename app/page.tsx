@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import CryptoNav from "@/components/CryptoNav";
-import OptionsCard from "@/components/OptionsCard";
 import TradingViewChartContainer from "@/components/TradingViewChartContainer";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import TradingPositionsFallback from "@/components/TradingPositionsFallback";
