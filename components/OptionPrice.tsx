@@ -2,13 +2,14 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
-import datafeed, { setSymbolLogo } from '@/lib/datafeed';
+import { setSymbolLogo } from '@/lib/datafeed';
 import { Button } from './ui/button';
 import { Activity, ArrowUpDown, BarChart, BarChart3, CandlestickChart, ChevronDown, LineChart, PlusCircle, Search, TrendingUp } from 'lucide-react';
 import { Separator } from './ui/separator';
 import { AreaIcon, BarsIcon, CandleStickIcon, IndicatorsIcon } from '@/public/svgs/icons';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { optionsDatafeed, setOptionParameters } from '@/lib/optionsDatafeed';
 
 declare global {
   interface Window {
@@ -17,11 +18,13 @@ declare global {
   }
 }
 
-interface TradingViewChartProps {
+interface OptionPriceProps {
   symbol?: string;
   logo?: string;
+  strikePrice: string;
+  contractType: 'Call' | 'Put';
+  expiry: Date;
 }
-
 
 const getFormatConfig = (price: number) => {
   if (price < 0.0001) return { precision: 8, minMove: 0.00000001 };
@@ -71,9 +74,12 @@ const ALL_CHART_TYPES = [
   { label: 'Heikin Ashi', value: 11, icon: CandlestickChart },
 ];
 
-const TradingViewChart: React.FC<TradingViewChartProps> = ({ 
+const OptionPrice: React.FC<OptionPriceProps> = ({ 
   symbol = 'Crypto.BTC/USD', 
-  logo = '/images/bitcoin.png' 
+  logo = '/images/bitcoin.png',
+  strikePrice,
+  contractType,
+  expiry 
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<any>(null);
@@ -84,6 +90,19 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   const [selectedInterval, setSelectedInterval] = useState('D');
   const [chartType, setChartType] = useState(1);
   const [displaySymbol, setDisplaySymbol] = useState(symbol.replace('Crypto.', ''));
+
+  useEffect(() => {
+    setOptionParameters(parseFloat(strikePrice), expiry, contractType);
+    if (widgetRef.current && widgetRef.current.remove) {
+      widgetRef.current.remove();
+      widgetRef.current = null;
+      chartRef.current = null;
+      setIsChartReady(false);
+    }
+    if (typeof window.TradingView !== 'undefined' && containerRef.current) {
+      initChart();
+    }
+  }, [strikePrice, expiry, contractType]);
 
   useEffect(() => {
     setSymbolLogo(symbol, logo);
@@ -140,110 +159,95 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     }
   };
 
+  const initChart = async () => {
+    try {
+      const tempEl = document.createElement('div');
+      tempEl.className = 'text-primary';
+      document.body.appendChild(tempEl);
+      const primaryColor = window.getComputedStyle(tempEl).color;
+      document.body.removeChild(tempEl);
+
+      const widgetOptions: any = {
+        symbol: symbol,
+        interval: selectedInterval,
+        container: containerRef.current,
+        datafeed: optionsDatafeed,
+        library_path: "/charting_library/",
+        locale: "en",
+        disabled_features: [
+          "use_localstorage_for_settings",
+          "timeframes_toolbar",
+          "header_settings",
+          "header_undo_redo",
+          "header_screenshot",
+          "header_fullscreen_button",
+          "control_bar",
+          "timeframes_toolbar",
+          "create_volume_indicator_by_default",
+          "header_widget",
+        ],
+        enabled_features: [
+          "hide_left_toolbar_by_default",
+          "show_symbol_logos",
+          "show_symbol_logo_in_legend"
+        ],
+        theme: chartTheme,
+        custom_css_url: '/styles/tradingview-theme.css',
+        loading_screen: {
+          backgroundColor: chartTheme === 'Dark' ? "#141519" : "#FFFFFF",
+        },
+        overrides: {
+          "paneProperties.background": chartTheme === 'Dark' ? "#141519" : "#FFFFFF",
+          "paneProperties.backgroundType": "solid",
+          "mainSeriesProperties.candleStyle.upColor": "#53C08D",
+          "mainSeriesProperties.candleStyle.downColor": "#FF6889",
+          "mainSeriesProperties.candleStyle.wickUpColor": "#53C08D",
+          "mainSeriesProperties.candleStyle.wickDownColor": "#FF6889",
+          "mainSeriesProperties.candleStyle.borderUpColor": "#53C08D",
+          "mainSeriesProperties.candleStyle.borderDownColor": "#FF6889",
+          "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesVisible":false,
+          "mainSeriesProperties.highLowAvgPrice.highLowPriceLabelsVisible": true,
+          "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesColor": primaryColor,
+          "mainSeriesProperties.showPriceLine": false,
+          "scalesProperties.showSymbolLabels": false,
+        },
+        studies_overrides: {
+          "Moving Average.plot.color": primaryColor,
+          "Moving Average.plot.linewidth": 2,
+        },
+        fullscreen: false,
+        autosize: true,
+        debug: false,
+        custom_formatters: {
+          priceFormatterFactory: () => {
+            return {
+              format: (price: number) => {
+                const config = getFormatConfig(price);
+                return price.toFixed(config.precision);
+              }
+            };
+          }
+        }
+      };
+
+      const widget = new window.TradingView.widget(widgetOptions);
+      widgetRef.current = widget;
+
+      widget.onChartReady(() => {
+        const priceScale = widget.activeChart().getPanes()[0].getMainSourcePriceScale();
+        priceScale.setAutoScale(false)
+        chartRef.current = widget.chart();
+        chartRef.current.setChartType(chartType);
+        setIsChartReady(true);
+        resetPriceScale();
+      });
+    } catch (error) {
+      console.error('Error initializing chart:', error);
+    }
+  };
+
   useEffect(() => {
     if (typeof window.TradingView === 'undefined' || !containerRef.current || widgetRef.current) return;
-
-    const initChart = async () => {
-      try {
-        const tempEl = document.createElement('div');
-        tempEl.className = 'text-primary';
-        document.body.appendChild(tempEl);
-        const primaryColor = window.getComputedStyle(tempEl).color;
-        document.body.removeChild(tempEl);
-
-        const widgetOptions: any = {
-          symbol: symbol,
-          interval: selectedInterval,
-          container: containerRef.current,
-          datafeed: datafeed,
-          library_path: "/charting_library/",
-          locale: "en",
-          disabled_features: [
-            "use_localstorage_for_settings",
-            "timeframes_toolbar",
-            "header_settings",
-            "header_undo_redo",
-            "header_screenshot",
-            "header_fullscreen_button",
-            "control_bar",
-            "timeframes_toolbar",
-            "create_volume_indicator_by_default",
-            "header_widget",
-          ],
-          enabled_features: [
-            "hide_left_toolbar_by_default",
-            "show_symbol_logos",
-            "show_symbol_logo_in_legend"
-          ],
-          theme: chartTheme,
-          custom_css_url: '/styles/tradingview-theme.css',
-          loading_screen: {
-            backgroundColor: chartTheme === 'Dark' ? "#141519" : "#FFFFFF",
-          },
-          overrides: {
-            "paneProperties.background": chartTheme === 'Dark' ? "#141519" : "#FFFFFF",
-            "paneProperties.backgroundType": "solid",
-            "mainSeriesProperties.candleStyle.upColor": "#53C08D",
-            "mainSeriesProperties.candleStyle.downColor": "#FF6889",
-            "mainSeriesProperties.candleStyle.wickUpColor": "#53C08D",
-            "mainSeriesProperties.candleStyle.wickDownColor": "#FF6889",
-            "mainSeriesProperties.candleStyle.borderUpColor": "#53C08D",
-            "mainSeriesProperties.candleStyle.borderDownColor": "#FF6889",
-            "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesVisible":false,
-            "mainSeriesProperties.highLowAvgPrice.highLowPriceLabelsVisible": true,
-            "mainSeriesProperties.highLowAvgPrice.highLowPriceLinesColor": primaryColor,
-            "mainSeriesProperties.showPriceLine": false,
-            "scalesProperties.showSymbolLabels": false,
-          },
-          studies_overrides: {
-            "Moving Average.plot.color": primaryColor,
-            "Moving Average.plot.linewidth": 2,
-          },
-          fullscreen: false,
-          autosize: true,
-          debug: false,
-          custom_formatters: {
-            priceFormatterFactory: () => {
-              return {
-                format: (price: number) => {
-                  const config = getFormatConfig(price);
-                  return price.toFixed(config.precision);
-                }
-              };
-            }
-          }
-        };
-
-        const widget = new window.TradingView.widget(widgetOptions);
-        widgetRef.current = widget;
-
-        widget.onChartReady(() => {
-          const priceScale = widget.activeChart().getPanes()[0].getMainSourcePriceScale();
-          priceScale.setAutoScale(false)
-          chartRef.current = widget.chart();
-          chartRef.current.setChartType(chartType);
-          resetPriceScale();
-          // chartRef.current.createStudy(
-          //   'Moving Average',
-          //   true,
-          //   false,
-          //   {
-          //     length: 9,
-          //     source: "close",
-          //     offset: 0,
-          //   },
-          //   {
-          //     "plot.color": primaryColor,
-          //     "plot.linewidth": 2
-          //   }
-          // );
-          setIsChartReady(true);
-        });
-      } catch (error) {
-        console.error('Error initializing chart:', error);
-      }
-    };
-
     initChart();
 
     return () => {
@@ -260,6 +264,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     if (isChartReady && chartRef.current) {
       chartRef.current.setSymbol(symbol);
       setDisplaySymbol(symbol.replace('Crypto.', '').replace('/USD', ''));
+      resetPriceScale();
     }
   }, [symbol, isChartReady]);
 
@@ -267,6 +272,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     const handleResize = () => {
       if (widgetRef.current && widgetRef.current.resize) {
         widgetRef.current.resize();
+        resetPriceScale();
       }
     };
 
@@ -378,4 +384,4 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   );
 };
 
-export default TradingViewChart;
+export default OptionPrice;

@@ -1,4 +1,21 @@
+import { black_scholes } from "@/utils/optionsPricing";
 import datafeed from "./datafeed";
+import { differenceInSeconds } from "date-fns";
+
+let strikePrice = 150;
+let expiry = new Date();
+let isCall = true;
+
+export const setOptionParameters = (strike: number, expiryDate: Date, contractType: 'Call' | 'Put') => {
+    strikePrice = strike;
+    expiry = expiryDate;
+    isCall = contractType === 'Call';
+};
+
+const calculateOptionPrice = (assetPrice: number, timestamp: number): number => {
+  const timeToExpiry = differenceInSeconds(expiry, new Date(timestamp)) / (365 * 24 * 60 * 60);
+  return black_scholes(assetPrice, strikePrice, timeToExpiry, isCall);
+};
 
 export const optionsDatafeed = {
     ...datafeed,
@@ -17,10 +34,10 @@ export const optionsDatafeed = {
                 (bars: any[]) => {
                     const modifiedBars = bars.map(bar => ({
                         ...bar,
-                        open: bar.open/2,
-                        high: bar.high/2,
-                        low: bar.low / 2,
-                        close: bar.close / 2,
+                        open: calculateOptionPrice(bar.open, bar.time),
+                        high: calculateOptionPrice(bar.high, bar.time),
+                        low: calculateOptionPrice(bar.low, bar.time),
+                        close: calculateOptionPrice(bar.close, bar.time),
                     }));
                     onHistoryCallback(modifiedBars)
                 },
@@ -43,10 +60,10 @@ export const optionsDatafeed = {
             (bar: any) => {
                 const modifiedBar = {
                     ...bar,
-                    open: bar.open / 2,
-                    high: bar.high / 2,
-                    low: bar.low / 2,
-                    close: bar.close / 2,
+                    open: calculateOptionPrice(bar.open, bar.time),
+                    high: calculateOptionPrice(bar.high, bar.time),
+                    low: calculateOptionPrice(bar.low, bar.time),
+                    close: calculateOptionPrice(bar.close, bar.time),
                 };
                 onRealtimeCallback(modifiedBar);
             },

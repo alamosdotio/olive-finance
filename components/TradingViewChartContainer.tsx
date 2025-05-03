@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import TradingViewChart from "./TradingViewChart";
-import RecentTrades from "./RecentTrades";
 import PnlChartContainer from "./PnlChartContainer";
+import OptionPrice from "./OptionPrice";
 
 interface TradingViewChartContainerProps{
     symbol: string
@@ -11,11 +11,12 @@ interface TradingViewChartContainerProps{
     premium: string
     strikePrice: string
     currentPrice: number
-    contractType: string
+    contractType: 'Call' | 'Put'
     positionType: string
+    expiry: Date
 }
 
-export default function TradingViewChartContainer({symbol, logo, investment, premium, strikePrice, currentPrice, contractType, positionType} : TradingViewChartContainerProps){
+export default function TradingViewChartContainer({symbol, logo, investment, premium, strikePrice, currentPrice, contractType, positionType, expiry} : TradingViewChartContainerProps){
     const [activeTab, setActiveTab] = useState<string>("chart")
     
     const handleClick = (state: string) => {
@@ -55,7 +56,10 @@ export default function TradingViewChartContainer({symbol, logo, investment, pre
                 </div>
                 <div className="w-full flex-grow">
                     {activeTab === 'chart' && (
-                        <TradingViewChart symbol={symbol} logo={logo}/>
+                        <TradingViewChart 
+                            symbol={symbol} 
+                            logo={logo}
+                        />
                     )}
                     {activeTab === 'pnl' && (
                         <PnlChartContainer 
@@ -69,7 +73,13 @@ export default function TradingViewChartContainer({symbol, logo, investment, pre
                     )}
                     {activeTab === 'price' && (
                         <div className="h-full w-full border border-t-0">
-                            options price goes here
+                            <OptionPrice 
+                                symbol={symbol} 
+                                logo={logo}
+                                strikePrice={strikePrice}
+                                contractType={contractType}
+                                expiry={expiry}
+                            />
                         </div>
                     )}
                 </div>

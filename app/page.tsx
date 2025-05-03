@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CryptoNav from "@/components/CryptoNav";
 import TradingViewChartContainer from "@/components/TradingViewChartContainer";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import OptionCardContainer from "@/components/OptionCardContainer";
 import { addWeeks } from "date-fns";
 import { useOptionsPricing } from "@/hooks/useOptionsPricing";
+import { setOptionParameters } from "@/lib/optionsDatafeed";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
@@ -76,6 +77,7 @@ export default function Homepage(){
                         currentPrice={priceData.price!}
                         positionType={positionType}
                         contractType={contractType}
+                        expiry={expiry}
                       />
                       <div className="w-full">
                       <ProtectedRoute fallback={<TradingPositionsFallback/>}>

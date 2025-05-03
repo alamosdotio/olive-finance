@@ -158,7 +158,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     for (let i = 1; i <= optionIndex; i++) {
       try {
         const optionDetailAccount = getOptionDetailAccount(
-          optionIndex,
+          i,
           pool,
           custody
         );
@@ -184,7 +184,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
             type: detail?.lockedAsset.equals(custody) ? "Call" : "Put",
             expiry: new Date(
               detail?.expiredDate.toNumber() * 1000
-            ).toISOString(),
+            ).toString(),
             size: detail?.lockedAsset.equals(custody)
               ? detail.amount.toNumber() / 10 ** WSOL_DECIMALS
               : detail.amount.toNumber() / 10 ** USDC_DECIMALS,

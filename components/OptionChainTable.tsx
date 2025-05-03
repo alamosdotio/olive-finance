@@ -1,5 +1,4 @@
 'use client'
-import { useState } from "react";
 import { Button } from "./ui/button";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 import { tokenList } from "@/lib/data/tokenlist";
@@ -7,17 +6,46 @@ import type { PythPriceState } from "@/hooks/usePythPrice";
 import { formatPrice } from "@/utils/formatter";
 import { Select, SelectContent, SelectTrigger } from "./ui/select";
 import { ChevronsUpDown } from "lucide-react";
+import { generateOptionChainData, OptionChainData } from "@/lib/data/dummyData";
+import { ScrollArea } from "./ui/scroll-area";
 
 interface OptionChainTableProps{
     tokenIdx: number
     priceData: PythPriceState;
     priceLoading: boolean;
+    dummyData: OptionChainData[];
+    optionIdx: number;
+    onOptionIdxChange: (idx:number) => void;
+    onBidPriceChange: (amount: number) => void;
+    position: 'Long' | 'Short';
+    contract: 'Call' | 'Put';
+    onPositionChange: (position: 'Long' | 'Short') => void;
+    onContractChange: (contract: 'Call' | 'Put') => void;
 }
 
-export default function OptionChainTable({tokenIdx, priceData, priceLoading} : OptionChainTableProps){
-    const [position, setPosition] = useState<'Long' | 'Short'>('Long')
-    const [contract, setContract] = useState<'Call' | 'Put'>('Call')
+export default function OptionChainTable({
+    tokenIdx, 
+    priceData, 
+    priceLoading, 
+    dummyData, 
+    contract, 
+    position, 
+    optionIdx,
+    onContractChange, 
+    onPositionChange,
+    onOptionIdxChange,
+    onBidPriceChange
+} : OptionChainTableProps){
+
     const tokens = tokenList;
+    const handleClick = (idx: number) => {
+        if(idx === optionIdx){
+            onOptionIdxChange(-1)
+        }else{
+            onOptionIdxChange(idx)
+        }
+    }
+
     return (
         <main className="w-full flex flex-col space-y-4"  style={{ height: 'calc(100vh - 155px)' }}>
             <section className="w-full flex flex-col border rounded-sm">
@@ -34,7 +62,7 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
                                     ? 'bg-green-500 border border-green-500 text-black' 
                                     : 'bg-red-500/10 border border-red-500 text-red-500'
                                 }`}
-                                onClick={() => setPosition('Long')}
+                                onClick={() => onPositionChange('Long')}
                             >
                                 Long
                             </Button>
@@ -44,7 +72,7 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
                                     ? 'bg-red-500 border border-red-500 text-black' 
                                     : 'bg-green-500/10 border border-green-500 text-green-500'
                                 }`}
-                                onClick={() => setPosition('Short')}
+                                onClick={() => onPositionChange('Short')}
                             >
                                 Short
                             </Button>
@@ -64,7 +92,7 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
                                             : 'bg-red-500/10 border border-red-500 text-red-500'
                                         }`
                                 }`}
-                                onClick={() => setContract('Call')}
+                                onClick={() => onContractChange('Call')}
                             >
                                 Call
                             </Button>
@@ -82,7 +110,7 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
                                             : 'bg-red-500/10 border border-red-500 text-red-500'
                                         }`
                                 }`}
-                                onClick={() => setContract('Put')}
+                                onClick={() => onContractChange('Put')}
                             >
                                 Put
                             </Button>
@@ -100,9 +128,10 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
                     </Select>
                 </div>
             </section>
-            <section className="w-full flex flex-grow border rounded-sm">
+            <section className="w-full flex flex-grow border rounded-sm overflow-y-hidden">
+                <ScrollArea className="w-full overflow-y-auto">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="top-0 left-0 sticky bg-background">
                         <TableRow>
                             <TableHead>
                                 Strike Price
@@ -125,9 +154,44 @@ export default function OptionChainTable({tokenIdx, priceData, priceLoading} : O
                         </TableRow>
                     </TableHeader>
                     <TableBody className="">
-                                
+                        {dummyData.map((option, idx) => (
+                            <TableRow key={idx} className="">
+                                <TableHead>${option.strikePrice}</TableHead>
+                                <TableHead>${option.breakeven}</TableHead>
+                                <TableHead>{option.chanceofProfit}</TableHead>
+                                <TableHead>{option.percentChange}</TableHead>
+                                <TableHead>{option.change}</TableHead>
+                                <TableHead className="flex items-center">
+                                    <div 
+                                        className={`
+                                                border border-primary border-r-0 p-1 h-fit 
+                                                rounded-sm rounded-r-none flex justify-center w-20
+                                                ${optionIdx===idx ? 'bg-primary text-black hover:bg-primary/80' : 'bg-transparent text-primary'}
+                                            `}
+                                        >
+                                        ${(option.bidPrice).toFixed(2)}
+                                    </div>
+                                    <Button 
+                                        variant={'outline'}
+                                        className={`p-1 h-fit border-primary font-bold rounded-l-none w-8 
+                                                ${optionIdx===idx ? 'bg-primary text-black hover:bg-primary/80 border-l-black' : 'bg-transparent text-primary'}
+                                            `}    
+                                        onClick={() => {
+                                            handleClick(idx)
+                                        }}
+                                    >
+                                        {optionIdx === idx ? (
+                                            '✓'
+                                        ) : (
+                                           '+'
+                                        )}
+                                    </Button>
+                                </TableHead>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
+                </ScrollArea>
             </section>
         </main>
     )
