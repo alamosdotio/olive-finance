@@ -130,7 +130,7 @@ const OptionPrice: React.FC<OptionPriceProps> = ({
     setSelectedInterval(interval);
     if (chartRef.current) {
       chartRef.current.setResolution(interval);
-      resetPriceScale
+      resetPriceScale()
     }
   };
 
