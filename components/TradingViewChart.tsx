@@ -111,7 +111,7 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     setSelectedInterval(interval);
     if (chartRef.current) {
       chartRef.current.setResolution(interval);
-      resetPriceScale
+      resetPriceScale()
     }
   };
 
