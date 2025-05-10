@@ -49,15 +49,15 @@ export default function OptionChainTable({
     return (
         <main className="w-full flex flex-col space-y-4"  style={{ height: 'calc(100vh - 155px)' }}>
             <section className="w-full flex flex-col border rounded-sm">
-                <div className="flex flex-col space-y-1 border-b p-4">
-                    <span className="text-base text-secondary-foreground font-medium">{tokens[tokenIdx].symbol} ${priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
-                    <h1 className="text-3xl">{tokens[tokenIdx].symbol} {position} {contract}</h1>
+                <div className="flex lg:flex-col space-y-1 border-b p-4">
+                    <span className="text-xs lg:text-base text-secondary-foreground font-medium">{tokens[tokenIdx].symbol} ${priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
+                    <h1 className="text-xl lg:text-3xl">{tokens[tokenIdx].symbol} {position} {contract}</h1>
                 </div>
-                <div className="w-full flex items-center justify-between p-4">
-                    <div className="flex gap-4">
-                        <div className="flex">
+                <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-4">
+                    <div className="flex gap-4 w-full">
+                        <div className="flex w-full lg:w-auto">
                             <Button
-                                className={`w-20 rounded-r-none ${
+                                className={`w-full lg:w-20 rounded-r-none ${
                                     position === 'Long' 
                                     ? 'bg-green-500 border border-green-500 text-black' 
                                     : 'bg-red-500/10 border border-red-500 text-red-500'
@@ -67,7 +67,7 @@ export default function OptionChainTable({
                                 Long
                             </Button>
                             <Button 
-                                className={`w-20 rounded-l-none ${
+                                className={`w-full lg:w-20 rounded-l-none ${
                                     position === 'Short' 
                                     ? 'bg-red-500 border border-red-500 text-black' 
                                     : 'bg-green-500/10 border border-green-500 text-green-500'
@@ -77,9 +77,9 @@ export default function OptionChainTable({
                                 Short
                             </Button>
                         </div>
-                        <div className="flex">
+                        <div className="flex w-full lg:w-auto">
                             <Button 
-                                className={`w-20 rounded-r-none ${
+                                className={`w-full lg:w-20 rounded-r-none ${
                                     position === 'Long' 
                                     ? `${
                                         contract === 'Call' 
@@ -97,7 +97,7 @@ export default function OptionChainTable({
                                 Call
                             </Button>
                             <Button 
-                                className={`w-20 rounded-l-none ${
+                                className={`w-full lg:w-20 rounded-l-none ${
                                     position === 'Long' 
                                     ? `${
                                         contract === 'Put' 
@@ -118,7 +118,7 @@ export default function OptionChainTable({
                         </div>
                     </div>
                     <Select>
-                        <SelectTrigger className="w-72">
+                        <SelectTrigger className="w-full lg:w-72">
                             <span>Expiring June 21 (46d)</span>
                             <ChevronsUpDown />
                         </SelectTrigger>
@@ -128,7 +128,7 @@ export default function OptionChainTable({
                     </Select>
                 </div>
             </section>
-            <section className="w-full flex flex-grow border rounded-sm overflow-y-hidden">
+            <section className="w-full hidden lg:flex flex-grow border rounded-sm overflow-y-hidden">
                 <ScrollArea className="w-full overflow-y-auto">
                 <Table>
                     <TableHeader className="top-0 left-0 sticky bg-background">
@@ -193,6 +193,12 @@ export default function OptionChainTable({
                 </Table>
                 </ScrollArea>
             </section>
+            <section className="lg:hidden flex flex-grow border">
+                <ScrollArea>
+                    
+                </ScrollArea>
+            </section>
+
         </main>
     )
 }

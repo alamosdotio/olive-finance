@@ -31,7 +31,7 @@ export default function SettingsMobile(){
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild className="hidden lg:flex">
                 <Button className="bg-accent justify-start text-secondary-foreground rounded-[12px]">
                     Settings
                 </Button>

@@ -2,6 +2,7 @@ import { OptionChainData } from "@/lib/data/dummyData";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { OptionChainChart } from "./OptionChainChart";
 
 interface OptionChainSummaryProps{
     idx: number;
@@ -54,7 +55,7 @@ export default function OptionChainSummary({idx, option} : OptionChainSummaryPro
                     Review Order
                 </Button>
                 <div className="border rounded-sm h-40 flex justify-center items-center">
-                    chart goes here
+                    <OptionChainChart />
                 </div>
             </main>
         )

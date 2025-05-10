@@ -16,6 +16,7 @@ export default function AnalyticSidebar(){
                 {[
                     {name: 'Trades', path: ''},
                     {name: 'Option Trades', path: 'option-trades'},
+                    {name: 'Pool Trades', path: 'pool-trades'},
                     {name: 'Pool Metrics', path: 'pool-metrics'},
                     {name: 'Options Metrics', path: 'options-metrics'},
                     {name: 'Futures Metrics', path: 'futures-metrics'},

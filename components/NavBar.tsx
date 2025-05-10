@@ -77,7 +77,7 @@ export default function NavBar(){
                     </Link>
                     <Link 
                         href='/earn'
-                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'p-0 w-auto h-auto flex justify-between gap-1 hover:text-primary')}
+                        className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}), 'hidden p-0 w-auto h-auto lg:flex justify-between gap-1 hover:text-primary')}
                         onClick={() => handleClick('Earn')}
                     > 
                          <EarnIcon />
@@ -90,7 +90,7 @@ export default function NavBar(){
                     
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                         <DropdownMenuTrigger
-                            className={`${isOpen ? 'text-primary' : 'text-secondary-foreground'} p-0 w-auto h-auto flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary`}
+                            className={`${isOpen ? 'text-primary' : 'text-secondary-foreground'} p-0 w-auto h-auto hidden lg:flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary`}
                             onClick={() => handleClick('More')}
                         >
                                 <MoreIcon />

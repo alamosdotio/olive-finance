@@ -11,9 +11,6 @@ import { generateStrategies, Strategy } from "@/lib/data/strategies"
 import EarnPaginate from "./EarnPaginate"
 import { ApyIcon, TvlIcon } from "@/public/svgs/icons"
 
-
-
-
 export default function EarnCards (){
     const [sortBy, setSortBy] = useState<string>("featured")
     const [currentPage, setCurrentPage] = useState(1)

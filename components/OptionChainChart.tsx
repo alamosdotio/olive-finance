@@ -24,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-export function ChartStrategy() {
+export function OptionChainChart() {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -108,7 +108,7 @@ export function ChartStrategy() {
   };
 
   return (
-    <div className="w-full h-[167px] p-2 border border-[#2B2C30] rounded-sm">
+    <div className="w-full h-full rounded-sm p-2">
       <Line options={options} data={data} />
     </div>
   );

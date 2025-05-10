@@ -110,14 +110,14 @@ const generatePnLData = ({
           borderColor: (ctx: ScriptableLineSegmentContext) => {
             const value = ctx.p1.parsed.y;
             return value < 0 
-              ? "rgba(177, 163, 251, 1)" // Red for negative
-              : "rgba(83, 192, 141, 1)"; // Green for positive
+              ? "rgba(177, 163, 251, 1)" 
+              : "rgba(83, 192, 141, 1)"; 
           },
           backgroundColor: (ctx: ScriptableLineSegmentContext) => {
             const value = ctx.p1.parsed.y;
             return value < 0 
-              ? "rgba(177, 163, 251, 0.2)" // Transparent red for negative
-              : "rgba(83, 192, 141, 0.2)"; // Transparent green for positive
+              ? "rgba(177, 163, 251, 0.2)" 
+              : "rgba(83, 192, 141, 0.2)"; 
           },
         },
         fill: true,
@@ -276,7 +276,7 @@ export function PnLChart({
 
   return (
     <div className="w-full h-full bg-background rounded-lg px-1">
-      <div className="h-full">
+      <div className="h-full p-1">
         <Line id={chartId} options={options} data={{ labels, datasets }} />
       </div>
     </div>
