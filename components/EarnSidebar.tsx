@@ -498,7 +498,7 @@ export default function EarnSidebar({
                         : `${tokenAmount > 0 ? tokenAmount:0} ${symbol}-LP `}  
                     </span>
                       will be {activeTab === 'mint' ? 'bought into' : 'sold from'} the pool at <span className="text-foreground">0.1%</span>  fees.
-                      You'll Receive XXX <span className="text-foreground">{activeTab === 'mint' ? `${symbol}-LP` : `${symbol} `} </span>
+                      You&apos;ll Receive XXX <span className="text-foreground">{activeTab === 'mint' ? `${symbol}-LP` : `${symbol} `} </span>
                   </div>
                    <div className="text-xs">
                     <span>{tokenAmount > 0 ? tokenAmount:0} {symbol} = XXX {symbol}-LP</span>
