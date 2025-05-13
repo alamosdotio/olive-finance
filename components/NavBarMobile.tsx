@@ -48,7 +48,7 @@ export default function NavBarMobile(){
                     </div>
                     <div className="flex flex-col w-full px-3 space-y-3">
                         <Button 
-                            className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 hidden lg:flex rounded-[12px]")}
+                            className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 md:hidden lg:flex rounded-[12px]")}
                             onClick={() => {handleClick('Options'); router.push('/'); setIsOpen(false)}}
                         >
                             <OptionsIcon />
@@ -56,7 +56,7 @@ export default function NavBarMobile(){
                             <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                         </Button>
                         <Button 
-                            className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 hidden lg:flex rounded-[12px]")}
+                            className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 md:hidden lg:flex rounded-[12px]")}
                             onClick={() => {handleClick('Futures'); router.push('/futures'); setIsOpen(false)}}
                         >
                             <OptionsIcon />

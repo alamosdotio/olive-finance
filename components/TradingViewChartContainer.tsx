@@ -72,15 +72,13 @@ export default function TradingViewChartContainer({symbol, logo, investment, pre
                         />
                     )}
                     {activeTab === 'price' && (
-                        <div className="h-full w-full border border-t-0">
-                            <OptionPrice 
-                                symbol={symbol} 
-                                logo={logo}
-                                strikePrice={strikePrice}
-                                contractType={contractType}
-                                expiry={expiry}
-                            />
-                        </div>
+                        <OptionPrice 
+                            symbol={symbol} 
+                            logo={logo}
+                            strikePrice={strikePrice}
+                            contractType={contractType}
+                            expiry={expiry}
+                        />
                     )}
                 </div>
             </div>
