@@ -501,7 +501,12 @@ export default function EarnSidebar({
                       You&apos;ll Receive XXX <span className="text-foreground">{activeTab === 'mint' ? `${symbol}-LP` : `${symbol} `} </span>
                   </div>
                    <div className="text-xs">
-                    <span>{tokenAmount > 0 ? tokenAmount:0} {symbol} = XXX {symbol}-LP</span>
+                    {activeTab === 'mint' ? (
+                      <span>{tokenAmount > 0 ? tokenAmount:0} {symbol} = XXX {symbol}-LP</span>
+                    ) : (
+                      <span>{tokenAmount > 0 ? tokenAmount:0} {symbol}-LP = XXX {symbol}</span>
+                    )}
+                    
                    </div>
                   
                 </section>

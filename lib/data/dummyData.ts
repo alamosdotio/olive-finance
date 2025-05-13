@@ -39,7 +39,7 @@ export const generateOptionChainData = (count: number, price: number, t:number, 
 export const dummyPoolTrades = Array.from({ length: 50 }, (_, i) => ({
   profile: `${Math.random().toString(16).substring(2, 6)}...${Math.random().toString(16).substring(2, 6)}`,
   type: i % 2 === 0 ? "Withdrawal" : "Deposit",
-  quantity: `${(Math.random() * 100).toFixed(2)} SOL`,
+  quantity: `${(Math.random() * 100).toFixed(2)} SOL-LP`,
   paidReceived: `${(Math.random() * 2000).toFixed(2)} USDC`,
   fees: `${(Math.random() * 2).toFixed(2)} USDC`,
   pool: `SOL/USDC`,

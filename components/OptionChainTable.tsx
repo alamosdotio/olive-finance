@@ -64,7 +64,7 @@ export default function OptionChainTable({
                                 }`}
                                 onClick={() => onPositionChange('Long')}
                             >
-                                Long
+                                Buy
                             </Button>
                             <Button 
                                 className={`w-full lg:w-20 rounded-l-none ${
@@ -74,7 +74,7 @@ export default function OptionChainTable({
                                 }`}
                                 onClick={() => onPositionChange('Short')}
                             >
-                                Short
+                                Sell
                             </Button>
                         </div>
                         <div className="flex w-full lg:w-auto">
