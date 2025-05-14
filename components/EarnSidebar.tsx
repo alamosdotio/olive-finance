@@ -78,7 +78,7 @@ export default function EarnSidebar({
         img: logo,
         symbol: symbol,
         name: name,
-        poolSize: `${solPoolsize} SOL`,
+        poolSize: `${solPoolsize} ${symbol}`,
         current_weightage: `${Math.round(
           ((solPoolsize * price) / total) * 100
         )}%`,

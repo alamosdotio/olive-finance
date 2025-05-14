@@ -21,6 +21,7 @@ import Notifications from "./Notifications";
 import PointsDropDown from "./PointsDropDown";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ChartLine } from "lucide-react";
+import { link } from "fs";
 
 
 export default function NavBar(){
@@ -115,13 +116,22 @@ export default function NavBar(){
                             ))}
                             <DropdownMenuSeparator />
                             {[
-                                "Docs",
-                                "Analytics",
-                                "Feedback",
+                                {
+                                    name:"Docs",
+                                    link:'https://docs.olive.finance'
+                                },
+                                {
+                                    name:"Analytics",
+                                    link:'/analytics'
+                                },
+                                {
+                                    name:"Feedback",
+                                    link:'/feedback'
+                                }
                             ].map((item) => (
-                                <Link href={`/${item.toLowerCase()}`} key={item} className="w-full" onClick={() => handleClick(item)}>
+                                <Link href={`${item.link}`} target={`${item.name === 'Docs' ? '_blank': ''}`} key={item.name} className="w-full" onClick={() => handleClick(item.name)}>
                                     <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
-                                        {item}
+                                        {item.name}
                                     </DropdownMenuItem>
                                 </Link>
                             ))}
