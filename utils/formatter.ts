@@ -1,24 +1,28 @@
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 export function formatExpiryLabel(date: Date): string {
-  return format(date, 'ddMMMyy').toUpperCase();
+  return format(date, "ddMMMyy").toUpperCase();
 }
 
 export function formatCountdown(timeLeft: number): string {
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const hours = Math.floor(
+    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
   const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-  return `${days}d:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  return `${days}d:${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
 
 export function formatPrice(price: number): string {
-  if (price < 10 && price!=0) {
+  if (price < 10 && price != 0) {
     const priceString = price.toString();
-    const [, decimalPart] = priceString.split('.');
+    const [, decimalPart] = priceString.split(".");
     const firstNonZeroIndex = decimalPart.search(/[1-9]/);
-    
+
     if (firstNonZeroIndex === -1) {
       return price.toFixed(4);
     } else {
@@ -28,4 +32,8 @@ export function formatPrice(price: number): string {
   } else {
     return price.toFixed(2);
   }
+}
+
+export function formatAmount(amount: number, decimals: number): string {
+  return (amount / 10 ** decimals).toFixed(2);
 }

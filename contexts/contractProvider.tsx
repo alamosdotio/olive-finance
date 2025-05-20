@@ -56,7 +56,7 @@ export const ContractContext = createContext<ContractContextType>({
   onExerciseOption: () => {},
   onAddLiquidity: () => {},
   onRemoveLiquidity: () => {},
-  getOptionDetailAccount: () => {}
+  getOptionDetailAccount: () => {},
 });
 
 export const clusterUrl = "https://api.devnet.solana.com";
@@ -137,11 +137,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       program.programId
     );
     const [custody] = PublicKey.findProgramAddressSync(
-      [
-        Buffer.from("custody"),
-        pool.toBuffer(),
-        WSOL_MINT.toBuffer(),
-      ],
+      [Buffer.from("custody"), pool.toBuffer(), WSOL_MINT.toBuffer()],
       program.programId
     );
     const [userPDA] = PublicKey.findProgramAddressSync(
@@ -157,11 +153,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     if (optionIndex == 0) return [[], [], []];
     for (let i = 1; i <= optionIndex; i++) {
       try {
-        const optionDetailAccount = getOptionDetailAccount(
-          i,
-          pool,
-          custody
-        );
+        const optionDetailAccount = getOptionDetailAccount(i, pool, custody);
         if (!optionDetailAccount) continue;
         const detail = await program.account.optionDetail.fetch(
           optionDetailAccount
@@ -180,11 +172,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
             token: detail?.lockedAsset.equals(custody) ? "SOL" : "USDC",
             logo: "/images/solana.png",
             symbol: "SOL",
-            strikePrice: detail?.strikePrice!,
+            strikePrice: detail?.strikePrice ?? 0,
             type: detail?.lockedAsset.equals(custody) ? "Call" : "Put",
-            expiry: new Date(
-              detail?.expiredDate.toNumber() * 1000
-            ).toString(),
+            expiry: new Date(detail?.expiredDate.toNumber() * 1000).toString(),
             size: detail?.lockedAsset.equals(custody)
               ? detail.amount.toNumber() / 10 ** WSOL_DECIMALS
               : detail.amount.toNumber() / 10 ** USDC_DECIMALS,
@@ -209,7 +199,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
             token: detail?.lockedAsset.equals(custody) ? "SOL" : "USDC",
             iconPath: "/images/solana.png",
             symbol: "SOL",
-            strikePrice: detail?.strikePrice!,
+            strikePrice: detail?.strikePrice ?? 0,
             qty: 100,
             expiryPrice: expiryPrice!,
             transaction: detail?.lockedAsset.equals(custody) ? "Call" : "Put",
@@ -259,11 +249,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       program.programId
     );
     const [custody] = PublicKey.findProgramAddressSync(
-      [
-        Buffer.from("custody"),
-        pool.toBuffer(),
-        WSOL_MINT.toBuffer(),
-      ],
+      [Buffer.from("custody"), pool.toBuffer(), WSOL_MINT.toBuffer()],
       program.programId
     );
     const [userPDA] = PublicKey.findProgramAddressSync(
@@ -350,11 +336,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         program.programId
       );
       const [custody] = PublicKey.findProgramAddressSync(
-        [
-          Buffer.from("custody"),
-          pool.toBuffer(),
-          WSOL_MINT.toBuffer(),
-        ],
+        [Buffer.from("custody"), pool.toBuffer(), WSOL_MINT.toBuffer()],
         program.programId
       );
       const optionDetailAccount = getOptionDetailAccount(
@@ -374,7 +356,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         wallet.publicKey
       );
       const transaction = await program.methods
-        .closeOption({optionIndex: new BN(optionIndex), poolName: "SOL-USDC"})
+        .closeOption({ optionIndex: new BN(optionIndex), poolName: "SOL-USDC" })
         .accountsPartial({
           owner: publicKey,
           fundingAccount,
@@ -649,7 +631,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         onExerciseOption,
         onAddLiquidity,
         onRemoveLiquidity,
-        getOptionDetailAccount
+        getOptionDetailAccount,
       }}
     >
       {children}
