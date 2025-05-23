@@ -202,9 +202,9 @@ export default function RecentTrades() {
 
   const sortedOptionDetails = useMemo(() => {
     return [...optionDetails].sort((a, b) => {
-      const dateA = new Date(parseInt(a.expiredDate) * 1000);
-      const dateB = new Date(parseInt(b.expiredDate) * 1000);
-      return dateA.getTime() - dateB.getTime(); // Sort in ascending order (oldest first)
+      const dateA = new Date(a.purchaseDate);
+      const dateB = new Date(b.purchaseDate);
+      return dateB.getTime() - dateA.getTime(); // Sort in ascending order (oldest first)
     });
   }, [optionDetails]);
 

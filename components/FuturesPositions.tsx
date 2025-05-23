@@ -19,8 +19,8 @@ const DummyFutures = [
         position: 'long',
         entryPrice: 122.50,
         LiqPrice: 135.00,  // liquidation price for long
-        Size: 50,  // contract size
-        Collateral: 1500,  // margin used
+        size: 50,  // contract size
+        collateral: 1500,  // margin used
         TPSL: 145.00,  // target price for take profit/stop loss
         logo: '/images/solana.png',  // Solana logo path
         leverage: 31
@@ -32,8 +32,8 @@ const DummyFutures = [
         position: 'short',
         entryPrice: 35000.00,
         LiqPrice: 36000.00,  // liquidation price for short
-        Size: 0.5,  // contract size (in BTC)
-        Collateral: 15000,  // margin used
+        size: 0.5,  // contract size (in BTC)
+        collateral: 15000,  // margin used
         TPSL: 34000.00,  // target price for short position
         logo: '/images/bitcoin.png',  // Bitcoin logo path
         leverage: 22.2
@@ -45,8 +45,8 @@ const DummyFutures = [
         position: 'long',
         entryPrice: 5.30,
         LiqPrice: 6.00,  // liquidation price for long
-        Size: 1000,  // contract size
-        Collateral: 5300,  // margin used
+        size: 1000,  // contract size
+        collateral: 5300,  // margin used
         TPSL: 6.50,  // target price for take profit/stop loss
         logo: '/images/wif.png',  // Wif logo path
         leverage: 10.2
@@ -58,8 +58,8 @@ const DummyFutures = [
         position: 'short',
         entryPrice: 2500.00,
         LiqPrice: 2650.00,  // liquidation price for short
-        Size: 10,  // contract size (in ETH)
-        Collateral: 25000,  // margin used
+        size: 10,  // contract size (in ETH)
+        collateral: 25000,  // margin used
         TPSL: 2400.00,  // target price for short position
         logo: '/images/ethereum.png',  // Ethereum logo path
         leverage: 11
@@ -71,8 +71,8 @@ const DummyFutures = [
         position: 'long',
         entryPrice: 8.00,
         LiqPrice: 9.00,  // liquidation price for long
-        Size: 500,  // contract size (LINK)
-        Collateral: 4000,  // margin used
+        size: 500,  // contract size (LINK)
+        collateral: 4000,  // margin used
         TPSL: 10.00,  // target price for long position
         logo: '/images/chainlink.png',  // Chainlink logo path
         leverage: 14
@@ -84,8 +84,8 @@ const DummyFutures = [
         position: 'short',
         entryPrice: 0.00000250,
         LiqPrice: 0.00000270,  // liquidation price for short
-        Size: 5000000,  // contract size (BONK)
-        Collateral: 12500,  // margin used
+        size: 5000000,  // contract size (BONK)
+        collateral: 12500,  // margin used
         TPSL: 0.00000200,  // target price for short position
         logo: '/images/bonk.png',  // Placeholder logo path for Bonk, change as needed
         leverage: 5
@@ -164,12 +164,25 @@ export default function FuturesPositions(){
                     </TabsList>
                 </Tabs>
             </section>
-           <ProtectedRoute fallback={<Fallback />}>
+           {/* <ProtectedRoute fallback={<Fallback />}> */}
                 {activeTab === 'positions' && (
                     <>
                         <section className="px-6 py-3 space-y-[10px]">
                             {currentItems.map((pos, idx) => (
-                                <OpenFutures key={idx} token={pos.token} logo={pos.logo} symbol={pos.symbol} type={pos.futureType} position={pos.position} leverage={pos.leverage}/>
+                                <OpenFutures 
+                                    key={idx} 
+                                    token={pos.token} 
+                                    logo={pos.logo} 
+                                    symbol={pos.symbol} 
+                                    type={pos.futureType} 
+                                    position={pos.position} 
+                                    leverage={pos.leverage}
+                                    entry={pos.entryPrice}
+                                    liquidation={pos.LiqPrice}
+                                    size={pos.size}
+                                    collateral={pos.collateral}
+                                    tpsl={pos.TPSL}
+                                />
                             ))}
                         </section>
                         <div className="px-3 md:px-6 pb-4 w-full">
@@ -212,7 +225,7 @@ export default function FuturesPositions(){
                         </div>
                     </>
                 )}
-            </ProtectedRoute>
+            {/* </ProtectedRoute> */}
         </div>
     )
 }

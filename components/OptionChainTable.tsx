@@ -1,6 +1,6 @@
 'use client'
 import { Button } from "./ui/button";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { tokenList } from "@/lib/data/tokenlist";
 import type { PythPriceState } from "@/hooks/usePythPrice";
 import { formatPrice } from "@/utils/formatter";
@@ -127,28 +127,28 @@ export default function OptionChainTable({
                                     Breakeven
                                 </TableHead>
                                 <TableHead>
-                                Chance of Profit
+                                    Chance of Profit
                                 </TableHead>
                                 <TableHead>
-                                %Change
+                                    %Change
                                 </TableHead>
                                 <TableHead>
-                                Change
+                                    Change
                                 </TableHead>
                                 <TableHead>
-                                Bid Price
+                                    Bid Price
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody className="">
                             {dummyData.map((option, idx) => (
                                 <TableRow key={idx} className="">
-                                    <TableHead>${option.strikePrice}</TableHead>
-                                    <TableHead>${option.breakeven}</TableHead>
-                                    <TableHead>{option.chanceofProfit}</TableHead>
-                                    <TableHead>{option.percentChange}</TableHead>
-                                    <TableHead>{option.change}</TableHead>
-                                    <TableHead className="flex items-center">
+                                    <TableCell>${option.strikePrice}</TableCell>
+                                    <TableCell>${option.breakeven}</TableCell>
+                                    <TableCell>{option.chanceofProfit}</TableCell>
+                                    <TableCell>{option.percentChange}</TableCell>
+                                    <TableCell>{option.change}</TableCell>
+                                    <TableCell className="flex items-center">
                                         <div 
                                             className={`
                                                     border border-primary border-r-0 p-1 h-fit 
@@ -170,20 +170,23 @@ export default function OptionChainTable({
                                             {optionIdx === idx ? (
                                                 '✓'
                                             ) : (
-                                            '+'
+                                                '+'
                                             )}
                                         </Button>
-                                    </TableHead>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                     </ScrollArea>
                 ) : (
-                    <div className="m-auto">
-                        No Open Positions.
-                        Start Trading Now
-                    </div>
+                    <ScrollArea className="w-full overflow-y-auto">
+                        <Table>
+                            <TableHeader>
+                                
+                            </TableHeader>
+                        </Table>
+                    </ScrollArea>
                 )}
             </section>
             <section className="lg:hidden flex flex-grow border">

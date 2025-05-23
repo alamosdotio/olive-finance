@@ -222,7 +222,7 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
               value={amount}
               placeholder="0.00"
               onChange={(e) => setAmount(e.target.value)}
-              className="pl-12 h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
+              className="pr-2 h-11 text-right text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
               step="0.1"
               min="0.1"
             />

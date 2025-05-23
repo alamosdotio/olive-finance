@@ -2,8 +2,6 @@
 
 import { useContext, useEffect, useState } from "react";
 import {
-  ArrowUpRight,
-  ArrowDownRight,
   MoreHorizontal,
   Info,
   TrendingUp,
@@ -33,6 +31,7 @@ interface OptionCardProps{
   onExpiryChange: (date: Date) => void;
   onStrikePriceChange: (amount: string) => void;
   onPayAmountChange: (amount: string) => void;
+  onCurrencyChange: (currency: string) => void;
   onContractTypeChange: (type: 'Call' | 'Put') => void;
   active: number;
   priceData: PythPriceState;
@@ -43,7 +42,7 @@ interface OptionCardProps{
 
 
 export default function OptionCard(
-  {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange, onExpiryChange, onContractTypeChange} 
+  {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange, onExpiryChange, onContractTypeChange, onCurrencyChange} 
   : 
   OptionCardProps) {
     const { connected } = useWallet();
@@ -65,6 +64,10 @@ export default function OptionCard(
   const isPositive = marketData.change24h !== null && marketData.change24h > 0;
 
   console.log(defaultStrikePrices)
+
+  useEffect(() => {
+    onCurrencyChange(payCurrency)
+  }, [payCurrency]);
 
   useEffect(() => {
     setHasSetInitialStrike(false);
@@ -326,7 +329,7 @@ export default function OptionCard(
                 onPayAmountChange(e.target.value)
               }}
             placeholder="0.00"
-            className="pl-12 h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
+            className="pr-2 text-right h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
             step="0.1"
             min="0.1"
           />

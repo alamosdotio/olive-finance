@@ -4,6 +4,9 @@ import { Badge } from "./ui/badge";
 import { useState } from "react";
 import { ArrowDown, ArrowUp } from "@/public/svgs/icons";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import Collateral from "./Collateral";
+import Tpsl from "./Tpsl";
+import CloseFutures from "./CloseFutures";
 
 interface OpenFuturesProps{
     logo:string
@@ -12,9 +15,26 @@ interface OpenFuturesProps{
     type:string
     position:string
     leverage:number
+    entry:number
+    liquidation:number
+    size:number
+    collateral:number
+    tpsl:number
 }
 
-export default function OpenFutures({logo, token, symbol, type, position, leverage} : OpenFuturesProps){
+export default function OpenFutures({
+    logo, 
+    token, 
+    symbol, 
+    type, 
+    position, 
+    leverage,
+    entry,
+    liquidation,
+    size,
+    collateral,
+    tpsl
+} : OpenFuturesProps){
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     return (
@@ -45,7 +65,7 @@ export default function OpenFutures({logo, token, symbol, type, position, levera
                 <div className="w-full px-4 pt-2 pb-4 space-y-4 border-t-2 border-backgroundSecondary">
                     <Table>
                         <TableHeader>
-                            <TableRow className="w-full grid grid-cols-8 whitespace-nowrap h-7">
+                            <TableRow className="w-full grid grid-cols-10 whitespace-nowrap h-7">
                                 <TableHead className="">Entry Price</TableHead>
                                 <TableHead className="">Mark Price</TableHead>
                                 <TableHead className="">Size</TableHead>
@@ -53,19 +73,35 @@ export default function OpenFutures({logo, token, symbol, type, position, levera
                                 <TableHead className="">Liq. Price</TableHead>
                                 <TableHead className="">Levarage</TableHead>
                                 <TableHead className="">Collateral</TableHead>
+                                <TableHead className="">TP/SL</TableHead>
                                 <TableHead className="">PNL</TableHead>
+                                <TableHead className=""></TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow className="w-full grid grid-cols-8">
-                                <TableCell>$107.32</TableCell>
-                                <TableCell>$107.32</TableCell>
-                                <TableCell>$107.32</TableCell>
-                                <TableCell>$107.32</TableCell>
-                                <TableCell>$107.32</TableCell>
-                                <TableCell>10x</TableCell>
-                                <TableCell>$107.32</TableCell>
-                                <TableCell>$107.32</TableCell>
+                            <TableRow className="w-full grid grid-cols-10">
+                                <TableCell className="flex space-x-2 items-center">{entry}</TableCell>
+                                <TableCell className="flex space-x-2 items-center">$107.32</TableCell>
+                                <TableCell className="flex space-x-2 items-center">{size}</TableCell>
+                                <TableCell className="flex space-x-2 items-center">$107.32</TableCell>
+                                <TableCell className="flex space-x-2 items-center">${liquidation}</TableCell>
+                                <TableCell className="flex space-x-2 items-center">{leverage}x</TableCell>
+                                <TableCell className="flex space-x-2 items-center">
+                                    <span>
+                                        ${collateral} 
+                                    </span>
+                                    <Collateral />
+                                </TableCell>
+                                <TableCell className="flex space-x-2 items-center">
+                                    <span>
+                                        ${tpsl} 
+                                    </span>
+                                    <Tpsl />
+                                </TableCell>
+                                <TableCell className="flex space-x-2 items-center">$107.32</TableCell>
+                                <TableCell className="flex space-x-2 items-center">
+                                    <CloseFutures />
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

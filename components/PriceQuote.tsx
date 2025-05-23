@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import type { PythPriceState } from "@/hooks/usePythPrice";
 import { CallIconDark, GrayDot, GreenDot, OrangeDot, PurpleDot, PutIconDark } from "@/public/svgs/icons";
-import { tokenList } from "@/lib/data/tokenlist";
+import { tokenList, USDC } from "@/lib/data/tokenlist";
 import { useOptionsPricing } from "@/hooks/useOptionsPricing";
 import { black_scholes } from "@/utils/optionsPricing";
 import { differenceInSeconds, differenceInYears } from "date-fns";
@@ -16,21 +16,18 @@ interface PriceQuoteProps{
     premium: number
     contractType: string
     priceData: PythPriceState
+    currency: string
 }
 
-export default function PriceQuote({value, active, priceData, premium, contractType}:PriceQuoteProps){
+export default function PriceQuote({value, active, priceData, premium, contractType, currency}:PriceQuoteProps){
     const [dropDownActive, setDropDownActive] = useState<boolean>(true);
     const [moreInfo, setMoreInfo] = useState<boolean>(false);
     const tokens = tokenList;
+    const usdc = USDC
     const s = priceData.price ?? 0;
 
-    const total = (s/premium)
+    const total = currency === usdc.pythSymbol ? ((s/premium)/s) : (s/premium)
     const minRec = parseFloat(value) * total
-
-    // const seconds = differenceInSeconds(expiry, Date.now());
-    // const t = seconds / (365 * 24 * 60 * 60);
-    // const prem = black_scholes(s, k, t, true)    
-    // console.log(`1 ${tokens[active].symbol} is $${s} and total premium is ${total} formula: ${s}/${prem}`)
 
 
     return (
@@ -55,8 +52,18 @@ export default function PriceQuote({value, active, priceData, premium, contractT
                     <div className="w-full flex flex-col space-y-3">
                         <div className="w-full flex items-center justify-center space-x-2 bg-accent rounded-sm px-3 py-2 text-base font-normal whitespace-nowrap">
                             <div className="flex items-center space-x-1">
-                                <span>1 {tokens[active].symbol}</span>
-                                <Image src={tokens[active].iconPath} alt="eth" width={100} height={100} className="rounded-full w-4 h-4"/>
+                                {currency === usdc.pythSymbol ? (
+                                    <>
+                                        <span>1 {usdc.symbol}</span>
+                                        <Image src={usdc.iconPath} alt="eth" width={100} height={100} className="rounded-full w-4 h-4"/>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>1 {tokens[active].symbol}</span>
+                                        <Image src={tokens[active].iconPath} alt="eth" width={100} height={100} className="rounded-full w-4 h-4"/>
+                                    </>
+                                )}
+                                
                             </div> 
                             <span>=</span> 
                             <span>{formatPrice(total)}</span> 

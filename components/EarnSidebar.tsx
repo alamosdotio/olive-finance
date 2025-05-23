@@ -123,6 +123,7 @@ export default function EarnSidebar({
   const { connected, publicKey } = useWallet();
   const wallet = useAnchorWallet();
   const [program, setProgram] = useState<Program<OptionContract>>();
+  const [loading, setLoading] = useState(false);
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
@@ -192,7 +193,17 @@ export default function EarnSidebar({
 
   const handleTokenAmount = (value: string) => {
     setTokenAmount(parseFloat(value));
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   };
+
+  setTimeout(() => {
+      setLoading(!loading);
+  }, 2000);
+
+
   return (
     <SheetContent className="space-y-6 w-full md:w-[720px] rounded-sm bg-accent overflow-y-auto">
       <SheetHeader>
@@ -413,55 +424,14 @@ export default function EarnSidebar({
               </TabsTrigger>
             </TabsList>
           </Tabs>
-            <div className="flex justify-between items-end gap-2">
-              {activeTab === 'mint' ? (
-                <div className="flex flex-col space-y-[6px] w-full">
-                  <span className="text-sm text-secondary-foreground font-medium">Pay</span>
-                  <div className="relative w-full">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-                     <PoolDropdown
-                        isOpen={isOpen} 
-                        handleClickToken={handleClickToken}
-                        handleOpenChange={handleOpenChange}
-                        poolDatas={poolDatas}
-                        selectedToken={selectedToken}
-                        logo={logo}
-                      />
-                    </div>
-                    <Input
-                      type="number"
-                      onChange={(e) => handleTokenAmount(e.target.value)}
-                      placeholder={'0.00'}
-                      className="pl-12 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
-                      step="0.1"
-                      min="0.1"
-                    />
-                  </div>
-                </div>
-                
-              ) : (
-                <div className="flex gap-2">
-                  <div className="space-y-1">
+            <div className="flex justify-between items-start gap-2">
+              <div className="w-full flex flex-col space-y-2">
+                {activeTab === 'mint' ? (
+                  <div className="flex flex-col space-y-1 w-full">
                     <span className="text-sm text-secondary-foreground font-medium">Pay</span>
-                    <div className="relative">
+                    <div className="relative w-full">
                       <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-                        {symbol}-LP
-                      </div>
-                      <Input
-                        type="number"
-                        placeholder="0.00"
-                        onChange={(e) => handleTokenAmount(e.target.value)}
-                        className="text-right pr-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
-                        step="0.1"
-                        min="0.1"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-sm text-secondary-foreground font-medium">Sell Into</span>
-                    <div className="relative">
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-                        <PoolDropdown
+                      <PoolDropdown
                           isOpen={isOpen} 
                           handleClickToken={handleClickToken}
                           handleOpenChange={handleOpenChange}
@@ -472,47 +442,110 @@ export default function EarnSidebar({
                       </div>
                       <Input
                         type="number"
-                        placeholder="0.00"
-                        className="text-right pr-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
+                        onChange={(e) => handleTokenAmount(e.target.value)}
+                        placeholder={'0.00'}
+                        className="pl-12 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
                         step="0.1"
                         min="0.1"
                       />
                     </div>
                   </div>
-                  
-                </div>
-              )}
+                ) : (
+                  <div className="flex space-x-2">
+                    <div className="flex flex-col space-y-1 w-full">
+                      <span className="text-sm text-secondary-foreground font-medium">Pay</span>
+                      <div className="relative">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                          {symbol}-LP
+                        </div>
+                        <Input
+                          type="number"
+                          placeholder="0.00"
+                          onChange={(e) => handleTokenAmount(e.target.value)}
+                          className="text-right pr-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
+                          step="0.1"
+                          min="0.1"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col space-y-1 w-full">
+                      <span className="text-sm text-secondary-foreground font-medium">Sell Into</span>
+                      <div className="relative">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                          <PoolDropdown
+                            isOpen={isOpen} 
+                            handleClickToken={handleClickToken}
+                            handleOpenChange={handleOpenChange}
+                            poolDatas={poolDatas}
+                            selectedToken={selectedToken}
+                            logo={logo}
+                          />
+                        </div>
+                        <Input
+                          type="number"
+                          placeholder="0.00"
+                          className="text-right pr-3 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
+                          step="0.1"
+                          min="0.1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {tokenAmount > 0 && (  
+                  <div className="w-full flex flex-col border p-5 rounded-sm">
+                    <section className="flex flex-col space-y-1 text-sm text-secondary-foreground font-medium">
+                      <div>
+                        <span className="text-foreground">
+                          {activeTab === 'mint' ? `${tokenAmount > 0 ? tokenAmount:0} ${symbol} ` 
+                            : `${tokenAmount > 0 ? tokenAmount:0} ${symbol}-LP `}  
+                        </span>
+                        <span>
+                          will be {activeTab === 'mint' ? 'bought into' : 'sold from'} the pool at <span className="text-foreground">0.1%</span>  fees. <br />
+                          You&apos;ll Receive XXX <span className="text-foreground">{activeTab === 'mint' ? `${symbol}-LP` : `${symbol} `} </span>
+                        </span>
+                          
+                      </div>
+                      <div className="text-xs flex gap-2">
+                        <svg
+                            className={`${loading  ? 'animate-spin': ''} h-4 w-4 text-primary`}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8v8z"
+                            ></path>
+                          </svg>
+                        {activeTab === 'mint' ? (
+                          <span>{tokenAmount > 0 ? tokenAmount:0} {symbol} = XXX {symbol}-LP</span>
+                        ) : (
+                          <span>{tokenAmount > 0 ? tokenAmount:0} {symbol}-LP = XXX {symbol}</span>
+                        )}
+                        
+                      </div>  
+                    </section>
+                  </div>
+                )}
+              </div>
               <Button
-                className="h-fit rounded-sm px-4 py-[10px] w-2/6 text-black bg-primary hover:bg-gradient-primary"
+                className="h-fit rounded-sm px-4 py-[10px] mt-6 w-2/6 text-black bg-primary hover:bg-gradient-primary"
                 onClick={onSubmit}
               >
                 {activeTab === "mint" ? "Buy" : "Sell"}
               </Button>
             </div>
-            {tokenAmount > 0 && (  
-              <div className="w-full flex flex-col items-center justify-center border p-2 rounded-sm">
-                <section className="flex flex-col items-center text-sm text-secondary-foreground font-medium">
-                  <div>
-                    <span className="text-foreground">
-                      {activeTab === 'mint' ? `${tokenAmount > 0 ? tokenAmount:0} ${symbol} ` 
-                        : `${tokenAmount > 0 ? tokenAmount:0} ${symbol}-LP `}  
-                    </span>
-                      will be {activeTab === 'mint' ? 'bought into' : 'sold from'} the pool at <span className="text-foreground">0.1%</span>  fees.
-                      You&apos;ll Receive XXX <span className="text-foreground">{activeTab === 'mint' ? `${symbol}-LP` : `${symbol} `} </span>
-                  </div>
-                   <div className="text-xs">
-                    {activeTab === 'mint' ? (
-                      <span>{tokenAmount > 0 ? tokenAmount:0} {symbol} = XXX {symbol}-LP</span>
-                    ) : (
-                      <span>{tokenAmount > 0 ? tokenAmount:0} {symbol}-LP = XXX {symbol}</span>
-                    )}
-                    
-                   </div>
-                  
-                </section>
-
-              </div>
-            )}
+            
         </div>
       </div>
     </SheetContent>
