@@ -15,6 +15,8 @@ import CardTokenList from "./CardTokenList";
 import type { PythPriceState } from "@/hooks/usePythPrice";
 import type { MarketDataState } from "@/hooks/usePythMarketData"
 import { formatPrice } from "@/utils/formatter";
+import WalletModal from "./WalletModal";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 
 interface FutureCardProps {
   type: 'perps' | 'dated';
@@ -30,7 +32,11 @@ interface FutureCardProps {
 }
 
 export default function FutureCard({ type, orderType, onSymbolChange, onIdxChange, active ,selectedSymbol, priceData, marketData, priceLoading, marketLoading}: FutureCardProps) {
+  const { connected } = useWallet();
+  const wallet = useAnchorWallet();
+
   const [selectedTx, setSelectedTx] = useState('long');
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [leverage, setLeverage] = useState('1');
   const [amount, setAmount] = useState("");
   const [payCurrency, setPayCurrency] = useState(selectedSymbol)
@@ -326,13 +332,28 @@ export default function FutureCard({ type, orderType, onSymbolChange, onIdxChang
 
       {/* Connect Wallet Button */}
       <div className="p-6 pt-0">
-        <Button 
-          className="w-full h-10 rounded-sm bg-primary hover:bg-gradient-primary text-black"
-        >
-          <WalletIcon />
-          <span className="text-base font-medium">Connect Wallet</span>
-        </Button>
+        {connected ? (
+          <Button 
+            className="w-full h-10 rounded-sm bg-primary hover:bg-gradient-primary text-black"
+          >
+            <span className="text-base font-medium">Trade</span>
+          </Button>
+        ) : (
+          <Button 
+            className="w-full h-10 rounded-sm bg-primary hover:bg-gradient-primary text-black"
+            onClick={() => setIsWalletModalOpen(true)}
+          >
+            <WalletIcon />
+            <span className="text-base font-medium">Connect Wallet</span>
+          </Button>
+        )}
+        
       </div>
+
+      <WalletModal
+        isOpen={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+      />
 
       <ExpirationDialog
         open={showExpirationModal}

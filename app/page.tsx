@@ -15,6 +15,7 @@ import OptionCardContainer from "@/components/OptionCardContainer";
 import { addWeeks } from "date-fns";
 import { useOptionsPricing } from "@/hooks/useOptionsPricing";
 import { setOptionParameters } from "@/lib/optionsDatafeed";
+import { ToastContainer } from "react-toastify";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
@@ -149,7 +150,9 @@ export default function Homepage(){
                 </Button>
               </div>
             </div>
-            
+            <ToastContainer
+              theme="dark"
+            />
         </>
     )
 }

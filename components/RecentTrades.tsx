@@ -318,7 +318,9 @@ export default function RecentTrades() {
           </TableHeader>
           {memoizedTableContent}
         </Table>
-        <ToastContainer />
+        <ToastContainer
+          theme="dark"
+        />
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

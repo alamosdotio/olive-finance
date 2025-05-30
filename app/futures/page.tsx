@@ -10,6 +10,7 @@ import { usePythMarketData } from "@/hooks/usePythMarketData";
 import { usePythPrice } from "@/hooks/usePythPrice";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Futures(){
     const [active ,setActive] = useState('chart')
@@ -81,6 +82,9 @@ export default function Futures(){
                 </Button>
               </div>
             </div>
+            <ToastContainer
+              theme="dark"
+            />
         </main>
         
     )

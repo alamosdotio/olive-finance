@@ -157,7 +157,7 @@ export default function TradingViewTopNav({
                     </div>
                 </DropdownMenuContent>
             </DropdownMenu>
-                <div className={`${type==='futures' ? 'hidden' : 'flex'}`}>
+                <div className={`${type==='futures' ? 'hidden' : 'hidden'}`}>
                     <div className="px-4 py-1">
                         <Separator orientation="vertical"/>
                     </div>
@@ -208,15 +208,13 @@ export default function TradingViewTopNav({
                     <Separator orientation="vertical"/>
                 </div>
                 <div className="flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Open Interest</span>
-                    <span className="text-foreground text-xs font-medium">$</span>
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">SOL Utilization</span>
                 </div>
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>
                 <div className="flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Available Liquidity</span>
-                    <span className="text-foreground text-xs font-medium">$</span>
+                    <span className="text-secondary-foreground font-normal text-[10px] h-3">USDC Utilization</span>
                 </div>
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>

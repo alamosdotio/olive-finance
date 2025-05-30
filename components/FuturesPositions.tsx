@@ -142,29 +142,29 @@ export default function FuturesPositions(){
         <div className="w-full border rounded-sm flex flex-col mb-3">
             <section className="border-b rounded-none px-6 py-3">
                 <Tabs defaultValue={activeTab} onValueChange={handleClickTab}>
-                    <TabsList className="bg-inherit flex justify-start text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
+                    <TabsList className="bg-inherit grid grid-cols-6 text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
                         <TabsTrigger
                             value="positions"
-                            className="border-b rounded-nonetext-[11px] md:text-sm px-2 py-0 rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
                             Open Positions
                         </TabsTrigger>
                         <TabsTrigger
                             value="expired" 
-                            className="border-b rounded-nonetext-[11px] md:text-sm px-2 py-0 rounded-none border-transparent data-[state=active]:border-primary"   
+                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"  
                         >
                             Expired Positions
                         </TabsTrigger>
                         <TabsTrigger
                             value="history"
-                            className="border-b rounded-nonetext-[11px] md:text-sm px-2 py-0 rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
                            Order History
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
             </section>
-           {/* <ProtectedRoute fallback={<Fallback />}> */}
+           <ProtectedRoute fallback={<Fallback />}>
                 {activeTab === 'positions' && (
                     <>
                         <section className="px-6 py-3 space-y-[10px]">
@@ -225,7 +225,7 @@ export default function FuturesPositions(){
                         </div>
                     </>
                 )}
-            {/* </ProtectedRoute> */}
+            </ProtectedRoute>
         </div>
     )
 }

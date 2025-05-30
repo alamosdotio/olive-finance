@@ -11,6 +11,7 @@ import WalletActivity from "./WalletActivity";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { allWallets } from "./WalletModal";
 import { XIcon } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function WalletSideBar() {
   const { wallet, publicKey, disconnect, connected } = useWallet();
@@ -30,6 +31,12 @@ export default function WalletSideBar() {
       setActiveTab(state);
     }
   };
+  const handleDisconnect = () => {
+    toast.success('Wallet Disconnected', {
+      position: 'bottom-right'
+    })
+    disconnect();
+  }
   useEffect(() => {
     if (wallet) {
         setIconPath(allWallets.filter((value) => value.name === wallet.adapter.name)[0].iconPath);
@@ -71,7 +78,7 @@ export default function WalletSideBar() {
             </Button>
             <Button
               className="bg-secondary p-2 h-fit shadow-none rounded-sm"
-              onClick={() => disconnect()}
+              onClick={() => handleDisconnect()}
             >
               <LogOutIcon />
             </Button>

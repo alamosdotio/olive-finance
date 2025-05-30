@@ -256,7 +256,9 @@ export default function PoolTradesTable() {
           {memoizedTableContent}
         </Table>
       </ScrollArea>
-      <ToastContainer />
+      <ToastContainer
+          theme="dark"
+      />
     </div>
   );
 }

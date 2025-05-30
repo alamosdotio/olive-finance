@@ -51,10 +51,10 @@ export default function OptionChainTable({
     return (
         <main className="w-full flex flex-col space-y-4"  style={{ height: 'calc(100vh - 155px)' }}>
             <section className="w-full flex flex-col border rounded-sm">
-                <div className="flex lg:flex-col space-y-1 border-b p-4">
+                {/* <div className="flex lg:flex-col space-y-1 border-b p-4">
                     <span className="text-xs lg:text-base text-secondary-foreground font-medium">{tokens[tokenIdx].symbol} ${priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
                     <h1 className="text-xl lg:text-3xl">{tokens[tokenIdx].symbol} {contract}</h1>
-                </div>
+                </div> */}
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-4">
                     <div className="flex gap-4 w-full">
                         <div className="flex w-full lg:w-auto">
@@ -180,13 +180,9 @@ export default function OptionChainTable({
                     </Table>
                     </ScrollArea>
                 ) : (
-                    <ScrollArea className="w-full overflow-y-auto">
-                        <Table>
-                            <TableHeader>
-                                
-                            </TableHeader>
-                        </Table>
-                    </ScrollArea>
+                    <div className="w-full flex justify-center items-center h-full">
+                        No Positions Open
+                    </div>
                 )}
             </section>
             <section className="lg:hidden flex flex-grow border">

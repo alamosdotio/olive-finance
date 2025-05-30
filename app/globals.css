@@ -13,6 +13,12 @@
 @layer base {
   :root {
     --radius: 0.5rem;
+    --toastify-color-light: #FFFFFF;
+    --toastify-color-dark: #212126;
+    --toastify-color-info: #3498db;
+    --toastify-color-success: #00c951;
+    --toastify-color-warning: #f1c40f;
+    --toastify-color-progress-dark: rgb(var(--primary));
   }
   [data-theme="light-purple"] {
     --background: #FFFFFF;

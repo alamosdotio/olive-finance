@@ -22,6 +22,8 @@ import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import WalletModal from "./WalletModal";
 import { ContractContext } from "@/contexts/contractProvider";
 import { WSOL_DECIMALS } from "@/utils/const";
+import { toast } from "react-toastify";
+import BuyOption from "./toasts/BuyOption";
 
 interface OptionCardProps{
   orderType: 'market' | 'limit';
@@ -123,6 +125,14 @@ export default function OptionCard(
   const sc = useContext(ContractContext);
 
   const buyOptionHandler = async () => {
+    // toast(
+    //   <BuyOption 
+    //     option={selectedOption}
+    //     active={active}
+    //   />, {
+    //   position: 'bottom-right',
+    //   className: 'h-32'
+    // })
     const currentTime = Math.floor(Date.now()/1000);
     const expTime = Math.floor(expiration.getTime()/1000)
     const period = Math.floor((expTime - currentTime)/(3600 * 24))
