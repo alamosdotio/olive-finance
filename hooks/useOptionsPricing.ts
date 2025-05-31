@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { black_scholes } from '@/utils/optionsPricing';
-import { differenceInSeconds, differenceInYears } from 'date-fns';
-import { useState, useEffect } from 'react';
+import { black_scholes } from "@/utils/optionsPricing";
+import { differenceInSeconds, differenceInYears } from "date-fns";
+import { useState, useEffect } from "react";
 
 interface UseOptionsPricingProps {
-  type: 'Call' | 'Put';
+  type: "Call" | "Put";
   strikePrice: number;
   currentPrice: number;
   expiryDate: Date;
@@ -18,12 +18,13 @@ export function useOptionsPricing({
   expiryDate,
 }: UseOptionsPricingProps) {
   const [premium, setPremium] = useState<number>(0);
-  const seconds = differenceInSeconds(expiryDate, Date.now())
+  const seconds = differenceInSeconds(expiryDate, Date.now());
+
   const time = seconds / (365 * 24 * 60 * 60);
-  
-  const isCall = (type: 'Call' | 'Put') => {
-    return type === 'Call' ? true : false;
-  }
+
+  const isCall = (type: "Call" | "Put") => {
+    return type === "Call" ? true : false;
+  };
 
   useEffect(() => {
     if (!strikePrice || !currentPrice || !expiryDate) {
@@ -32,7 +33,10 @@ export function useOptionsPricing({
     }
 
     const calculatedPremium = black_scholes(
-      currentPrice, strikePrice, time, isCall(type) 
+      currentPrice,
+      strikePrice,
+      time,
+      isCall(type)
     );
 
     setPremium(Math.max(0, calculatedPremium));

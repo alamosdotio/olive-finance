@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { PriceServiceConnection } from '@pythnetwork/price-service-client';
-import { PRICE_FEEDS } from '../lib/data/price-feed';
+import { useState, useEffect, useRef } from "react";
+import { PriceServiceConnection } from "@pythnetwork/price-service-client";
+import { PRICE_FEEDS } from "../lib/data/price-feed";
 import { HermesClient } from "@pythnetwork/hermes-client";
-const PYTH_ENDPOINT = 'https://hermes.pyth.network';
+const PYTH_ENDPOINT = "https://hermes.pyth.network";
 const POLLING_INTERVAL = 15000; // 15 seconds polling interval
 const CACHE_DURATION = 10000; // 10 seconds cache duration
 
@@ -46,7 +46,7 @@ export function usePythPrice(token: string): UsePythPriceResult {
     let mounted = true;
     let intervalId: NodeJS.Timeout;
 
-    const priceFeed = PRICE_FEEDS.find(feed => feed.token === token);
+    const priceFeed = PRICE_FEEDS.find((feed) => feed.token === token);
     if (!priceFeed) {
       setError(`Price feed not found for token: ${token}`);
       setLoading(false);
@@ -62,15 +62,17 @@ export function usePythPrice(token: string): UsePythPriceResult {
       const cachedResult = priceCache.get(token);
 
       // Check cache first
-      if (cachedResult && (now - cachedResult.timestamp) < CACHE_DURATION) {
+      if (cachedResult && now - cachedResult.timestamp < CACHE_DURATION) {
         setPriceData(cachedResult.data);
         setLoading(false);
         return;
       }
 
       // Rate limiting check
-      if (now - lastRequestTimeRef.current < 10000) { // 10 second window
-        if (requestCountRef.current >= 25) { // Keep below 30 req/10s limit
+      if (now - lastRequestTimeRef.current < 10000) {
+        // 10 second window
+        if (requestCountRef.current >= 25) {
+          // Keep below 30 req/10s limit
           return;
         }
       } else {
@@ -88,17 +90,19 @@ export function usePythPrice(token: string): UsePythPriceResult {
 
         const feed = priceFeeds?.[0];
         if (!feed) {
-          throw new Error('No price feed data available');
+          throw new Error("No price feed data available");
         }
 
         const priceInfo = feed.getPriceNoOlderThan(60);
         if (!priceInfo) {
-          setError('Price data is stale');
+          setError("Price data is stale");
           return;
         }
 
-        const price = parseFloat(priceInfo.price) * Math.pow(10, priceInfo.expo);
-        const confidence = parseFloat(priceInfo.conf) * Math.pow(10, priceInfo.expo);
+        const price =
+          parseFloat(priceInfo.price) * Math.pow(10, priceInfo.expo);
+        const confidence =
+          parseFloat(priceInfo.conf) * Math.pow(10, priceInfo.expo);
 
         const newPriceData = {
           price,
@@ -118,7 +122,9 @@ export function usePythPrice(token: string): UsePythPriceResult {
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : 'Failed to fetch price data');
+          setError(
+            err instanceof Error ? err.message : "Failed to fetch price data"
+          );
         }
       } finally {
         if (mounted) {
@@ -142,14 +148,20 @@ export function usePythPrice(token: string): UsePythPriceResult {
 }
 
 export const getPythPrice = async (token: string, timestamp: number) => {
-  const priceFeed = PRICE_FEEDS.find(feed => feed.token === token);
+  const priceFeed = PRICE_FEEDS.find((feed) => feed.token === token);
   const globalConnection = new HermesClient(PYTH_ENDPOINT);
   if (!priceFeed) return 0;
-  const priceData = await globalConnection.getPriceUpdatesAtTimestamp(Math.round(timestamp / 1000), [priceFeed.id], { parsed: true, ignoreInvalidPriceIds: true });
+  const priceData = await globalConnection.getPriceUpdatesAtTimestamp(
+    Math.round(timestamp / 1000),
+    [priceFeed.id],
+    { parsed: true, ignoreInvalidPriceIds: true }
+  );
   if (priceData) {
     //TODO: to update on Mainnet
     // const price = priceData.getEmaPriceNoOlderThan(300); // Historical price data
-    const price = priceData.parsed?.find(feed => priceFeed.id.includes(feed.id));
+    const price = priceData.parsed?.find((feed) =>
+      priceFeed.id.includes(feed.id)
+    );
 
     if (!price) return 0;
     // Adjust price and confidence with exponent
@@ -158,4 +170,4 @@ export const getPythPrice = async (token: string, timestamp: number) => {
     console.log("No price data available for that time.");
     return 0;
   }
-}
+};
