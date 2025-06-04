@@ -28,7 +28,7 @@ export const SOL_USD_PYTH_ACCOUNT = new PublicKey(
   "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
 );
 export const Option_Program_Address = new PublicKey(
-  "8g657xNHbnchJuT4crLjVCG1bXS4uqPqA6ECaspjadmR"
+  "Gbg6YHDbSBciSAmbxjY2toriq8vTnhXJtXKgdtdZj2GH"
 );
 
 export const WSOL_ORACLE = new PublicKey(
