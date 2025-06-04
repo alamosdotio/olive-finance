@@ -23,6 +23,7 @@ import {
 } from "./ui/tooltip";
 import {
   connection,
+  LP_DECIMALS,
   USDC_DECIMALS,
   USDC_MINT,
   WSOL_DECIMALS,
@@ -43,8 +44,6 @@ import { ChartStrategy } from "./ChartStrategy";
 import { PublicKey } from "@solana/web3.js";
 import CardTokenList from "./CardTokenList";
 import PoolDropdown from "./PoolDropDown";
-
-
 
 interface EarnSidebarProps {
   name: string;
@@ -176,13 +175,13 @@ export default function EarnSidebar({
       } else if (activeTab == "redeem") {
         if (selectedToken == 0) {
           sc.onRemoveLiquidity(
-            tokenAmount * 10 ** WSOL_DECIMALS,
+            tokenAmount * 10 ** LP_DECIMALS,
             program,
             WSOL_MINT
           );
         } else {
           sc.onRemoveLiquidity(
-            tokenAmount * 10 ** USDC_DECIMALS,
+            tokenAmount * 10 ** LP_DECIMALS,
             program,
             USDC_MINT
           );
@@ -406,8 +405,8 @@ export default function EarnSidebar({
                 value="mint"
                 className="rounded-sm px-5 py-[6px] border border-transparent w-full data-[state=active]:border-primary hover:text-primary"
                 onClick={() => {
-                  setActiveTab("mint")
-                  handleTokenAmount('0')
+                  setActiveTab("mint");
+                  handleTokenAmount("0");
                 }}
               >
                 Buy
@@ -416,8 +415,8 @@ export default function EarnSidebar({
                 value="redeem"
                 className="rounded-sm border px-5 py-[6px] border-transparent w-full data-[state=active]:border-primary hover:text-primary"
                 onClick={() => {
-                  setActiveTab("redeem")
-                  handleTokenAmount('0')
+                  setActiveTab("redeem");
+                  handleTokenAmount("0");
                 }}
               >
                 Sell

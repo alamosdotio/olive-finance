@@ -297,7 +297,7 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
         );
         setProgram(program);
         setPubKey(publicKey);
-        const price = await getPythPrice("Crypto.SOL/USD", Date.now())
+        const price = await getPythPrice("Crypto.SOL/USD", Date.now());
         updateWholeTransactionDetail("On-Chain Price", {
           label: "On-Chain Price",
           before: `$${price.toFixed(2)}`,
@@ -468,9 +468,9 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
 
               updateWholeTransactionDetail("Unlocked SOL", {
                 label: "Unlocked SOL",
-                before: `${(afterUnLock+ change).toFixed(2)} SOL`,
+                before: `${(afterUnLock + change).toFixed(2)} SOL`,
                 after: `${afterUnLock.toFixed(2)} SOL`,
-                change: `${((- change / (afterLock + change)) * 100).toFixed(
+                change: `${((-change / (afterLock + change)) * 100).toFixed(
                   2
                 )}%`,
                 difference: `${-change.toFixed(2)} SOL`,
@@ -490,59 +490,96 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
                 )}%`,
                 difference: `${change.toFixed(2)} USDC`,
               });
-              const afterUnLock = getTransactionDetail("Unlocked USDC", "after");
+              const afterUnLock = getTransactionDetail(
+                "Unlocked USDC",
+                "after"
+              );
 
               updateWholeTransactionDetail("Unlocked USDC", {
                 label: "Unlocked USDC",
-                before: `${(afterUnLock+ change).toFixed(2)} USDC`,
+                before: `${(afterUnLock + change).toFixed(2)} USDC`,
                 after: `${afterUnLock.toFixed(2)} USDC`,
-                change: `${((- change / (afterLock + change)) * 100).toFixed(
+                change: `${((-change / (afterLock + change)) * 100).toFixed(
                   2
                 )}%`,
                 difference: `${-change.toFixed(2)} USDC`,
               });
             }
-            if(payCustodyData.mint.equals(USDC_MINT)){
+            if (payCustodyData.mint.equals(USDC_MINT)) {
               const change =
-              lockedAmount.toNumber() / 10 ** lockedCustodyData.decimals;
-            const afterLock = getTransactionDetail("Total USDC", "after");
-            updateWholeTransactionDetail("Locked USDC", {
-              label: "Locked USDC",
-              before: `${(afterLock - change).toFixed(2)} USDC`,
-              after: `${afterLock.toFixed(2)} USDC`,
-              change: `${((change / (afterLock - change)) * 100).toFixed(
-                2
-              )}%`,
-              difference: `${change.toFixed(2)} USDC`,
-            });
-            const afterUnLock = getTransactionDetail("Unlocked USDC", "after");
+                lockedAmount.toNumber() / 10 ** lockedCustodyData.decimals;
+              const afterLock = getTransactionDetail("Total USDC", "after");
+              updateWholeTransactionDetail("Locked USDC", {
+                label: "Locked USDC",
+                before: `${(afterLock - change).toFixed(2)} USDC`,
+                after: `${afterLock.toFixed(2)} USDC`,
+                change: `${((change / (afterLock - change)) * 100).toFixed(
+                  2
+                )}%`,
+                difference: `${change.toFixed(2)} USDC`,
+              });
+              const afterUnLock = getTransactionDetail(
+                "Unlocked USDC",
+                "after"
+              );
 
-            updateWholeTransactionDetail("Unlocked USDC", {
-              label: "Unlocked USDC",
-              before: `${(afterUnLock+ change).toFixed(2)} USDC`,
-              after: `${afterUnLock.toFixed(2)} USDC`,
-              change: `${((- change / (afterLock + change)) * 100).toFixed(
-                2
-              )}%`,
-              difference: `${-change.toFixed(2)} USDC`,
-            });
-            } else if(payCustodyData.mint.equals(WSOL_MINT)){
-
+              updateWholeTransactionDetail("Unlocked USDC", {
+                label: "Unlocked USDC",
+                before: `${(afterUnLock + change).toFixed(2)} USDC`,
+                after: `${afterUnLock.toFixed(2)} USDC`,
+                change: `${((-change / (afterLock + change)) * 100).toFixed(
+                  2
+                )}%`,
+                difference: `${-change.toFixed(2)} USDC`,
+              });
+            } else if (payCustodyData.mint.equals(WSOL_MINT)) {
             }
             updateWholeTransactionDetail("Total Pool Volume", {
               label: "Total Pool Volume",
-              before: `$${(getTransactionDetail("Total SOL", "before") * price + getTransactionDetail("Total USDC", "before")).toFixed(2)}`,
-              after: `$${(getTransactionDetail("Total SOL", "before") * price + getTransactionDetail("Total USDC", "before")).toFixed(2)}`,
-              change: `${((getTransactionDetail("Total SOL", "before") * price + getTransactionDetail("Total USDC", "before") - getTransactionDetail("Total SOL", "before") * price - getTransactionDetail("Total USDC", "before"))/(getTransactionDetail("Total SOL", "before") * price + getTransactionDetail("Total USDC", "before"))).toFixed(2)}%`,
-              difference: `$${(getTransactionDetail("Total SOL", "before") * price + getTransactionDetail("Total USDC", "before") - getTransactionDetail("Total SOL", "before") * price - getTransactionDetail("Total USDC", "before")).toFixed(2)}`,
+              before: `$${(
+                getTransactionDetail("Total SOL", "before") * price +
+                getTransactionDetail("Total USDC", "before")
+              ).toFixed(2)}`,
+              after: `$${(
+                getTransactionDetail("Total SOL", "before") * price +
+                getTransactionDetail("Total USDC", "before")
+              ).toFixed(2)}`,
+              change: `${(
+                (getTransactionDetail("Total SOL", "before") * price +
+                  getTransactionDetail("Total USDC", "before") -
+                  getTransactionDetail("Total SOL", "before") * price -
+                  getTransactionDetail("Total USDC", "before")) /
+                (getTransactionDetail("Total SOL", "before") * price +
+                  getTransactionDetail("Total USDC", "before"))
+              ).toFixed(2)}%`,
+              difference: `$${(
+                getTransactionDetail("Total SOL", "before") * price +
+                getTransactionDetail("Total USDC", "before") -
+                getTransactionDetail("Total SOL", "before") * price -
+                getTransactionDetail("Total USDC", "before")
+              ).toFixed(2)}`,
             });
 
             updateWholeTransactionDetail("Total Premium", {
               label: "Total Premium",
               before: `$0`,
-              after: `$${payCustodyData.mint.equals(USDC_MINT) ? (transferAmount / 10 ** payCustodyData.decimals).toFixed(2) : (transferAmount / 10 ** payCustodyData.decimals * price).toFixed(2)}`,
+              after: `$${
+                payCustodyData.mint.equals(USDC_MINT)
+                  ? (transferAmount / 10 ** payCustodyData.decimals).toFixed(2)
+                  : (
+                      (transferAmount / 10 ** payCustodyData.decimals) *
+                      price
+                    ).toFixed(2)
+              }`,
               change: `100%`,
-              difference: `$${payCustodyData.mint.equals(USDC_MINT) ? (transferAmount / 10 ** payCustodyData.decimals).toFixed(2) : (transferAmount / 10 ** payCustodyData.decimals * price).toFixed(2)}`,
+              difference: `$${
+                payCustodyData.mint.equals(USDC_MINT)
+                  ? (transferAmount / 10 ** payCustodyData.decimals).toFixed(2)
+                  : (
+                      (transferAmount / 10 ** payCustodyData.decimals) *
+                      price
+                    ).toFixed(2)
+              }`,
             });
             updateWholeTransactionDetail("Total Selling Fees", {
               label: "Total Selling Fees",
@@ -565,7 +602,8 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
       <div className="w-full p-3 flex flex-col border-b">
         <span>Transaction ID: {id}</span>
         <span>Type: Put</span> {/*change to actual type if its call or put*/}
-        <span>Amount: 5 Contracts</span> {/*change to actual number/amount of contracts*/}
+        <span>Amount: 5 Contracts</span>{" "}
+        {/*change to actual number/amount of contracts*/}
       </div>
       <Table className="w-full">
         <TableHeader>

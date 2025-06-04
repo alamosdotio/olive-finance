@@ -34,6 +34,10 @@ export function formatPrice(price: number): string {
   }
 }
 
-export function formatAmount(amount: number, decimals: number): string {
-  return (amount / 10 ** decimals).toFixed(2);
+export function formatAmount(amount: number, decimals: number): number {
+  return Number((amount / 10 ** decimals).toFixed(decimals));
+}
+
+export function formatAddress(address: string): string {
+  return address.slice(0, 4) + "..." + address.slice(-4);
 }

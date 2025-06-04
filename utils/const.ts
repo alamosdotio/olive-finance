@@ -16,18 +16,26 @@ export const connection = new Connection(clusterUrl, "confirmed");
 
 // Devnet
 export const USDC_MINT = new PublicKey(
-  "4dfkxzRKJzwhWHAkJErU4YVKr8RVKESDFj5xKqGuw7Xs"
+  "3d79oe7AKxxHfLz11BXAnWqBX72rubLiQppUNoKGhMPk"
 );
 export const USDC_DECIMALS = 6;
 export const WSOL_MINT = new PublicKey(
-  "AvGyRAUiWkF6fzALe1LNnzCwGbNTZ4aqyfthuEZHM5Wq"
+  "349kUpx5gmhFhy3bmYFW6SqNteDyc4uUt4Do5nSRM5B7"
 );
-export const WSOL_DECIMALS = 6;
+export const WSOL_DECIMALS = 9;
+export const LP_DECIMALS = 6;
 export const SOL_USD_PYTH_ACCOUNT = new PublicKey(
   "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
 );
 export const Option_Program_Address = new PublicKey(
-  "6PJkfHcuDPttDRBPUPwc7NryNW8vk3uL9ffbmUMGqqs1"
+  "Gbg6YHDbSBciSAmbxjY2toriq8vTnhXJtXKgdtdZj2GH"
+);
+
+export const WSOL_ORACLE = new PublicKey(
+  "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
+);
+export const USDC_ORACLE = new PublicKey(
+  "5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy7"
 );
 
 export const HERMES_URL = "https://hermes.pyth.network/";

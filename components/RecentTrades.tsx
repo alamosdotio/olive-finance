@@ -2,7 +2,12 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 
-import { clusterUrl, Option_Program_Address } from "@/utils/const";
+import {
+  clusterUrl,
+  Option_Program_Address,
+  USDC_DECIMALS,
+  WSOL_DECIMALS,
+} from "@/utils/const";
 
 import {
   Table,
@@ -23,10 +28,22 @@ import { Keypair, PublicKey } from "@solana/web3.js";
 import { Wallet } from "@coral-xyz/anchor/dist/cjs/provider";
 
 import { pools } from "@/lib/data/pools";
-import { formatAmount } from "@/utils/formatter";
 import { toast, ToastContainer } from "react-toastify";
 
+import { getPythPrice } from "@/hooks/usePythPrice";
+import { formatAddress, formatAmount, formatPrice } from "@/utils/formatter";
+import { USDC } from "@/lib/data/tokenlist";
+import {
+  usePythMarketData,
+  type MarketDataState,
+} from "@/hooks/usePythMarketData";
+import { usePythPrice, type PythPriceState } from "@/hooks/usePythPrice";
+import { black_scholes } from "@/utils/optionsPricing";
+import { useOptionsPricing } from "@/hooks/useOptionsPricing";
+
 interface OptionDetail {
+  profile: string;
+  quantity: string;
   amount: string;
   boughtBack: string;
   claimed: string;
@@ -44,7 +61,9 @@ interface OptionDetail {
   valid: string;
   tx: string;
   type: string;
+  executedDate: string;
   purchaseDate: string;
+  purchasedPrice: string;
 }
 
 interface ProgramAccount {
@@ -58,6 +77,9 @@ export default function RecentTrades() {
   const [optionDetails, setOptionDetails] = useState<OptionDetail[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [program, setProgram] = useState<Program<OptionContract>>();
+  const selectedSymbol = "Crypto.SOL/USD";
+
+  const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
 
   const initializeProvider = useCallback(() => {
     const dummyKeypair = Keypair.generate();
@@ -74,72 +96,75 @@ export default function RecentTrades() {
     }
   }, []);
 
-  const processOptionAccount = useCallback(
-    async (account: ProgramAccount, program: Program<OptionContract>) => {
-      try {
-        const optionDetailAccount = await program.account.optionDetail.fetch(
-          account.pubkey
-        );
-        const poolInfo = pools.find(
-          (pool) => pool.programId === optionDetailAccount.pool.toString()
-        );
+  const processOptionAccount = async (
+    account: ProgramAccount,
+    program: Program<OptionContract>
+  ) => {
+    try {
+      const optionDetailAccount = await program.account.optionDetail.fetch(
+        account.pubkey
+      );
 
-        return {
-          amount: formatAmount(
-            optionDetailAccount.amount,
-            poolInfo?.decimals || 0
-          ),
-          boughtBack: formatAmount(
-            optionDetailAccount.boughtBack,
-            poolInfo?.decimals || 0
-          ),
-          claimed: formatAmount(
-            optionDetailAccount.claimed,
-            poolInfo?.decimals || 0
-          ),
-          custody: optionDetailAccount.custody.toString(),
-          exercised: optionDetailAccount.exercised.toString(),
-          expiredDate: new Date(
-            parseInt(optionDetailAccount.expiredDate) * 1000
-          ).toLocaleString(),
-          index: optionDetailAccount.index.toString(),
-          lockedAsset: optionDetailAccount.lockedAsset.toString(),
-          period: optionDetailAccount.period.toString(),
-          pool: poolInfo?.name || "",
-          premium: formatAmount(
-            optionDetailAccount.premium,
-            poolInfo?.decimals || 0
-          ),
-          premiumAsset: optionDetailAccount.premiumAsset.toString(),
-          profit: formatAmount(
-            optionDetailAccount.profit,
-            poolInfo?.decimals || 0
-          ),
-          strikePrice: optionDetailAccount.strikePrice.toString(),
-          valid: optionDetailAccount.valid.toString(),
-          tx:
-            optionDetailAccount.exercised.toString() !== "0"
-              ? "Exercised"
-              : optionDetailAccount.boughtBack.toString() !== "0"
-              ? "Bought"
-              : "Sold",
-          type:
-            optionDetailAccount.lockedAsset.toString() ===
-            optionDetailAccount.premiumAsset.toString()
-              ? "Call"
-              : "Put",
-          purchaseDate: new Date(
-            parseInt(optionDetailAccount.expiredDate) * 1000 -
-              parseInt(optionDetailAccount.period) * 86400 * 1000
-          ).toLocaleString(),
-        };
-      } catch (error) {
-        console.error("Error processing option account:", error);
-        return null;
-      }
-    },
-    []
-  );
+      const poolInfo = pools.find(
+        (pool) => pool.programId === optionDetailAccount.pool.toString()
+      );
+
+      const purchaseTimestamp =
+        parseInt(optionDetailAccount.expiredDate) * 1000 -
+        parseInt(optionDetailAccount.period) * 86400 * 1000 -
+        86400000;
+
+      const priceData = await getPythPrice(selectedSymbol, purchaseTimestamp);
+
+      const isCall =
+        optionDetailAccount.lockedAsset.toString() ==
+        optionDetailAccount.premiumAsset.toString();
+
+      const premium = parseFloat(optionDetailAccount.premium);
+      const quantity = optionDetailAccount.quantity.toString();
+      const profile = optionDetailAccount.owner.toString();
+      const tx =
+        optionDetailAccount.exercised.toString() != "0"
+          ? "Exercised"
+          : optionDetailAccount.boughtBack.toString() != "0"
+          ? "Sold"
+          : "Bought";
+      return {
+        quantity: quantity,
+        profile: profile,
+        amount: optionDetailAccount.amount.toString(),
+        boughtBack: optionDetailAccount.boughtBack.toString(),
+        claimed: optionDetailAccount.claimed.toString(),
+        custody: optionDetailAccount.custody.toString(),
+        exercised: optionDetailAccount.exercised.toString(),
+        expiredDate: new Date(
+          parseInt(optionDetailAccount.expiredDate) * 1000
+        ).toLocaleString(),
+        index: optionDetailAccount.index.toString(),
+        lockedAsset: optionDetailAccount.lockedAsset.toString(),
+        period: optionDetailAccount.period.toString(),
+        pool: poolInfo?.name || "",
+        premium: optionDetailAccount.premium.toString(),
+        premiumAsset: optionDetailAccount.premiumAsset.toString(),
+        profit: optionDetailAccount.profit.toString(),
+        strikePrice: optionDetailAccount.strikePrice.toString(),
+        valid: optionDetailAccount.valid.toString(),
+        tx: tx,
+        type: isCall ? "Call" : "Put",
+        executedDate:
+          tx === "Exercised"
+            ? parseInt(optionDetailAccount.exercised)
+            : tx === "Sold"
+            ? parseInt(optionDetailAccount.boughtBack)
+            : parseInt(optionDetailAccount.purchaseDate),
+        purchaseDate: optionDetailAccount.purchaseDate,
+        purchasedPrice: priceData,
+      };
+    } catch (error) {
+      console.error("Error processing option account:", error);
+      return null;
+    }
+  };
 
   useEffect(() => {
     const fetchTrades = async () => {
@@ -157,7 +182,11 @@ export default function RecentTrades() {
             Option_Program_Address,
             {
               encoding: "base64",
-              filters: [{ dataSize: 218 }],
+              filters: [
+                {
+                  dataSize: 267,
+                },
+              ],
             },
           ],
         });
@@ -170,23 +199,35 @@ export default function RecentTrades() {
         setProgram(program);
 
         // Process accounts in batches to avoid overwhelming the system
-        const BATCH_SIZE = 5;
+
         const optionAccounts = data.result;
         const _optionDetails: OptionDetail[] = [];
 
-        for (let i = 0; i < optionAccounts.length; i += BATCH_SIZE) {
-          const batch = optionAccounts.slice(i, i + BATCH_SIZE);
-          const batchResults = await Promise.all(
-            batch.map((account: ProgramAccount) =>
-              processOptionAccount(account, program)
-            )
-          );
-          _optionDetails.push(
-            ...batchResults.filter(
-              (detail): detail is OptionDetail => detail !== null
-            )
-          );
+        const results = await Promise.all(
+          optionAccounts.map((account: ProgramAccount) =>
+            processOptionAccount(account, program)
+          )
+        );
+        _optionDetails.push(...results);
+
+        const _solOrexcise = _optionDetails.filter((detail) => {
+          return detail.tx != "Bought";
+        });
+
+        for (const detail of _solOrexcise) {
+          _optionDetails.push({
+            ...detail,
+            executedDate:
+              detail.executedDate == "0"
+                ? detail.executedDate
+                : detail.purchaseDate,
+            tx: "Bought",
+          });
         }
+
+        _optionDetails.sort((a, b) => {
+          return parseInt(b.executedDate) - parseInt(a.executedDate);
+        });
 
         setOptionDetails(_optionDetails);
       } catch (error) {
@@ -198,25 +239,17 @@ export default function RecentTrades() {
     };
 
     fetchTrades();
-  }, [initializeProvider, processOptionAccount]);
-
-  const sortedOptionDetails = useMemo(() => {
-    return [...optionDetails].sort((a, b) => {
-      const dateA = new Date(a.purchaseDate);
-      const dateB = new Date(b.purchaseDate);
-      return dateB.getTime() - dateA.getTime(); // Sort in ascending order (oldest first)
-    });
-  }, [optionDetails]);
+  }, [initializeProvider]);
 
   const memoizedTableContent = useMemo(
     () => (
       <TableBody className="w-full">
-        {sortedOptionDetails.map((row, idx) => (
+        {optionDetails.map((row, idx) => (
           <TableRow key={idx} className="border-none w-full">
             <TableCell className="text-sm text-foreground font-normal text-justify pl-5 pr-3 py-3">
               <div className="flex gap-[10px] items-center">
                 <AvatarIcon />
-                ---
+                {formatAddress(row.profile)}
               </div>
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
@@ -235,13 +268,39 @@ export default function RecentTrades() {
               )}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
-              {row.amount}
+              {row.quantity}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
-              {row.claimed !== "0" ? row.claimed : row.profit}
+              {row.tx == "Bought"
+                ? (
+                    parseFloat(row.amount) /
+                    10 ** (row.type == "Call" ? WSOL_DECIMALS : USDC_DECIMALS)
+                  ).toFixed(2)
+                : row.tx == "Sold"
+                ? (
+                    ((parseFloat(row.amount) / 10) * 9) /
+                    (row.type == "Call"
+                      ? 10 ** WSOL_DECIMALS
+                      : 10 ** USDC_DECIMALS)
+                  ).toFixed(2)
+                : row.tx == "Exercised"
+                ? row.claimed != "0"
+                  ? row.claimed
+                  : parseFloat(row.profit).toFixed(2)
+                : "0"}{" "}
+              {row.type == "Call" ? "SOL" : "USDC"}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
-              {row.premium} USDC
+              {row.tx == "Sold"
+                ? (
+                    parseFloat(row.amount) /
+                    10 /
+                    (row.type == "Call"
+                      ? 10 ** WSOL_DECIMALS
+                      : 10 ** USDC_DECIMALS)
+                  ).toFixed(2)
+                : "0"}{" "}
+              {row.type == "Call" ? "SOL" : "USDC"}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
               {row.pool}
@@ -263,16 +322,25 @@ export default function RecentTrades() {
               {row.expiredDate}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
-              $ {row.amount}
+              $
+              {row.purchasedPrice
+                ? (
+                    (Number(row.amount) * Number(row.purchasedPrice)) /
+                    (row.type == "Call"
+                      ? 10 ** WSOL_DECIMALS
+                      : 10 ** USDC_DECIMALS)
+                  ).toFixed(2)
+                : "0"}{" "}
+              USD
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify pl-3 pr-5 py-[14px]">
-              {row.purchaseDate}
+              {new Date(parseInt(row.executedDate) * 1000).toLocaleString()}
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     ),
-    [sortedOptionDetails]
+    [optionDetails]
   );
 
   return (

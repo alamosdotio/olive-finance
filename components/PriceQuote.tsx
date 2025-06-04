@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, RotateCw} from "lucide-react";
+import { ChevronDown, ChevronUp, RotateCw } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
@@ -148,28 +148,28 @@ export default function PriceQuote({value, active, priceData, premium, contractT
                                     </div>
                                 </div>
                             </div> */}
-                        </>
-                    )}
-                    <div className="w-full flex justify-start">
-                        <Button 
-                            className="bg-inherit p-0 space-x-2 shadow-none text-primary"
-                            onClick={() => setMoreInfo(!moreInfo)}
-                        >
-                            {moreInfo ? (
-                                <>
-                                    Less Info
-                                    <ChevronUp />
-                                </>
-                            ) : (
-                                <>
-                                    More Info
-                                    <ChevronDown />
-                                </>
-                            )}
-                        </Button>
-                    </div>
-                </div>
-            )}
+            </>
+          )}
+          <div className="w-full flex justify-start">
+            <Button
+              className="bg-inherit p-0 space-x-2 shadow-none text-primary"
+              onClick={() => setMoreInfo(!moreInfo)}
+            >
+              {moreInfo ? (
+                <>
+                  Less Info
+                  <ChevronUp />
+                </>
+              ) : (
+                <>
+                  More Info
+                  <ChevronDown />
+                </>
+              )}
+            </Button>
+          </div>
         </div>
-    )
+      )}
+    </div>
+  );
 }

@@ -12,12 +12,17 @@ import { Input } from "@/components/ui/input";
 import { StrikePriceDialog } from "./StrikePriceDialog";
 import { ExpirationDialog } from "./ExpirationDialog";
 import { addWeeks, format } from "date-fns";
-import { WalletIcon } from "@/public/svgs/icons"
-import CardTokenList from "./CardTokenList"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { WalletIcon } from "@/public/svgs/icons";
+import CardTokenList from "./CardTokenList";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 import type { PythPriceState } from "@/hooks/usePythPrice";
 import type { MarketDataState } from "@/hooks/usePythMarketData";
-import { formatPrice } from "@/utils/formatter"
+import { formatPrice } from "@/utils/formatter";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import WalletModal from "./WalletModal";
 import { ContractContext } from "@/contexts/contractProvider";
@@ -25,8 +30,8 @@ import { WSOL_DECIMALS } from "@/utils/const";
 import { toast } from "react-toastify";
 import BuyOption from "./toasts/BuyOption";
 
-interface OptionCardProps{
-  orderType: 'market' | 'limit';
+interface OptionCardProps {
+  orderType: "market" | "limit";
   selectedSymbol: string;
   onSymbolChange: (symbol: string) => void;
   onIdxChange: (idx: number) => void;
@@ -52,16 +57,20 @@ export default function OptionCard(
 
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [optionSize, setOptionSize] = useState("0.1");
-  const [selectedOption, setSelectedOption] = useState<'Call' | 'Put'>('Call')
-  const [strikePrice, setStrikePrice] = useState('0')
-  const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1))
-  const [payAmount, setPayAmount] = useState('')
-  const [payCurrency, setPayCurrency] = useState(selectedSymbol)
-  const [showStrikePriceModal, setShowStrikePriceModal] = useState(false)
-  const [showExpirationModal, setShowExpirationModal] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<"Call" | "Put">("Call");
+  const [strikePrice, setStrikePrice] = useState("0");
+  const [expiration, setExpiration] = useState<Date>(addWeeks(new Date(), 1));
+  const [payAmount, setPayAmount] = useState("");
+  const [payCurrency, setPayCurrency] = useState(selectedSymbol);
+  const [showStrikePriceModal, setShowStrikePriceModal] = useState(false);
+  const [showExpirationModal, setShowExpirationModal] = useState(false);
   const [limitPrice, setLimitPrice] = useState("");
-  const [hasSetInitialStrike, setHasSetInitialStrike] = useState(false)
-  const [defaultStrikePrices, setDefaultStrikePrices] = useState(['0', '0', '0'])
+  const [hasSetInitialStrike, setHasSetInitialStrike] = useState(false);
+  const [defaultStrikePrices, setDefaultStrikePrices] = useState([
+    "0",
+    "0",
+    "0",
+  ]);
 
   const isPositive = marketData.change24h !== null && marketData.change24h > 0;
 
@@ -73,24 +82,23 @@ export default function OptionCard(
 
   useEffect(() => {
     setHasSetInitialStrike(false);
-    setStrikePrice('0');
-    setDefaultStrikePrices(['0', '0', '0']);
+    setStrikePrice("0");
+    setDefaultStrikePrices(["0", "0", "0"]);
   }, [selectedSymbol]);
-  
+
   useEffect(() => {
-    if ( !selectedSymbol) return;
+    if (!selectedSymbol) return;
 
     let firstStrike = defaultStrikePrices[0];
-    const isValidStrike = firstStrike && parseFloat(firstStrike) > 0 ;
-  
-    if(priceData.price && !hasSetInitialStrike && isValidStrike){
+    const isValidStrike = firstStrike && parseFloat(firstStrike) > 0;
+
+    if (priceData.price && !hasSetInitialStrike && isValidStrike) {
       setStrikePrice(firstStrike);
       onStrikePriceChange(firstStrike);
-      setHasSetInitialStrike(true)
+      setHasSetInitialStrike(true);
     }
   }, [selectedSymbol, priceData.price, defaultStrikePrices]);
-  
-  
+
   const defaultExpirations = [
     { label: "1 week", value: addWeeks(new Date(), 1) },
     { label: "2 weeks", value: addWeeks(new Date(), 2) },
@@ -105,9 +113,9 @@ export default function OptionCard(
   );
 
   const formatStrikePrice = (price: string) => {
-    const num = parseFloat(price)
-    return `$${num.toLocaleString()}`
-  }
+    const num = parseFloat(price);
+    return `$${num.toLocaleString()}`;
+  };
 
   const handleExpirationSelect = (newExpiration: Date) => {
     setExpiration(newExpiration);
@@ -125,22 +133,21 @@ export default function OptionCard(
   const sc = useContext(ContractContext);
 
   const buyOptionHandler = async () => {
-    // toast(
-    //   <BuyOption 
-    //     option={selectedOption}
-    //     active={active}
-    //   />, {
-    //   position: 'bottom-right',
-    //   className: 'h-32'
-    // })
-    const currentTime = Math.floor(Date.now()/1000);
-    const expTime = Math.floor(expiration.getTime()/1000)
-    const period = Math.floor((expTime - currentTime)/(3600 * 24))
-    await sc.onOpenOption(parseFloat(optionSize) * (10 ** WSOL_DECIMALS), parseFloat(strikePrice),period, expTime, selectedOption == "Call" ? true : false, true);
-  }
+    const currentTime = Math.floor(Date.now() / 1000);
+    const expTime = Math.floor(expiration.getTime() / 1000);
+    const period = Math.floor((expTime - currentTime) / (3600 * 24)) + 1;
+    await sc.onOpenOption(
+      parseFloat(optionSize) * 10 ** WSOL_DECIMALS,
+      parseFloat(strikePrice),
+      period,
+      expTime,
+      selectedOption == "Call" ? true : false,
+      true
+    );
+  };
 
   const formatChange = (change: number | null) => {
-    if (change === null) return '0.00';
+    if (change === null) return "0.00";
     return Math.abs(change).toFixed(2);
   };
 
@@ -148,18 +155,36 @@ export default function OptionCard(
     <div className="w-full flex flex-col flex-grow bg-card rounded-sm rounded-t-none p-6 space-y-4 border border-t-0">
       {/* Token Selection */}
       <div className="flex justify-between gap-3 items-start">
-        <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="chart"/>
-        {orderType === 'market' ? (
+        <CardTokenList
+          onSymbolChange={onSymbolChange}
+          onPaymentTokenChange={setPayCurrency}
+          onIdxChange={onIdxChange}
+          active={active}
+          type="chart"
+        />
+        {orderType === "market" ? (
           <div className="text-right h-12">
-            <div className="text-2xl font-semibold tracking-tight">${priceData.price ? formatPrice(priceData.price) : priceLoading}</div>
-            <div className={`text-sm font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-              {isPositive ? '+' : '-'}{marketData.change24h ? formatChange(marketData.change24h) : marketLoading}%
+            <div className="text-2xl font-semibold tracking-tight">
+              ${priceData.price ? formatPrice(priceData.price) : priceLoading}
+            </div>
+            <div
+              className={`text-sm font-medium ${
+                isPositive ? "text-green-500" : "text-red-500"
+              }`}
+            >
+              {isPositive ? "+" : "-"}
+              {marketData.change24h
+                ? formatChange(marketData.change24h)
+                : marketLoading}
+              %
             </div>
           </div>
         ) : (
           <div className="space-y-1">
             <div className="w-32 rounded-sm p-2 h-12 flex flex-col border items-start justify-center focus-within:border-primary">
-              <span className="text-xs text-secondary-foreground">Limit Price:</span>
+              <span className="text-xs text-secondary-foreground">
+                Limit Price:
+              </span>
               <Input
                 type="text"
                 value={limitPrice}
@@ -179,35 +204,43 @@ export default function OptionCard(
           <Button
             variant="outline"
             onClick={() => {
-              setSelectedOption('Call')
-              onContractTypeChange('Call')
+              setSelectedOption("Call");
+              onContractTypeChange("Call");
             }}
             className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm transition-all group border ${
-                selectedOption === 'Call'
-                    ? 'bg-green-500/10 text-green-500 border-green-500 hover:bg-green-500/20' 
-                    : 'hover:border-green-500 hover:text-green-500 border-border/40 hover:bg-green-500/20'
-                }`}
+              selectedOption === "Call"
+                ? "bg-green-500/10 text-green-500 border-green-500 hover:bg-green-500/20"
+                : "hover:border-green-500 hover:text-green-500 border-border/40 hover:bg-green-500/20"
+            }`}
           >
-            <TrendingUp className={`w-4 h-4 mr-2 ${
-              selectedOption === 'Call' ? 'text-green-500' : 'text-muted-foreground group-hover:text-green-500'
-            }`} />
+            <TrendingUp
+              className={`w-4 h-4 mr-2 ${
+                selectedOption === "Call"
+                  ? "text-green-500"
+                  : "text-muted-foreground group-hover:text-green-500"
+              }`}
+            />
             Call
           </Button>
           <Button
             variant="outline"
             onClick={() => {
-              setSelectedOption('Put')
-              onContractTypeChange('Put')
+              setSelectedOption("Put");
+              onContractTypeChange("Put");
             }}
             className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-sm transition-all group border ${
-                selectedOption === 'Put'
-                    ? 'bg-red-500/10 text-red-500 border-red-500 hover:bg-red-500/20' 
-                    : 'hover:border-red-500 hover:text-red-500 border-border/40 hover:bg-red-500/20'
-                }`}
+              selectedOption === "Put"
+                ? "bg-red-500/10 text-red-500 border-red-500 hover:bg-red-500/20"
+                : "hover:border-red-500 hover:text-red-500 border-border/40 hover:bg-red-500/20"
+            }`}
           >
-            <TrendingDown className={`w-4 h-4 mr-2 ${
-              selectedOption === 'Put' ? 'text-red-500' : 'text-muted-foreground group-hover:text-red-500'
-            }`} />
+            <TrendingDown
+              className={`w-4 h-4 mr-2 ${
+                selectedOption === "Put"
+                  ? "text-red-500"
+                  : "text-muted-foreground group-hover:text-red-500"
+              }`}
+            />
             Put
           </Button>
         </div>
@@ -225,16 +258,18 @@ export default function OptionCard(
                 <Button
                   key={idx}
                   onClick={() => {
-                    setStrikePrice(price)
-                    onStrikePriceChange(price)
+                    setStrikePrice(price);
+                    onStrikePriceChange(price);
                   }}
                   className={`flex-1 py-2 px-4 rounded-sm ${
                     strikePrice === price
-                    ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
-                    : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
-                }`}
+                      ? "bg-primary hover:bg-gradient-primary text-backgroundSecondary"
+                      : "bg-backgroundSecondary text-foreground hover:bg-secondary"
+                  }`}
                 >
-                  {selectedSymbol === 'Crypto.BONK/USD'? '$'+formatPrice(parseFloat(price)) : formatStrikePrice(price)}
+                  {selectedSymbol === "Crypto.BONK/USD"
+                    ? "$" + formatPrice(parseFloat(price))
+                    : formatStrikePrice(price)}
                 </Button>
               ))}
               <Button
@@ -273,14 +308,15 @@ export default function OptionCard(
                 <Button
                   key={exp.label}
                   onClick={() => {
-                    setExpiration(exp.value)
-                    onExpiryChange(exp.value)
+                    setExpiration(exp.value);
+                    onExpiryChange(exp.value);
                   }}
                   className={`flex-1 py-2 px-4 rounded-sm ${
-                    format(expiration, 'yyyy-MM-dd') === format(exp.value, 'yyyy-MM-dd')
-                    ? 'bg-primary hover:bg-gradient-primary text-backgroundSecondary'
-                    : 'bg-backgroundSecondary text-foreground hover:bg-secondary'
-                }`}
+                    format(expiration, "yyyy-MM-dd") ===
+                    format(exp.value, "yyyy-MM-dd")
+                      ? "bg-primary hover:bg-gradient-primary text-backgroundSecondary"
+                      : "bg-backgroundSecondary text-foreground hover:bg-secondary"
+                  }`}
                 >
                   {exp.label}
                 </Button>
@@ -312,7 +348,9 @@ export default function OptionCard(
       <div className="space-y-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <label className="text-sm text-secondary-foreground font-medium">Pay Amount</label>
+            <label className="text-sm text-secondary-foreground font-medium">
+              Pay Amount
+            </label>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -324,20 +362,28 @@ export default function OptionCard(
               </Tooltip>
             </TooltipProvider>
           </div>
-          <span className="text-sm text-secondary-foreground">Balance: 0 SOL</span>
+          <span className="text-sm text-secondary-foreground">
+            Balance: 0 SOL
+          </span>
         </div>
         <div className="relative">
           <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-            <CardTokenList onSymbolChange={onSymbolChange} onPaymentTokenChange={setPayCurrency} onIdxChange={onIdxChange} active={active} type="paying"/>
+            <CardTokenList
+              onSymbolChange={onSymbolChange}
+              onPaymentTokenChange={setPayCurrency}
+              onIdxChange={onIdxChange}
+              active={active}
+              type="paying"
+            />
           </div>
           <Input
             type="number"
             value={payAmount}
-            onChange={(e) => 
-              {
-                setPayAmount(e.target.value)
-                onPayAmountChange(e.target.value)
-              }}
+            onChange={(e) => {
+              setPayAmount(e.target.value);
+              onPayAmountChange(e.target.value);
+              setOptionSize(e.target.value);
+            }}
             placeholder="0.00"
             className="pr-2 text-right h-11 text-base font-medium border-border rounded-sm placeholder:text-secondary-foreground focus:border-primary"
             step="0.1"

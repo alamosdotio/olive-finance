@@ -18,6 +18,7 @@ import {
   Option_Program_Address,
   HELIUS_ENDPOINT,
   clusterUrl,
+  USDC_MINT,
 } from "@/utils/const";
 import { createSolanaRpc, type Signature } from "@solana/kit";
 import { BorshInstructionCoder } from "@coral-xyz/anchor";
@@ -38,6 +39,7 @@ interface PoolTrade {
   amount0: string;
   token1: string;
   amount1: string;
+  signature: string;
 }
 
 interface Transaction {
@@ -95,11 +97,12 @@ export default function PoolTradesTable() {
           paidReceived: "",
           fees: "",
           pool: "",
-          dateTime: new Date(parseInt(tx.timestamp) * 1000).toLocaleString(),
+          dateTime: tx.timestamp,
           token0: "",
           amount0: "",
           token1: "",
           amount1: "",
+          signature: tx.signature,
         };
 
         if (ix.name === "remove_liquidity" || ix.name === "add_liquidity") {
@@ -111,7 +114,7 @@ export default function PoolTradesTable() {
 
           _poolTrade.type =
             ix.name === "remove_liquidity" ? "Withdrawal" : "Deposit";
-          _poolTrade.quantity = amount.toString();
+          _poolTrade.quantity = amount;
           _poolTrade.pool = pool;
 
           // Process token transfers
@@ -158,16 +161,16 @@ export default function PoolTradesTable() {
         const coder = new BorshInstructionCoder(idl as OptionContract);
 
         // Process transactions in parallel with a concurrency limit
-        const BATCH_SIZE = 5;
         const allTrades: PoolTrade[] = [];
 
-        for (let i = 0; i < response.data.length; i += BATCH_SIZE) {
-          const batch = response.data.slice(i, i + BATCH_SIZE) as Transaction[];
-          const batchResults = await Promise.all(
-            batch.map((tx) => processTransaction(tx, coder))
-          );
-          allTrades.push(...batchResults.flat());
-        }
+        const batchResults = await Promise.all(
+          response.data.map((tx: Transaction) => processTransaction(tx, coder))
+        );
+        allTrades.push(
+          ...batchResults.flat().sort((a, b) => {
+            return parseInt(b.dateTime) - parseInt(a.dateTime);
+          })
+        );
 
         setPoolTrades(allTrades);
       } catch (error) {
@@ -203,10 +206,10 @@ export default function PoolTradesTable() {
               )}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
-              {tx.amount0} SOL-LP
+              {tx.amount1} {tx.pool + "-LP"}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
-              {tx.amount1} USDC
+              {tx.amount0} {tx.token0 == USDC_MINT.toString() ? "USDC" : "SOL"}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
               {tx.fees} USDC
@@ -215,7 +218,7 @@ export default function PoolTradesTable() {
               {tx.pool}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
-              {tx.dateTime}
+              {new Date(parseInt(tx.dateTime) * 1000).toLocaleString()}
             </TableCell>
           </TableRow>
         ))}
