@@ -21,6 +21,21 @@ export interface FuturesTransaction{
     purchaseDate: string
 }
 
+export interface FuturePos{
+    token: Token;
+    symbol: string;
+    futureType: 'perps' | 'dated';
+    position: 'long' | 'short';
+    entryPrice: number;
+    LiqPrice: number;
+    size: number;
+    collateral: number;
+    TPSL: number;
+    logo: string;
+    leverage: number;
+    purchaseDate: string;
+}
+
 export const formatDate = (date: Date): string => {
     const day = date.getDate().toString().padStart(2, '0');
     const month = date.toLocaleString('default', { month: 'short' }).toUpperCase();
@@ -84,3 +99,39 @@ export const futuresTx : FuturesTransaction[] = tokenList.map((token) => {
         purchaseDate: formattedPurchase
     }
 })
+
+export const futurePos : FuturePos[] = tokenList.map((token) => {
+    const futureType = Math.random() < 0.5 ? 'perps' : 'dated';
+    const position = Math.random() < 0.5 ? 'long' : 'short';
+    const entryPrice = parseFloat((Math.random() * 10000 + 1).toFixed(2));
+    const priceDelta = entryPrice * (Math.random() * 0.1 + 0.02);
+    const LiqPrice = position === 'long' 
+        ? parseFloat((entryPrice - priceDelta).toFixed(2))
+        : parseFloat((entryPrice + priceDelta).toFixed(2));
+    const size = parseFloat((Math.random() * 1000 + 1).toFixed(2));
+    const collateral = parseFloat((entryPrice * size / (Math.random() * 10 + 1)).toFixed(2));
+    const TPSL = position === 'long'
+        ? parseFloat((entryPrice + priceDelta * 2).toFixed(2))
+        : parseFloat((entryPrice - priceDelta * 2).toFixed(2));
+    const leverage = parseFloat((Math.random() * 50 + 1).toFixed(1));
+
+    const daysAgo = Math.floor(Math.random() * 30);
+    const purchaseDate = new Date();
+    purchaseDate.setDate(purchaseDate.getDate() - daysAgo);
+    const formattedPurchase = format(new Date(purchaseDate), 'dd MMM, yyyy HH:mm:ss')
+
+    return {
+        token: token,
+        symbol: token.symbol,
+        futureType,
+        position,
+        entryPrice,
+        LiqPrice,
+        size,
+        collateral,
+        TPSL,
+        logo: token.iconPath,
+        leverage,
+        purchaseDate: formattedPurchase
+    };
+});
