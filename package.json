@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@coral-xyz/anchor": "0.30.1",
+    "@coral-xyz/anchor": "^0.31.1",
     "@debridge-finance/solana-transaction-parser": "^3.2.3",
     "@pythnetwork/client": "^2.22.0",
     "@pythnetwork/hermes-client": "^1.3.0",

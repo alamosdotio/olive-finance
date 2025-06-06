@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/option_contract.json`.
  */
 export type OptionContract = {
-  "address": "Gbg6YHDbSBciSAmbxjY2toriq8vTnhXJtXKgdtdZj2GH",
+  "address": "CcPMs3aDTLqphbwRLXd9tegpt3tw5rbhPjnCY6DTS26i",
   "metadata": {
     "name": "option_contract",
     "version": "0.1.0",
@@ -1284,41 +1284,6 @@ export type OptionContract = {
           }
         },
         {
-          "name": "option_detail",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  111,
-                  112,
-                  116,
-                  105,
-                  111,
-                  110
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "owner"
-              },
-              {
-                "kind": "arg",
-                "path": "params.option_index"
-              },
-              {
-                "kind": "account",
-                "path": "pool"
-              },
-              {
-                "kind": "account",
-                "path": "custody"
-              }
-            ]
-          }
-        },
-        {
           "name": "pay_custody",
           "writable": true,
           "pda": {
@@ -1417,6 +1382,47 @@ export type OptionContract = {
               }
             ]
           }
+        },
+        {
+          "name": "option_detail",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "arg",
+                "path": "params.option_index"
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "custody"
+              }
+            ]
+          }
+        },
+        {
+          "name": "custody_oracle_account"
+        },
+        {
+          "name": "pay_custody_oracle_account"
         },
         {
           "name": "custody_mint",
@@ -3330,7 +3336,7 @@ export type OptionContract = {
           },
           {
             "name": "expired_date",
-            "type": "u64"
+            "type": "i64"
           },
           {
             "name": "purchase_date",

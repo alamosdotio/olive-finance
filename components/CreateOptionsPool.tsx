@@ -143,9 +143,8 @@ export default function CreateOptionsPool() {
 
     try {
       const provider = new AnchorProvider(connection, wallet, {});
+      const programId = new PublicKey(idl.address);
       const program = new Program(idl as OptionContract, provider);
-
-      console.log("Program~~~~~~~~~", program)
 
       const poolSeed = Buffer.from("pool");
       const lpMintSeed = Buffer.from("lp_token_mint");
@@ -173,6 +172,8 @@ export default function CreateOptionsPool() {
         [transferAuthoritySeed],
         program.programId
       );
+
+    console.log(program.methods);
 
     const tx = await program.methods
       .addPool({ name: poolName })
