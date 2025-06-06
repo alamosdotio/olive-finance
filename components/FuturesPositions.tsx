@@ -9,89 +9,7 @@ import OpenFutures from "./OpenFutures";
 import Pagination from "./Pagination";
 import ExpiredFutures from "./ExpiredFutures";
 import FuturesOrderHistory from "./FuturesOrderHistory";
-import { FuturesTransaction, futuresTx } from "@/lib/data/WalletActivity";
-
-const DummyFutures = [
-    {
-        token: 'solana',  // Solana
-        symbol: 'SOL',
-        futureType: 'perps',  // perpetual futures
-        position: 'long',
-        entryPrice: 122.50,
-        LiqPrice: 135.00,  // liquidation price for long
-        Size: 50,  // contract size
-        Collateral: 1500,  // margin used
-        TPSL: 145.00,  // target price for take profit/stop loss
-        logo: '/images/solana.png',  // Solana logo path
-        leverage: 31
-    },
-    {
-        token: 'bitcoin',  // Bitcoin
-        symbol: 'BTC',
-        futureType: 'dated',  // dated futures
-        position: 'short',
-        entryPrice: 35000.00,
-        LiqPrice: 36000.00,  // liquidation price for short
-        Size: 0.5,  // contract size (in BTC)
-        Collateral: 15000,  // margin used
-        TPSL: 34000.00,  // target price for short position
-        logo: '/images/bitcoin.png',  // Bitcoin logo path
-        leverage: 22.2
-    },
-    {
-        token: 'dogwifhat',  // Wif (assumed to be a token)
-        symbol: 'WIF',
-        futureType: 'perps',  // perpetual futures
-        position: 'long',
-        entryPrice: 5.30,
-        LiqPrice: 6.00,  // liquidation price for long
-        Size: 1000,  // contract size
-        Collateral: 5300,  // margin used
-        TPSL: 6.50,  // target price for take profit/stop loss
-        logo: '/images/wif.png',  // Wif logo path
-        leverage: 10.2
-    },
-    {
-        token: 'ethereum',  // Ethereum
-        symbol: 'ETH',
-        futureType: 'dated',  // dated futures
-        position: 'short',
-        entryPrice: 2500.00,
-        LiqPrice: 2650.00,  // liquidation price for short
-        Size: 10,  // contract size (in ETH)
-        Collateral: 25000,  // margin used
-        TPSL: 2400.00,  // target price for short position
-        logo: '/images/ethereum.png',  // Ethereum logo path
-        leverage: 11
-    },
-    {
-        token: 'chainlink',  // Chainlink
-        symbol: 'LINK',
-        futureType: 'perps',  // perpetual futures
-        position: 'long',
-        entryPrice: 8.00,
-        LiqPrice: 9.00,  // liquidation price for long
-        Size: 500,  // contract size (LINK)
-        Collateral: 4000,  // margin used
-        TPSL: 10.00,  // target price for long position
-        logo: '/images/chainlink.png',  // Chainlink logo path
-        leverage: 14
-    },
-    {
-        token: 'bonk',  // Bonk
-        symbol: 'BONK',
-        futureType: 'dated',  // dated futures
-        position: 'short',
-        entryPrice: 0.00000250,
-        LiqPrice: 0.00000270,  // liquidation price for short
-        Size: 5000000,  // contract size (BONK)
-        Collateral: 12500,  // margin used
-        TPSL: 0.00000200,  // target price for short position
-        logo: '/images/bonk.png',  // Placeholder logo path for Bonk, change as needed
-        leverage: 5
-    },
-];
-
+import { futurePos, FuturePos, FuturesTransaction, futuresTx } from "@/lib/data/WalletActivity";
 
 
 const Fallback = () => {
@@ -119,19 +37,21 @@ const Fallback = () => {
 export default function FuturesPositions(){
     const [activeTab, setActiveTab] = useState('positions')
     const [currentPage, setCurrentPage] = useState(1)
-    const [dummyFutures, setDummyFutures] = useState<FuturesTransaction[]>([])
+    const [dummyTx, setDummyTx] = useState<FuturesTransaction[]>([])
+    const [dummyPos, setDummyPos] = useState<FuturePos[]>([])
 
     useEffect(() => {
-        setDummyFutures(futuresTx)
+        setDummyTx(futuresTx)
+        setDummyPos(futurePos)
     }, [])
 
     const itemsPerPage = 5
 
     const indexOfLastItem = currentPage * itemsPerPage
     const indexOfFirstItem = indexOfLastItem - itemsPerPage
-    const currentItems = DummyFutures.slice(indexOfFirstItem, indexOfLastItem)
+    const currentItems = dummyPos.slice(indexOfFirstItem, indexOfLastItem)
 
-    const orderHistoryItems = dummyFutures.slice(indexOfFirstItem, indexOfLastItem)
+    const orderHistoryItems = dummyTx.slice(indexOfFirstItem, indexOfLastItem)
 
     const handleClickTab = (value: string) => {
         setActiveTab(value);
@@ -142,22 +62,22 @@ export default function FuturesPositions(){
         <div className="w-full border rounded-sm flex flex-col mb-3">
             <section className="border-b rounded-none px-6 py-3">
                 <Tabs defaultValue={activeTab} onValueChange={handleClickTab}>
-                    <TabsList className="bg-inherit flex justify-start text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
+                    <TabsList className="bg-inherit grid grid-cols-6 text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
                         <TabsTrigger
                             value="positions"
-                            className="border-b rounded-nonetext-[11px] md:text-sm px-2 py-0 rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
                             Open Positions
                         </TabsTrigger>
                         <TabsTrigger
                             value="expired" 
-                            className="border-b rounded-nonetext-[11px] md:text-sm px-2 py-0 rounded-none border-transparent data-[state=active]:border-primary"   
+                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"  
                         >
                             Expired Positions
                         </TabsTrigger>
                         <TabsTrigger
                             value="history"
-                            className="border-b rounded-nonetext-[11px] md:text-sm px-2 py-0 rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
                            Order History
                         </TabsTrigger>
@@ -169,13 +89,27 @@ export default function FuturesPositions(){
                     <>
                         <section className="px-6 py-3 space-y-[10px]">
                             {currentItems.map((pos, idx) => (
-                                <OpenFutures key={idx} token={pos.token} logo={pos.logo} symbol={pos.symbol} type={pos.futureType} position={pos.position} leverage={pos.leverage}/>
+                                <OpenFutures 
+                                    key={idx} 
+                                    token={pos.token.name} 
+                                    logo={pos.logo} 
+                                    symbol={pos.symbol} 
+                                    type={pos.futureType} 
+                                    position={pos.position} 
+                                    leverage={pos.leverage}
+                                    entry={pos.entryPrice}
+                                    liquidation={pos.LiqPrice}
+                                    size={pos.size}
+                                    collateral={pos.collateral}
+                                    tpsl={pos.TPSL}
+                                    purchaseDate={pos.purchaseDate}
+                                />
                             ))}
                         </section>
                         <div className="px-3 md:px-6 pb-4 w-full">
                             <Pagination
                                 currentPage={currentPage}
-                                totalItems={DummyFutures.length}
+                                totalItems={dummyPos.length}
                                 itemsPerPage={itemsPerPage}
                                 onPageChange={setCurrentPage}
                             />
@@ -205,7 +139,7 @@ export default function FuturesPositions(){
                         <div className="px-3 md:px-6 pb-4 w-full">
                             <Pagination
                                 currentPage={currentPage}
-                                totalItems={dummyFutures.length}
+                                totalItems={dummyTx.length}
                                 itemsPerPage={itemsPerPage}
                                 onPageChange={setCurrentPage}
                             />

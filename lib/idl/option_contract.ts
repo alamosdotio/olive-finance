@@ -5,91 +5,131 @@
  * IDL can be found at `target/idl/option_contract.json`.
  */
 export type OptionContract = {
-  address: "8g657xNHbnchJuT4crLjVCG1bXS4uqPqA6ECaspjadmR";
-  metadata: {
-    name: "optionContract";
-    version: "0.1.0";
-    spec: "0.1.0";
-    description: "Created with Anchor";
-  };
-  instructions: [
+  "address": "Gbg6YHDbSBciSAmbxjY2toriq8vTnhXJtXKgdtdZj2GH",
+  "metadata": {
+    "name": "option_contract",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
     {
-      name: "addCustody";
-      discriminator: [247, 254, 126, 17, 26, 6, 215, 117];
-      accounts: [
+      "name": "add_custody",
+      "discriminator": [
+        247,
+        254,
+        126,
+        17,
+        26,
+        6,
+        215,
+        117
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyTokenMint";
+                "kind": "account",
+                "path": "custody_token_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyTokenAccount";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   99,
                   117,
                   115,
@@ -111,26 +151,26 @@ export type OptionContract = {
                   117,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyTokenMint";
+                "kind": "account",
+                "path": "custody_token_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -149,60 +189,69 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyTokenMint";
+          "name": "custody_token_mint"
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "addCustodyParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AddCustodyParams"
+            }
+          }
         }
-      ];
-      returns: "u8";
+      ],
+      "returns": "u8"
     },
     {
-      name: "addLiquidity";
-      discriminator: [181, 157, 89, 67, 143, 182, 52, 72];
-      accounts: [
+      "name": "add_liquidity",
+      "discriminator": [
+        181,
+        157,
+        89,
+        67,
+        143,
+        182,
+        52,
+        72
+      ],
+      "accounts": [
         {
-          name: "owner";
-          writable: true;
-          signer: true;
+          "name": "owner",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "fundingAccount";
-          writable: true;
+          "name": "funding_account",
+          "writable": true
         },
         {
-          name: "lpTokenAccount";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "lp_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               },
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   6,
                   221,
                   246,
@@ -235,16 +284,16 @@ export type OptionContract = {
                   255,
                   0,
                   169
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "lpTokenMint";
+                "kind": "account",
+                "path": "lp_token_mint"
               }
-            ];
-            program: {
-              kind: "const";
-              value: [
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
                 140,
                 151,
                 37,
@@ -277,17 +326,17 @@ export type OptionContract = {
                 233,
                 248,
                 89
-              ];
-            };
-          };
+              ]
+            }
+          }
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -306,69 +355,91 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyOracleAccount";
+          "name": "custody_oracle_account"
         },
         {
-          name: "custodyTokenAccount";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   99,
                   117,
                   115,
@@ -390,28 +461,28 @@ export type OptionContract = {
                   117,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lpTokenMint";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "lp_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   108,
                   112,
                   95,
@@ -425,101 +496,133 @@ export type OptionContract = {
                   105,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool.name";
-                account: "pool";
+                "kind": "account",
+                "path": "pool.name",
+                "account": "Pool"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "associatedTokenProgram";
-          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "addLiquidityParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AddLiquidityParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "addPool";
-      discriminator: [115, 230, 212, 211, 175, 49, 39, 169];
-      accounts: [
+      "name": "add_pool",
+      "discriminator": [
+        115,
+        230,
+        212,
+        211,
+        175,
+        49,
+        39,
+        169
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.name";
+                "kind": "arg",
+                "path": "params.name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lpTokenMint";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "lp_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   108,
                   112,
                   95,
@@ -533,22 +636,22 @@ export type OptionContract = {
                   105,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "arg";
-                path: "params.name";
+                "kind": "arg",
+                "path": "params.name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -567,207 +670,269 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         },
         {
-          name: "rent";
-          address: "SysvarRent111111111111111111111111111111111";
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "addPoolParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AddPoolParams"
+            }
+          }
         }
-      ];
-      returns: "u8";
+      ],
+      "returns": "u8"
     },
     {
-      name: "autoExercise";
-      discriminator: [92, 40, 119, 42, 152, 121, 62, 28];
-      accounts: [
+      "name": "auto_exercise",
+      "discriminator": [
+        92,
+        40,
+        119,
+        42,
+        152,
+        121,
+        62,
+        28
+      ],
+      "accounts": [
         {
-          name: "tester";
-          writable: true;
-          signer: true;
+          "name": "tester",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "user";
-          pda: {
-            seeds: [
+          "name": "user",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [117, 115, 101, 114];
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
-                kind: "arg";
-                path: "params.user";
+                "kind": "arg",
+                "path": "params.user"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "optionDetail";
-          pda: {
-            seeds: [
+          "name": "option_detail",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [111, 112, 116, 105, 111, 110];
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
               },
               {
-                kind: "arg";
-                path: "params.user";
+                "kind": "arg",
+                "path": "params.user"
               },
               {
-                kind: "arg";
-                path: "params.option_index";
+                "kind": "arg",
+                "path": "params.option_index"
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custody";
+                "kind": "account",
+                "path": "custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "locked_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "locked_custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "locked_custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedOracle";
+          "name": "locked_oracle"
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "associatedTokenProgram";
-          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "autoExerciseOptionParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AutoExerciseOptionParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "claimOption";
-      discriminator: [253, 12, 10, 151, 212, 164, 101, 103];
-      accounts: [
+      "name": "claim_option",
+      "discriminator": [
+        253,
+        12,
+        10,
+        151,
+        212,
+        164,
+        101,
+        103
+      ],
+      "accounts": [
         {
-          name: "owner";
-          writable: true;
-          signer: true;
-          relations: ["fundingAccount"];
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "funding_account"
+          ]
         },
         {
-          name: "fundingAccount";
-          writable: true;
+          "name": "funding_account",
+          "writable": true
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -786,173 +951,226 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "user";
-          pda: {
-            seeds: [
+          "name": "user",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [117, 115, 101, 114];
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "optionDetail";
-          pda: {
-            seeds: [
+          "name": "option_detail",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [111, 112, 116, 105, 111, 110];
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               },
               {
-                kind: "arg";
-                path: "params.option_index";
+                "kind": "arg",
+                "path": "params.option_index"
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custody";
+                "kind": "account",
+                "path": "custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "locked_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "locked_custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "locked_custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedOracle";
+          "name": "locked_oracle"
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "associatedTokenProgram";
-          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "claimOptionParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ClaimOptionParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "closeOption";
-      discriminator: [138, 79, 53, 54, 221, 16, 109, 141];
-      accounts: [
+      "name": "close_option",
+      "discriminator": [
+        138,
+        79,
+        53,
+        54,
+        221,
+        16,
+        109,
+        141
+      ],
+      "accounts": [
         {
-          name: "owner";
-          writable: true;
-          signer: true;
-          relations: ["fundingAccount"];
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "funding_account"
+          ]
         },
         {
-          name: "fundingAccount";
-          writable: true;
+          "name": "funding_account",
+          "writable": true
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -971,129 +1189,171 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "user";
-          pda: {
-            seeds: [
+          "name": "user",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [117, 115, 101, 114];
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "optionDetail";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "option_detail",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [111, 112, 116, 105, 111, 110];
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               },
               {
-                kind: "arg";
-                path: "params.option_index";
+                "kind": "arg",
+                "path": "params.option_index"
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custody";
+                "kind": "account",
+                "path": "custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "payCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pay_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "payCustodyMint";
+                "kind": "account",
+                "path": "pay_custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "payCustodyTokenAccount";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pay_custody_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   99,
                   117,
                   115,
@@ -1115,102 +1375,128 @@ export type OptionContract = {
                   117,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "pay_custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "pay_custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "locked_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "locked_custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "locked_custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "payCustodyMint";
-          writable: true;
+          "name": "pay_custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "associatedTokenProgram";
-          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "closeOptionParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "CloseOptionParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "createLpMint";
-      discriminator: [240, 207, 70, 86, 85, 222, 161, 55];
-      accounts: [
+      "name": "create_lp_mint",
+      "discriminator": [
+        240,
+        207,
+        70,
+        86,
+        85,
+        222,
+        161,
+        55
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lpTokenMint";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "lp_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   108,
                   112,
                   95,
@@ -1224,22 +1510,22 @@ export type OptionContract = {
                   105,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "arg";
-                path: "params.name";
+                "kind": "arg",
+                "path": "params.name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -1258,56 +1544,67 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         },
         {
-          name: "rent";
-          address: "SysvarRent111111111111111111111111111111111";
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "lpTokenMintData";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "LpTokenMintData"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "exerciseOption";
-      discriminator: [231, 98, 131, 183, 245, 93, 122, 48];
-      accounts: [
+      "name": "exercise_option",
+      "discriminator": [
+        231,
+        98,
+        131,
+        183,
+        245,
+        93,
+        122,
+        48
+      ],
+      "accounts": [
         {
-          name: "owner";
-          writable: true;
-          signer: true;
-          relations: ["fundingAccount"];
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "funding_account"
+          ]
         },
         {
-          name: "fundingAccount";
-          writable: true;
+          "name": "funding_account",
+          "writable": true
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -1326,196 +1623,265 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "user";
-          pda: {
-            seeds: [
+          "name": "user",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [117, 115, 101, 114];
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "optionDetail";
-          pda: {
-            seeds: [
+          "name": "option_detail",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [111, 112, 116, 105, 111, 110];
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               },
               {
-                kind: "arg";
-                path: "params.option_index";
+                "kind": "arg",
+                "path": "params.option_index"
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custody";
+                "kind": "account",
+                "path": "custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "locked_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "lockedCustodyMint";
+                "kind": "account",
+                "path": "locked_custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lockedOracle";
+          "name": "locked_oracle"
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "lockedCustodyMint";
-          writable: true;
+          "name": "locked_custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "associatedTokenProgram";
-          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "exerciseOptionParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ExerciseOptionParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "initialize";
-      discriminator: [175, 175, 109, 31, 13, 152, 155, 237];
-      accounts: [
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "transferAuthority";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -1534,42 +1900,51 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [];
+      ],
+      "args": []
     },
     {
-      name: "openOption";
-      discriminator: [237, 33, 198, 81, 110, 234, 251, 210];
-      accounts: [
+      "name": "open_option",
+      "discriminator": [
+        237,
+        33,
+        198,
+        81,
+        110,
+        234,
+        251,
+        210
+      ],
+      "accounts": [
         {
-          name: "owner";
-          writable: true;
-          signer: true;
+          "name": "owner",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "fundingAccount";
-          writable: true;
+          "name": "funding_account",
+          "writable": true
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -1588,109 +1963,144 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyOracleAccount";
+          "name": "custody_oracle_account"
         },
         {
-          name: "user";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [117, 115, 101, 114];
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
-                kind: "account";
-                path: "owner";
+                "kind": "account",
+                "path": "owner"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "optionDetail";
-          writable: true;
+          "name": "option_detail",
+          "writable": true
         },
         {
-          name: "payCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pay_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "payCustodyMint";
+                "kind": "account",
+                "path": "pay_custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "payCustodyTokenAccount";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pay_custody_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   99,
                   117,
                   115,
@@ -1712,219 +2122,299 @@ export type OptionContract = {
                   117,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "pay_custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "pay_custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "payCustodyOracleAccount";
+          "name": "pay_custody_oracle_account"
         },
         {
-          name: "lockedCustody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "locked_custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "lockedCustodyMint";
+                "kind": "account",
+                "path": "locked_custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "payCustodyMint";
-          writable: true;
+          "name": "pay_custody_mint",
+          "writable": true
         },
         {
-          name: "lockedCustodyMint";
-          writable: true;
+          "name": "locked_custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "openOptionParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "OpenOptionParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "reallocPool";
-      discriminator: [114, 128, 37, 167, 71, 227, 40, 178];
-      accounts: [
+      "name": "realloc_pool",
+      "discriminator": [
+        114,
+        128,
+        37,
+        167,
+        71,
+        227,
+        40,
+        178
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "reallocPoolParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ReallocPoolParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "removeCustody";
-      discriminator: [143, 229, 131, 48, 248, 212, 167, 185];
-      accounts: [
+      "name": "remove_custody",
+      "discriminator": [
+        143,
+        229,
+        131,
+        48,
+        248,
+        212,
+        167,
+        185
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          pda: {
-            seeds: [
+          "name": "custody",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyTokenMint";
+                "kind": "account",
+                "path": "custody_token_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyTokenAccount";
-          pda: {
-            seeds: [
+          "name": "custody_token_account",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   99,
                   117,
                   115,
@@ -1946,26 +2436,26 @@ export type OptionContract = {
                   117,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyTokenMint";
+                "kind": "account",
+                "path": "custody_token_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -1984,60 +2474,72 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyTokenMint";
+          "name": "custody_token_mint"
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "removeCustodyParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "RemoveCustodyParams"
+            }
+          }
         }
-      ];
-      returns: "u8";
+      ],
+      "returns": "u8"
     },
     {
-      name: "removeLiquidity";
-      discriminator: [80, 85, 209, 72, 24, 206, 177, 108];
-      accounts: [
+      "name": "remove_liquidity",
+      "discriminator": [
+        80,
+        85,
+        209,
+        72,
+        24,
+        206,
+        177,
+        108
+      ],
+      "accounts": [
         {
-          name: "owner";
-          writable: true;
-          signer: true;
-          relations: ["receivingAccount", "lpTokenAccount"];
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "receiving_account",
+            "lp_token_account"
+          ]
         },
         {
-          name: "receivingAccount";
-          writable: true;
+          "name": "receiving_account",
+          "writable": true
         },
         {
-          name: "lpTokenAccount";
-          writable: true;
+          "name": "lp_token_account",
+          "writable": true
         },
         {
-          name: "transferAuthority";
-          pda: {
-            seeds: [
+          "name": "transfer_authority",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   116,
                   114,
                   97,
@@ -2056,70 +2558,92 @@ export type OptionContract = {
                   105,
                   116,
                   121
-                ];
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          pda: {
-            seeds: [
+          "name": "contract",
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custody";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 117, 115, 116, 111, 100, 121];
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  100,
+                  121
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custody.mint";
-                account: "custody";
+                "kind": "account",
+                "path": "custody.mint",
+                "account": "Custody"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyOracleAccount";
+          "name": "custody_oracle_account"
         },
         {
-          name: "custodyTokenAccount";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "custody_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   99,
                   117,
                   115,
@@ -2141,27 +2665,27 @@ export type OptionContract = {
                   117,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool";
+                "kind": "account",
+                "path": "pool"
               },
               {
-                kind: "account";
-                path: "custodyMint";
+                "kind": "account",
+                "path": "custody_mint"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "lpTokenMint";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "lp_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [
+                "kind": "const",
+                "value": [
                   108,
                   112,
                   95,
@@ -2175,751 +2699,861 @@ export type OptionContract = {
                   105,
                   110,
                   116
-                ];
+                ]
               },
               {
-                kind: "account";
-                path: "pool.name";
-                account: "pool";
+                "kind": "account",
+                "path": "pool.name",
+                "account": "Pool"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "custodyMint";
-          writable: true;
+          "name": "custody_mint",
+          "writable": true
         },
         {
-          name: "tokenProgram";
-          address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "removeLiquidityParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "RemoveLiquidityParams"
+            }
+          }
         }
-      ];
+      ]
     },
     {
-      name: "removePool";
-      discriminator: [132, 42, 53, 138, 28, 220, 170, 55];
-      accounts: [
+      "name": "remove_pool",
+      "discriminator": [
+        132,
+        42,
+        53,
+        138,
+        28,
+        220,
+        170,
+        55
+      ],
+      "accounts": [
         {
-          name: "signer";
-          writable: true;
-          signer: true;
+          "name": "signer",
+          "writable": true,
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "contract";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "contract",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [99, 111, 110, 116, 114, 97, 99, 116];
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  97,
+                  99,
+                  116
+                ]
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "pool";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [112, 111, 111, 108];
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
               },
               {
-                kind: "arg";
-                path: "params.pool_name";
+                "kind": "arg",
+                "path": "params.pool_name"
               }
-            ];
-          };
+            ]
+          }
         },
         {
-          name: "systemProgram";
-          address: "11111111111111111111111111111111";
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "removePoolParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "RemovePoolParams"
+            }
+          }
         }
-      ];
-      returns: "u8";
+      ],
+      "returns": "u8"
     },
     {
-      name: "setSigners";
-      discriminator: [16, 210, 170, 26, 155, 87, 127, 49];
-      accounts: [
+      "name": "set_signers",
+      "discriminator": [
+        16,
+        210,
+        170,
+        26,
+        155,
+        87,
+        127,
+        49
+      ],
+      "accounts": [
         {
-          name: "admin";
-          signer: true;
+          "name": "admin",
+          "signer": true
         },
         {
-          name: "multisig";
-          writable: true;
-          pda: {
-            seeds: [
+          "name": "multisig",
+          "writable": true,
+          "pda": {
+            "seeds": [
               {
-                kind: "const";
-                value: [109, 117, 108, 116, 105, 115, 105, 103];
+                "kind": "const",
+                "value": [
+                  109,
+                  117,
+                  108,
+                  116,
+                  105,
+                  115,
+                  105,
+                  103
+                ]
               }
-            ];
-          };
+            ]
+          }
         }
-      ];
-      args: [
+      ],
+      "args": [
         {
-          name: "params";
-          type: {
-            defined: {
-              name: "setAdminSignersParams";
-            };
-          };
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SetAdminSignersParams"
+            }
+          }
         }
-      ];
-      returns: "u8";
+      ],
+      "returns": "u8"
     }
-  ];
-  accounts: [
+  ],
+  "accounts": [
     {
-      name: "contract";
-      discriminator: [172, 138, 115, 242, 121, 67, 183, 26];
+      "name": "Contract",
+      "discriminator": [
+        172,
+        138,
+        115,
+        242,
+        121,
+        67,
+        183,
+        26
+      ]
     },
     {
-      name: "custody";
-      discriminator: [1, 184, 48, 81, 93, 131, 63, 145];
+      "name": "Custody",
+      "discriminator": [
+        1,
+        184,
+        48,
+        81,
+        93,
+        131,
+        63,
+        145
+      ]
     },
     {
-      name: "multisig";
-      discriminator: [224, 116, 121, 186, 68, 161, 79, 236];
+      "name": "Multisig",
+      "discriminator": [
+        224,
+        116,
+        121,
+        186,
+        68,
+        161,
+        79,
+        236
+      ]
     },
     {
-      name: "optionDetail";
-      discriminator: [204, 187, 248, 154, 76, 215, 205, 46];
+      "name": "OptionDetail",
+      "discriminator": [
+        204,
+        187,
+        248,
+        154,
+        76,
+        215,
+        205,
+        46
+      ]
     },
     {
-      name: "pool";
-      discriminator: [241, 154, 109, 4, 17, 177, 109, 188];
+      "name": "Pool",
+      "discriminator": [
+        241,
+        154,
+        109,
+        4,
+        17,
+        177,
+        109,
+        188
+      ]
     },
     {
-      name: "user";
-      discriminator: [159, 117, 95, 227, 239, 151, 58, 236];
+      "name": "User",
+      "discriminator": [
+        159,
+        117,
+        95,
+        227,
+        239,
+        151,
+        58,
+        236
+      ]
     }
-  ];
-  errors: [
+  ],
+  "errors": [
     {
-      code: 6000;
-      name: "invalidWithdrawError";
+      "code": 6000,
+      "name": "InvalidWithdrawError"
     },
     {
-      code: 6001;
-      name: "invalidPoolBalanceError";
+      "code": 6001,
+      "name": "InvalidPoolBalanceError"
     },
     {
-      code: 6002;
-      name: "invalidSignerBalanceError";
+      "code": 6002,
+      "name": "InvalidSignerBalanceError"
     },
     {
-      code: 6003;
-      name: "invalidCustodyTokenError";
+      "code": 6003,
+      "name": "InvalidCustodyTokenError"
     },
     {
-      code: 6004;
-      name: "invalidPoolState";
+      "code": 6004,
+      "name": "InvalidPoolState"
     },
     {
-      code: 6005;
-      name: "invalidCustodyState";
+      "code": 6005,
+      "name": "InvalidCustodyState"
     }
-  ];
-  types: [
+  ],
+  "types": [
     {
-      name: "addCustodyParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "AddCustodyParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "oracle";
-            type: "pubkey";
+            "name": "oracle",
+            "type": "pubkey"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "addLiquidityParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "AddLiquidityParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "amountIn";
-            type: "u64";
+            "name": "amount_in",
+            "type": "u64"
           },
           {
-            name: "minLpAmountOut";
-            type: "u64";
+            "name": "min_lp_amount_out",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "addPoolParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "AddPoolParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "name";
-            type: "string";
+            "name": "name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "autoExerciseOptionParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "AutoExerciseOptionParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "user";
-            type: "pubkey";
+            "name": "user",
+            "type": "pubkey"
           },
           {
-            name: "optionIndex";
-            type: "u64";
+            "name": "option_index",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "claimOptionParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "ClaimOptionParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "optionIndex";
-            type: "u64";
+            "name": "option_index",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "closeOptionParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "CloseOptionParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "optionIndex";
-            type: "u64";
+            "name": "option_index",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "contract";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Contract",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "pools";
-            type: {
-              vec: "pubkey";
-            };
+            "name": "pools",
+            "type": {
+              "vec": "pubkey"
+            }
           },
           {
-            name: "bump";
-            type: "u8";
+            "name": "bump",
+            "type": "u8"
           },
           {
-            name: "transferAuthorityBump";
-            type: "u8";
+            "name": "transfer_authority_bump",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "custody";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Custody",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "mint";
-            type: "pubkey";
+            "name": "mint",
+            "type": "pubkey"
           },
           {
-            name: "tokenAccount";
-            type: "pubkey";
+            "name": "token_account",
+            "type": "pubkey"
           },
           {
-            name: "decimals";
-            type: "u8";
+            "name": "decimals",
+            "type": "u8"
           },
           {
-            name: "oracle";
-            type: "pubkey";
+            "name": "oracle",
+            "type": "pubkey"
           },
           {
-            name: "tokenOwned";
-            type: "u64";
+            "name": "token_owned",
+            "type": "u64"
           },
           {
-            name: "tokenLocked";
-            type: "u64";
+            "name": "token_locked",
+            "type": "u64"
           },
           {
-            name: "fees";
-            type: {
-              defined: {
-                name: "fees";
-              };
-            };
+            "name": "fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
           },
           {
-            name: "bump";
-            type: "u8";
+            "name": "bump",
+            "type": "u8"
           },
           {
-            name: "tokenAccountBump";
-            type: "u8";
+            "name": "token_account_bump",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "exerciseOptionParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "ExerciseOptionParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "optionIndex";
-            type: "u64";
+            "name": "option_index",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "fees";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "ratioMult";
-            type: "u64";
+            "name": "ratio_mult",
+            "type": "u64"
           },
           {
-            name: "addLiquidity";
-            type: "u64";
+            "name": "add_liquidity",
+            "type": "u64"
           },
           {
-            name: "removeLiquidity";
-            type: "u64";
+            "name": "remove_liquidity",
+            "type": "u64"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "lpTokenMintData";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "LpTokenMintData",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "name";
-            type: "string";
+            "name": "name",
+            "type": "string"
           },
           {
-            name: "symbol";
-            type: "string";
+            "name": "symbol",
+            "type": "string"
           },
           {
-            name: "uri";
-            type: "string";
+            "name": "uri",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "multisig";
-      serialization: "bytemuck";
-      repr: {
-        kind: "c";
-        packed: true;
-      };
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Multisig",
+      "serialization": "bytemuck",
+      "repr": {
+        "kind": "c",
+        "packed": true
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "numSigners";
-            type: "u8";
+            "name": "num_signers",
+            "type": "u8"
           },
           {
-            name: "numSigned";
-            type: "u8";
+            "name": "num_signed",
+            "type": "u8"
           },
           {
-            name: "minSignatures";
-            type: "u8";
+            "name": "min_signatures",
+            "type": "u8"
           },
           {
-            name: "instructionAccountsLen";
-            type: "u8";
+            "name": "instruction_accounts_len",
+            "type": "u8"
           },
           {
-            name: "instructionDataLen";
-            type: "u16";
+            "name": "instruction_data_len",
+            "type": "u16"
           },
           {
-            name: "instructionHash";
-            type: "u64";
+            "name": "instruction_hash",
+            "type": "u64"
           },
           {
-            name: "signers";
-            type: {
-              array: ["pubkey", 6];
-            };
+            "name": "signers",
+            "type": {
+              "array": [
+                "pubkey",
+                6
+              ]
+            }
           },
           {
-            name: "signed";
-            type: {
-              array: ["u8", 6];
-            };
+            "name": "signed",
+            "type": {
+              "array": [
+                "u8",
+                6
+              ]
+            }
           },
           {
-            name: "bump";
-            type: "u8";
+            "name": "bump",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "openOptionParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "OpenOptionParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "amount";
-            type: "u64";
+            "name": "amount",
+            "type": "u64"
           },
           {
-            name: "strike";
-            type: "f64";
+            "name": "strike",
+            "type": "f64"
           },
           {
-            name: "period";
-            type: "u64";
+            "name": "period",
+            "type": "u64"
           },
           {
-            name: "expiredTime";
-            type: "u64";
+            "name": "expired_time",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "optionDetail";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "OptionDetail",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "index";
-            type: "u64";
+            "name": "index",
+            "type": "u64"
           },
           {
-            name: "owner";
-            type: "pubkey";
+            "name": "owner",
+            "type": "pubkey"
           },
           {
-            name: "amount";
-            type: "u64";
+            "name": "amount",
+            "type": "u64"
           },
           {
-            name: "quantity";
-            type: "u64";
+            "name": "quantity",
+            "type": "u64"
           },
           {
-            name: "strikePrice";
-            type: "f64";
+            "name": "strike_price",
+            "type": "f64"
           },
           {
-            name: "period";
-            type: "u64";
+            "name": "period",
+            "type": "u64"
           },
           {
-            name: "expiredDate";
-            type: "u64";
+            "name": "expired_date",
+            "type": "u64"
           },
           {
-            name: "purchaseDate";
-            type: "u64";
+            "name": "purchase_date",
+            "type": "u64"
           },
           {
-            name: "optionType";
-            type: "u8";
+            "name": "option_type",
+            "type": "u8"
           },
           {
-            name: "premium";
-            type: "u64";
+            "name": "premium",
+            "type": "u64"
           },
           {
-            name: "premiumAsset";
-            type: "pubkey";
+            "name": "premium_asset",
+            "type": "pubkey"
           },
           {
-            name: "profit";
-            type: "u64";
+            "name": "profit",
+            "type": "u64"
           },
           {
-            name: "lockedAsset";
-            type: "pubkey";
+            "name": "locked_asset",
+            "type": "pubkey"
           },
           {
-            name: "pool";
-            type: "pubkey";
+            "name": "pool",
+            "type": "pubkey"
           },
           {
-            name: "custody";
-            type: "pubkey";
+            "name": "custody",
+            "type": "pubkey"
           },
           {
-            name: "exercised";
-            type: "u64";
+            "name": "exercised",
+            "type": "u64"
           },
           {
-            name: "boughtBack";
-            type: "u64";
+            "name": "bought_back",
+            "type": "u64"
           },
           {
-            name: "claimed";
-            type: "u64";
+            "name": "claimed",
+            "type": "u64"
           },
           {
-            name: "valid";
-            type: "bool";
+            "name": "valid",
+            "type": "bool"
           },
           {
-            name: "bump";
-            type: "u8";
+            "name": "bump",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "pool";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "Pool",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "name";
-            type: "string";
+            "name": "name",
+            "type": "string"
           },
           {
-            name: "custodies";
-            type: {
-              vec: "pubkey";
-            };
+            "name": "custodies",
+            "type": {
+              "vec": "pubkey"
+            }
           },
           {
-            name: "ratios";
-            type: {
-              vec: {
-                defined: {
-                  name: "tokenRatios";
-                };
-              };
-            };
+            "name": "ratios",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "TokenRatios"
+                }
+              }
+            }
           },
           {
-            name: "aumUsd";
-            type: "u128";
+            "name": "aum_usd",
+            "type": "u128"
           },
           {
-            name: "bump";
-            type: "u8";
+            "name": "bump",
+            "type": "u8"
           },
           {
-            name: "lpTokenBump";
-            type: "u8";
+            "name": "lp_token_bump",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "reallocPoolParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "ReallocPoolParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "ratios";
-            type: {
-              vec: {
-                defined: {
-                  name: "tokenRatios";
-                };
-              };
-            };
+            "name": "ratios",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "TokenRatios"
+                }
+              }
+            }
           },
           {
-            name: "custodyKey";
-            type: "pubkey";
+            "name": "custody_key",
+            "type": "pubkey"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "removeCustodyParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "RemoveCustodyParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "ratios";
-            type: {
-              vec: {
-                defined: {
-                  name: "tokenRatios";
-                };
-              };
-            };
+            "name": "ratios",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "TokenRatios"
+                }
+              }
+            }
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "removeLiquidityParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "RemoveLiquidityParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "lpAmountIn";
-            type: "u64";
+            "name": "lp_amount_in",
+            "type": "u64"
           },
           {
-            name: "minAmountOut";
-            type: "u64";
+            "name": "min_amount_out",
+            "type": "u64"
           },
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "removePoolParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "RemovePoolParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "poolName";
-            type: "string";
+            "name": "pool_name",
+            "type": "string"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "setAdminSignersParams";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "SetAdminSignersParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "minSignatures";
-            type: "u8";
+            "name": "min_signatures",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "tokenRatios";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "TokenRatios",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "target";
-            type: "u64";
+            "name": "target",
+            "type": "u64"
           },
           {
-            name: "min";
-            type: "u64";
+            "name": "min",
+            "type": "u64"
           },
           {
-            name: "max";
-            type: "u64";
+            "name": "max",
+            "type": "u64"
           }
-        ];
-      };
+        ]
+      }
     },
     {
-      name: "user";
-      type: {
-        kind: "struct";
-        fields: [
+      "name": "User",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: "optionIndex";
-            type: "u64";
+            "name": "option_index",
+            "type": "u64"
           },
           {
-            name: "bump";
-            type: "u8";
+            "name": "bump",
+            "type": "u8"
           }
-        ];
-      };
+        ]
+      }
     }
-  ];
-};
+  ]
+}

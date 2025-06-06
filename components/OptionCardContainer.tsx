@@ -16,6 +16,7 @@ interface OptionCardContainerProps{
   onIdxChange: (idx: number) => void;
   onStrikePriceChange: (amount: string) => void;
   onPayAmountChange: (amount: string) => void;
+  onCurrencyChange: (currency: string) => void;
   onContractTypeChange: (type: 'Call' | 'Put') => void;
   index: number;
   priceData: PythPriceState;
@@ -24,7 +25,7 @@ interface OptionCardContainerProps{
   marketLoading: boolean;
 }
 
-export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, onStrikePriceChange, onExpiryChange, onContractTypeChange, index, selectedSymbol, priceData, marketData, priceLoading, marketLoading}:OptionCardContainerProps) {
+export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, onStrikePriceChange, onExpiryChange, onContractTypeChange, onCurrencyChange, index, selectedSymbol, priceData, marketData, priceLoading, marketLoading}:OptionCardContainerProps) {
   const [active, setActive] = useState('buy')
   const [orderType, setOrderType] = useState<'market'|'limit'>('market');
   
@@ -69,6 +70,7 @@ export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayA
             onStrikePriceChange={onStrikePriceChange}
             onPayAmountChange={onPayAmountChange}
             onContractTypeChange={onContractTypeChange}
+            onCurrencyChange={onCurrencyChange}
             active={index}
             orderType={orderType}
             priceData={priceData}

@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { cn } from "@/lib/utils";
 import WalletButton from "./WalletButton";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { toast, ToastContainer } from "react-toastify";
 
 interface WalletModalProps {
   isOpen: boolean;
@@ -47,6 +48,9 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
         .name
     );
     onClose();
+    toast.success(`${walletName} Wallet Connected`, {
+      position: 'bottom-right'
+    });
   };
 
   return (

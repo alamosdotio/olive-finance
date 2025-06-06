@@ -1,6 +1,6 @@
 'use client'
 import { Button } from "./ui/button";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { tokenList } from "@/lib/data/tokenlist";
 import type { PythPriceState } from "@/hooks/usePythPrice";
 import { formatPrice } from "@/utils/formatter";
@@ -51,10 +51,10 @@ export default function OptionChainTable({
     return (
         <main className="w-full flex flex-col space-y-4"  style={{ height: 'calc(100vh - 155px)' }}>
             <section className="w-full flex flex-col border rounded-sm">
-                <div className="flex lg:flex-col space-y-1 border-b p-4">
+                {/* <div className="flex lg:flex-col space-y-1 border-b p-4">
                     <span className="text-xs lg:text-base text-secondary-foreground font-medium">{tokens[tokenIdx].symbol} ${priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
                     <h1 className="text-xl lg:text-3xl">{tokens[tokenIdx].symbol} {contract}</h1>
-                </div>
+                </div> */}
                 <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-4">
                     <div className="flex gap-4 w-full">
                         <div className="flex w-full lg:w-auto">
@@ -127,28 +127,28 @@ export default function OptionChainTable({
                                     Breakeven
                                 </TableHead>
                                 <TableHead>
-                                Chance of Profit
+                                    Chance of Profit
                                 </TableHead>
                                 <TableHead>
-                                %Change
+                                    %Change
                                 </TableHead>
                                 <TableHead>
-                                Change
+                                    Change
                                 </TableHead>
                                 <TableHead>
-                                Bid Price
+                                    Bid Price
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody className="">
                             {dummyData.map((option, idx) => (
                                 <TableRow key={idx} className="">
-                                    <TableHead>${option.strikePrice}</TableHead>
-                                    <TableHead>${option.breakeven}</TableHead>
-                                    <TableHead>{option.chanceofProfit}</TableHead>
-                                    <TableHead>{option.percentChange}</TableHead>
-                                    <TableHead>{option.change}</TableHead>
-                                    <TableHead className="flex items-center">
+                                    <TableCell>${option.strikePrice}</TableCell>
+                                    <TableCell>${option.breakeven}</TableCell>
+                                    <TableCell>{option.chanceofProfit}</TableCell>
+                                    <TableCell>{option.percentChange}</TableCell>
+                                    <TableCell>{option.change}</TableCell>
+                                    <TableCell className="flex items-center">
                                         <div 
                                             className={`
                                                     border border-primary border-r-0 p-1 h-fit 
@@ -170,19 +170,18 @@ export default function OptionChainTable({
                                             {optionIdx === idx ? (
                                                 '✓'
                                             ) : (
-                                            '+'
+                                                '+'
                                             )}
                                         </Button>
-                                    </TableHead>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                     </ScrollArea>
                 ) : (
-                    <div className="m-auto">
-                        No Open Positions.
-                        Start Trading Now
+                    <div className="w-full flex justify-center items-center h-full">
+                        No Positions Open
                     </div>
                 )}
             </section>

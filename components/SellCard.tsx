@@ -238,38 +238,39 @@ export default function SellCard() {
         <h2 className="text-xl font-semibold">Your Options</h2>
       </div>
 
-      <ScrollArea className="flex-grow w-full">
-        <div className="space-y-2">
-          {options.map((option) => (
-            <Button
-              key={option.id}
-              variant="outline"
-              className="w-full h-auto p-4 border-border rounded-sm hover:text-secondary-foreground"
-              onClick={() => setSelectedOption(option)}
-            >
-              <div className="w-full flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  {option.type === "Call" ? (
-                    <ArrowUpRight className="w-4 h-4 text-emerald-500" />
-                  ) : (
-                    <ArrowDownRight className="w-4 h-4 text-red-500" />
-                  )}
-                  <span>{option.type}</span>
+      {options.length > 0 ? (
+        <ScrollArea className="h-[395px] w-full">
+          <div className="space-y-2">
+            {options.map((option) => (
+              <Button
+                key={option.id}
+                variant="outline"
+                className="w-full h-auto p-4 border-border rounded-sm hover:text-secondary-foreground"
+                onClick={() => setSelectedOption(option)}
+              >
+                <div className="w-full flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    {option.type === "Call" ? (
+                      <ArrowUpRight className="w-4 h-4 text-emerald-500" />
+                    ) : (
+                      <ArrowDownRight className="w-4 h-4 text-red-500" />
+                    )}
+                    <span>{option.type}</span>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <span>{format(option.expiration, "MMM dd")}</span>
+                    <span
+                      className={`font-medium ${getStatusColor(option.status)}`}
+                    >
+                      {option.status}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <span>{format(option.expiration, "MMM dd")}</span>
-                  <span
-                    className={`font-medium ${getStatusColor(option.status)}`}
-                  >
-                    {option.status}
-                  </span>
-                </div>
-              </div>
-            </Button>
-          ))}
-        </div>
-      </ScrollArea>
-      {options.length === 0 && (
+              </Button>
+            ))}
+          </div>
+        </ScrollArea>
+      ) : (
         <div className="text-center py-8 text-secondary-foreground">
           No options found. Start trading to see your options here.
         </div>

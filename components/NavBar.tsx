@@ -20,16 +20,27 @@ import NavBarMobile from "./NavBarMobile";
 import Notifications from "./Notifications";
 import PointsDropDown from "./PointsDropDown";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { ChartLine } from "lucide-react";
-import { link } from "fs";
+import { BookOpenText, ChartLine, ExternalLink, FileChartColumn, MessagesSquare, TableColumnsSplit } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 
 export default function NavBar(){
-    const [active, setActive] = useState<string>("Options");
+    const pathname = usePathname();
     const { theme } = useTheme();
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
     const { connected } = useWallet();
     const [isOpen, setIsOpen] = useState(false);
+
+    const routes : Record<string, string> = {
+        "/": "Options",
+        "/futures": "futures",
+        "/earn": "Earn",
+        "/analytics": "Analytics",
+        "/options-chain" : "Options Chain",
+        "/feedback": "Feedback",
+    }
+    const currentPath = pathname?.split("/")[1] || "";
+    const [active , setActive] = useState(routes[`/${currentPath}`])
 
     const handleClick = (state:string) =>{
         if(active!==state){
@@ -91,26 +102,29 @@ export default function NavBar(){
                     
                     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                         <DropdownMenuTrigger
-                            className={`${isOpen ? 'text-primary' : 'text-secondary-foreground'} p-0 w-auto h-auto hidden lg:flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary`}
+                            className={`${isOpen || (active === 'Analytics' || active === 'Options Chain') ? 'text-primary' : 'text-secondary-foreground'} p-0 w-auto h-auto hidden lg:flex items-center gap-1 justify-between focus:bg-transparent focus:outline-none hover:text-primary`}
                             onClick={() => handleClick('More')}
                         >
                                 <MoreIcon />
                                 <h1 className="text-sm font-medium">More</h1>
                                 <ArrowDown />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="w-auto text-secondary-foreground rounded-sm">
+                        <DropdownMenuContent align='start' className="w-44 text-secondary-foreground rounded-sm">
                             {[
-                                "Exotic Options",
-                                "NFT Options",
-                                "Liquidity",
-                                "Synthetics",
-                                "Yield",
-                                "Prediction Markets",
-                                
+                                {
+                                    name:"Options Chain",
+                                    icon: <TableColumnsSplit />,
+                                    link:'/options-chain'
+                                },
+                                {
+                                    name:"Analytics",
+                                    icon: <FileChartColumn />,
+                                    link:'/analytics'
+                                },
                             ].map((item) => (
-                                <Link href={`${item.toLowerCase()}`} key={item} className="w-full" onClick={() => handleClick(item)}>
-                                    <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
-                                        {item} {(['Liquidity', 'Tokenized Stocks', 'Bridge', 'Leveraged Farming'].includes(item) ? '(Coming Late)' : '(Coming Soon)')}
+                                <Link href={`${item.link}`} key={item.name} className="w-full" onClick={() => handleClick(item.name)}>
+                                    <DropdownMenuItem className="focus:text-primary px-1 py-2 cursor-pointer justify-between [&>svg]:size-4">
+                                         {item.name} {item.icon}
                                     </DropdownMenuItem>
                                 </Link>
                             ))}
@@ -118,25 +132,24 @@ export default function NavBar(){
                             {[
                                 {
                                     name:"Docs",
+                                    icon: <BookOpenText />,
                                     link:'https://docs.olive.finance'
                                 },
                                 {
-                                    name:"Analytics",
-                                    link:'/analytics'
-                                },
-                                {
                                     name:"Feedback",
+                                    icon: <MessagesSquare />,
                                     link:'/feedback'
                                 }
                             ].map((item) => (
                                 <Link href={`${item.link}`} target={`${item.name === 'Docs' ? '_blank': ''}`} key={item.name} className="w-full" onClick={() => handleClick(item.name)}>
-                                    <DropdownMenuItem className="focus:text-primary px-4 py-2 cursor-pointer">
+                                    <DropdownMenuItem className="focus:text-primary px-1 py-2 cursor-pointer justify-between [&>svg]:size-4">
                                         {item.name}
+                                        <ExternalLink />
                                     </DropdownMenuItem>
                                 </Link>
                             ))}
                             <DropdownMenuSeparator />
-                            <div className="flex justify-start px-4 py-2 gap-3">
+                            <div className="flex px-1 py-2 gap-3">
                                 <a href='https://x.com/_olivefinance' target="_blank">
                                     <Image src={x} alt="x link"/>
                                 </a>

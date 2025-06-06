@@ -55,7 +55,7 @@ export default function CardTokenList({onSymbolChange, onIdxChange, active, type
                         <Image 
                             src={selectedToken.iconPath} 
                             alt={selectedToken.symbol}
-                            className="rounded-full mr-3" 
+                            className="rounded-full mr-3 w-7 h-7" 
                             width={28} 
                             height={28}
                         />
@@ -66,14 +66,16 @@ export default function CardTokenList({onSymbolChange, onIdxChange, active, type
                         <ChevronDown size={18} className="text-muted-foreground"/>
                     </Button>
                 ) : (
-                    <Button className="w-fit h-fit rounded-full bg-transparent flex p-0">
+                    <Button className="w-fit h-fit rounded-sm flex gap-1 p-1 bg-backgroundSecondary">
                         <Image 
                             src={payment.iconPath} 
                             alt={payment.symbol}
-                            className="rounded-full" 
-                            width={28} 
-                            height={28}
+                            className="rounded-full w-5 h-5" 
+                            width={24} 
+                            height={24}
                         />
+                        <span className="text-secondary-foreground text-base">{payment.symbol}</span>
+                        <ChevronDown className="text-secondary-foreground"/>
                     </Button>
                 )}
             </DialogTrigger>

@@ -13,6 +13,9 @@ import TokenList from "./TokenList";
 import MarketDetails from "./MarketDetails";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { HoverCard, HoverCardContent } from "./ui/hover-card";
+import { HoverCardTrigger } from "@radix-ui/react-hover-card";
+import { Progress } from "./ui/progress";
 
 
 type CryptoData = {
@@ -157,7 +160,7 @@ export default function TradingViewTopNav({
                     </div>
                 </DropdownMenuContent>
             </DropdownMenu>
-                <div className={`${type==='futures' ? 'hidden' : 'flex'}`}>
+                <div className={`${type==='futures' ? 'hidden' : 'hidden'}`}>
                     <div className="px-4 py-1">
                         <Separator orientation="vertical"/>
                     </div>
@@ -207,17 +210,45 @@ export default function TradingViewTopNav({
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>
-                <div className="flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Open Interest</span>
-                    <span className="text-foreground text-xs font-medium">$</span>
-                </div>
+                <HoverCard>
+                    <HoverCardTrigger asChild>
+                        <div className="flex flex-col flex-grow space-y-1.5 justify-start cursor-pointer"> 
+                            <span className="text-secondary-foreground font-normal text-[10px] h-3">SOL Utilization</span>
+                            <Progress value={66} className="h-1"/>
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent align="start" className="flex flex-col justify-center p-2">
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Call Open Interests</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Call Available Liquidity</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>
-                <div className="flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Available Liquidity</span>
-                    <span className="text-foreground text-xs font-medium">$</span>
-                </div>
+                <HoverCard>
+                    <HoverCardTrigger asChild>
+                        <div className="flex flex-col flex-grow space-y-1.5 justify-start cursor-pointer"> 
+                            <span className="text-secondary-foreground font-normal text-[10px] h-3">USDC Utilization</span>
+                            <Progress value={66} className="h-1"/>
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent align="start" className="flex flex-col justify-center p-2">
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Put Open Interests</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Put Available Liquidity</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>

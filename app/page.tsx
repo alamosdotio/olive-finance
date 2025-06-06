@@ -15,6 +15,7 @@ import OptionCardContainer from "@/components/OptionCardContainer";
 import { addWeeks } from "date-fns";
 import { useOptionsPricing } from "@/hooks/useOptionsPricing";
 import { setOptionParameters } from "@/lib/optionsDatafeed";
+import { ToastContainer } from "react-toastify";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
@@ -22,6 +23,7 @@ export default function Homepage(){
     const [selectedSymbol, setSelectedSymbol] = useState<string>('Crypto.SOL/USD')
     const [positionType, setPositionType] = useState<string>('long')
     const [contractType, setContractType] = useState<'Call' | 'Put'>('Call')
+    const [currency, setCurrency] = useState(selectedSymbol)
     const [selectedLogo, setSelectedLogo] = useState<string>('/images/solana.png')
     const { priceData, loading: priceLoading } = usePythPrice(selectedSymbol);
     const { marketData, loading: marketLoading } = usePythMarketData(selectedSymbol);
@@ -107,6 +109,7 @@ export default function Homepage(){
                       onExpiryChange={setExpiry}
                       onPayAmountChange={setPayAmount}
                       onContractTypeChange={setContractType}
+                      onCurrencyChange={setCurrency}
                       priceData={priceData}
                       marketData={marketData}
                       priceLoading={priceLoading}
@@ -115,6 +118,7 @@ export default function Homepage(){
                     <div className="w-full flex flex-col space-y-4">
                       <PriceQuote
                         active={tokenIdx}
+                        currency={currency}
                         value={payAmount}
                         priceData={priceData}
                         premium={premium.premium}
@@ -146,7 +150,9 @@ export default function Homepage(){
                 </Button>
               </div>
             </div>
-            
+            <ToastContainer
+              theme="dark"
+            />
         </>
     )
 }
