@@ -114,9 +114,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       const custodies = new Map<string, any>();
       const ratios = new Map<string, any>();
-      const poolData = await program.account.pool.fetch(pool);
+      const poolData = await program.account.Pool.fetch(pool);
       for await (let custody of poolData.custodies) {
-        let c = await program.account.custody.fetch(new PublicKey(custody));
+        let c = await program.account.Custody.fetch(new PublicKey(custody));
         let mint = c.mint;
         custodies.set(mint.toBase58(), c);
         ratios.set(
@@ -149,38 +149,38 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       [Buffer.from("user"), publicKey.toBuffer()],
       program.programId
     );
-    const userInfo = await program.account.user.fetch(userPDA).catch((e) => {
+    const userInfo = await program.account.User.fetch(userPDA).catch((e) => {
       return null;
     });
     if (!userInfo) return [[], [], []];
-    const optionIndex = userInfo.optionIndex.toNumber();
+    const optionIndex = userInfo.option_index.toNumber();
 
     if (optionIndex == 0) return [[], [], []];
     for (let i = 1; i <= optionIndex; i++) {
       try {
         const optionDetailAccount = getOptionDetailAccount(i, pool, custody);
         if (!optionDetailAccount) continue;
-        const detail = await program.account.optionDetail.fetch(
+        const detail = await program.account.OptionDetail.fetch(
           optionDetailAccount
         );
         if (!detail) continue;
         const pnl =
-          priceData.price && detail.strikePrice
-            ? priceData.price - detail.strikePrice
+          priceData.price && detail.strike_price
+            ? priceData.price - detail.strike_price
             : 0;
         if (
-          detail?.expiredDate.toNumber() > Math.round(Date.now() / 1000) &&
+          detail?.expired_date.toNumber() > Math.round(Date.now() / 1000) &&
           detail?.valid
         ) {
           pinfo.push({
             index: detail?.index.toNumber(),
-            token: detail?.lockedAsset.equals(custody) ? "SOL" : "USDC",
+            token: detail?.locked_asset.equals(custody) ? "SOL" : "USDC",
             logo: "/images/solana.png",
             symbol: "SOL",
-            strikePrice: detail?.strikePrice ?? 0,
-            type: detail?.lockedAsset.equals(custody) ? "Call" : "Put",
-            expiry: new Date(detail?.expiredDate.toNumber() * 1000).toString(),
-            size: detail?.lockedAsset.equals(custody)
+            strikePrice: detail?.strike_price ?? 0,
+            type: detail?.locked_asset.equals(custody) ? "Call" : "Put",
+            expiry: new Date(detail?.expired_date.toNumber() * 1000).toString(),
+            size: detail?.locked_asset.equals(custody)
               ? detail.amount.toNumber() / 10 ** WSOL_DECIMALS
               : detail.amount.toNumber() / 10 ** USDC_DECIMALS,
             pnl: pnl,
@@ -192,26 +192,26 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
             },
           });
         } else if (
-          detail?.expiredDate.toNumber() < Math.round(Date.now() / 1000) &&
+          detail?.expired_date.toNumber() < Math.round(Date.now() / 1000) &&
           detail?.valid
         ) {
           const expiryPrice = await getPythPrice(
             "Crypto.SOL/USD",
-            detail?.expiredDate.toNumber()
+            detail?.expired_date.toNumber()
           );
           expiredpinfo.push({
             index: detail?.index.toNumber() ?? 1,
-            token: detail?.lockedAsset.equals(custody) ? "SOL" : "USDC",
+            token: detail?.locked_asset.equals(custody) ? "SOL" : "USDC",
             iconPath: "/images/solana.png",
             symbol: "SOL",
-            strikePrice: detail?.strikePrice ?? 0,
+            strikePrice: detail?.strike_price ?? 0,
             qty: 100,
             expiryPrice: expiryPrice!,
-            transaction: detail?.lockedAsset.equals(custody) ? "Call" : "Put",
-            tokenAmount: detail?.lockedAsset.equals(custody)
+            transaction: detail?.locked_asset.equals(custody) ? "Call" : "Put",
+            tokenAmount: detail?.locked_asset.equals(custody)
               ? detail.amount.toNumber() / 10 ** WSOL_DECIMALS
               : detail.amount.toNumber() / 10 ** USDC_DECIMALS,
-            dollarAmount: detail?.lockedAsset.equals(custody)
+            dollarAmount: detail?.locked_asset.equals(custody)
               ? detail.profit * (expiryPrice ?? 1)
               : detail.profit,
           });
@@ -219,15 +219,15 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
           doneInfo.push({
             transactionID: `SOL-${formatDate(
               new Date(detail.exercised * 1000)
-            )}-${detail.strikePrice}-${
-              detail?.lockedAsset.equals(custody) ? "C" : "P"
+            )}-${detail.strike_price}-${
+              detail?.locked_asset.equals(custody) ? "C" : "P"
             }`,
             token: coins[0],
-            transactionType: detail?.lockedAsset.equals(custody)
+            transactionType: detail?.locked_asset.equals(custody)
               ? "Call"
               : "Put",
             optionType: "American",
-            strikePrice: detail.strikePrice,
+            strikePrice: detail.strike_price,
             expiry: format(new Date(detail.exercised), "dd MMM, yyyy HH:mm:ss"),
           });
         }
@@ -263,8 +263,8 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     let optionIndex;
     try {
-      const userInfo = await program.account.user.fetch(userPDA);
-      optionIndex = userInfo.optionIndex.toNumber() + 1;
+      const userInfo = await program.account.User.fetch(userPDA);
+      optionIndex = userInfo.option_index.toNumber() + 1;
     } catch {
       optionIndex = 1;
     }
@@ -290,10 +290,10 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       program.programId
     );
 
-    const paycustodyData = await program.account.custody.fetch(paycustody);
+    const paycustodyData = await program.account.Custody.fetch(paycustody);
 
     const transaction = await program.methods
-      .openOption({
+      .open_option({
         amount: new BN(amount),
         strike: strike,
         period: new BN(period),
@@ -302,18 +302,18 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       })
       .accountsPartial({
         owner: publicKey,
-        fundingAccount: fundingAccount,
-        custodyMint: WSOL_MINT,
-        payCustodyMint: paySol ? WSOL_MINT : USDC_MINT,
-        custodyOracleAccount: new PublicKey(
+        funding_account: fundingAccount,
+        custody_mint: WSOL_MINT,
+        pay_custody_mint: paySol ? WSOL_MINT : USDC_MINT,
+        custody_oracle_account: new PublicKey(
           "J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix"
         ),
-        payCustodyOracleAccount: paySol
+        pay_custody_oracle_account: paySol
           ? new PublicKey("J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix")
           : new PublicKey("5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy7"),
-        lockedCustodyMint: isCall ? WSOL_MINT : USDC_MINT,
-        optionDetail: optionDetailAccount,
-        payCustodyTokenAccount: paycustodyData.tokenAccount,
+        locked_custody_mint: isCall ? WSOL_MINT : USDC_MINT,
+        option_detail: optionDetailAccount,
+        pay_custody_token_account: paycustodyData.token_account,
       })
       .transaction();
     const latestBlockHash = await connection.getLatestBlockhash();
@@ -382,28 +382,28 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         custody
       );
       if (!optionDetailAccount) return;
-      const optionDetailAccountData = await program.account.optionDetail.fetch(
+      const optionDetailAccountData = await program.account.OptionDetail.fetch(
         optionDetailAccount
       );
 
       const fundingAccount = getAssociatedTokenAddressSync(
-        optionDetailAccountData.premiumAsset.equals(custody)
+        optionDetailAccountData.premium_asset.equals(custody)
           ? WSOL_MINT
           : USDC_MINT,
         wallet.publicKey
       );
 
       const transaction = await program.methods
-        .closeOption({ optionIndex: new BN(optionIndex), poolName: "SOL-USDC" })
+        .close_option({ optionIndex: new BN(optionIndex), poolName: "SOL-USDC" })
         .accountsPartial({
           owner: publicKey,
-          fundingAccount,
-          custodyMint: WSOL_MINT,
-          payCustodyMint: WSOL_MINT,
-          payCustodyTokenAccount: payCustodyTokenAccount,
-          optionDetail: optionDetail,
-          lockedCustody: lockedCustody,
-          payCustody: payCustody,
+          funding_account: fundingAccount,
+          custody_mint: WSOL_MINT,
+          pay_custody_mint: WSOL_MINT,
+          pay_custody_token_account: payCustodyTokenAccount,
+          option_detail: optionDetail,
+          locked_custody: lockedCustody,
+          pay_custody: payCustody,
         })
         .transaction();
 
@@ -446,10 +446,10 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       if (!optionDetailAccount) return;
       const transaction = await program.methods
-        .claimOption(new BN(optionIndex), solPrice)
+        .claim_option(new BN(optionIndex), solPrice)
         .accountsPartial({
           owner: publicKey,
-          custodyMint: WSOL_MINT,
+          custody_mint: WSOL_MINT,
         })
         .transaction();
       const latestBlockHash = await connection.getLatestBlockhash();
@@ -487,7 +487,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     if (!optionDetailAccount) return;
     const transaction = await program.methods
-      .exerciseOption(new BN(optionIndex))
+      .exercise_option(new BN(optionIndex))
       .accountsPartial({
         owner: publicKey,
       })
@@ -522,8 +522,8 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         [Buffer.from("custody"), pool.toBuffer(), asset.toBuffer()],
         program.programId
       );
-      const poolData = await program.account.pool.fetch(pool);
-      const custodyData = await program.account.custody.fetch(custody);
+      const poolData = await program.account.Pool.fetch(pool);
+      const custodyData = await program.account.Custody.fetch(custody);
       const fundingAccount = getAssociatedTokenAddressSync(
         asset,
         wallet.publicKey
@@ -531,7 +531,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       let custodies = [];
       let oracles = [];
       for await (let custody of poolData.custodies) {
-        let c = await program.account.custody.fetch(new PublicKey(custody));
+        let c = await program.account.Custody.fetch(new PublicKey(custody));
         let ora = c.oracle;
         custodies.push({ pubkey: custody, isSigner: false, isWritable: true });
         oracles.push({ pubkey: ora, isSigner: false, isWritable: true });
@@ -540,16 +540,16 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const remainingAccounts = custodies.concat(oracles);
 
       const transaction = await program.methods
-        .addLiquidity({
+        .add_liquidity({
           amountIn: new BN(amount),
           minLpAmountOut: new BN(1),
           poolName: "SOL-USDC",
         })
         .accountsPartial({
           owner: publicKey,
-          fundingAccount: fundingAccount,
-          custodyMint: asset,
-          custodyOracleAccount: custodyData.oracle,
+          funding_account: fundingAccount,
+          custody_mint: asset,
+          custody_oracle_account: custodyData.oracle,
         })
         .remainingAccounts(remainingAccounts)
         .transaction();
@@ -587,9 +587,9 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         [Buffer.from("custody"), pool.toBuffer(), asset.toBuffer()],
         program.programId
       );
-      const poolData = await program.account.pool.fetch(pool);
+      const poolData = await program.account.Pool.fetch(pool);
 
-      const custodyData = await program.account.custody.fetch(custody);
+      const custodyData = await program.account.Custody.fetch(custody);
       const receivingAccount = getAssociatedTokenAddressSync(
         asset,
         wallet.publicKey
@@ -597,7 +597,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       let custodies = [];
       let oracles = [];
       for await (let custody of poolData.custodies) {
-        let c = await program.account.custody.fetch(new PublicKey(custody));
+        let c = await program.account.Custody.fetch(new PublicKey(custody));
         let ora = c.oracle;
         custodies.push({ pubkey: custody, isSigner: false, isWritable: true });
         oracles.push({ pubkey: ora, isSigner: false, isWritable: true });
@@ -637,24 +637,24 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       const remainingAccounts = custodies.concat(oracles);
 
       const transaction = await program.methods
-        .removeLiquidity({
+        .remove_liquidity({
           lpAmountIn: new BN(amount),
           minAmountOut: new BN(0),
           poolName: "SOL-USDC",
         })
         .accountsPartial({
           owner: publicKey,
-          receivingAccount: receivingAccount,
-          transferAuthority: transferAuthority,
+          receiving_account: receivingAccount,
+          transfer_authority: transferAuthority,
           contract: contract,
           pool: poolPDA,
           custody: CustodyPDA,
-          custodyOracleAccount: WSOL_ORACLE,
-          custodyTokenAccount: custodyTokenAccount,
-          lpTokenMint: lpTokenMint,
-          lpTokenAccount: lpTokenAccount,
-          custodyMint: asset,
-          tokenProgram: TOKEN_PROGRAM_ID,
+          custody_oracle_account: WSOL_ORACLE,
+          custody_token_account: custodyTokenAccount,
+          lp_token_mint: lpTokenMint,
+          lp_token_account: lpTokenAccount,
+          custody_mint: asset,
+          token_program: TOKEN_PROGRAM_ID,
         })
         .remainingAccounts(remainingAccounts)
         .transaction();
