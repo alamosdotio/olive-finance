@@ -44,6 +44,8 @@ import { ChartStrategy } from "./ChartStrategy";
 import { PublicKey } from "@solana/web3.js";
 import CardTokenList from "./CardTokenList";
 import PoolDropdown from "./PoolDropDown";
+import { ExternalLink } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface EarnSidebarProps {
   name: string;
@@ -123,6 +125,7 @@ export default function EarnSidebar({
   const wallet = useAnchorWallet();
   const [program, setProgram] = useState<Program<OptionContract>>();
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
@@ -212,7 +215,7 @@ export default function EarnSidebar({
       </SheetHeader>
       <div className="space-y-5  flex flex-col w-full">
         <div className="grid grid-cols-1 sm:grid-cols-5 items-center sm:space-x-3 space-y-3 sm:space-y-0">
-          <div className="border rounded-sm p-3 sm:col-span-2 h-[167px]">
+          <div className="border rounded-sm p-3 sm:col-span-2 h-full">
             <div className="flex flex-col justify-between">
               <div className="flex space-x-1 text-sm font-medium ">
                 <div className="flex gap-2 items-center">
@@ -271,14 +274,23 @@ export default function EarnSidebar({
                 <span className="whitespace-nowrap">{name} Pool</span>
               </div>
               <div className="w-full flex">
-                <p className="text-xs tracking-tight text-justify">
+                <p className="text-sm tracking-tight text-justify">
                   The {name} Liquidity Pool ({symbol}-LP) is a liquidity pool
                   that sells covered calls and cash secured puts.
                 </p>
               </div>
             </div>
           </div>
-          <div className="sm:col-span-3 w-full h-[167px]">
+          <div className="sm:col-span-3 h-fit border rounded-sm p-2">
+            <div className="w-full flex justify-center items-center space-x-2">
+              <span className="text-sm">Liquidity Pool Price Chart</span>
+              <button 
+                className="hover:text-primary"
+                onClick={() => router.push('/analytics/pool-metrics')}
+              >
+                <ExternalLink size={14}/>
+              </button>
+            </div>
             <ChartStrategy />
           </div>
         </div>
@@ -426,32 +438,40 @@ export default function EarnSidebar({
             <div className="flex justify-between items-start gap-2">
               <div className="w-full flex flex-col space-y-2">
                 {activeTab === 'mint' ? (
-                  <div className="flex flex-col space-y-1 w-full">
-                    <span className="text-sm text-secondary-foreground font-medium">Pay</span>
-                    <div className="relative w-full">
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
-                      <PoolDropdown
-                          isOpen={isOpen} 
-                          handleClickToken={handleClickToken}
-                          handleOpenChange={handleOpenChange}
-                          poolDatas={poolDatas}
-                          selectedToken={selectedToken}
-                          logo={logo}
+                  <div className="grid grid-cols-12 gap-2">
+                    <div className="col-span-8 flex flex-col space-y-1">
+                      <span className="text-sm text-secondary-foreground font-medium">Pay</span>
+                      <div className="relative w-full">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+                        <PoolDropdown
+                            isOpen={isOpen} 
+                            handleClickToken={handleClickToken}
+                            handleOpenChange={handleOpenChange}
+                            poolDatas={poolDatas}
+                            selectedToken={selectedToken}
+                            logo={logo}
+                          />
+                        </div>
+                        <Input
+                          type="number"
+                          onChange={(e) => handleTokenAmount(e.target.value)}
+                          placeholder={'0.00'}
+                          className="pl-12 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
+                          step="0.1"
+                          min="0.1"
                         />
                       </div>
-                      <Input
-                        type="number"
-                        onChange={(e) => handleTokenAmount(e.target.value)}
-                        placeholder={'0.00'}
-                        className="pl-12 py-2 rounded-sm h-auto w-full bg-secondary border-none shadow-none"
-                        step="0.1"
-                        min="0.1"
-                      />
                     </div>
+                    <Button
+                      className="h-fit rounded-sm px-4 py-[10px] col-span-4 mt-6 text-black bg-primary hover:bg-gradient-primary"
+                      onClick={onSubmit}
+                    >
+                      {activeTab === "mint" ? "Buy" : "Sell"}
+                    </Button>
                   </div>
                 ) : (
-                  <div className="flex space-x-2">
-                    <div className="flex flex-col space-y-1 w-full">
+                  <div className="gap-2 grid gird-cols-12">
+                    <div className="flex flex-col space-y-1 col-span-12 w-full">
                       <span className="text-sm text-secondary-foreground font-medium">Pay</span>
                       <div className="relative">
                         <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
@@ -467,7 +487,7 @@ export default function EarnSidebar({
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col space-y-1 w-full">
+                    <div className="flex flex-col space-y-1 col-span-8">
                       <span className="text-sm text-secondary-foreground font-medium">Sell Into</span>
                       <div className="relative">
                         <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
@@ -489,6 +509,12 @@ export default function EarnSidebar({
                         />
                       </div>
                     </div>
+                    <Button
+                      className="h-fit rounded-sm px-4 py-[10px] col-span-4 mt-6 text-black bg-primary hover:bg-gradient-primary"
+                      onClick={onSubmit}
+                    >
+                      {activeTab === "mint" ? "Buy" : "Sell"}
+                    </Button>
                   </div>
                 )}
                 {tokenAmount > 0 && (  
@@ -537,12 +563,6 @@ export default function EarnSidebar({
                   </div>
                 )}
               </div>
-              <Button
-                className="h-fit rounded-sm px-4 py-[10px] mt-6 w-2/6 text-black bg-primary hover:bg-gradient-primary"
-                onClick={onSubmit}
-              >
-                {activeTab === "mint" ? "Buy" : "Sell"}
-              </Button>
             </div>
             
         </div>

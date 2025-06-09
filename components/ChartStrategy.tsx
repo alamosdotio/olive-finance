@@ -91,13 +91,13 @@ export function ChartStrategy() {
     },
   };
 
-  const labels = ['$0', '$20', '$40', '$60', '$80', '$100'];
+  const labels = ['Jan \'25', 'Feb \'25', 'Mar \'25', 'Apr \'25', 'May \'25', 'Jun \'25'];
   const data = {
     labels,
     datasets: [
       {
         fill: true,
-        data: [80, 90, 100, 110, 120, 130],
+        data: [100, 80, 140, 75, 130, 120],
         borderColor: '#B1A3FB',
         backgroundColor: 'rgba(177, 163, 251, 0.4)',
         tension: 0.4,
@@ -108,7 +108,7 @@ export function ChartStrategy() {
   };
 
   return (
-    <div className="w-full h-[167px] p-2 border border-[#2B2C30] rounded-sm">
+    <div className="w-full h-fit">
       <Line options={options} data={data} />
     </div>
   );

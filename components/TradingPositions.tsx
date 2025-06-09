@@ -86,7 +86,7 @@ export default function TradingPositions() {
               className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
               onClick={() => handleClickTab("History")}
             >
-              Order History
+              History
             </TabsTrigger>
           </TabsList>
         </Tabs>

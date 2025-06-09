@@ -32,7 +32,7 @@ export default function TradingPositionsFallback() {
                             value="History"
                             className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
                         >
-                            Order History
+                            History
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
