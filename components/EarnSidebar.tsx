@@ -382,6 +382,9 @@ export default function EarnSidebar({
                         {row.target_weightage}
                       </TableCell>
                       <TableCell className="text-xs text-foreground text-center">
+                        XXX %
+                      </TableCell>
+                      <TableCell className="text-xs text-foreground text-center">
                         {row.utilization}
                       </TableCell>
                     </TableRow>

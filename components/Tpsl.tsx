@@ -20,7 +20,7 @@ export default function Tpsl (){
     return (
        <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger>
-                <CirclePlus size={16} className={`hover:text-primary ${isOpen ? 'text-primary' : 'text-secondary-foreground'}`}/>
+                <CirclePlus size={13} className={`hover:text-primary ${isOpen ? 'text-primary' : 'text-foreground'}`}/>
             </PopoverTrigger>
             <PopoverContent align="end" className="flex flex-col space-y-2">
                 <div className="w-full flex justify-between">

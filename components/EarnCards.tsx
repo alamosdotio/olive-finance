@@ -50,61 +50,63 @@ export default function EarnCards (){
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4">
             {currentCards.map((strategy, index) => (
                 <Sheet key={index}>
-                    <SheetTrigger className="relative group cursor-pointer">
-                        <div
-                            className="absolute inset-2 blur opacity-25 group-hover:bg-gradient-primary group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+                    <SheetTrigger asChild>
+                        <div className="relative group cursor-pointer">
+                            <div
+                                className="absolute inset-2 blur opacity-25 group-hover:bg-gradient-primary group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+                            </div>
+                            <Card className="w-full hover:border-primary/45 rounded-sm relative">
+                                <CardHeader className="p-5 border-b">
+                                    <div className="flex justify-start space-x-2 items-center">
+                                        <EarnCardlogo strategy={strategy}/>
+                                        <span className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">{strategy.symbol} Liquidity Pool</span>
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="p-5">
+                                    <div className="w-full flex flex-col space-y-4">
+                                        <div className="flex flex-col space-y-2">
+                                            <span className="flex items-center gap-2 text-sm text-secondary-foreground font-medium">
+                                                <TvlIcon />
+                                                TVL:
+                                            </span>
+                                            <span className="flex items-center gap-2 text-base">
+                                                {formatCurrency(strategy.stats.tvl)}
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger>
+                                                            <TooltipIcon />
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+                                            </span>
+                                            <Progress value={33} className="h-1"/>
+                                        </div>
+                                        <div className="flex flex-col space-y-2">
+                                            <span className="flex items-center gap-2 text-sm text-secondary-foreground font-medium">
+                                                <ApyIcon />
+                                                APY:
+                                            </span>
+                                            <span className="flex items-center gap-2 font-normal text-sm">
+                                                {strategy.stats.apy}% 
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger>
+                                                            <TooltipIcon />
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
                         </div>
-                        <Card className="w-full hover:border-primary/45 rounded-sm relative">
-                            <CardHeader className="p-5 border-b">
-                                <div className="flex justify-start space-x-2 items-center">
-                                    <EarnCardlogo strategy={strategy}/>
-                                    <span className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">{strategy.symbol} Liquidity Pool</span>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="p-5">
-                                <div className="w-full flex flex-col space-y-4">
-                                    <div className="flex flex-col space-y-2">
-                                        <span className="flex items-center gap-2 text-sm text-secondary-foreground font-medium">
-                                            <TvlIcon />
-                                            TVL:
-                                        </span>
-                                        <span className="flex items-center gap-2 text-base">
-                                            {formatCurrency(strategy.stats.tvl)}
-                                            <TooltipProvider>
-                                                <Tooltip>
-                                                    <TooltipTrigger>
-                                                        <TooltipIcon />
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>
-
-                                                    </TooltipContent>
-                                                </Tooltip>
-                                            </TooltipProvider>
-                                        </span>
-                                        <Progress value={33} className="h-1"/>
-                                    </div>
-                                    <div className="flex flex-col space-y-2">
-                                        <span className="flex items-center gap-2 text-sm text-secondary-foreground font-medium">
-                                            <ApyIcon />
-                                            APY:
-                                        </span>
-                                        <span className="flex items-center gap-2 font-normal text-sm">
-                                            {strategy.stats.apy}% 
-                                            <TooltipProvider>
-                                                <Tooltip>
-                                                    <TooltipTrigger>
-                                                        <TooltipIcon />
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>
-
-                                                    </TooltipContent>
-                                                </Tooltip>
-                                            </TooltipProvider>
-                                        </span>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
                     </SheetTrigger>
                     <EarnSidebar name={strategy.name} symbol={strategy.symbol} logo={strategy.asset.logo} apy={strategy.stats.apy} apr={strategy.stats.apr}/>
                 </Sheet>
