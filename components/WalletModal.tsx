@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { ChevronDown, ChevronUp, XIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
@@ -28,6 +28,7 @@ export const allWallets: Wallet[] = [
 export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
   const { select, wallets } = useWallet();
   const [isMoreWalletOpen, setIsMoreWalletOpen] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
   const installedWallets = wallets.filter(
     (wallet) => wallet.readyState === "Installed"
   );
@@ -42,16 +43,39 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
     installedWallets.length > 0
       ? allWallets.filter((item) => !filterSet.has(item.name))
       : allWallets.slice(1);
-  const handleWalletConnect = (walletName: string, iconPath: string) => {
-    select(
-      wallets.filter((value) => value.adapter.name === walletName)[0].adapter
-        .name
-    );
-    onClose();
-    toast.success(`${walletName} Wallet Connected`, {
-      position: 'bottom-right'
-    });
+  const handleWalletConnect = async (walletName: string, iconPath: string) => {
+    if (isConnecting) return;
+
+    setIsConnecting(true);
+    try {
+      const wallet = wallets.find((value) => value.adapter.name === walletName);
+
+      if (!wallet) {
+        toast.error(`Wallet "${walletName}" not found`, {
+          position: 'bottom-right',
+        });
+        return;
+      }
+
+      select(wallet.adapter.name);
+      await wallet.adapter.connect();
+
+      toast.success(`${walletName} Wallet Connected`, {
+        position: 'bottom-right',
+      });
+
+      onClose();
+    } catch (error: any) {
+      console.error('Wallet connection error:', error);
+      toast.error(`Failed to connect: ${error?.message || 'Unknown error'}`, {
+        position: 'bottom-right',
+      });
+    } finally {
+      setIsConnecting(false);
+    }
   };
+
+
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

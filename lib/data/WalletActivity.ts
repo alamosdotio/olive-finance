@@ -118,7 +118,7 @@ export const futurePos : FuturePos[] = tokenList.map((token) => {
     const daysAgo = Math.floor(Math.random() * 30);
     const purchaseDate = new Date();
     purchaseDate.setDate(purchaseDate.getDate() - daysAgo);
-    const formattedPurchase = format(new Date(purchaseDate), 'dd MMM, yyyy HH:mm:ss')
+    const formattedPurchase = format(new Date(purchaseDate), 'dd MMM, yyyy')
 
     return {
         token: token,

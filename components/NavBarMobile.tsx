@@ -1,4 +1,4 @@
-import { ChevronDown, MenuIcon, XIcon } from "lucide-react";
+import { BookOpenText, ChevronDown, FileChartColumn, MenuIcon, MessagesSquare, TableColumnsSplit, XIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import Image from "next/image";
 import { Button, buttonVariants } from "./ui/button";
@@ -12,6 +12,9 @@ import SettingsMobile from "./SettingsMobile";
 import WalletSideBar from "./WalletSidebar";
 import WalletModal from "./WalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
+import x from '@/public/svgs/x.svg';
+import discord from '@/public/svgs/discord.svg'
+import telegram from '@/public/svgs/telegram.svg'
 
 export default function NavBarMobile(){
     const [isOpen, setIsOpen] = useState(false)
@@ -40,7 +43,7 @@ export default function NavBarMobile(){
                             <Image src='/images/logo-dark.png' alt="logo" width={65} height={21} />
                         </div>
                         <Button 
-                            className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-[12px]"
+                            className="bg-secondary p-[9px] shadow-none [&_svg]:size-[18px] rounded-sm"
                             onClick={() => setIsOpen(false)}
                         >
                             <XIcon size={18} className="text-secondary-foreground"/>
@@ -48,7 +51,7 @@ export default function NavBarMobile(){
                     </div>
                     <div className="flex flex-col w-full px-3 space-y-3">
                         <Button 
-                            className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 md:hidden lg:flex rounded-[12px]")}
+                            className={cn(buttonVariants({variant: active === 'Options' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 md:hidden lg:flex rounded-sm")}
                             onClick={() => {handleClick('Options'); router.push('/'); setIsOpen(false)}}
                         >
                             <OptionsIcon />
@@ -56,7 +59,7 @@ export default function NavBarMobile(){
                             <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                         </Button>
                         <Button 
-                            className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 md:hidden lg:flex rounded-[12px]")}
+                            className={cn(buttonVariants({variant: active === 'Futures' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 md:hidden lg:flex rounded-sm")}
                             onClick={() => {handleClick('Futures'); router.push('/futures'); setIsOpen(false)}}
                         >
                             <OptionsIcon />
@@ -64,16 +67,16 @@ export default function NavBarMobile(){
                             <Badge className={cn((active === 'Options' ? 'border-primary text-gradient-primary' : 'border-secondary-foreground text-secondary-foreground'),"border text-[8px] px-1 py-[3px] rounded-[3px] h-4 bg-transparent text-center flex group-hover:border-primary group-hover:text-primary")}>BETA</Badge>
                         </Button>
                         <Button
-                            className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 flex rounded-[12px]")}
+                            className={cn(buttonVariants({variant: active === 'Earn' ? 'active' : 'inactive'}),"bg-accent justify-start px-5 py-3 flex rounded-sm")}
                             onClick={() => {handleClick('Earn'); router.push('/earn'); setIsOpen(false)}}
                         >
                             <EarnIcon />
                             <h1 className="text-sm font-medium">Earn</h1>
-                            <Badge className="rounded-[4px] bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
+                            <Badge className="rounded-sm bg-gradient-primary px-1 py-[3px] text-background h-4 text-[8px] border-none">48% APY</Badge>
                         </Button>
-                        <div className="w-full bg-accent rounded-[12px] p-0">
+                        <div className="w-full bg-accent rounded-sm p-0">
                             <Button 
-                                className="w-full bg-accent px-5 py-3 flex justify-between text-secondary-foreground rounded-[12px] shadow-none"
+                                className="w-full bg-accent px-5 py-3 flex justify-between text-secondary-foreground rounded-sm shadow-none"
                                 onClick={() => setIsDropped(!isDropped)}
                             >
                                 <div className="flex space-x-2 items-center">
@@ -83,16 +86,68 @@ export default function NavBarMobile(){
                                 <ChevronDown size={12}/>
                             </Button>
                             {isDropped && (
-                                <div className="w-full px-5 py-3 pt-0 text-sm text-secondary-foreground flex flex-col">
-                                    <Separator className="mb-3"/>
-                                    <span>Menu Item</span>
-                                    <Separator className="my-3"/>
-                                    <span>Menu Item</span>
-                                    <Separator className="my-3"/>
-                                    <span>Menu Item</span>
-                                    <Separator className="my-3"/>
-                                    <span>Menu Item</span>
-                                </div>
+                                <>
+                                    {[
+                                        {
+                                            name:"Options Chain",
+                                            icon: <TableColumnsSplit />,
+                                            link:'/options-chain'
+                                        },
+                                        {
+                                            name:"Analytics",
+                                            icon: <FileChartColumn />,
+                                            link:'/analytics'
+                                        },
+                                        {
+                                            name:"Docs",
+                                            icon: <BookOpenText />,
+                                            link:'https://docs.olive.finance'
+                                        },
+                                        {
+                                            name:"Feedback",
+                                            icon: <MessagesSquare />,
+                                            link:'/feedback'
+                                        },
+                                        {
+                                            name:"Medium",
+                                            icon: <TableColumnsSplit />,
+                                            link:'https://medium.com'
+                                        },
+                                        {
+                                            name:"X",
+                                            icon: <Image src={x} alt="x link"/>,
+                                            link:'https://x.com/_olivefinance'
+                                        },
+                                        {
+                                            name:"Telegram",
+                                            icon: <Image src={telegram} alt="telegram link"/>,
+                                            link:'https://t.me/olive_financee'
+                                        },
+                                        {
+                                            name:"Discord",
+                                            icon: <Image src={discord} alt="discord link" />,
+                                            link:'https://discord.gg/u6pq5yNj'
+                                        },
+                                    ].map((item, idx) => (
+                                        <div 
+                                            className="w-full px-5 py-3 pt-0 text-sm text-secondary-foreground flex flex-col"
+                                            key={idx}
+                                        >
+                                            <Separator className="mb-3"/>
+                                            <Button 
+                                                variant={'ghost'} className="p-0 justify-start w-fit h-fit gap-2"
+                                                onClick={() => {
+                                                    router.push(item.link)
+                                                    setIsOpen(false)
+                                                }}    
+                                            >
+                                                {item.icon}
+                                                <span>{item.name}</span>
+                                            </Button>
+                                            
+                                        </div>
+                                    ))}
+                                </>
                             )}
                         </div>
                     <SettingsMobile />
@@ -102,7 +157,7 @@ export default function NavBarMobile(){
                     {connected ? (
                         <WalletSideBar></WalletSideBar>
                     ) : (
-                        <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-[12px] gap-2 text-background">
+                        <Button onClick={() => setIsWalletModalOpen(true)} className="w-full h-fit border border-transparent py-[7px] px-4 rounded-sm gap-2 text-background">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M6.88152 17.7048C7.42067 17.1657 7.7304 16.4774 7.8107 15.7662C7.91967 14.8199 7.60421 13.8391 6.88152 13.1165C6.45135 12.6863 5.92367 12.3995 5.36731 12.2676C4.30622 11.998 3.13041 12.2791 2.293 13.1165C1.7137 13.6957 1.39824 14.4356 1.35809 15.1984C1.32941 15.5254 1.35809 15.8637 1.44413 16.1907C1.57605 16.747 1.86283 17.2747 2.293 17.7048C3.56058 18.9724 5.61394 18.9724 6.88152 17.7048ZM5.80322 14.8142C6.13589 14.8142 6.4112 15.0895 6.4112 15.4221C6.40546 15.7605 6.13589 16.0301 5.79748 16.0358L5.19524 16.0301L5.20098 16.6094C5.19524 16.9478 4.92567 17.2173 4.58726 17.2231C4.24886 17.2173 3.97928 16.9478 3.97355 16.6094L3.97928 16.0301L3.37704 16.0358C3.03864 16.0301 2.76906 15.7605 2.76333 15.4221C2.76906 15.2558 2.83789 15.1067 2.94687 14.9977C3.05584 14.8887 3.20497 14.8199 3.3713 14.8142L3.97928 14.8142L3.97928 14.1833C3.97928 14.0112 4.04811 13.8621 4.15709 13.7531C4.26607 13.6441 4.41519 13.5753 4.58726 13.5753C4.91993 13.5753 5.19524 13.8506 5.19524 14.1833L5.19524 14.8142L5.80322 14.8142Z" fill="currentColor"/>
                                 <path d="M12.5782 3.20568V6.28793H11.3615V3.20568C11.3615 2.98668 11.1668 2.88123 11.037 2.88123C10.9964 2.88123 10.9559 2.88934 10.9153 2.90556L4.48296 5.33081C4.05305 5.49303 3.77726 5.89859 3.77726 6.36093V6.90438C3.03912 7.45594 2.56055 8.34006 2.56055 9.33774V6.36093C2.56055 5.3957 3.15268 4.53591 4.05305 4.19524L10.4935 1.76189C10.672 1.697 10.8585 1.66455 11.037 1.66455C11.8481 1.66455 12.5782 2.32156 12.5782 3.20568Z" fill="currentColor"/>

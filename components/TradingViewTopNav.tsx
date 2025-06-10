@@ -226,6 +226,14 @@ export default function TradingViewTopNav({
                             <span>Call Available Liquidity</span>
                             <span className="text-foreground">XXX</span>
                         </div>
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Call Intereset Rate</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Call Volatility</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
                     </HoverCardContent>
                 </HoverCard>
                 <div className="px-4 py-1">
@@ -245,6 +253,14 @@ export default function TradingViewTopNav({
                         </div>
                         <div className="flex justify-between text-secondary-foreground font-normal text-xs">
                             <span>Put Available Liquidity</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Put Intereset Rate</span>
+                            <span className="text-foreground">XXX</span>
+                        </div>
+                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                            <span>Put Volatility</span>
                             <span className="text-foreground">XXX</span>
                         </div>
                     </HoverCardContent>

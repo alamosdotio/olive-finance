@@ -11,7 +11,7 @@ import WalletActivity from "./WalletActivity";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { allWallets } from "./WalletModal";
 import { XIcon } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function WalletSideBar() {
   const { wallet, publicKey, disconnect, connected } = useWallet();
@@ -25,6 +25,9 @@ export default function WalletSideBar() {
     if (publicKey) {
       navigator.clipboard.writeText(publicKey.toBase58());
     }
+    toast.success('Address Copied', {
+      position: 'bottom-right'
+    })
   };
   const handleClickTab = (state: string) => {
     if (activeTab !== state) {
@@ -129,6 +132,9 @@ export default function WalletSideBar() {
           </Tabs>
           {activeTab === "portfolio" ? <WalletPortfolio /> : <WalletActivity />}
         </div>
+        <ToastContainer 
+          theme="dark"
+        />
       </SheetContent>
     </Sheet>
   );

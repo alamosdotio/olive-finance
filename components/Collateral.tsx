@@ -17,7 +17,7 @@ export default function Collateral(){
     return (
         <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger>
-                <SquarePen size={16} className={`hover:text-primary ${isOpen ? 'text-primary' : 'text-secondary-foreground'}`}/>
+                <SquarePen size={13} className={`hover:text-primary ${isOpen ? 'text-primary' : 'text-foreground'}`}/>
             </PopoverTrigger>
             <PopoverContent align="end">
                 <Tabs defaultValue="deposit">

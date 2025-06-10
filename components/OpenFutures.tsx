@@ -51,6 +51,7 @@ export default function OpenFutures({
                     <Badge className={`${position === 'long' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'} text-xs font-semibold py-[1px] px-1 w-fit h-fit rounded-[3px] flex items-center justify-center`}>
                         {leverage}x {position.charAt(0).toUpperCase() + position.slice(1).toLowerCase()}
                     </Badge>
+                    <span className="text-xs text-secondary-foreground font-medium">{type === 'dated' ? purchaseDate : 'PERPS'}</span>
                 </div>
                 <div>
                     
@@ -70,21 +71,30 @@ export default function OpenFutures({
                 <div className="w-full px-4 pt-2 pb-4 space-y-4 border-t-2 border-backgroundSecondary">
                     <Table>
                         <TableHeader>
-                            <TableRow className="w-full grid grid-cols-9 whitespace-nowrap h-7">
+                            <TableRow className="w-full grid grid-cols-10 gap-10 whitespace-nowrap h-7">
                                 <TableHead className="">Entry Price</TableHead>
                                 <TableHead className="">Mark Price</TableHead>
                                 <TableHead className="">Size</TableHead>
                                 <TableHead className="">Value</TableHead>
                                 <TableHead className="">Liq. Price</TableHead>
                                 <TableHead className="">Levarage</TableHead>
-                                <TableHead className="col-span-1">Collateral</TableHead>
-                                <TableHead className="">TP/SL</TableHead>
+                                <TableHead className="text-center">
+                                    <div className="flex items-center gap-1">
+                                        Collateral <Collateral />
+                                    </div>
+                                </TableHead>
+                                <TableHead className="">
+                                    <div className="flex items-center gap-1">
+                                        TP/SL <Tpsl />
+                                    </div>
+                                    
+                                </TableHead>
                                 <TableHead className="">PNL</TableHead>
                                 <TableHead className=""></TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow className="w-full grid grid-cols-9">
+                            <TableRow className="w-full grid grid-cols-10 gap-10">
                                 <TableCell className="flex space-x-2 items-center">{entry}</TableCell>
                                 <TableCell className="flex space-x-2 items-center">$107.32</TableCell>
                                 <TableCell className="flex space-x-2 items-center">{size}</TableCell>
@@ -95,13 +105,13 @@ export default function OpenFutures({
                                     <span>
                                         ${collateral} 
                                     </span>
-                                    <Collateral />
+                                    
                                 </TableCell>
                                 <TableCell className="flex space-x-1 items-center">
                                     <span>
                                         ${tpsl} 
                                     </span>
-                                    <Tpsl />
+                                    
                                 </TableCell>
                                 <TableCell className="flex space-x-2 items-center">$107.32</TableCell>
                                 <TableCell className="flex space-x-2 items-center">

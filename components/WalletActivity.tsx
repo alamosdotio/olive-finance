@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Separator } from "./ui/separator"
+import { ScrollArea } from "./ui/scroll-area"
 
 export default function WalletActivity(){
     const [generateTx, setGenerateTx] = useState<Transaction[]>([])
@@ -15,7 +16,7 @@ export default function WalletActivity(){
     const allTx = generateTx.slice(0,10)
     return (
         <div className="flex flex-col h-[calc(100vh-280px)]">
-            <div className="flex-grow overflow-y-auto">
+            <ScrollArea className="flex-grow pr-3">
                 <div className="w-full flex flex-col md:space-y-[14px]">
                     {allTx.map((tx) => (
                         <div className="w-full flex flex-col md:flex-row" key={tx.transactionID}>
@@ -54,7 +55,7 @@ export default function WalletActivity(){
                         </div>
                     ))}
                 </div>
-            </div>
+            </ScrollArea>
             {/* <div className="flex items-center gap-5 justify-center md:justify-end pt-4 mt-auto">
                 <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9 hover:bg-secondary/80">
                     <ChevronLeft className="w-fit h-fit text-secondary-foreground" />

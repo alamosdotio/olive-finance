@@ -79,7 +79,7 @@ export default function FuturesPositions(){
                             value="history"
                             className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
-                           Order History
+                           History
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
