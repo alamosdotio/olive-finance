@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image";
-import { ChevronDown, FileSpreadsheet, Grid3x3, Layers, Link, Search, Sheet, TableColumnsSplit } from "lucide-react";
+import { ChevronDown, Diff, Search, TableColumnsSplit } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { DollarIcon, OptionChainIcon, PythIcon, SortIcon } from "@/public/svgs/icons";
+import { PythIcon, SortIcon } from "@/public/svgs/icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
 import { formatPrice } from "@/utils/formatter";
@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { HoverCard, HoverCardContent } from "./ui/hover-card";
 import { HoverCardTrigger } from "@radix-ui/react-hover-card";
 import { Progress } from "./ui/progress";
+import CircularProgressBar from "./ui/circular-progress-bar";
 
 
 type CryptoData = {
@@ -177,15 +178,46 @@ export default function TradingViewTopNav({
                 <div className="hidden md:flex px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>
-                <div className="hidden md:flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Oracle Price</span>
-                    <div className="flex space-x-0.5">
-                        <span>
-                            <PythIcon />
-                        </span>
-                        <span className="text-foreground text-xs font-medium">{priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
-                    </div>
-                </div>
+                <HoverCard>
+                    <HoverCardTrigger asChild>
+                         <div className="hidden md:flex flex-col cursor-pointer">
+                            <span className="text-secondary-foreground font-normal text-[10px] h-3">Oracle Price</span>
+                            <div className="flex space-x-0.5">
+                                <span>
+                                    <PythIcon />
+                                </span>
+                                <span className="text-foreground text-xs font-medium">{priceData.price ? formatPrice(priceData.price) : priceLoading}</span>
+                            </div>
+                        </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent align="start" className="w-fit flex flex-col bg-accent rounded-sm justify-center p-2 space-y-4">
+                        <div className="text-xs flex flex-col text-foreground gap-2">
+                            <div className="flex flex-col">
+                                <span>
+                                    The current Oracle Price of the selected asset
+                                </span>
+                                <span>
+                                    ({symbol}).
+                                </span>
+                            </div>
+                            
+                            <span className="flex items-center gap-1">
+                                {priceData.price ? formatPrice(priceData.price) : priceLoading}
+                                <Diff size={12}/>
+
+                            </span>
+                        </div>
+                        <div className="text-xs flex flex-col text-foreground">
+                            <span>
+                                Oracle Provide by <a className="text-primary" href="">Pyth</a>.
+                            </span>
+                            <span>
+                                Last Pull: 6 slots ago
+                            </span>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
+               
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>
@@ -217,22 +249,27 @@ export default function TradingViewTopNav({
                             <Progress value={66} className="h-1"/>
                         </div>
                     </HoverCardTrigger>
-                    <HoverCardContent align="start" className="flex flex-col justify-center p-2">
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Call Open Interests</span>
-                            <span className="text-foreground">XXX</span>
+                    <HoverCardContent align="center" className="flex flex-col justify-center bg-accent p-2 rounded-sm gap-2">
+                        <div className="flex justify-center ">
+                            <CircularProgressBar />
                         </div>
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Call Available Liquidity</span>
-                            <span className="text-foreground">XXX</span>
-                        </div>
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Call Intereset Rate</span>
-                            <span className="text-foreground">XXX</span>
-                        </div>
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Call Volatility</span>
-                            <span className="text-foreground">XXX</span>
+                        <div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Call Open Interests</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Call Available Liquidity</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Call Intereset Rate</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Call Volatility</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>                    
                         </div>
                     </HoverCardContent>
                 </HoverCard>
@@ -246,39 +283,30 @@ export default function TradingViewTopNav({
                             <Progress value={66} className="h-1"/>
                         </div>
                     </HoverCardTrigger>
-                    <HoverCardContent align="start" className="flex flex-col justify-center p-2">
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Put Open Interests</span>
-                            <span className="text-foreground">XXX</span>
+                    <HoverCardContent align="center" className="flex flex-col bg-accent justify-center p-2 rounded-sm gap-2">
+                        <div className="flex justify-center">
+                            <CircularProgressBar />
                         </div>
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Put Available Liquidity</span>
-                            <span className="text-foreground">XXX</span>
-                        </div>
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Put Intereset Rate</span>
-                            <span className="text-foreground">XXX</span>
-                        </div>
-                        <div className="flex justify-between text-secondary-foreground font-normal text-xs">
-                            <span>Put Volatility</span>
-                            <span className="text-foreground">XXX</span>
+                        <div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Put Open Interests</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Put Available Liquidity</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Put Intereset Rate</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
+                            <div className="flex justify-between text-secondary-foreground font-normal text-xs">
+                                <span>Put Volatility</span>
+                                <span className="text-foreground">XXX</span>
+                            </div>
                         </div>
                     </HoverCardContent>
                 </HoverCard>
-                <div className="px-4 py-1">
-                    <Separator orientation="vertical"/>
-                </div>
-                <div className="flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Volatility</span>
-                    <span className="text-foreground text-xs font-medium"></span>
-                </div>
-                <div className="px-4 py-1">
-                    <Separator orientation="vertical"/>
-                </div>
-                <div className="flex flex-col">
-                    <span className="text-secondary-foreground font-normal text-[10px] h-3">Interest Rate</span>
-                    <span className="text-foreground text-xs font-medium"></span>
-                </div>
             </div>
             <div className="flex justify-end w-full px-2 lg:hidden">
                 <MarketDetails logo={logo} symbol={symbol!} tokenPrice={priceData.price} high={marketData.high24h} low={marketData.low24h}/>
