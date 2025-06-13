@@ -311,7 +311,6 @@ export default function TradingViewTopNav({
             <div className="flex justify-end w-full px-2 lg:hidden">
                 <MarketDetails logo={logo} symbol={symbol!} tokenPrice={priceData.price} high={marketData.high24h} low={marketData.low24h}/>
             </div>
-            
         </div>
     )
 }
