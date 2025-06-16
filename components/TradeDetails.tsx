@@ -352,32 +352,32 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
               (ix) => ix.name == "custody"
             );
             const pool = ordered[0].accounts.find((ix) => ix.name == "pool");
-            const poolData = await program.account.pool.fetch(
+            const poolData = await program.account.Pool.fetch(
               pool!.pubkey.toBase58()
             );
 
-            const payCustodyData = await program.account.custody.fetch(
+            const payCustodyData = await program.account.Custody.fetch(
               payCustody!.pubkey.toBase58()
             );
-            const lockedCustodyData = await program.account.custody.fetch(
+            const lockedCustodyData = await program.account.Custody.fetch(
               lockedCustody!.pubkey.toBase58()
             );
-            const custodyData = await program.account.custody.fetch(
+            const custodyData = await program.account.Custody.fetch(
               custody!.pubkey.toBase58()
             );
             for await (let custody of poolData.custodies) {
-              let c = await program.account.custody.fetch(
+              let c = await program.account.Custody.fetch(
                 new PublicKey(custody)
               );
               if (c.mint.toBase58() == WSOL_MINT.toBase58()) {
                 updateWholeTransactionDetail("Total SOL", {
                   label: "Total SOL",
                   before: `${(
-                    c.tokenOwned.toNumber() /
+                    c.token_owned.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} SOL`,
                   after: `${(
-                    c.tokenOwned.toNumber() /
+                    c.token_owned.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} SOL`,
                   change: `0.00%`,
@@ -386,11 +386,11 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
                 updateWholeTransactionDetail("Locked SOL", {
                   label: "Locked SOL",
                   before: `${(
-                    c.tokenLocked.toNumber() /
+                    c.token_locked.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} SOL`,
                   after: `${(
-                    c.tokenLocked.toNumber() /
+                    c.token_locked.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} SOL`,
                   change: `0.00%`,
@@ -399,11 +399,11 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
                 updateWholeTransactionDetail("Unlocked SOL", {
                   label: "Unlocked SOL",
                   before: `${(
-                    (c.tokenOwned.toNumber() - c.tokenLocked.toNumber()) /
+                    (c.token_owned.toNumber() - c.token_locked.toNumber()) /
                     10 ** c.decimals
                   ).toFixed(2)} SOL`,
                   after: `${(
-                    (c.tokenOwned.toNumber() - c.tokenLocked.toNumber()) /
+                    (c.token_owned.toNumber() - c.token_locked.toNumber()) /
                     10 ** c.decimals
                   ).toFixed(2)} SOL`,
                   change: `0.00%`,
@@ -413,11 +413,11 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
                 updateWholeTransactionDetail("Total USDC", {
                   label: "Total USDC",
                   before: `${(
-                    c.tokenOwned.toNumber() /
+                    c.token_owned.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} USDC`,
                   after: `${(
-                    c.tokenOwned.toNumber() /
+                    c.token_owned.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} USDC`,
                   change: `0.00%`,
@@ -426,11 +426,11 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
                 updateWholeTransactionDetail("Locked USDC", {
                   label: "Locked USDC",
                   before: `${(
-                    c.tokenLocked.toNumber() /
+                    c.token_locked.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} USDC`,
                   after: `${(
-                    c.tokenLocked.toNumber() /
+                    c.token_locked.toNumber() /
                     10 ** c.decimals
                   ).toFixed(2)} USDC`,
                   change: `0.00%`,
@@ -439,11 +439,11 @@ export default function TradeDetails({ id }: TradeDetailsProps) {
                 updateWholeTransactionDetail("Unlocked USDC", {
                   label: "Unlocked USDC",
                   before: `${(
-                    (c.tokenOwned.toNumber() - c.tokenLocked.toNumber()) /
+                    (c.token_owned.toNumber() - c.token_locked.toNumber()) /
                     10 ** c.decimals
                   ).toFixed(2)} USDC`,
                   after: `${(
-                    (c.tokenOwned.toNumber() - c.tokenLocked.toNumber()) /
+                    (c.token_owned.toNumber() - c.token_locked.toNumber()) /
                     10 ** c.decimals
                   ).toFixed(2)} USDC`,
                   change: `0.00%`,
