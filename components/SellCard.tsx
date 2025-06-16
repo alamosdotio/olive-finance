@@ -95,31 +95,31 @@ export default function SellCard() {
           [Buffer.from("user"), wallet.publicKey.toBuffer()],
           program.programId
         );
-        const userData = await program.account.user
+        const userData = await program.account.User
           .fetch(userPDA)
           .catch((e) => null);
         if (!userData) return [];
         const optionDatas: Option[] = [];
-        for (let i = 1; i <= userData.optionIndex.toNumber(); i++) {
+        for (let i = 1; i <= userData.option_index.toNumber(); i++) {
           const optionDetailAccount = sc.getOptionDetailAccount(
             i,
             pool,
             custody
           );
-          const optionData = await program.account.optionDetail.fetch(
+          const optionData = await program.account.OptionDetail.fetch(
             optionDetailAccount
           );
-          const lockedAssetData = await program.account.custody.fetch(optionData.lockedAsset);
+          const lockedAssetData = await program.account.Custody.fetch(optionData.locked_asset);
           console.log("premium", i, optionData.premium.toNumber())
           optionDatas.push({
             id: optionData.index.toNumber(),
-            type: optionData.lockedAsset.equals(custody) ? "Call" : "Put",
-            strikePrice: optionData.strikePrice,
+            type: optionData.locked_asset.equals(custody) ? "Call" : "Put",
+            strikePrice: optionData.strike_price,
             size: optionData.amount.toNumber() / (10 ** lockedAssetData.decimals),
             status: optionData.valid ? "Active" : "Invalid",
-            expiration: new Date(optionData.expiredDate.toNumber() * 1000),
+            expiration: new Date(optionData.expired_date.toNumber() * 1000),
             purchaseDate: new Date(
-              (optionData.expiredDate.toNumber() -
+              (optionData.expired_date.toNumber() -
                 optionData.period * 3600 * 24) *
                 1000
             ),
