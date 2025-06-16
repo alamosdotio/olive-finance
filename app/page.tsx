@@ -30,6 +30,7 @@ export default function Homepage(){
     const [payAmount, setPayAmount] = useState('')
     const [strikePrice, setStrikePrice] = useState('')
     const [expiry , setExpiry] = useState<Date>(addWeeks(new Date(), 1))
+    const [transaction, setTransaction] = useState('buy');
 
     const handleSymbolChange = (newSymbol: string) => {
       setSelectedSymbol(newSymbol);
@@ -88,18 +89,6 @@ export default function Homepage(){
                     </div>
                   </div>
                   <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:col-span-4 flex-col space-y-4")}>
-                    {/* <OptionsCard 
-                      chartToken={selectedSymbol}
-                      chartTokenLogo={selectedLogo}
-                      onBuyingChange={(value) => handleBuyingAmountChange(value)}
-                      onValueChange={(value) => handleSellingAmountChange(value)}
-                      onStrikePriceChange={(value) => handleStrikePriceChange(value)}
-                      onPositionTypeChange={(value) => setPositionType(value)}
-                      onContractTypeChange={(value) => setContractType(value)}
-                      priceData={priceData}
-                      marketData={marketData}
-                      priceLoading={priceLoading}
-                    /> */}
                     <OptionCardContainer 
                       selectedSymbol={selectedSymbol}
                       onSymbolChange={handleSymbolChange} 
@@ -114,8 +103,9 @@ export default function Homepage(){
                       marketData={marketData}
                       priceLoading={priceLoading}
                       marketLoading={marketLoading}
+                      onTransactionChange={setTransaction}
                     />
-                    <div className="w-full flex flex-col space-y-4">
+                    <div className={`${transaction === 'sell' ? 'hidden' : 'flex'} flex-col space-y-4 w-full`}>
                       <PriceQuote
                         active={tokenIdx}
                         currency={currency}

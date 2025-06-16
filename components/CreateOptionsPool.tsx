@@ -214,7 +214,7 @@ export default function CreateOptionsPool() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <div className="border-b border-border bg-accent/30">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-0 md:px-4 py-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => router.push("/earn")}>
               <ArrowLeft className="h-4 w-4" />
@@ -227,11 +227,11 @@ export default function CreateOptionsPool() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-6 max-w-5xl">
-        <div className="grid gap-6">
+      <div className="container mx-auto px-0 md:px-4 py-6 max-w-5xl">
+        <div className="grid grid-cols-1 gap-6 ">
 
           {/* Basic Pool Configuration */}
-          <Card className="bg-accent/50 border-border">
+          <Card className="bg-accent/50 border-border rounded-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 Basic Pool Configuration
@@ -356,7 +356,7 @@ export default function CreateOptionsPool() {
           </Card>
 
           {/* Oracle Configuration */}
-          <Card className="bg-accent/50 border-border">
+          <Card className="bg-accent/50 border-border rounded-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 Oracle Price Feeds
@@ -409,7 +409,7 @@ export default function CreateOptionsPool() {
           </Card>
 
           {/* Token Ratios */}
-          <Card className="bg-accent/50 border-border">
+          <Card className="bg-accent/50 border-border rounded-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 Target Token Ratios
@@ -441,7 +441,7 @@ export default function CreateOptionsPool() {
                   max={80}
                   min={20}
                   step={5}
-                  className="w-full"
+                  className="w-full cursor-pointer"
                 />
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>20%</span>
@@ -453,7 +453,7 @@ export default function CreateOptionsPool() {
           </Card>
 
           {/* Initial Liquidity */}
-          <Card className="bg-accent/50 border-border">
+          <Card className="bg-accent/50 border-border rounded-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 Initial Liquidity
@@ -510,7 +510,7 @@ export default function CreateOptionsPool() {
           </Card>
 
           {/* Advanced Settings */}
-          <Card className="bg-accent/50 border-border">
+          <Card className="bg-accent/50 border-border rounded-sm">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Advanced Settings</CardTitle>
@@ -607,7 +607,7 @@ export default function CreateOptionsPool() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex gap-4 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
             <Button variant="outline" className="flex-1" onClick={validateForm}>
               Validate Configuration
             </Button>

@@ -18,6 +18,7 @@ interface OptionCardContainerProps{
   onPayAmountChange: (amount: string) => void;
   onCurrencyChange: (currency: string) => void;
   onContractTypeChange: (type: 'Call' | 'Put') => void;
+  onTransactionChange: (type: string) => void;
   index: number;
   priceData: PythPriceState;
   marketData: MarketDataState;
@@ -25,9 +26,29 @@ interface OptionCardContainerProps{
   marketLoading: boolean;
 }
 
-export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayAmountChange, onStrikePriceChange, onExpiryChange, onContractTypeChange, onCurrencyChange, index, selectedSymbol, priceData, marketData, priceLoading, marketLoading}:OptionCardContainerProps) {
+export default function OptionCardContainer({
+  onIdxChange, 
+  onSymbolChange, 
+  onPayAmountChange, 
+  onStrikePriceChange, 
+  onExpiryChange, 
+  onContractTypeChange, 
+  onCurrencyChange,
+  onTransactionChange,
+  index, 
+  selectedSymbol, 
+  priceData, 
+  marketData, 
+  priceLoading, 
+  marketLoading
+}:OptionCardContainerProps) {
   const [active, setActive] = useState('buy')
   const [orderType, setOrderType] = useState<'market'|'limit'>('market');
+
+  const handleTransaction = (tx: string) => {
+    setActive(tx);
+    onTransactionChange(tx)
+  }
   
   return (
       <div className="w-full flex flex-col h-[540px] space-y-0">
@@ -35,13 +56,13 @@ export default function OptionCardContainer({onIdxChange, onSymbolChange, onPayA
           <div className="flex gap-4">
             <Button 
               className={`w-full bg-inherit border-b rounded-none shadow-none h-[42px] hover:text-primary ${active === 'buy' ? 'text-primary border-primary': 'text-secondary-foreground border-transparent'}`}
-              onClick={() => setActive('buy')}
+              onClick={() => handleTransaction('buy')}
             >
               Buy
             </Button>
             <Button 
               className={`w-full bg-inherit border-b rounded-none shadow-none h-[42px] hover:text-primary ${active === 'sell' ? 'text-primary border-primary': 'text-secondary-foreground border-transparent'}`}
-              onClick={() => setActive('sell')}
+              onClick={() => handleTransaction('sell')}
             >
               Sell
             </Button>

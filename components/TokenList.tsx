@@ -6,7 +6,7 @@ import { usePythPrice } from "@/hooks/usePythPrice"
 import { formatPrice } from "@/utils/formatter";
 import { useMemo } from "react";
 
-type Category = 'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals';
+type Category = 'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals'  | 'commodities' | 'equities' | 'fixed';
 
 type CryptoData = {
     id: string
@@ -20,6 +20,9 @@ type CryptoData = {
         forex: boolean;
         ai: boolean;
         metals: boolean;
+        commodities: boolean;
+        equities: boolean;
+        fixed: boolean;
     };
 }
 
@@ -47,8 +50,8 @@ function TokenListItem({ token, marketChange, onSelect }: {
     };
 
     return (
-        <div className="w-full flex gap-4 p-1 hover:bg-secondary rounded-md cursor-pointer" onClick={onSelect}>
-            <div className="w-[115px] flex gap-1 items-center pl-1">
+        <div className="w-full grid grid-cols-3 gap-4 p-1 hover:bg-secondary rounded-md cursor-pointer" onClick={onSelect}>
+            <div className="flex gap-1 items-center pl-1">
                 <Image 
                     src={token.iconPath} 
                     alt={token.name} 
@@ -65,14 +68,14 @@ function TokenListItem({ token, marketChange, onSelect }: {
                     </span>
                 </div>
             </div>
-            <div className="w-[68px] flex justify-start items-center">
+            <div className="flex justify-start items-center">
                 <span className="text-xs font-medium text-secondary-foreground">
                     ${priceData.price 
                         ? formatPrice(priceData.price) 
                         : loading}
                 </span>
             </div>
-            <div className="w-[48px] flex justify-start gap-0.5 items-center pr-1">
+            <div className="flex justify-start gap-0.5 items-center pr-1">
                 {marketChange !== null && (
                     <>
                         <span className={`text-xs font-medium ${marketChange >= 0 ? "text-green-500" : "text-red-500"}`}>{marketChange >= 0 ? "↑" : "↓"}</span>

@@ -31,6 +31,9 @@ type CryptoData = {
         forex: boolean
         ai: boolean
         metals: boolean
+        commodities: boolean;
+        equities: boolean;
+        fixed: boolean;
     }
 }
 
@@ -65,7 +68,7 @@ export default function TradingViewTopNav({
     marketLoading,
     type,
 }: TradingViewTopNavProps) {
-    const [active, setActive] = useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals'>('all');
+    const [active, setActive] = useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals' | 'commodities' | 'equities' | 'fixed'>('all');
     const router = useRouter()
 
     return (
@@ -82,7 +85,7 @@ export default function TradingViewTopNav({
                         <ChevronDown className="text-secondary-foreground h-3 w-3"/>
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[280px] py-2 px-1 bg-accent rounded-sm flex flex-col space-y-2" align="start">
+                <DropdownMenuContent className="w-fit py-2 px-1 bg-accent rounded-sm flex flex-col space-y-2" align="start">
                     <div className="w-full px-1 flex flex-col space-y-2">
                         <div className="flex w-full h-fit space-x-2 items-center px-3 py-2 rounded-sm text-xs text-secondary-foreground bg-secondary">
                             <Input 
@@ -134,17 +137,41 @@ export default function TradingViewTopNav({
                                         <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
                                     )}
                                 </button>
+                                <button className={cn((active === 'commodities' ? 'text-primary' : ''),"px-1 relative")}
+                                    onClick={()=>setActive('commodities')}
+                                >
+                                    <span>Commodities</span>
+                                    {active === 'commodities' && (
+                                        <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
+                                    )}
+                                </button>
+                                <button className={cn((active === 'equities' ? 'text-primary' : ''),"px-1 relative")}
+                                    onClick={()=>setActive('equities')}
+                                >
+                                    <span>Equities</span>
+                                    {active === 'equities' && (
+                                        <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
+                                    )}
+                                </button>
+                                <button className={cn((active === 'fixed' ? 'text-primary' : ''),"px-1 relative")}
+                                    onClick={()=>setActive('fixed')}
+                                >
+                                    <span>Fixed Income</span>
+                                    {active === 'fixed' && (
+                                        <div className="absolute -bottom-[3px] left-0 right-0 h-[1px] bg-primary" />
+                                    )}
+                                </button>
                             </div>
-                            <div className="w-full flex gap-4">
-                                <div className="w-[120px] flex gap-1 items-center">
+                            <div className="w-full grid grid-cols-3 gap-4">
+                                <div className="flex gap-1 items-center">
                                     <span className="text-xs font-medium">Symbols</span>
                                     <SortIcon />
                                 </div>
-                                <div className="w-[68px] flex gap-1 items-center">
+                                <div className="flex gap-1 items-center">
                                     <span className="text-xs font-medium">Price</span>
                                     <SortIcon />
                                 </div>
-                                <div className="w-[48px] flex gap-1 items-center">
+                                <div className="flex gap-1 items-center">
                                     <span className="text-xs font-medium">24h%</span>
                                     <SortIcon />
                                 </div>
