@@ -101,7 +101,7 @@ export default function RecentTrades() {
     program: Program<OptionContract>
   ) => {
     try {
-      const optionDetailAccount = await program.account.optionDetail.fetch(
+      const optionDetailAccount = await program.account.OptionDetail.fetch(
         account.pubkey
       );
 
@@ -110,15 +110,15 @@ export default function RecentTrades() {
       );
 
       const purchaseTimestamp =
-        parseInt(optionDetailAccount.expiredDate) * 1000 -
+        parseInt(optionDetailAccount.expired_date) * 1000 -
         parseInt(optionDetailAccount.period) * 86400 * 1000 -
         86400000;
 
       const priceData = await getPythPrice(selectedSymbol, purchaseTimestamp);
 
       const isCall =
-        optionDetailAccount.lockedAsset.toString() ==
-        optionDetailAccount.premiumAsset.toString();
+        optionDetailAccount.locked_asset.toString() ==
+        optionDetailAccount.premium_asset.toString();
 
       const premium = parseFloat(optionDetailAccount.premium);
       const quantity = optionDetailAccount.quantity.toString();
@@ -126,28 +126,28 @@ export default function RecentTrades() {
       const tx =
         optionDetailAccount.exercised.toString() != "0"
           ? "Exercised"
-          : optionDetailAccount.boughtBack.toString() != "0"
+          : optionDetailAccount.bought_back.toString() != "0"
           ? "Sold"
           : "Bought";
       return {
         quantity: quantity,
         profile: profile,
         amount: optionDetailAccount.amount.toString(),
-        boughtBack: optionDetailAccount.boughtBack.toString(),
+        boughtBack: optionDetailAccount.bought_back.toString(),
         claimed: optionDetailAccount.claimed.toString(),
         custody: optionDetailAccount.custody.toString(),
         exercised: optionDetailAccount.exercised.toString(),
         expiredDate: new Date(
-          parseInt(optionDetailAccount.expiredDate) * 1000
+          parseInt(optionDetailAccount.expired_date) * 1000
         ).toLocaleString(),
         index: optionDetailAccount.index.toString(),
-        lockedAsset: optionDetailAccount.lockedAsset.toString(),
+        lockedAsset: optionDetailAccount.locked_asset.toString(),
         period: optionDetailAccount.period.toString(),
         pool: poolInfo?.name || "",
         premium: optionDetailAccount.premium.toString(),
-        premiumAsset: optionDetailAccount.premiumAsset.toString(),
+        premiumAsset: optionDetailAccount.premium_asset.toString(),
         profit: optionDetailAccount.profit.toString(),
-        strikePrice: optionDetailAccount.strikePrice.toString(),
+        strikePrice: optionDetailAccount.strike_price.toString(),
         valid: optionDetailAccount.valid.toString(),
         tx: tx,
         type: isCall ? "Call" : "Put",
@@ -155,9 +155,9 @@ export default function RecentTrades() {
           tx === "Exercised"
             ? parseInt(optionDetailAccount.exercised)
             : tx === "Sold"
-            ? parseInt(optionDetailAccount.boughtBack)
-            : parseInt(optionDetailAccount.purchaseDate),
-        purchaseDate: optionDetailAccount.purchaseDate,
+            ? parseInt(optionDetailAccount.bought_back)
+            : parseInt(optionDetailAccount.purchase_date),
+        purchaseDate: optionDetailAccount.purchase_date,
         purchasedPrice: priceData,
       };
     } catch (error) {
