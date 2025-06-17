@@ -1,4 +1,5 @@
 import { PriceIcon, PurchaseDateIcon, PurchasePriceIcon } from "@/public/svgs/icons";
+import Tpsl from "./Tpsl";
 
 export default function PositionDetails(){
     return (
@@ -23,6 +24,16 @@ export default function PositionDetails(){
                         <span>Purchase Date</span>
                     </div>
                     <span>10/30/2024</span>
+                </div>
+                <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
+                    <div className='flex space-x-2 items-center'>
+                        <PurchaseDateIcon />
+                        <span>TPSL</span>
+                    </div>
+                    <div className='flex space-x-2 items-center'>
+                        <span>---</span>
+                        <Tpsl />
+                    </div>
                 </div>
             </div>
         )

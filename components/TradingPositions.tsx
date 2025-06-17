@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import OpenPositions from "./OpenPositions";
 import OrderHistory from "./OrderHistory";
-import { Position, positions } from "@/lib/data/Positions";
+import { orders, Position, positions } from "@/lib/data/Positions";
 import ExpiredOptions from "./ExpiredOptions";
 import {
   DropdownMenu,
@@ -22,6 +22,7 @@ import { ContractContext, ExpiredOption } from "@/contexts/contractProvider";
 import { Transaction } from "@/lib/data/WalletActivity";
 import { BN } from "@coral-xyz/anchor";
 import Pagination from "./Pagination";
+import OpenOptionOrders from "./OpenOptionOrders";
 
 export default function TradingPositions() {
   const [activeTab, setActiveTab] = useState<string>("Positions");
@@ -60,26 +61,36 @@ export default function TradingPositions() {
   const itemsPerPage = 5;
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
+
+  const dummy = positions;
+  const dummyOrders = orders;
   
 
   return (
     <div className="w-full h-fit border rounded-sm flex flex-col">
       <div className="w-full flex justify-between px-3 py-1 md:px-6 md:py-3 border-b">
         <Tabs defaultValue={activeTab} className="p-0">
-          <TabsList className="w-full grid grid-cols-3 bg-inherit text-secondary-foreground p-0 gap-2 md:gap-6">
+          <TabsList className="w-full flex bg-inherit text-secondary-foreground p-0 gap-2 md:gap-3 lg:gap-6">
             <TabsTrigger
               value="Positions"
               className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
               onClick={() => handleClickTab("Positions")}
             >
-              Open Positions
+              Positions
+            </TabsTrigger>
+            <TabsTrigger
+              value="OpenOrders"
+              className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
+              onClick={() => handleClickTab("OpenOrders")}
+            >
+              Orders
             </TabsTrigger>
             <TabsTrigger
               value="Expired"
               className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
               onClick={() => handleClickTab("Expired")}
             >
-              Expired Positions
+              Expired
             </TabsTrigger>
             <TabsTrigger
               value="History"
@@ -141,6 +152,22 @@ export default function TradingPositions() {
                 onExercise={()=>onExercise(position.index)}
               />
             ))}
+            {dummy.map((position, index) => (
+              <OpenPositions
+                key={index}
+                index={position.index}
+                token={position.token}
+                logo={position.logo}
+                symbol={position.symbol}
+                type={position.type}
+                strikePrice={position.strikePrice}
+                expiry={position.expiry}
+                size={position.size}
+                pnl={position.pnl}
+                greeks={position.greeks}
+                onExercise={()=>onExercise(position.index)}
+              />
+            ))}
             <div className="pb-4 w-full">
                 <Pagination
                     currentPage={currentPage}
@@ -157,37 +184,38 @@ export default function TradingPositions() {
           <ExpiredOptions infos={expiredInfos} onClaim={onClaim} />
         </div>
       )}
+      {activeTab === "OpenOrders" && (
+        <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px]">
+          {dummyOrders.map((pos, idx) => (
+            <OpenOptionOrders 
+              key={idx}
+              logo={pos.logo}
+              token={pos.token}
+              symbol={pos.symbol}
+              type={pos.type}
+              limitPrice={pos.limitPrice}
+              transaction={pos.transaction}
+              strikePrice={pos.strikePrice}
+              expiry={pos.expiry}
+              size={pos.size}
+              orderDate={pos.orderDate}
+            />
+          ))}
+          <div className="pb-4 w-full">
+              <Pagination
+                  currentPage={currentPage}
+                  totalItems={dummyOrders.length}
+                  itemsPerPage={itemsPerPage}
+                  onPageChange={setCurrentPage}
+              />
+          </div>
+        </div>
+      )}
       {activeTab === "History" && (
         <div className="px-3 md:px-6 py-4 pb-[20px] md:pb-[10px]">
           <OrderHistory doneOptioninfos={doneInfo} />
         </div>
       )}
-      {/* <div className="px-3 md:px-6 pb-4 flex justify-end">
-        <div className="w-full flex items-center md:gap-5 justify-between md:justify-end">
-          <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
-            <ChevronLeft className="w-fit h-fit  text-secondary-foreground" />
-          </button>
-          <div className="space-x-2">
-            <button className="p-[6px] w-9 h-9 rounded-[12px] bg-backgroundSecondary">
-              1
-            </button>
-            <button className="p-[6px] w-9 h-9 rounded-[12px] bg-backgroundSecondary">
-              2
-            </button>
-            <button className="p-[6px] w-9 h-9 rounded-[12px] bg-backgroundSecondary">
-              3
-            </button>
-            <span>...</span>
-            <button className="py-[6px] px-2 rounded-[12px] bg-backgroundSecondary w-fit h-fit">
-              109
-            </button>
-          </div>
-
-          <button className="p-2 rounded-[12px] bg-secondary flex items-center h-9 w-9">
-            <ChevronRight className="w-fit h-fit  text-secondary-foreground" />
-          </button>
-        </div>
-      </div> */}
     </div>
   );
 }
