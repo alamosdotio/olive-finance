@@ -10,33 +10,40 @@ import { WalletIcon } from "@/public/svgs/icons"
 export default function TradingPositionsFallback() {
     const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
     
+    
 
     return (
         <div className="w-full h-[230px] border rounded-sm flex flex-col">
             <div className="w-full flex justify-between px-3 py-1 md:px-6 md:py-3 border-b">
                 <Tabs defaultValue="Positions" className="p-0 whitespace-nowrap overflow-hidden"> 
-                    <TabsList className="w-full grid grid-cols-3 bg-inherit text-secondary-foreground p-0 gap-2 md:gap-6">
-                        <TabsTrigger 
-                            value='Positions'
-                            className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+                    <TabsList className="w-full flex bg-inherit text-secondary-foreground p-0 gap-2 md:gap-3 lg:gap-6">
+                        <TabsTrigger
+                            value="Positions"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
-                            Open Positions
+                            Positions
                         </TabsTrigger>
-                        <TabsTrigger 
-                            value="Orders"
-                            className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+                        <TabsTrigger
+                            value="OpenOrders"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
-                            Expired Options
+                            Orders
                         </TabsTrigger>
-                        <TabsTrigger 
+                        <TabsTrigger
+                            value="Expired"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
+                        >
+                            Expired
+                        </TabsTrigger>
+                        <TabsTrigger
                             value="History"
-                            className="text-[11px] md:text-sm px-2 py-[2px] border-b-[1px] rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
                             History
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
-                <div className="hidden md:flex gap-3 items-center">
+                {/* <div className="hidden md:flex gap-3 items-center">
                     <Button
                         className="bg-secondary p-2 w-full h-auto rounded-sm"
                     >
@@ -48,7 +55,7 @@ export default function TradingPositionsFallback() {
                         <Ban className="text-secondary-foreground p-0"/>
                         <span className="text-sm font-normal text-secondary-foreground p-0">Cancel all</span>
                     </Button>
-                </div>
+                </div> */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button
