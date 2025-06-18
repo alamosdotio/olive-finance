@@ -1,4 +1,4 @@
-import { ExpiryIcon, PositionTypeIcon, RedArrowPnl, SizeIcon, StrikePriceIcon, ValueIcon } from "@/public/svgs/icons"
+import { ExpiryIcon, PositionTypeIcon, PurchasePriceIcon, RedArrowPnl, SizeIcon, StrikePriceIcon, ValueIcon } from "@/public/svgs/icons"
 import { Calendar, SquarePen } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Label } from "./ui/label"
@@ -29,11 +29,88 @@ export default function PositionOverview({type, expiry, size, pnl, strikePrice} 
         <div className='w-full flex flex-col space-y-1'>
             <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
                 <div className='flex space-x-2 items-center'>
-                    <PositionTypeIcon />
-                    <span>Position Type:</span>
+                    <SizeIcon />
+                    <span>Size:</span>
                 </div>
-                <span>{type}</span>
+                <div className='flex space-x-2 items-center'>
+                    <span>{size}</span>
+                    <Popover open={isSize} onOpenChange={setIsSize}>
+                        <PopoverTrigger asChild>
+                            <SquarePen size={13} className="text-foreground hover:text-primary cursor-pointer"/>
+                        </PopoverTrigger>
+                        <PopoverContent align="end" className="p-3 space-y-4">
+                            <div className="space-y-2 flex flex-col">
+                                <Label>
+                                    New Size
+                                </Label>
+                                <Input
+                                    className="p-2 border-border text-xs rounded-sm"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs">
+                                    Pay In
+                                </Label>
+                                <Input
+                                    className="p-2 border-border text-xs rounded-sm"
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button 
+                                    variant='outline'
+                                    onClick={() => setIsSize(false)}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button>Confirm</Button>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+                </div>
             </div>
+
+            <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
+                <div className='flex space-x-2 items-center'>
+                    <StrikePriceIcon />
+                    <span>Strike Price:</span>
+                </div>
+                <div className='flex space-x-2 items-center'>
+                    <span>{strikePrice}</span>
+                    <Popover open={isStrike} onOpenChange={setIsStrike}>
+                        <PopoverTrigger asChild>
+                            <SquarePen size={13} className="text-foreground hover:text-primary cursor-pointer"/>
+                        </PopoverTrigger>
+                        <PopoverContent align="end" className="p-3 space-y-4">
+                            <div className="space-y-2 flex flex-col">
+                                <Label className="text-xs">
+                                    New Strike Price
+                                </Label>
+                                <Input
+                                    className="p-2 border-border text-xs rounded-sm"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs">
+                                    Pay In
+                                </Label>
+                                <Input
+                                    className="p-2 border-border text-xs rounded-sm"
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button 
+                                    variant='outline'
+                                    onClick={() => setIsStrike(false)}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button>Confirm</Button>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+                </div>
+            </div>
+
             <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
                 <div className='flex space-x-2 items-center'>
                     <ExpiryIcon />
@@ -100,95 +177,25 @@ export default function PositionOverview({type, expiry, size, pnl, strikePrice} 
                 </div>
                 
             </div>
+            
+            
             <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
                 <div className='flex space-x-2 items-center'>
-                    <SizeIcon />
-                    <span>Size:</span>
-                </div>
-                <div className='flex space-x-2 items-center'>
-                    <span>{size}</span>
-                    <Popover open={isSize} onOpenChange={setIsSize}>
-                        <PopoverTrigger asChild>
-                            <SquarePen size={13} className="text-foreground hover:text-primary cursor-pointer"/>
-                        </PopoverTrigger>
-                        <PopoverContent align="end" className="p-3 space-y-4">
-                            <div className="space-y-2 flex flex-col">
-                                <Label>
-                                    New Size
-                                </Label>
-                                <Input
-                                    className="p-2 border-border text-xs rounded-sm"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-xs">
-                                    Pay In
-                                </Label>
-                                <Input
-                                    className="p-2 border-border text-xs rounded-sm"
-                                />
-                            </div>
-                            <div className="grid grid-cols-2 gap-2">
-                                <Button 
-                                    variant='outline'
-                                    onClick={() => setIsSize(false)}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button>Confirm</Button>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-                </div>
-            </div>
-            <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
-                <div className='flex space-x-2 items-center'>
-                    <StrikePriceIcon />
-                    <span>Strike Price:</span>
-                </div>
-                <div className='flex space-x-2 items-center'>
-                    <span>{strikePrice}</span>
-                    <Popover open={isStrike} onOpenChange={setIsStrike}>
-                        <PopoverTrigger asChild>
-                            <SquarePen size={13} className="text-foreground hover:text-primary cursor-pointer"/>
-                        </PopoverTrigger>
-                        <PopoverContent align="end" className="p-3 space-y-4">
-                            <div className="space-y-2 flex flex-col">
-                                <Label className="text-xs">
-                                    New Strikeprice
-                                </Label>
-                                <Input
-                                    className="p-2 border-border text-xs rounded-sm"
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-xs">
-                                    Pay In
-                                </Label>
-                                <Input
-                                    className="p-2 border-border text-xs rounded-sm"
-                                />
-                            </div>
-                            <div className="grid grid-cols-2 gap-2">
-                                <Button 
-                                    variant='outline'
-                                    onClick={() => setIsStrike(false)}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button>Confirm</Button>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-                </div>
-            </div>
-            <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
-                <div className='flex space-x-2 items-center'>
-                    <ValueIcon />
-                    <span>Value:</span>
+                    <PurchasePriceIcon />
+                    <span>Purchase Price:</span>
                 </div>
                 <span>value</span>
             </div>
+
+            <div className='w-full flex justify-between text-sm text-secondary-foreground font-normal'>
+                <div className='flex space-x-2 items-center'>
+                    <ValueIcon />
+                    <span>Current Price:</span>
+                </div>
+                <span>value</span>
+            </div>
+
+
             <div className='w-full flex justify-between text-sm text-[#FF6889] font-normal'>
                 <div className='flex space-x-2 items-center'>
                     <RedArrowPnl />

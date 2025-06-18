@@ -100,7 +100,7 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                         <PositionGreeks delta={greeks.delta} gamma={greeks.gamma} theta={greeks.theta} vega={greeks.vega}/>
                     )}
                     {activeTab === 'Details' &&(
-                        <PositionDetails />
+                        <PositionDetails type={type} />
                     )}
                     <Separator className='my-4 md:hidden'/>
                     <div className='md:hidden flex space-x-3'>

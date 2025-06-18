@@ -62,8 +62,14 @@ export default function TradingPositions() {
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
-  const dummy = positions;
   const dummyOrders = orders;
+
+  const actionTextMap: Record<string, string> = {
+    Positions: "Close all",
+    OpenOrders: "Cancel all",
+    Expired: "Claim all",
+  };
+
   
 
   return (
@@ -105,12 +111,16 @@ export default function TradingPositions() {
           <Button className="bg-secondary p-2 w-full h-auto rounded-sm">
             <RotateCw className="text-secondary-foreground" />
           </Button>
-          <Button className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-sm">
-            <Ban className="text-secondary-foreground p-0" />
-            <span className="text-sm font-normal text-secondary-foreground p-0">
-              Cancel all
-            </span>
-          </Button>
+          {activeTab !== 'History' && (
+            <Button className="bg-secondary w-full h-auto py-[6px] px-[10px] rounded-sm">
+              <Ban className="text-secondary-foreground p-0" />
+              {actionTextMap[activeTab] && (
+                <span className="text-sm font-normal text-secondary-foreground p-0">
+                  {actionTextMap[activeTab]}
+                </span>
+              )}
+            </Button>
+          )}
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -128,7 +138,11 @@ export default function TradingPositions() {
             </DropdownMenuItem>
             <DropdownMenuItem className="w-fit space-x-[6px] gap-0">
               <Ban className="text-secondary-foreground" />
-              <span>Cancel All</span>
+              {actionTextMap[activeTab] && (
+                <span className="text-sm font-normal text-secondary-foreground p-0">
+                  {actionTextMap[activeTab]}
+                </span>
+              )}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -137,22 +151,6 @@ export default function TradingPositions() {
         <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px]">
           {optioninfos &&
             optioninfos.map((position, index) => (
-              <OpenPositions
-                key={index}
-                index={position.index}
-                token={position.token}
-                logo={position.logo}
-                symbol={position.symbol}
-                type={position.type}
-                strikePrice={position.strikePrice}
-                expiry={position.expiry}
-                size={position.size}
-                pnl={position.pnl}
-                greeks={position.greeks}
-                onExercise={()=>onExercise(position.index)}
-              />
-            ))}
-            {dummy.map((position, index) => (
               <OpenPositions
                 key={index}
                 index={position.index}

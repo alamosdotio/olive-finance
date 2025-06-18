@@ -30,13 +30,13 @@ export default function CreateStrategyCard(){
                         onClick={() => setSelectedOption('create-options-pool')}
                     >
                         <div className="flex justify-between items-start">
-                            <span className="text-foreground font-medium">Create Options Pool</span>
+                            <span className="text-foreground font-medium">Create Liquidity Pool</span>
                             {selectedOption === 'create-options-pool' && (
                                     <CircleCheck className="text-foreground"/>
                             )}
                         </div>
                     </button>
-                    <button 
+                    {/* <button 
                         className={`w-full p-4 text-left rounded-sm transition-colors bg-backgroundSecondary 
                             ${selectedOption === 'create-futures-pool' ? 'border border-foreground' : 'hover:bg-secondary'}`}
                         onClick={() => setSelectedOption('create-futures-pool')}
@@ -59,7 +59,7 @@ export default function CreateStrategyCard(){
                                 <CircleCheck className="text-foreground"/>
                             )}
                         </div>
-                    </button>
+                    </button> */}
                 </div>
                 <div className="flex flex-col gap-2 mt-4">
                     <Button 
