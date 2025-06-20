@@ -41,3 +41,8 @@ export function formatAmount(amount: number, decimals: number): number {
 export function formatAddress(address: string): string {
   return address.slice(0, 4) + "..." + address.slice(-4);
 }
+
+export const formatGreek = (val: number): string => {
+  if (typeof val !== "number" || isNaN(val)) return "N/A";
+  return val.toFixed(4); 
+};

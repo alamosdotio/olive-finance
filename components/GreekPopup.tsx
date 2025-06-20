@@ -1,12 +1,18 @@
 import { DeltaIcon, GammaIcon, RhoIcon, ThetaIcon, VegaIcon } from "@/public/svgs/icons";
+import { formatGreek } from "@/utils/formatter";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 interface GreekPopupProps{
     value: string
+    delta: number
+    gamma: number
+    theta: number
+    vega: number
+    rho: number
 }
 
-export default function GreekPopup({value} : GreekPopupProps){
+export default function GreekPopup({value, delta, gamma, theta, vega, rho} : GreekPopupProps){
     const [dropDownActive, setDropDownActive] = useState<boolean>(true);
     return (
         <div className={value === '' || parseFloat(value) <= 0 ? 'hidden' : 'w-full border rounded-sm flex flex-col'}>
@@ -25,35 +31,35 @@ export default function GreekPopup({value} : GreekPopupProps){
                                 <DeltaIcon />
                                 <span>Delta</span>
                             </div>
-                            <span>0.7914</span>
+                            <span>{formatGreek(delta)}</span>
                         </div>
                         <div className="flex justify-between">
                             <div className="flex space-x-2 items-center">
                                 <GammaIcon />
                                 <span>Gamma</span>
                             </div>
-                            <span>0.0723</span>
+                            <span>{formatGreek(gamma)}</span>
                         </div>
                         <div className="flex justify-between">
                             <div className="flex space-x-2 items-center">
                                 <ThetaIcon />
                                 <span>Theta</span>
                             </div>
-                            <span>-1.1042</span>
+                            <span>{formatGreek(theta)}</span>
                         </div>
                         <div className="flex justify-between">
                             <div className="flex space-x-2 items-center">
                                 <VegaIcon />
                                 <span>Vega</span>
                             </div>
-                            <span>0.2471</span>
+                            <span>{formatGreek(vega)}</span>
                         </div>
                         <div className="flex justify-between">
                             <div className="flex space-x-2 items-center">
                                 <RhoIcon />
                                 <span>Rho</span>
                             </div>
-                            <span>0.9812</span>
+                            <span>{formatGreek(rho)}</span>
                         </div>
                     </div>
                 </div>

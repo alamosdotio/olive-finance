@@ -16,6 +16,7 @@ import { addWeeks } from "date-fns";
 import { useOptionsPricing } from "@/hooks/useOptionsPricing";
 import { setOptionParameters } from "@/lib/optionsDatafeed";
 import { ToastContainer } from "react-toastify";
+import { useGreeks } from "@/hooks/useGreeks";
 
 export default function Homepage(){
     const [active ,setActive] = useState('chart')
@@ -48,6 +49,13 @@ export default function Homepage(){
     const k = parseFloat(strikePrice);
     
     const premium = useOptionsPricing({
+        type: contractType,
+        currentPrice: s,
+        strikePrice: k,
+        expiryDate: expiry
+    })
+
+    const greeks = useGreeks({
         type: contractType,
         currentPrice: s,
         strikePrice: k,
@@ -114,7 +122,14 @@ export default function Homepage(){
                         premium={premium.premium}
                         contractType={contractType}
                       />
-                      <GreekPopup value={payAmount}/>
+                      <GreekPopup 
+                        value={payAmount}
+                        delta={greeks.delta}
+                        gamma={greeks.gamma}
+                        theta={greeks.theta}
+                        vega={greeks.vega}
+                        rho={greeks.rho}
+                      />
                       {active === 'trade' && (
                         <ProtectedRoute fallback={<TradingPositionsFallback/>}>
                           <TradingPositions />
