@@ -2823,9 +2823,647 @@ export const PRICE_FEEDS: priceFeed[] = [
     {
         "token": "Equity.US.ZTS/USD",
         "id": "0xc79170bfddf87b4c4ef6f1cefbe92b23eaac21ce29cbffc2bb24cab51dcf10d6"
-    }
+    },
+    //Non-USD
+    
+    {
+        "token": "Equity.CN.510310/CNY",
+        "id": "0x150436e6b1b3e104c4bcc850950a659d06445b3abdcf088c31897bfcaf6967f9"
+    },
+    {
+        "token": "Equity.CN.510330/CNY",
+        "id": "0x20999d58c48bc25fc2db78aa45a13d16677afd7f152d9a8af5cc62d3f26079a1"
+    },
+    {
+        "token": "Equity.FR.C3M/EUR",
+        "id": "0x5372f717fd6845e363b0268d0a0bee8f479c3aa23f1152a507557d9f2b2d0546"
+    },
+    {
+        "token": "Equity.GB.AAF/GBP",
+        "id": "0x7afd29f3c35f70a59fb5f491026f1a3e1dad2578932c0cf12e5d6875df6fda4d"
+    },
+    {
+        "token": "Equity.GB.AAL/GBP",
+        "id": "0x6933a1dfe481cefd8f6d96c53e8d3260af5848f6793bc2c2bf0f9ef9a9ecd999"
+    },
+    {
+        "token": "Equity.GB.ABF/GBP",
+        "id": "0x72bd42358798e4c7b20e608f0d4dd704db6566ac889fe709161ad6ad01f416d3"
+    },
+    {
+        "token": "Equity.GB.ADM/GBP",
+        "id": "0x733fe4ffe6704fc2bc69981e1db69699250c0c561bb129d41599d22908d0d2a4"
+    },
+
+    {
+        "token": "Equity.GB.AHT/GBP",
+        "id": "0x040bdbbf8d4cf58e053ebe527aed51a6f7b9a3ebd9fe07d2884e537417b51f82"
+    },
+    {
+        "token": "Equity.GB.ALW/GBP",
+        "id": "0x9fd3794898be3dfe3951ed9ec2306d317cfb714ad7239bf189b47a96d679f114"
+    },
+    {
+        "token": "Equity.GB.ANTO/GBP",
+        "id": "0xcb6b4b7241ca3f475a0b342b2fa1056edb3bbe85b833de87a91964cb97c6c7ab"
+    },
+    {
+        "token": "Equity.GB.AUTO/GBP",
+        "id": "0xa2226626945592475e25a17bc769508a07e95a6378b836c538c7cee4867ab28e"
+    },
+    {
+        "token": "Equity.GB.AV/GBP",
+        "id": "0xc04c79e6ba7d90eefa087a70f606fdc3bfecadbbb2dacc9dbc5d68e26ba13002"
+    },
+    {
+        "token": "Equity.GB.AZN/GBP",
+        "id": "0xa637b76c2fc7f928fab462a999fc65ecd8493142d8d6e1c67b96a352d0d20b08"
+    },
+    {
+        "token": "Equity.GB.BA/GBP",
+        "id": "0x6f107ff8ec8d9c02b6180538be5167196eb0d7bcc42d7e737ee84524b2be191e"
+    },
+
+    {
+        "token": "Equity.GB.BARC/GBP",
+        "id": "0xa60cc52c5587ceab4a122a9a76f52edcfed73509a076441bad681dc04a0ebb59"
+    },
+    {
+        "token": "Equity.GB.BATS/GBP",
+        "id": "0xd702a51d5b5179e0d207051e8f133e0cf16b026fb8b363ac039fa65d6c8ea6eb"
+    },
+    {
+        "token": "Equity.GB.BEZ/GBP",
+        "id": "0x6fcc8aa358c7643b3c81ffd016ac80776addedd99eb643ce81826a27739b4750"
+    },
+    {
+        "token": "Equity.GB.BKG/GBP",
+        "id": "0xad47427cedeb8fcfef5b44c9e36ad34098fbaeb374a545b1a3f37f6ce39deae7"
+    },
+    {
+        "token": "Equity.GB.BLND/GBP",
+        "id": "0xa7e208af4e00879b57e9ea4a10288ae4f6ee93abc33eefad9ea23484ddf87211"
+    },
+    {
+        "token": "Equity.GB.BNZL/GBP",
+        "id": "0xea48f26a559f137aa0f530a5bbf9467b2c0a5a44df7819c56717464e7bef0ec2"
+    },
+    {
+        "token": "Equity.GB.BP/GBP",
+        "id": "0x1fb5b82a43cafadad1e148ebc874bbdba1dd1ece9fe6f5559ccfbae1669e79c9"
+    },
+
+    {
+        "token": "Equity.GB.BTA/GBP",
+        "id": "0x96295040b6801e18e480904a28fb6efb1b859a2683b804505ac188361b4db223"
+    },
+    {
+        "token": "Equity.GB.BTRW/GBP",
+        "id": "0xd689e62fae0e72002ff44db79937dc66627d237b571345607fe746ad01d866fe"
+    },
+    {
+        "token": "Equity.GB.CCH/GBP",
+        "id": "0x6a62a570cde075c5d1d728c7e8ffb876d3d943fb7da3b2f72f6e32c8ce454181"
+    },
+    {
+        "token": "Equity.GB.CNA/GBP",
+        "id": "0xaf4096a8c681312295ae72d877a4e6a627ea5ebd5928b1eb754caf55a75e2f92"
+    },
+    {
+        "token": "Equity.GB.CPG/GBP",
+        "id": "0x5c1d2b8d904d8076cadda4310c5d0cb9dd41eef03850e07b16a7bec7cb256590"
+    },
+    {
+        "token": "Equity.GB.CRDA/GBP",
+        "id": "0xbd01f61828479cdb79344c29cc27cff529cc6ac03595762df4db668e0edb69ee"
+    },
+    {
+        "token": "Equity.GB.CSPX/USD",
+        "id": "0x6d881ecf489bb24aa10468ca332e3ea262a9bf3a8fb9db1eadac9cce544b16b1"
+    },
+
+
+    {
+        "token": "Equity.GB.CTEC/GBP",
+        "id": "0x2c43b5ffda4ddef90f9261d6705f00fe9e7440670eea3adca9c8c7675471d4d5"
+    },
+    {
+        "token": "Equity.GB.DCC/GBP",
+        "id": "0x683b07c0113c6eb7cb1dcaa72ca7d2775235a8fb2bb052e951c4fe72a2f9c15f"
+    },
+    {
+        "token": "Equity.GB.DGE/GBP",
+        "id": "0xfe4b5108a2382891f862ca80628acb316abaf0d1c110c2ca9c87ba27670ba83b"
+    },
+    {
+        "token": "Equity.GB.DPLM/GBP",
+        "id": "0x034d1f6d28b211c84e7902b24eb209e463ffb798ee940943c2835366b5320cab"
+    },
+    {
+        "token": "Equity.GB.EDV/GBP",
+        "id": "0x9a01dced50be45e47b6e22144a6706dbc8226128248fd5ae4096cf8d1c2ac90d"
+    },
+    {
+        "token": "Equity.GB.ENT/GBP",
+        "id": "0x2956b3738f8f1a0007008b5f490ec230ccf1c1a0998bdfb8ad230ea5957c5e2a"
+    },
+    {
+        "token": "Equity.GB.EXPN/GBP",
+        "id": "0xa23381e9a952b39dfea3593e84c41e412ad4dfedac29981d348eb1742263f6d1"
+    },
+
+    {
+        "token": "Equity.GB.EZJ/GBP",
+        "id": "0x0d54f44453f2068ee0910a7abf931af611c675049f3c2ece1a7084aac69c4593"
+    },
+    {
+        "token": "Equity.GB.FCIT/GBP",
+        "id": "0xe7718a55c812787267b06ff8f7f42a7d82a5f92406b343fcf09db8d095360832"
+    },
+    {
+        "token": "Equity.GB.FRES/GBP",
+        "id": "0x98309bfbdd38714f62daae9fa0f145ea11445b8c8648ec0003b19bbd13585785"
+    },
+    {
+        "token": "Equity.GB.GAW/GBP",
+        "id": "0xab5ac3a797d02f0159cea2097c4576ebb29afd60f7b7a6845617e8295a206d20"
+    },
+    {
+        "token": "Equity.GB.GLEN/GBP",
+        "id": "0x8f9c6d4c66c67ad15b0a872e06ac223753ebda26f84b48a501f760d49fad0631"
+    },
+    {
+        "token": "Equity.GB.GSK/GBP",
+        "id": "0x755cd5b667d6abd763ce30327fd98681689cb27e2337ab3296ea54f82e059f2e"
+    },
+    {
+        "token": "Equity.GB.HIK/GBP",
+        "id": "0x5a4159cbc9d623070fd6f70b9edb7bc4fdc9dcd1d9be2a30e9bb02fdce8eb09a"
+    },
+
+    {
+        "token": "Equity.GB.HLMA/GBP",
+        "id": "0x3146b6ae143235d85a3cdff8be210b2a4629dd1c20ed634fa046a2e63b184c42"
+    },
+    {
+        "token": "Equity.GB.HLN/GBP",
+        "id": "0x0a9ad2666c0bf241cf67a83ee8f3ac7ae38dfbc24d83bc00675fee5569f72074"
+    },
+    {
+        "token": "Equity.GB.HSBA/GBP",
+        "id": "0x23ae36a89ccacc8ed0d3a933546fb2db0065bf4c8d56161293cb7e3521a8c331"
+    },
+    {
+        "token": "Equity.GB.HSX/GBP",
+        "id": "0x2c294be2b538a817e375ce2727ed6d3a027d728e3627bb03c97d554d940ba55c"
+    },
+    {
+        "token": "Equity.GB.HWDN/GBP",
+        "id": "0x0270c75fbb9d695c30a09cd5c247675d80f75340274252c6742eea62d11c317c"
+    },
+    {
+        "token": "Equity.GB.IAG/GBP",
+        "id": "0x99f0d376ff77efbabfa09202bf6f19a8716a1c43657b32c921e1bbd852b629c3"
+    },
+    {
+        "token": "Equity.GB.IB01/USD",
+        "id": "0x45b05d03edb6081e7ae536b94b450a42f43e6342791c560a481030b41f9b945d"
+    },
+
+    {
+        "token": "Equity.GB.IBTA/USD",
+        "id": "0x8086320540b3d7b9b4b564e6756a29a9cb91a7cd97d5fafff63841959d3a09a0"
+    },
+    {
+        "token": "Equity.GB.ICG/GBP",
+        "id": "0x6b989b5fcc1e1d81808f2a85486af2ba82a0ef9023cfefc1c269c9d47ec57081"
+    },
+    {
+        "token": "Equity.GB.IHG/GBP",
+        "id": "0x3c6a628b82864989754205afbafd0f69c756cb1af351af8bc744ecfbceb85c6f"
+    },
+    {
+        "token": "Equity.GB.III/GBP",
+        "id": "0x07b9c356e71df39385d541c0d7564c00825e25a5d9cb38e983f7711bb319695c"
+    },
+    {
+        "token": "Equity.GB.IMB/GBP",
+        "id": "0x968825d1093b823a437448576bda4c54c691c681a7e84605386043ea969caa6d"
+    },
+    {
+        "token": "Equity.GB.IMI/GBP",
+        "id": "0x963bc79ec349e0a95fe4c0f62d0a4ff1c2c2ae7bad6dbac0eff05b7ebdc4bc24"
+    },
+    {
+        "token": "Equity.GB.INF/GBP",
+        "id": "0x597813341c4bc9f3c6c5538fa03dbabb1c1a971de9df3367409c9b6b648efa90"
+    },
+
+    {
+        "token": "Equity.GB.ISF/GBP",
+        "id": "0x11aca907d2bdfcd7b4d62fd15ac40fb9cb73760322d0f9ab0386503f4745c445"
+    },
+    {
+        "token": "Equity.GB.ITRK/GBP",
+        "id": "0x7678cd55ad35547dd012c118b95be15a1b6e60e6a0095301941472a729d66bf1"
+    },
+    {
+        "token": "Equity.GB.JD/GBP",
+        "id": "0x5364ca7da542969c6977f06dbb21386d39184e9b556d2e5ca9e6c67f1766bd1e"
+    },
+    {
+        "token": "Equity.GB.KGF/GBP",
+        "id": "0x379581431238c4848597628126b5c1ffabe1911e151508ecd00e0a31957187c0"
+    },
+    {
+        "token": "Equity.GB.LAND/GBP",
+        "id": "0xbec4c1932e5db9ade321ce7934b5f31d532ec70922034b5b2f75b4985ce8de4c"
+    },
+    {
+        "token": "Equity.GB.LGEN/GBP",
+        "id": "0x4a5717b6ac4ac00479bc9edadbdb420a257f662674d0443b65b9f2f68d38b648"
+    },
+    {
+        "token": "Equity.GB.LLOY/GBP",
+        "id": "0x3d3b5f16b89d24f26daf0fdfdf98278a1e03b89ed8468e068a1dd58fd396c815"
+    },
+
+    {
+        "token": "Equity.GB.LMP/GBP",
+        "id": "0x45d6ece82e3596f017a815fafa768ee201275589e0342389cfaeb7966582ad74"
+    },
+    {
+        "token": "Equity.GB.LSEG/GBP",
+        "id": "0xab429f879290f2c0fd37e84a6b8e0c3a3d5fbfc106bac7e71664cf44d84e4f91"
+    },
+    {
+        "token": "Equity.GB.MKS/GBP",
+        "id": "0xac3eaae8586a3bb2c644021309963f09065f8f878bea83768eb7d60561d8fefe"
+    },
+    {
+        "token": "Equity.GB.MNDI/GBP",
+        "id": "0x1d2c2dbf3b483a0895f24f0295103cd74fa841f743da32d78085dc02ee4a4156"
+    },
+    {
+        "token": "Equity.GB.MNG/GBP",
+        "id": "0x178d0d973d4cabb0323fb50aa043e9f9d384d904d70340a4e794e20e6d5986e6"
+    },
+    {
+        "token": "Equity.GB.MRO/GBP",
+        "id": "0x73fd681bf8a157d8cd5e9aed978a474d7fed699402e370d863e8020516a83444"
+    },
+    {
+        "token": "Equity.GB.NG/GBP",
+        "id": "0x0c1b04494d698f8f5d772822c47248153a32aea9fc07fd542c376d487efa30d8"
+    },
+
+    {
+        "token": "Equity.GB.NWG/GBP",
+        "id": "0xaa8aa008443dd20c6f569c653fb0f44bb3fdeed6f26084cb6a0a4785c95c0f62"
+    },
+    {
+        "token": "Equity.GB.NXT/GBP",
+        "id": "0x4242a7777bc209a5f05cce7611ee3ab037281baf8bee7848ae96b6ec1840483d"
+    },
+    {
+        "token": "Equity.GB.PHNX/GBP",
+        "id": "0x420c0521619ff01100f053cdfd27b06f25c59a98256bf9d10b97b5f500e3488c"
+    },
+    {
+        "token": "Equity.GB.PRU/GBP",
+        "id": "0xdb30d3be7afb5b4c472a02502c43a48a5c0c295d8d4b1a850114c491f297133c"
+    },
+    {
+        "token": "Equity.GB.PSH/GBP",
+        "id": "0x2ad321b77e925225e0000e3a618ac75076f290257533847287b53e6b51eab6bc"
+    },
+    {
+        "token": "Equity.GB.PSN/GBP",
+        "id": "0x5f0be72c8df13ed6bc403ed1f0395c5323d7ec148e5d57cbd5a8c7000be7d5e2"
+    },
+    {
+        "token": "Equity.GB.PSON/GBP",
+        "id": "0x8fe8b63b83c0961c059c24dcbb03ac9966b586662a0146e0321df923dde60818"
+    },
+    {
+        "token": "Equity.GB.REL/GBP",
+        "id": "0x6c6e7b3af79a3843cbd07181d1e5ae3de8757b587afac09df94b239630db4d5c"
+    },
+    {
+        "token": "Equity.GB.RIO/GBP",
+        "id": "0xd21c420077ba3c132b9f9f5615786db26cf5dcd334fab5475d600416b194eda2"
+    },
+    {
+        "token": "Equity.GB.RKT/GBP",
+        "id": "0x095a86c0a5767f8b5372b4c85a117ef07fc3bb59b6981ace5186fdc0558b2669"
+    },
+    {
+        "token": "Equity.GB.RMV/GBP",
+        "id": "0x6be78abf6e4da7a4f4381f306c4accaa87aa7a969f7fea3782981adf3f838384"
+    },
+    {
+        "token": "Equity.GB.RR/GBP",
+        "id": "0xe54d0c3cef618e85839218bd7c79712d2b2b479b4e5905a31e9a45f0c25c2af3"
+    },
+    {
+        "token": "Equity.GB.RTO/GBP",
+        "id": "0x4342f2527ffb83124666d7d5a8176c93261a5c1c55a31a817bd78c6a117449c9"
+    },
+    {
+        "token": "Equity.GB.SBRY/GBP",
+        "id": "0x882883b2c3ccf9fc413967f4ea1938dfc9fed358654459a61f1616eabf1ece80"
+    },
+    {
+        "token": "Equity.GB.SDR/GBP",
+        "id": "0x3af52229ecfae9740e9de7cb2350af8103011bc3a4aaed9093f0c63dc7d5d106"
+    },
+    {
+        "token": "Equity.GB.SGE/GBP",
+        "id": "0x4838fb4b15b5f3bef939c8e3d423c6b5fb191e40a481cbe3eb8bf64cae712583"
+    },
+    {
+        "token": "Equity.GB.SGRO/GBP",
+        "id": "0x85a3293cca41e75c2f0dafe18cc0e6694e9a9ecc92395a97e4a395825cd18c88"
+    },
+    {
+        "token": "Equity.GB.SHEL/GBP",
+        "id": "0xc972c864b4247e56c9b040862e87b19d5f9d1ad2afda2af49506300fb4c269de"
+    },
+    {
+        "token": "Equity.GB.SMIN/GBP",
+        "id": "0x8da11d224f395cea6d99b5bce91950bc81a95d8791600a2637790fb333f99e67"
+    },
+    {
+        "token": "Equity.GB.SMT/GBP",
+        "id": "0xfbceeec3e08fa0907cd5790f1ca32ebfa31dc45d619fecd6186b1dab0ff7c4a3"
+    },
+    {
+        "token": "Equity.GB.SN/GBP",
+        "id": "0x46c71d965035a8d8659de74885f0f3fe805287bac7b50b65b8eb3f3ef41c74ee"
+    },
+    {
+        "token": "Equity.GB.SPX/GBP",
+        "id": "0xc9854722061e0d255f8eff067019a9f74b4f92d9b8b8c08151fa882885edbb84"
+    },
+    {
+        "token": "Equity.GB.SSE/GBP",
+        "id": "0x1ce91489704e9636877742cc68cdd30bf9541c638aa1c111641ea2718546179f"
+    },
+    {
+        "token": "Equity.GB.STAN/GBP",
+        "id": "0x3c38ca8a994518101b0c0f716f1cd8c9a6539ec685ac2dcab732e795a1d22f94"
+    },
+    {
+        "token": "Equity.GB.STJ/GBP",
+        "id": "0xc204f66d8fc6a1e08b207970cfc237b2f4610fff10d2af17fb3809b3ac33ffde"
+    },
+    {
+        "token": "Equity.GB.SVT/GBP",
+        "id": "0x1a0ab11f6df1b2ff257776a746782243a1dc9bb0597cfc8c4a07ac772b03dc5e"
+    },
+    {
+        "token": "Equity.GB.TSCO/GBP",
+        "id": "0x16368d5be7aa57db21860c4692c82449556fdc2490af15c13dd0e190170d7a1b"
+    },
+    {
+        "token": "Equity.GB.TW/GBP",
+        "id": "0x8be4ab9f8e5864fc5802e376de48d1d5a9d80873657f8dd9175b66d7ab0cb89b"
+    },
+    {
+        "token": "Equity.GB.ULVR/GBP",
+        "id": "0xe2fd4ae39decd0a3e91aab639c506124feadaf6573776d4838be31e053f34bcf"
+    },
+    {
+        "token": "Equity.GB.UTG/GBP",
+        "id": "0x9116f5730a120f668848a858a2f2563a629b816ce78c37c3a85b5d4a6e031dc8"
+    },
+    {
+        "token": "Equity.GB.UU/GBP",
+        "id": "0x9089a28f8cc25753d75676afc2f96ecf35703a33d495a8d0583d0160c379af1a"
+    },
+    {
+        "token": "Equity.GB.VOD/GBP",
+        "id": "0x8a88e69ffd466c12b429fe65d8c45fbdc181b340bc23fcc623ef7c8a637e92d1"
+    },
+    {
+        "token": "Equity.GB.WEIR/GBP",
+        "id": "0x16191e61f0ae3ebbdaf568d9617ac572ca3ce3f4fd6c4759d5c2ddfb312b350f"
+    },
+    {
+        "token": "Equity.GB.WPP/GBP",
+        "id": "0x62ecc2c34d56b195828e851e3f25c907452ce0c8c1324dede50e663b400d22d5"
+    },
+    {
+        "token": "Equity.GB.WTB/GBP",
+        "id": "0x1388513a22827940d404bfb2440679ae78747d52f7a6ec1f1c3880fee2d408ef"
+    },
+    {
+        "token": "Equity.GB.NG/GBP",
+        "id": "0x0c1b04494d698f8f5d772822c47248153a32aea9fc07fd542c376d487efa30d8"
+    },
+
+    {
+        "token": "Equity.HK.0002-HK/HKD",
+        "id": "0xb360fcd1e6f90694e6d20640c90f20b09fb76b6dcd4fd890b4c7361b8b93ce82"
+    },
+    {
+        "token": "Equity.HK.0003-HK/HKD",
+        "id": "0xfb4eca232d42a8f4687f4af997ef279857b8d44d9b84d79b6854872212ebbc37"
+    },
+    {
+        "token": "Equity.HK.0012-HK/HKD",
+        "id": "0x69f6626a3c359ca9475ef892f18113d724b15c348f603c66889fd5beb0907bb5"
+    },
+    {
+        "token": "Equity.HK.0017-HK/HKD",
+        "id": "0xadd612726e57b1dbb7fdbb9a85de4ccb1e52edf1ce7c35fc672c5543db8c1a34"
+    },
+    {
+        "token": "Equity.HK.0027-HK/HKD",
+        "id": "0x35601ad68cf21b0bc2e8a3d8795fc81af7d7066ad096dbddd0d10a0744293ec4"
+    },
+    {
+        "token": "Equity.HK.0101-HK/HKD",
+        "id": "0x2d47ac295f7156b2b3a724d31034b230ed7e74414ea3e642e2c7f4425cc0a8f4"
+    },
+    {
+        "token": "Equity.HK.0241-HK/HKD",
+        "id": "0xb71f8dd03a414bf0e9a97bfa2cc230779b02f6e72eb134c67c1ae4c0ccce40ff"
+    },
+    {
+        "token": "Equity.HK.0267-HK/HKD",
+        "id": "0xd4556a535e854e23f4df33b569aba1da65f45278e340ce9dede8436c02d3da39"
+    },
+    {
+        "token": "Equity.HK.0669-HK/HKD",
+        "id": "0xb58705ca9d9a6eb06a68e05ace82fdf69bd71073cae5d3a8e1a13d85ce9aa328"
+    },
+    {
+        "token": "Equity.HK.0700-HK/HKD",
+        "id": "0x2229ed6410e4f9e0a91b74a2f08c3048cfb6c2c80b3f1a4dbbfb8765b653cef1"
+    },
+    {
+        "token": "Equity.HK.0883-HK/HKD",
+        "id": "0x6fc494c3a1b707ba9d391a94b34d4b3ce5b1131be304feca614acd38136de3eb"
+    },
+    {
+        "token": "Equity.HK.0939-HK/HKD",
+        "id": "0x2eb638879348c112357d8dae148bc1e162aa7a372b118235b92b675274fbcdf5"
+    },
+    {
+        "token": "Equity.HK.0992-HK/HKD",
+        "id": "0xedee2a6a61d87da880ddcb04244cf1f6e78c3a8c80f7f35f1445e900439fb681"
+    },
+    {
+        "token": "Equity.HK.1038-HK/HKD",
+        "id": "0xd61292575b7bbf7c8e8c64be4b4b88e4a23b653265392c76a8a10ec8073d9c6a"
+    },
+    {
+        "token": "Equity.HK.1044-HK/HKD",
+        "id": "0xec026006000639cbac4a83bcbf6e236c0770979fd49fe6d72bb47debf72d1099"
+    },
+    {
+        "token": "Equity.HK.1093-HK/HKD",
+        "id": "0x701eda42f3c80db841fc613051f2e92c5703ccccccd73e53eaa6e73b82a9098a"
+    },
+    {
+        "token": "Equity.HK.1109-HK/HKD",
+        "id": "0xda8c958bc21eb6c80a56a144b47d8e17d4a2f587825f740d01fce88f52db9dd5"
+    },
+    {
+        "token": "Equity.HK.1209-HK/HKD",
+        "id": "0xce0aab65ecf9314d3952e4c053704861e33ec665b05746d0a0d4edd4c02f37cd"
+    },
+    {
+        "token": "Equity.HK.1211-HK/HKD",
+        "id": "0x491d2a4356b490d041a34730ad7fe54f7ed0483e6eb7a279feca7fe4b61fa4da"
+    },
+    {
+        "token": "Equity.HK.1398-HK/HKD",
+        "id": "0xaef44626f9307dab733b34f31e95cde3e461664aa06d46daf6c8548f376bb7fe"
+    },
+    {
+        "token": "Equity.HK.1810-HK/HKD",
+        "id": "0xf4481e13c8640b78f48407c2db150f42a2e6861e173bb54ed50abe142d5cf62d"
+    },
+    {
+        "token": "Equity.HK.2015-HK/HKD",
+        "id": "0x51d6595b72b9771f8b84e62cb5f6a97013776527af037ea6dd7a62c446ce5c56"
+    },
+    {
+        "token": "Equity.HK.2020-HK/HKD",
+        "id": "0xfcc9259faab5496bd9a840e91dca556f456dd97a629310a686b5da19eb03095f"
+    },
+    {
+        "token": "Equity.HK.2269-HK/HKD",
+        "id": "0xa79471b8128c37e8193306b255521d2c8b5d7b3dd76673aad38abb3c7e42c825"
+    },
+    {
+        "token": "Equity.HK.2319-HK/HKD",
+        "id": "0xe91f9916ed39b71f95cf6ecfea5c64b4ea5d6500f914c76b92061c03ca9376f3"
+    },
+    {
+        "token": "Equity.HK.2331-HK/HKD",
+        "id": "0xa0f6917a0b53d31a33709c79237ea251ed4b3fcac27d9a65da225a7861bd87ff"
+    },
+    {
+        "token": "Equity.HK.2628-HK/HKD",
+        "id": "0x1acf9ce68f57d72a7c463a4127ea4bd9bdf5879c177062054b16918b6ec7df65"
+    },
+    {
+        "token": "Equity.HK.2688-HK/HKD",
+        "id": "0x612b8601b4023a6e8ad521db8b9b3a8755eda09b24d5c223a1d7574f7e86f713"
+    },
+    {
+        "token": "Equity.HK.3690-HK/HKD",
+        "id": "0x319b800060fb51b527409057632a5d8d60fc84f59ea0892cb23d91a1fb8b25c4"
+    },
+    {
+        "token": "Equity.HK.6690-HK/HKD",
+        "id": "0x1146c2a0a350b59854b5dfa9e9764654848b36936deeab01b521c296cadd2b62"
+    },
+    {
+        "token": "Equity.HK.9618-HK/HKD",
+        "id": "0x560cce1d2a2ab99b1d0cc828d970ba631598fe7d69b0998959b61a188b82c17b"
+    },
+    {
+        "token": "Equity.HK.9633-HK/HKD",
+        "id": "0x7ba7dce08b4c8a42335b12df281268b75b6180158ce3978c617f5bf3d400f2cc"
+    },
+    {
+        "token": "Equity.HK.9888-HK/HKD",
+        "id": "0x0df0e9628ac319fd8b7f64e3529f35642d568173e1e42009740424408f7e36a8"
+    },
+    {
+        "token": "Equity.HK.9988-HK/HKD",
+        "id": "0x2920e88a90a1b49ee633abc4bc0c4b399f01764d51fcfae8b93da6d2aa0fcb58"
+    },
+
+    {
+        "token": "Equity.IE.CSP1/GBP",
+        "id": "0xb2b6cb3dbbfabe4c37b99e11e3e068da037b5455bc58aac5924f2b96d5accf02"
+    },
+    {
+        "token": "Equity.IE.EUE/EUR",
+        "id": "0xdd08f0a40e21ce42178b25bdd9461a2beebccbaa2a781a6e02b323576c4072ab"
+    },
+    {
+        "token": "Equity.IE.VUSA/CHF",
+        "id": "0xf48024e7b8df89c416073b2a67c8a586ab0cb8409471a5daa52812ae48594772"
+    },
+    {
+        "token": "Equity.IE.VUSA/EUR",
+        "id": "0x9cecbb4f3744f4201aab46431e5587a931dfb6e02567f7c3d73f93b3c9fdeead"
+    },
+    {
+        "token": "Equity.IE.VUSA/GBP (Coming Soon)",
+        "id": "0xccdeebc019c8cd28b81f47a03999f9e905e87cd9320c268908649e411be0bf2a"
+    },
+    {
+        "token": "Equity.IE.VUSD/USD",
+        "id": "0xd3d665a78af7009400ed7ee20a9dfbac60fd19ba6d30ab67ef1289cdc4635b13"
+    },
+    
+    {
+        "token": "Equity.JP.1305/JPY",
+        "id": "0x296a14172d63e3a49376dec43593483d048eba72504d08c50de03977e22cbc38"
+    },
+    {
+        "token": "Equity.JP.1306/JPY",
+        "id": "0xc133ee357791942e1002f0b09590a285c66bdf26ecb8e7103e819aa2e1dbd5d2"
+    },
+    {
+        "token": "Equity.JP.1308/JPY",
+        "id": "0x9a13e9f0b074e0c5cd78c9bc2375068b61d9e086f669fe150f0a8c0ae047153b"
+    },
+    {
+        "token": "Equity.JP.1320/JPY",
+        "id": "0xa711d77befd0fd9109f8d7605a45b44402959b953ae5dcd883614087a73d417b"
+    },
+    {
+        "token": "Equity.JP.1321/JPY (Coming Soon)",
+        "id": "0x62454bd808fe2f611fa91a09749537ed9cee6023ac737461ae17ab54b184e44c"
+    },
+    {
+        "token": "Equity.JP.1330/JPY",
+        "id": "0x775e348785da6800e0a3b0f7d893c50cd764478e55f2ddd4e9bc02081f23ad24"
+    },
+
 
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
