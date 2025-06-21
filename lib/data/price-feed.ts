@@ -335,6 +335,7 @@ export const PRICE_FEEDS: priceFeed[] = [
         id: '0x3b9f8ee08c4dedaf70133256945518df1f037449c9d81cc678907694bdad3f0f'
     },
     
+    //Non-crypto assets on Pyth Network
     //BA-BWA
     {
         token: 'Equity.US.BA/USD',
@@ -467,7 +468,221 @@ export const PRICE_FEEDS: priceFeed[] = [
     {
         token: 'Equity.US.BWA/USD',
         id: '0x20e3150670edc7674cf130f844934de184fb497c271499d6c4b9ffad3c41ff0f'
+    },
+
+    //Non-crypto assets on Pyth Network
+    //CBOE-CZR
+
+    {
+        token: 'Equity.US.CBOE/USD',
+        id: '0x566241bb0d53283a8a1765b759341490dbf69e7fa7653c4b5f86aabf37567595'
+    },
+    {
+        token: 'Equity.US.CBRE/USD',
+        id: '0xc153deece90e57f0c4b2bd1b693deed41e32a8117fd6eb8269a49e71d5080292'
+    },
+    {
+        token: 'Equity.US.CCEP/USD',
+        id: '0xfd06662626076e1bd5c6cac35a92d1466f4d11b243e6c28fbc4a96c456275d93'
+    },
+    {
+        token: 'Equity.US.CCI/USD',
+        id: '0xd346bf2b5a30cbcb8092c1eed6afe9e747bb5a6a63ed7c008164cb280c64754c'
+    },
+    {
+        token: 'Equity.US.CCL/USD',
+        id: '0x2e92206274d7a8d2fe094d7ef448724608bdb231b3096ceac004fc44e12975db'
+    },
+    {
+        token: 'Equity.US.CDNS/USD',
+        id: '0xa2168b2c613dcd4b8c0f50e255b61a1c5dfdf750eddaf09bade719b9ceb573a0'
+    },
+    {
+        token: 'Equity.US.CDW/USD',
+        id: '0x3cb1afe7c1f9633ec2245e2ae902d431989d86e67fe69a999ea4736365226049'
+    },
+    {
+        token: 'Equity.US.CE/USD',
+        id: '0x6463830f5008818cb88359ee283973c92ef1edd8ea025aa75a5c75032a63e186'
+    },
+    {
+        token: 'Equity.US.CEG/USD',
+        id: '0xa541bc5c4b69961442e45e9198c7cce151ff9c2a1003f620c6d4a9785c77a4d9'
+    },
+    {
+        token: 'Equity.US.CF/USD',
+        id: '0xe2bad4d409637556216267dbb29fcb27d23e263ae12ab5acbb68b309ba17783d'
+    },
+    {
+        token: 'Equity.US.CFG/USD',
+        id: '0xc7c24c987c84f7c76bde1a1d50ff04624422d9ac68bd8f039a57a30e24dc524b'
+    },
+    {
+        token: 'Equity.US.CHD/USD',
+        id: '0x29f6892fec85377d66086b3c323e298c2a0bf133551e9a0a91c150b95517aec5'
+    },
+    {
+        token: 'Equity.US.CHRW/USD',
+        id: '0xf2df0a854dc8f45e9c6f93bb7e4e2720c920b2a5208afba18075a87fb5a6f6ed'
+    },
+    {
+        token: 'Equity.US.CHTR/USD',
+        id: '0x1585a2b6467e2bf7788d6c58ab4b0f2259610d5997f8aa7b6c160417250c71f8'
+    },
+    {
+        token: 'Equity.US.CI/USD',
+        id: '0x50792163ea9ceb6e4142a4ae35845e4ca4c559b89bbf6cb3d426f79534717401'
+    },
+    {
+        token: 'Equity.US.CINF/USD',
+        id: '0x2bdf663a6dacfbb4f986adc98d833cbdd206ab64d6f5fb0cd5470e91bb3985a0'
+    },
+    {
+        token: 'Equity.US.CL/USD',
+        id: '0x89b83912f0fe0c5091de834750cac3de2ff16b74b6a99bab7cbae25dd6585f4c'
+    },
+    {
+        token: 'Equity.US.CLX/USD',
+        id: '0x772e16ce4ffa670ed237b51edf04a153137998d06162517f75ad0baa45e118c4'
+    },
+    {
+        token: 'Equity.US.CMCSA/USD',
+        id: '0x1bd6720eea4df323c076c9bbc1e98e8f5fe4bd16584e56468c5fb6b1a6072725'
+    },
+    {
+        token: 'Equity.US.CME/USD',
+        id: '0x8773fef6b95d156416c3025d3a7b6f90b4a88b206038dde8000b1acddb714906'
+    },
+    {
+        token: 'Equity.US.CMG/USD',
+        id: '0xc1046358a2b78d92a2ad45b9d3c271350ab9335b478df21a390b8924cad91563'
+    },
+    {
+        token: 'Equity.US.CMI/USD',
+        id: '0x069463ea9b6c8741e39498539365f385d4fdf0acea213d1efdb6ddc30101d0dd'
+    },
+    {
+        token: 'Equity.US.CMS/USD',
+        id: '0x25be29dc1eae3448537076cf0d14ef2c43dbfd5de043256ead46fa01a19b425b'
+    },
+    {
+        token: 'Equity.US.CNC/USD',
+        id: '0x46c5fc6eefc5becf2f8dc3656357c21ef585feaf74bc94f0fc58f6f33fae1205'
+    },
+    {
+        token: 'Equity.US.CNP/USD',
+        id: '0xbf3a21d6b8dbb4df9e75df58c124be8248239c005d117fdb9e0f0ff434d1dfa8'
+    },
+    {
+        token: 'Equity.US.COF/USD',
+        id: '0x857c3a552953250d5b19db7341f3deaed12ff623f2db451e30581c266b23ab58'
+    },
+    {
+        token: 'Equity.US.COIN/USD',
+        id: '0xfee33f2a978bf32dd6b662b65ba8083c6773b494f8401194ec1870c640860245'
+    },
+    {
+        token: 'Equity.US.COO/USD',
+        id: '0xed5a005efa0f84a8acfab450ce4429c3dd57f7cd3284d04eb0c65820e062e85f'
+    },
+    {
+        token: 'Equity.US.COP/USD',
+        id: '0xd54d8d4e3774ea53660e660ecd03aa9daa31eed9b7e67d1a2aed3095b3e6720d'
+    },
+    {
+        token: 'Equity.US.COR/USD',
+        id: '0xec3594578eb750e3b9393433e983263baa18018db14e1d220c6845bf2fe480a3'
+    },
+    {
+        token: 'Equity.US.COST/USD',
+        id: '0x163f6a6406d65305e8e27965b9081ac79b0cf9529f0fcdc14fe37e65e3b6b5cb'
+    },
+    {
+        token: 'Equity.US.CPAY/USD',
+        id: '0x221834e0bb6002d75833e2aa4dcc4fdd26b8300a40e4546978946c3dff272c29'
+    },
+    {
+        token: 'Equity.US.CPB/USD',
+        id: '0x9b826f23dd771b0b4dfdcb76ff40db3b51c86e06fc2b62c1d4e5d69cf2942669'
+    },
+    {
+        token: 'Equity.US.CPNG/USD',
+        id: '0x5557d206aa0dd037fc082f03bbd78653f01465d280ea930bc93251f0eb60c707'
+    },
+    {
+        token: 'Equity.US.CPRT/USD',
+        id: '0x9bffd1e8d7b5f6c4890216b89d30393cf7284c540a9e0843c92490b58167302a'
+    },
+    {
+        token: 'Equity.US.CPT/USD',
+        id: '0xd71412c0ef13b400c49514108d5236f47c5c30906ac8ae7c65b40bca8a6a984b'
+    },
+    {
+        token: 'Equity.US.CRCL/USD',
+        id: '0x92b8527aabe59ea2b12230f7b532769b133ffb118dfbd48ff676f14b273f1365'
+    },
+    {
+        token: 'Equity.US.CRL/USD',
+        id: '0xffd5fb797551c47a8afbe371a3223489615969197332e02a412d79cd59a8423f'
+    },
+    {
+        token: 'Equity.US.CRM/USD',
+        id: '0xfeff234600320f4d6bb5a01d02570a9725c1e424977f2b823f7231e6857bdae8'
+    },
+    {
+        token: 'Equity.US.CRWD/USD',
+        id: '0xbaed936d3c6c2e34104e92c6b015b97ce96adc5ab4f04230c1270e1162e7a270'
+    },
+    {
+        token: 'Equity.US.CSCO/USD',
+        id: '0x3f4b77dd904e849f70e1e812b7811de57202b49bc47c56391275c0f45f2ec481'
+    },
+    {
+        token: 'Equity.US.CSGP/USD',
+        id: '0xc858b58bd00ea15770243cf7410c5fbcd09b4ff12775d6279464a2508d660932'
+    },
+    {
+        token: 'Equity.US.CSX/USD',
+        id: '0x74f3621e920f9a9d78595ed957c9090007d19e82f7c0edbe89a392bafec62c64'
+    },
+    {
+        token: 'Equity.US.CTAS/USD',
+        id: '0x3aac822069ed803b272ade5510441f32b97501963cad9598ae61238bd8843aa5'
+    },
+    {
+        token: 'Equity.US.CTRA/USD',
+        id: '0x5f28e3b079837ccba948864610ef7a436235aaed53d3b3c72e1c2b2d2d825407'
+    },
+    {
+        token: 'Equity.US.CTSH/USD',
+        id: '0x440045c78d204a0ec4aba5fdeebcc10a7eb9cd3a3df4a89e3aa917653db8ef04'
+    },
+    {
+        token: 'Equity.US.CTVA/USD',
+        id: '0x5fcafa59eadb26d764ed8de3d1ce071a4a9337dddf093ee8a7bace713aed7f22'
+    },
+    {
+        token: 'Equity.US.CVS/USD',
+        id: '0x016eb8866d4455bcce669bc745835fd1f00be9c9205602abb3a2b3cc31e993ff'
+    },
+    {
+        token: 'Equity.US.CVX/USD',
+        id: '0xf464e36fd4ef2f1c3dc30801a9ab470dcdaaa0af14dd3cf6ae17a7fca9e051c5'
+    },
+    {
+        token: 'Equity.US.CZR/USD',
+        id: '0x806724043f1c85300d24b61da4e03ea9840c059d2cb8ea248f005e6314d27052'
     }
+
+
+
+
+
+
+
+
+
+
 
 
 ]
