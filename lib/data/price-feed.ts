@@ -3449,6 +3449,152 @@ export const PRICE_FEEDS: priceFeed[] = [
         "id": "0x775e348785da6800e0a3b0f7d893c50cd764478e55f2ddd4e9bc02081f23ad24"
     },
 
+    //Metals
+    
+    {
+        "token": "Metal.XAG/USD",
+        "id": "0xf2fb02c32b055c805e7238d628e5e9dadef274376114eb1f012337cabe93871e"
+    },
+    {
+        "token": "Metal.XAU/USD",
+        "id": "0x765d2ba906dbc32ca17cc11f5310a89e9ee1f6420508c63861f2f8ba4ee34bb2"
+    },
+
+    //Commodities
+    
+    {
+        "token": "Commodities.BRENT1M",
+        "id": "0x374ddb8a25370dc3a997fd3c73103b1ac04c2cfd60103bf7f607fdb56c968e0d"
+    },
+    {
+        "token": "Commodities.BRENT2M",
+        "id": "0xa6416fd4788c8d0f0b5c7d9d93030f4f6b4a012a324771026f4b20d20114fcf4"
+    },
+    {
+        "token": "Commodities.BRENT3M",
+        "id": "0x6c4005cf9cc3c55690d8ad84a6487d5226f7fe732df55bfcfb76865061b0c10b"
+    },
+    {
+        "token": "Commodities.UKOILSPOT",
+        "id": "0x27f0d5e09a830083e5491795cac9ca521399c8f7fd56240d09484b14e614d57a"
+    },
+    {
+        "token": "Commodities.USOILSPOT",
+        "id": "0x925ca92ff005ae943c158e3563f59698ce7e75c5a8c8dd43303a0a154887b3e6"
+    },
+    {
+        "token": "Commodities.WTI1M",
+        "id": "0xeca3fb7e6be5be55a01678ee00f6405b9e4986e32d539ccd2a06a57e0c615880"
+    },
+    {
+        "token": "Commodities.WTI2M",
+        "id": "0xce78914f5aa6494591e123a5d5a8623fd85fe0fd247b97552177b48c2859eb1a"
+    },
+    {
+        "token": "Commodities.WTI3M",
+        "id": "0xc1ef96cd5a8c25e780ddc7e9e1dfaa9809e6a82ab8b58dbf233c47e9501f0176"
+    },
+
+    //Forex
+    
+    {
+        "token": "FX.AUD/USD",
+        "id": "0x67a6f93030420c1c9e3fe37c1ab6b77966af82f995944a9fefce357a22854a80"
+    },
+    {
+        "token": "FX.EUR/USD",
+        "id": "0xa995d00bb36a63cef7fd2c287dc105fc8f3d93779f062f09551b0af3e81ec30b"
+    },
+    {
+        "token": "FX.GBP/USD",
+        "id": "0x84c2dde9633d93d1bcad84e7dc41c9d56578b7ec52fabedc1f335d673df0a7c1"
+    },
+    {
+        "token": "FX.NZD/USD",
+        "id": "0x92eea8ba1b00078cdc2ef6f64f091f262e8c7d0576ee4677572f314ebfafa4c7"
+    },
+    {
+        "token": "FX.USD/BRL",
+        "id": "0xd2db4dbf1aea74e0f666b0e8f73b9580d407f5e5cf931940b06dc633d7a95906"
+    },
+    {
+        "token": "FX.USD/CAD",
+        "id": "0x3112b03a41c910ed446852aacf67118cb1bec67b2cd0b9a214c58cc0eaa2ecca"
+    },
+    {
+        "token": "FX.USD/CHF",
+        "id": "0x0b1e3297e69f162877b577b0d6a47a0d63b2392bc8499e6540da4187a63e28f8"
+    },
+    {
+        "token": "FX.USD/CLP",
+        "id": "0xd407a4b25cae3f9ec063af35c1d7feb9aa55be71d3f2a01b6de719dbcc3e84c7"
+    },
+    {
+        "token": "FX.USD/CNH",
+        "id": "0xeef52e09c878ad41f6a81803e3640fe04dceea727de894edd4ea117e2e332e66"
+    },
+    {
+        "token": "FX.USD/COP",
+        "id": "0xcaffb53eda8972cf729e59166e64f893960db66fa89ff5cd4702caf2ef4edf8d"
+    },
+    {
+        "token": "FX.USD/HKD",
+        "id": "0x19d75fde7fee50fe67753fdc825e583594eb2f51ae84e114a5246c4ab23aff4c"
+    },
+    {
+        "token": "FX.USD/IDR",
+        "id": "0x6693afcd49878bbd622e46bd805e7177932cf6ab0b1c91b135d71151b9207433"
+    },
+    {
+        "token": "FX.USD/INR",
+        "id": "0x0ac0f9a2886fc2dd708bc66cc2cea359052ce89d324f45d95fadbc6c4fcf1809"
+    },
+    {
+        "token": "FX.USD/JPY",
+        "id": "0xef2c98c804ba503c6a707e38be4dfbb16683775f195b091252bf24693042fd52"
+    },
+    {
+        "token": "FX.USD/KRW",
+        "id": "0xe539120487c29b4defdf9a53d337316ea022a2688978a468f9efd847201be7e3"
+    },
+    {
+        "token": "FX.USD/MXN",
+        "id": "0xe13b1c1ffb32f34e1be9545583f01ef385fde7f42ee66049d30570dc866b77ca"
+    },
+    {
+        "token": "FX.USD/NOK",
+        "id": "0x235ddea9f40e9af5814dbcc83a418b98e3ee8df1e34e1ae4d45cf5de596023a3"
+    },
+    {
+        "token": "FX.USD/PEN",
+        "id": "0x5a90fd584136ff7969fc54c6642430e3c50af8ff234ed0e697555ea7b192446a"
+    },
+    {
+        "token": "FX.USD/PHP",
+        "id": "0x2bda7f268b52bfbc3f2e124c31445247647350db313caadc6771e6299e0a68c9"
+    },
+    {
+        "token": "FX.USD/SEK",
+        "id": "0x8ccb376aa871517e807358d4e3cf0bc7fe4950474dbe6c9ffc21ef64e43fc676"
+    },
+    {
+        "token": "FX.USD/SGD",
+        "id": "0x396a969a9c1480fa15ed50bc59149e2c0075a72fe8f458ed941ddec48bdb4918"
+    },
+    {
+        "token": "FX.USD/TRY",
+        "id": "0x032a2eba1c2635bf973e95fb62b2c0705c1be2603b9572cc8d5edeaf8744e058"
+    },
+    {
+        "token": "FX.USD/TWD",
+        "id": "0x489f02f2f13584026d63fd397c80ed3b414a2820c4d43da0306fc007fcd5a8e0"
+    },
+    {
+        "token": "FX.USD/ZAR",
+        "id": "0x389d889017db82bf42141f23b61b8de938a4e2d156e36312175bebf797f493f1"
+    }
+
+
 
 ]
 
