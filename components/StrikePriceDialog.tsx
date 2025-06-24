@@ -64,16 +64,30 @@ export function StrikePriceDialog({ open, onOpenChange, onSelectPrice,onStrikePr
     }
 
     const priceNumbers = prices.map(p => parseFloat(p.price))
-    const closestIndex = priceNumbers.findIndex(p => p >= marketPrice);
+    const closestIndex = priceNumbers.findLastIndex(p => p <= marketPrice);
 
     let defaultStrikes: string[] = [];
-    if(closestIndex!== -1){
+    if (closestIndex !== -1) {
+      let start = closestIndex - 1;
+      let end = closestIndex + 2;
+
+      if (start < 0) {
+        start = 0;
+        end = 3;
+      }
+
+      if (end > priceNumbers.length) {
+        end = priceNumbers.length;
+        start = Math.max(0, end - 3);
+      }
+
       defaultStrikes = priceNumbers
-      .slice(closestIndex, closestIndex + 3)
-      .map(p => p.toString());
-    }
-    onDefaultStrikePrices(defaultStrikes);
-    setStrikePrices(prices)
+        .slice(start, end)
+        .map(p => p.toString());
+      }
+
+      onDefaultStrikePrices(defaultStrikes);
+      setStrikePrices(prices)
   }, [marketPrice])
   
 

@@ -10,6 +10,8 @@ import WalletSideBar from "./WalletSidebar";
 import { useTheme } from "next-themes";
 import x from '@/public/svgs/x.svg';
 import discord from '@/public/svgs/discord.svg'
+import yt from '@/public/svgs/youtube.svg';
+import medium from '@/public/images/medium.png'
 import telegram from '@/public/svgs/telegram.svg'
 import Image from "next/image";
 
@@ -155,6 +157,12 @@ export default function NavBar(){
                                 </a>
                                 <a href='https://t.me/olive_financee' target="_blank">
                                     <Image src={telegram} alt="telegram link"/>
+                                </a>
+                                <a href='https://medium.com' target="_blank">
+                                    <Image src={medium} width={18} height={18} alt="x link"/>
+                                </a>
+                                <a href='https://youtube.com' target="_blank">
+                                    <Image src={yt} alt="x link"/>
                                 </a>
                                 <a href='https://discord.gg/u6pq5yNj' target="_blank">
                                     <Image src={discord} alt="discord link" />

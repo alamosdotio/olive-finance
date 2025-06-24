@@ -51,17 +51,6 @@ export const positions: Position[] = [
 ]
 
 export const orders: Order[] = [
-    {
-        index:1,
-        token: 'Bitcoin',
-        logo: '/images/bitcoin.png',
-        symbol: 'BTC',
-        type: 'Call',
-        transaction: 'buy',
-        limitPrice: 145,
-        strikePrice: 150,
-        expiry: '1/5/2025',
-        size: 28,
-        orderDate: '12/5/2024',
-    },
+    
+    
 ]

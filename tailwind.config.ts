@@ -64,6 +64,9 @@ export default {
       fontFamily: {
         sans: ['var(--font-lufga)', 'system-ui', 'sans-serif'],
       },
+      screens: {
+        'desktop': '1800px',
+      },
     },
   },
   plugins: [require("tailwindcss-animate"),require('tailwind-scrollbar-hide')]

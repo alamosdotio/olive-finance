@@ -1,7 +1,5 @@
 import {
   Ban,
-  ChevronLeft,
-  ChevronRight,
   EllipsisVertical,
   RotateCw,
 } from "lucide-react";
@@ -148,70 +146,89 @@ export default function TradingPositions() {
         </DropdownMenu>
       </div>
       {activeTab === "Positions" && (
-        <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px]">
-          {optioninfos &&
-            optioninfos.map((position, index) => (
-              <OpenPositions
-                key={index}
-                index={position.index}
-                token={position.token}
-                logo={position.logo}
-                symbol={position.symbol}
-                type={position.type}
-                strikePrice={position.strikePrice}
-                expiry={position.expiry}
-                size={position.size}
-                pnl={position.pnl}
-                greeks={position.greeks}
-                onExercise={()=>onExercise(position.index)}
-              />
-            ))}
-            <div className="pb-4 w-full">
-                <Pagination
-                    currentPage={currentPage}
-                    totalItems={optioninfos.length}
-                    itemsPerPage={itemsPerPage}
-                    onPageChange={setCurrentPage}
+        <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
+          {optioninfos && optioninfos.length > 0 ? (
+            <>
+              {optioninfos.map((position, index) => (
+                <OpenPositions
+                  key={index}
+                  index={position.index}
+                  token={position.token}
+                  logo={position.logo}
+                  symbol={position.symbol}
+                  type={position.type}
+                  strikePrice={position.strikePrice}
+                  expiry={position.expiry}
+                  size={position.size}
+                  pnl={position.pnl}
+                  greeks={position.greeks}
+                  onExercise={() => onExercise(position.index)}
                 />
-            </div>
-            
+              ))}
+              <div className="pb-4 w-full">
+                <Pagination
+                  currentPage={currentPage}
+                  totalItems={optioninfos.length}
+                  itemsPerPage={itemsPerPage}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="text-sm text-muted-foreground text-center flex  flex-grow justify-center items-center">No Positions Open <br /> Start Trading Now</div>
+          )}
         </div>
       )}
       {activeTab === "Expired" && (
-        <div className="md:pb-[44px]">
-          <ExpiredOptions infos={expiredInfos} onClaim={onClaim} />
+        <div className="md:pb-[44px] min-h-[300px] flex">
+          {expiredInfos.length > 0 ? (
+            <ExpiredOptions infos={expiredInfos} onClaim={onClaim} />
+          ) : (
+            <div className="text-sm text-muted-foreground text-center flex  flex-grow justify-center items-center">No Expired Positions <br /> Start Trading Now</div>
+          )}
+          
         </div>
       )}
       {activeTab === "OpenOrders" && (
-        <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px]">
-          {dummyOrders.map((pos, idx) => (
-            <OpenOptionOrders 
-              key={idx}
-              logo={pos.logo}
-              token={pos.token}
-              symbol={pos.symbol}
-              type={pos.type}
-              limitPrice={pos.limitPrice}
-              transaction={pos.transaction}
-              strikePrice={pos.strikePrice}
-              expiry={pos.expiry}
-              size={pos.size}
-              orderDate={pos.orderDate}
-            />
-          ))}
-          <div className="pb-4 w-full">
-              <Pagination
-                  currentPage={currentPage}
-                  totalItems={dummyOrders.length}
-                  itemsPerPage={itemsPerPage}
-                  onPageChange={setCurrentPage}
-              />
-          </div>
+        <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
+          {dummyOrders.length > 0 ? (
+            <>
+              {dummyOrders.slice(indexOfFirstItem, indexOfLastItem).map((pos, idx) => (
+                <OpenOptionOrders 
+                  key={idx}
+                  logo={pos.logo}
+                  token={pos.token}
+                  symbol={pos.symbol}
+                  type={pos.type}
+                  limitPrice={pos.limitPrice}
+                  transaction={pos.transaction}
+                  strikePrice={pos.strikePrice}
+                  expiry={pos.expiry}
+                  size={pos.size}
+                  orderDate={pos.orderDate}
+                />
+              ))}
+              <div className="pb-4 w-full">
+                  <Pagination
+                      currentPage={currentPage}
+                      totalItems={dummyOrders.length}
+                      itemsPerPage={itemsPerPage}
+                      onPageChange={setCurrentPage}
+                  />
+              </div>
+            </>
+          ) : (
+            <div className="text-sm text-muted-foreground text-center flex  flex-grow justify-center items-center">No Orders Open <br /> Start Trading Now</div>
+          )}
         </div>
       )}
       {activeTab === "History" && (
-        <div className="px-3 md:px-6 py-4 pb-[20px] md:pb-[10px]">
-          <OrderHistory doneOptioninfos={doneInfo} />
+        <div className="px-3 md:px-6 py-4 pb-[20px] md:pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
+          {doneInfo.length > 0 ? (
+            <OrderHistory doneOptioninfos={doneInfo} />
+          ) : (
+            <div className="text-sm text-muted-foreground text-center flex  flex-grow justify-center items-center">No History Available<br /> Start Trading Now</div>
+          )}
         </div>
       )}
     </div>

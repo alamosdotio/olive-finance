@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <ThemeProvider attribute="data-theme" defaultTheme="dark-purple">
           <Connectionprovider>
-            <div className="px-6 max-w-screen-2xl mx-auto">
+            <div className="px-6 min-h-screen mx-auto">
               <NavBar></NavBar>
               {children}
             </div>
