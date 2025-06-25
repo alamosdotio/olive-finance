@@ -1,19 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { PriceServiceConnection } from "@pythnetwork/price-service-client";
 import { PRICE_FEEDS } from "../lib/data/price-feed";
 import { HermesClient } from "@pythnetwork/hermes-client";
 const PYTH_ENDPOINT = "https://hermes.pyth.network";
-const POLLING_INTERVAL = 15000; // 15 seconds polling interval
-const CACHE_DURATION = 10000; // 10 seconds cache duration
-
-interface CachedPrice {
-  data: PythPriceState;
-  timestamp: number;
-}
-
-const priceCache = new Map<string, CachedPrice>();
+const POLLING_INTERVAL = 15000;
+const HISTORICAL_INTERVAL = 45000;
 
 export interface PythPriceState {
   price: number | null;
@@ -27,125 +19,135 @@ interface UsePythPriceResult {
   error: string | null;
 }
 
-const initialPriceState: PythPriceState = {
-  price: null,
-  confidence: null,
-  timestamp: null,
-};
-
-let globalConnection: PriceServiceConnection | null = null;
+interface PriceChangeState {
+  currentPrice: number | null;
+  pastPrice: number | null;
+  change: number | null;
+  percentChange: number | null;
+  loading: boolean;
+  error: string | null;
+}
 
 export function usePythPrice(token: string): UsePythPriceResult {
-  const [priceData, setPriceData] = useState<PythPriceState>(initialPriceState);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [priceData, setPriceData] = useState<PythPriceState>({
+    price: null,
+    confidence: null,
+    timestamp: null,
+  });
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const requestCountRef = useRef<number>(0);
-  const lastRequestTimeRef = useRef<number>(0);
 
   useEffect(() => {
     let mounted = true;
-    let intervalId: NodeJS.Timeout;
-
-    const priceFeed = PRICE_FEEDS.find((feed) => feed.token === token);
-    if (!priceFeed) {
-      setError(`Price feed not found for token: ${token}`);
-      setLoading(false);
+    const feed = PRICE_FEEDS.find((f) => f.token === token);
+    if (!feed) {
+      setError("Invalid token");
       return;
     }
 
-    const feedId = priceFeed.id;
-
-    async function fetchPrice() {
-      if (!mounted) return;
-
-      const now = Date.now();
-      const cachedResult = priceCache.get(token);
-
-      // Check cache first
-      if (cachedResult && now - cachedResult.timestamp < CACHE_DURATION) {
-        setPriceData(cachedResult.data);
-        setLoading(false);
-        return;
-      }
-
-      // Rate limiting check
-      if (now - lastRequestTimeRef.current < 10000) {
-        // 10 second window
-        if (requestCountRef.current >= 25) {
-          // Keep below 30 req/10s limit
-          return;
-        }
-      } else {
-        requestCountRef.current = 0;
-        lastRequestTimeRef.current = now;
-      }
-
+    const fetchData = async () => {
       try {
-        if (!globalConnection) {
-          globalConnection = new PriceServiceConnection(PYTH_ENDPOINT);
-        }
-
-        const priceFeeds = await globalConnection.getLatestPriceFeeds([feedId]);
-        requestCountRef.current++;
-
-        const feed = priceFeeds?.[0];
-        if (!feed) {
-          throw new Error("No price feed data available");
-        }
-
-        const priceInfo = feed.getPriceNoOlderThan(60);
-        if (!priceInfo) {
-          setError("Price data is stale");
-          return;
-        }
-
-        const price =
-          parseFloat(priceInfo.price) * Math.pow(10, priceInfo.expo);
-        const confidence =
-          parseFloat(priceInfo.conf) * Math.pow(10, priceInfo.expo);
-
-        const newPriceData = {
-          price,
-          confidence,
-          timestamp: priceInfo.publishTime,
-        };
-
-        // Update cache
-        priceCache.set(token, {
-          data: newPriceData,
-          timestamp: now,
-        });
+        const res = await fetch(`/api/pyth-price?id=${feed.id}`);
+        const data = await res.json();
+        const price = parseFloat(data.parsed[0].price.price) * Math.pow(10, data.parsed[0].price.expo);
+        const confidence = parseFloat(data.parsed[0].price.conf) * Math.pow(10, data.parsed[0].price.expo);
+        const timestamp = data.parsed[0].price.publish_time * 1000;
 
         if (mounted) {
-          setPriceData(newPriceData);
+          setPriceData({ price, confidence, timestamp });
           setError(null);
         }
-      } catch (err) {
+      } catch (err: any) {
         if (mounted) {
-          setError(
-            err instanceof Error ? err.message : "Failed to fetch price data"
-          );
+          setError(err.message || "Fetch failed");
         }
       } finally {
         if (mounted) {
           setLoading(false);
         }
       }
-    }
+    };
 
-    fetchPrice();
-    intervalId = setInterval(fetchPrice, POLLING_INTERVAL);
+    fetchData();
+    const interval = setInterval(fetchData, POLLING_INTERVAL);
 
     return () => {
       mounted = false;
-      if (intervalId) {
-        clearInterval(intervalId);
+      clearInterval(interval);
+    };
+  }, [token]);
+  return { priceData, loading, error };
+}
+
+export function usePyth24hChange(token : string) : PriceChangeState{
+  const [state, setState] = useState<PriceChangeState>({
+    currentPrice: null,
+    pastPrice: null,
+    change: null,
+    percentChange: null,
+    loading: true,
+    error: null
+  });
+
+  useEffect(() => {
+    let mounted = true;
+    const feed = PRICE_FEEDS.find((f) => f.token === token);
+    if (!feed) {
+      setState((s) => ({ ...s, error: 'Invalid token', loading: false }));
+      return;
+    }
+
+    const fetchPrices = async () => {
+      try {
+        const [nowRes, pastRes] = await Promise.all([
+          fetch(`/api/pyth-price?id=${feed.id}`),
+          fetch(`/api/pyth-price-history?id=${feed.id}&ago=24h`)
+        ])
+
+        const nowData = await nowRes.json();
+        const pastData = await pastRes.json();
+
+        console.log('now',nowData);
+        console.log('past',pastData);
+        const currentPrice = parseFloat(nowData.parsed[0].price.price);
+        const pastPrice = parseFloat(pastData.parsed[0].price.price);
+        const change = currentPrice - pastPrice;
+        const percentChange = (change / pastPrice) * 100;
+
+        if (mounted) {
+          setState({
+            currentPrice,
+            pastPrice,
+            change,
+            percentChange,
+            loading: false,
+            error: null,
+          });
+        }
+        
+      } catch (err: any) {
+        if (mounted) {
+          setState((s) => ({
+            ...s,
+            loading: false,
+            error: err.message || 'Failed to fetch prices',
+          }));
+        }
       }
+    };
+
+    fetchPrices();
+    const interval = setInterval(fetchPrices, HISTORICAL_INTERVAL);
+
+    return () => {
+      mounted = false;
+      clearInterval(interval);
     };
   }, [token]);
 
-  return { priceData, loading, error };
+  return state;
 }
+
 
 export const getPythPrice = async (token: string, timestamp: number) => {
   const priceFeed = PRICE_FEEDS.find((feed) => feed.token === token);
