@@ -78,7 +78,7 @@ export default function Homepage(){
             />
             <div className={cn((active === 'trade' ? 'space-y-0' : 'space-y-4'),"flex flex-col w-full justify-evenly h-full pb-4")}>
                 <div className="w-full pt-4 justify-between grid grid-cols-1 lg:grid-cols-12 gap-4">
-                    <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:col-span-8 lg:flex flex-col space-y-4")}>
+                    <div className={cn((active === 'chart' ? 'w-full' : 'hidden'),"lg:col-span-8 desktop:col-span-9 lg:flex flex-col space-y-4")}>
                       <TradingViewChartContainer 
                         symbol={selectedSymbol} 
                         logo={selectedLogo}
@@ -96,7 +96,7 @@ export default function Homepage(){
                       </ProtectedRoute>
                     </div>
                   </div>
-                  <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:col-span-4 flex-col space-y-4")}>
+                  <div className={cn((active === 'trade' ? 'w-full' : 'hidden'),"lg:flex lg:col-span-4 desktop:col-span-3 flex-col space-y-4")}>
                     <OptionCardContainer 
                       selectedSymbol={selectedSymbol}
                       onSymbolChange={handleSymbolChange} 
