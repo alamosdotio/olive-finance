@@ -35,6 +35,7 @@ interface TokenListProps {
     category: Category;
     marketChanges: MarketChanges;
     onTokenSelect: (token: CryptoData) => void;
+    query: string;
 }
 
 function TokenListItem({ token, marketChange, onSelect }: { 
@@ -89,13 +90,17 @@ function TokenListItem({ token, marketChange, onSelect }: {
     );
 }
 
-export default function TokenList({ tokens, category, marketChanges, onTokenSelect }: TokenListProps) {
-    const filteredTokens = useMemo(() => tokens.filter((token) => {
-        if (category === 'all') {
-            return true;
-        }
-        return token.category[category];
-    }), [tokens, category]);
+export default function TokenList({ tokens, category, marketChanges, onTokenSelect, query }: TokenListProps) {
+    const filteredTokens = useMemo(() => {
+    return tokens.filter((token) => {
+        const matchesCategory = category === 'all' || token.category[category];
+        const matchesSearch = token.name.toLowerCase().includes(query.toLowerCase()) ||
+                            token.symbol.toLowerCase().includes(query.toLowerCase());
+
+        return matchesCategory && matchesSearch;
+    });
+    }, [tokens, category, query]);
+
 
     return (
         <ScrollArea className="w-full h-64">

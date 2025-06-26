@@ -69,10 +69,11 @@ export default function TradingViewTopNav({
     type,
 }: TradingViewTopNavProps) {
     const [active, setActive] = useState<'all' | 'crypto' | 'memes' | 'forex' | 'ai' | 'metals' | 'commodities' | 'equities' | 'fixed'>('all');
-    const router = useRouter()
+    const router = useRouter();
+    const [query, setQuery] = useState("")
 
     return (
-        <div className="border border-t-0 rounded-b-sm p-1 w-full flex h-fit">
+        <div className="border border-t-0 rounded-b-sm py-1 w-full flex h-fit">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <div className="px-2 py-1 flex space-x-6 lg:space-x-2 items-center cursor-pointer group">
@@ -90,8 +91,11 @@ export default function TradingViewTopNav({
                         <div className="flex w-full h-fit space-x-2 items-center px-3 py-2 rounded-sm text-xs text-secondary-foreground bg-secondary">
                             <Input 
                                 type="text"
+                                name="query"
                                 placeholder="Search for a coin"
                                 className="h-fit border-none p-0 shadow-none rounded-none text-foreground placeholder:text-secondary-foreground"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
                             />
                             <Search size={14} className="w-[14px] h-[14px] text-foreground"/>
                         </div>
@@ -184,6 +188,7 @@ export default function TradingViewTopNav({
                             category={active}
                             marketChanges={marketChanges}
                             onTokenSelect={onTokenSelect}
+                            query={query}
                         />
                     </div>
                 </DropdownMenuContent>

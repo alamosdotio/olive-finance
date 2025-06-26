@@ -21,7 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import type { PythPriceState } from "@/hooks/usePythPrice";
+import { usePyth24hChange, type PythPriceState } from "@/hooks/usePythPrice";
 import type { MarketDataState } from "@/hooks/usePythMarketData";
 import { formatPrice } from "@/utils/formatter";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
@@ -53,7 +53,7 @@ export default function OptionCard(
   {orderType, onIdxChange, onSymbolChange, active, onPayAmountChange, selectedSymbol, priceData, priceLoading, marketData, marketLoading, onStrikePriceChange, onExpiryChange, onContractTypeChange, onCurrencyChange} 
   : 
   OptionCardProps) {
-    const { connected } = useWallet();
+  const { connected } = useWallet();
   const wallet = useAnchorWallet();
 
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
@@ -73,7 +73,8 @@ export default function OptionCard(
     "0",
   ]);
 
-  const isPositive = marketData.change24h !== null && marketData.change24h > 0;
+  const { percentChange } = usePyth24hChange(selectedSymbol);
+  const isPositive = percentChange !== null && percentChange > 0;
 
   // console.log(defaultStrikePrices)
 
@@ -174,9 +175,7 @@ export default function OptionCard(
               }`}
             >
               {isPositive ? "+" : "-"}
-              {marketData.change24h
-                ? formatChange(marketData.change24h)
-                : marketLoading}
+              {formatChange(percentChange)}
               %
             </div>
           </div>

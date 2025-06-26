@@ -62,22 +62,22 @@ export default function FuturesPositions(){
         <div className="w-full border rounded-sm flex flex-col mb-3">
             <section className="border-b rounded-none px-6 py-3">
                 <Tabs defaultValue={activeTab} onValueChange={handleClickTab}>
-                    <TabsList className="bg-inherit grid grid-cols-6 text-secondary-foreground py-0 gap-2 md:gap-6 h-fit">
+                    <TabsList className="w-full flex justify-start bg-inherit text-secondary-foreground p-0 gap-2 md:gap-3 lg:gap-6">
                         <TabsTrigger
                             value="positions"
-                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
-                            Open Positions
+                            Positions
                         </TabsTrigger>
                         <TabsTrigger
                             value="expired" 
-                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"  
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"  
                         >
-                            Expired Positions
+                            Expired
                         </TabsTrigger>
                         <TabsTrigger
                             value="history"
-                            className="text-[11px] col-span-2 md:col-span-1 md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >
                            History
                         </TabsTrigger>

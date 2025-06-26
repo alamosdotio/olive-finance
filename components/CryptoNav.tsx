@@ -6,7 +6,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import TradingViewTopNav from "./TradingViewTopNav";
 import { usePythMarketData } from "@/hooks/usePythMarketData";
-import { usePyth24hChange, type PythPriceState } from "@/hooks/usePythPrice";
+import { usePyth24hChange, usePythPrice, type PythPriceState } from "@/hooks/usePythPrice";
 import type { MarketDataState } from "@/hooks/usePythMarketData";
 import { tokenList, Token } from "@/lib/data/tokenlist";
 
@@ -36,8 +36,8 @@ const CryptoNavItem = React.memo(({ crypto, isActive, onClick, onMarketChange }:
     onClick: () => void;
     onMarketChange: (symbol: string, change: number | null) => void;
 }) => {
-    const { marketData } = usePythMarketData(crypto.pythSymbol);
     const { percentChange } = usePyth24hChange(crypto.pythSymbol);
+    //todo: const { priceData } = usePythPrice(crypto.pythSymbol)
 
     useEffect(() => {
         onMarketChange(crypto.pythSymbol, percentChange);

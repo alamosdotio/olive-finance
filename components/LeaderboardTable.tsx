@@ -38,7 +38,7 @@ export default function LeaderboardTable() {
                         <TableHead className="text-secondary-foreground font-normal px-3 py-4">Address</TableHead>
                         <TableHead className="text-secondary-foreground font-normal text-center px-3 py-4">Trading Points</TableHead>
                         <TableHead className="text-secondary-foreground font-normal text-center px-3 py-4">Liquidity Points</TableHead>
-                        <TableHead className="text-secondary-foreground font-normal text-center px-3 py-4">Referral Points</TableHead>
+                        <TableHead className="text-secondary-foreground font-normal text-center px-3 py-4">Borrowing Points</TableHead>
                         <TableHead className="text-secondary-foreground font-normal text-center px-3 py-4">Total Points</TableHead>
                     </TableRow>
                 </TableHeader>

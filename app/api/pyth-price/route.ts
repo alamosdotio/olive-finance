@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const tokenId = req.nextUrl.searchParams.get("id");
 
-  const SECRET_TOKEN = 'af5edce9-8fd7-443a-b238-32223ae3420c'; //todo: put this in env file
-  const SUBDOMAIN = 'olivefi-pythnet-b3f5';//todo: put this in env file
+  const SECRET_TOKEN = 'af5edce9-8fd7-443a-b238-32223ae3420c'; //important! todo: put this in env file
+  const SUBDOMAIN = 'olivefi-pythnet-b3f5';//important! todo: put this in env file
 
   if (!tokenId) {
     return NextResponse.json({ error: "Missing price feed ID" }, { status: 400 });
