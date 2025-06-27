@@ -37,6 +37,7 @@ export default function NavBar(){
         "/": "Options",
         "/futures": "futures",
         "/earn": "Earn",
+        "/portfolio": "Portfolio",
         "/analytics": "Analytics",
         "/options-chain" : "Options Chain",
         "/feedback": "Feedback",
@@ -99,6 +100,15 @@ export default function NavBar(){
                          <Badge className="rounded-[2px] bg-gradient-primary px-1 pt-[3px] h-3 border-none">
                             <span className="text-background text-[8px] font-semibold">48% APY</span>
                          </Badge>
+                    </Link>
+
+                    <Link 
+                        href='/portfolio'
+                        className={cn(buttonVariants({variant: active === 'Portfolio' ? 'active' : 'inactive'}), 'hidden p-0 w-auto h-auto lg:flex justify-between gap-1 hover:text-primary')}
+                        onClick={() => handleClick('Portfolio')}
+                    > 
+                         <WalletIcon />
+                         <h1 className="text-sm font-medium">Portfolio</h1>
                     </Link>
                     
                     
