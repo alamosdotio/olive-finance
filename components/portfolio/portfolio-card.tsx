@@ -12,7 +12,7 @@ export function PortfolioCard(){
 
 
     return(
-        <Card className="rounded-sm w-full">
+        <Card className="rounded-sm w-full col-span-3 h-full">
             <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-2">
