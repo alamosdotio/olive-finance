@@ -14,7 +14,7 @@ export default function AnalyticSidebar(){
         <div className="w-full h-fit">
             <ul>
                 {[
-                    {name: 'Trades', path: ''},
+                    {name: 'Future Trades', path: ''},
                     {name: 'Option Trades', path: 'option-trades'},
                     {name: 'Pool Trades', path: 'pool-trades'},
                     {name: 'Pool Metrics', path: 'pool-metrics'},

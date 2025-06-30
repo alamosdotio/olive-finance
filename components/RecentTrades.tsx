@@ -271,6 +271,10 @@ export default function RecentTrades() {
               {row.quantity}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
+              collateral
+              {/* todo add collateral value */}
+            </TableCell>
+            <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px]">
               {row.tx == "Bought"
                 ? (
                     parseFloat(row.amount) /
@@ -357,6 +361,9 @@ export default function RecentTrades() {
               </TableHead>
               <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">
                 Quantity
+              </TableHead>
+              <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">
+                Collateral
               </TableHead>
               <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4">
                 Paid/Received

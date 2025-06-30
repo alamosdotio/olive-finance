@@ -209,6 +209,10 @@ export default function PoolTradesTable() {
               {tx.amount1} {tx.pool + "-LP"}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
+              collateral
+              {/* todo add collateral value */}
+            </TableCell>
+            <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
               {tx.amount0} {tx.token0 == USDC_MINT.toString() ? "USDC" : "SOL"}
             </TableCell>
             <TableCell className="text-sm text-foreground font-normal text-justify px-3 py-[14px] ">
@@ -241,6 +245,9 @@ export default function PoolTradesTable() {
               </TableHead>
               <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">
                 Quantity
+              </TableHead>
+              <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">
+                Collateral
               </TableHead>
               <TableHead className="text-xs text-secondary-foreground font-medium text-justify px-3 py-4 ">
                 Paid/Received
