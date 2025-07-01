@@ -17,6 +17,7 @@ import { HoverCard, HoverCardContent } from "./ui/hover-card";
 import { HoverCardTrigger } from "@radix-ui/react-hover-card";
 import { Progress } from "./ui/progress";
 import CircularProgressBar from "./ui/circular-progress-bar";
+import { RatioBar } from "./RatioBar";
 
 
 type CryptoData = {
@@ -339,6 +340,38 @@ export default function TradingViewTopNav({
                         </div>
                     </HoverCardContent>
                 </HoverCard>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
+                {/* <div className="flex lg:w-56 xl:w-80 space-x-3 items-center">
+                    <span className="text-xs">
+                        Call
+                    </span>
+                    <RatioBar 
+                        symbol={symbol!}
+                        leftPercentage={60}
+                        rightPercentage={40}
+                    />
+                    <span className="text-xs">
+                        Put
+                    </span>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div> */}
+                <div className="flex gap-1">
+                    <div className="flex flex-col items-center bg-green-500/10 px-2 rounded-sm">
+                        <span className="text-green-500 font-normal text-[10px] h-3">Call</span>
+                        <span className="text-green-500 text-xs font-medium">6</span>
+                    </div>
+                    <div className="flex flex-col bg-red-500/10 px-2 rounded-sm items-center">
+                        <span className="text-red-500 font-normal text-[10px] h-3">Put</span>
+                        <span className="text-red-500 text-xs font-medium">4</span>
+                    </div>
+                </div>
+                <div className="px-4 py-1">
+                    <Separator orientation="vertical"/>
+                </div>
             </div>
             <div className="flex justify-end w-full px-2 lg:hidden">
                 <MarketDetails logo={logo} symbol={symbol!} tokenPrice={priceData.price} high={marketData.high24h} low={marketData.low24h}/>

@@ -6,6 +6,11 @@ export interface Coin {
 
 export const coins: Coin[] = [
     {
+        symbol: 'USDC',
+        name: 'USDC',
+        logo: '/images/usdc.png'
+    },
+    {
         symbol: 'SOL',
         name: 'Solana',
         logo: '/images/solana.png'

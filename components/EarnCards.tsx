@@ -53,9 +53,9 @@ export default function EarnCards (){
                     <SheetTrigger asChild>
                         <div className="relative group cursor-pointer">
                             <div
-                                className="absolute inset-2 blur opacity-25 group-hover:bg-gradient-primary group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+                                    className={`absolute inset-2 blur opacity-25 ${strategy.symbol==='USDC' ? 'group-hover:bg-[#FEEDCB]' : 'group-hover:bg-gradient-primary'}  group-hover:opacity-100 transition duration-1000 group-hover:duration-200`}>
                             </div>
-                            <Card className="w-full hover:border-primary/45 rounded-sm relative">
+                            <Card className={`w-full ${strategy.symbol==='USDC' ? 'hover:border-[#FEEDCB]/45' : 'hover:border-primary/45'}  rounded-sm relative`}>
                                 <CardHeader className="p-5 border-b">
                                     <div className="flex justify-start space-x-2 items-center">
                                         <EarnCardlogo strategy={strategy}/>
@@ -82,7 +82,7 @@ export default function EarnCards (){
                                                     </Tooltip>
                                                 </TooltipProvider>
                                             </span>
-                                            <Progress value={33} className="h-1"/>
+                                            <Progress value={33} className={"h-1"}/>
                                         </div>
                                         <div className="flex flex-col space-y-2">
                                             <span className="flex items-center gap-2 text-sm text-secondary-foreground font-medium">
