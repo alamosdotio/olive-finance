@@ -48,6 +48,57 @@ export const positions: Position[] = [
             vega: 0.0321
         }
     },
+    {
+        index:1,
+        token: 'Bitcoin',
+        logo: '/images/bitcoin.png',
+        symbol: 'BTC',
+        type: 'Call',
+        strikePrice: 150,
+        expiry: '1/5/2025',
+        size: 28,
+        pnl: 120,
+        greeks: {
+            delta: 0.9132,
+            gamma: 0.0723,
+            theta: -0.3587,
+            vega: 0.0321
+        }
+    },
+    {
+        index:1,
+        token: 'Bitcoin',
+        logo: '/images/bitcoin.png',
+        symbol: 'BTC',
+        type: 'Call',
+        strikePrice: 150,
+        expiry: '1/5/2025',
+        size: 28,
+        pnl: 120,
+        greeks: {
+            delta: 0.9132,
+            gamma: 0.0723,
+            theta: -0.3587,
+            vega: 0.0321
+        }
+    },
+    {
+        index:1,
+        token: 'Bitcoin',
+        logo: '/images/bitcoin.png',
+        symbol: 'BTC',
+        type: 'Call',
+        strikePrice: 150,
+        expiry: '1/5/2025',
+        size: 28,
+        pnl: 120,
+        greeks: {
+            delta: 0.9132,
+            gamma: 0.0723,
+            theta: -0.3587,
+            vega: 0.0321
+        }
+    },
 ]
 
 export const orders: Order[] = [

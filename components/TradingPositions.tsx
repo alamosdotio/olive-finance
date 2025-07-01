@@ -59,7 +59,7 @@ export default function TradingPositions() {
   const itemsPerPage = 5;
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
-
+  const dummyPositions = positions;
   const dummyOrders = orders;
 
   const actionTextMap: Record<string, string> = {
@@ -147,7 +147,7 @@ export default function TradingPositions() {
       </div>
       {activeTab === "Positions" && (
         <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
-          {optioninfos && optioninfos.length > 0 ? (
+          {/* {optioninfos && optioninfos.length > 0 ? (
             <>
               {optioninfos.map((position, index) => (
                 <OpenPositions
@@ -176,7 +176,32 @@ export default function TradingPositions() {
             </>
           ) : (
             <div className="text-sm text-muted-foreground text-center flex  flex-grow justify-center items-center">No Positions Open <br /> Start Trading Now</div>
-          )}
+          )} */}
+
+          {dummyPositions.map((position, index) => (
+            <OpenPositions
+              key={index}
+              index={position.index}
+              token={position.token}
+              logo={position.logo}
+              symbol={position.symbol}
+              type={position.type}
+              strikePrice={position.strikePrice}
+              expiry={position.expiry}
+              size={position.size}
+              pnl={position.pnl}
+              greeks={position.greeks}
+              onExercise={() => onExercise(position.index)}
+            />
+          ))}
+          <div className="pb-4 w-full">
+            <Pagination
+              currentPage={currentPage}
+              totalItems={dummyPositions.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+            />
+          </div>
         </div>
       )}
       {activeTab === "Expired" && (
