@@ -37,8 +37,7 @@ export default function OpenPositions({token, logo, symbol, type, expiry, size, 
                 className="w-full px-4 py-3 flex justify-between items-center cursor-pointer"
                 onClick={()=>setIsOpen(!isOpen)}
             >
-                <div className="flex space-x-[6px] items-center ">
-                    <h1>{index+1}</h1>
+                <div className="flex space-x-[6px] items-center">
                     <Image src={logo} alt={token} width={16} height={16} className="w-4 h-4 rounded-full"/>
                     <span className="text-sm text-foreground font-medium">{symbol}</span>
                     <Badge className="text-[8px] bg-gradient-primary border-none text-black font-semibold py-[3px] px-1 w-7 h-3 rounded-[3px] flex items-center justify-center">{type}</Badge>

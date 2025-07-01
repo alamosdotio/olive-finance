@@ -70,12 +70,18 @@ export default function FuturesPositions(){
                             Positions
                         </TabsTrigger>
                         <TabsTrigger
+                            value="Orders"
+                            className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
+                        >
+                            Orders
+                        </TabsTrigger>
+                        <TabsTrigger
                             value="expired" 
                             className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"  
                         >
                             Expired
                         </TabsTrigger>
-                        <TabsTrigger
+                         <TabsTrigger
                             value="history"
                             className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"
                         >

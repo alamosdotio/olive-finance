@@ -129,6 +129,11 @@ export default function NavBar(){
                                     link:'/options-chain'
                                 },
                                 {
+                                    name:"Borrow",
+                                    icon: <TableColumnsSplit />,
+                                    link:'/borrow'
+                                },
+                                {
                                     name:"Analytics",
                                     icon: <FileChartColumn />,
                                     link:'/analytics'

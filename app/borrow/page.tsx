@@ -1,4 +1,7 @@
 'use client'
+import { BorrowCardContainer } from "@/components/BorrowCardContainer";
+import { BorrowChartContainer } from "@/components/BorrowChartContainer";
+import { BorrowPositions } from "@/components/BorrowPositions";
 import CryptoNav from "@/components/CryptoNav";
 import { usePythMarketData } from "@/hooks/usePythMarketData";
 import { usePythPrice } from "@/hooks/usePythPrice";
@@ -21,7 +24,7 @@ export default function BorrowPage(){
             setTokenIdx(newIdx)
           }
     return(
-        <main className="space-y-4 flex flex-col">
+        <main className="space-y-4 pb-4 flex flex-col">
             <div className="w-full">
                 <CryptoNav
                     onSymbolChange={handleSymbolChange} 
@@ -37,13 +40,14 @@ export default function BorrowPage(){
                 />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                <div className="border rounded-sm col-span-8">
-                    <div className="h-[536px]">
-
+                <div className="col-span-8 flex flex-col gap-4">
+                    <div className="h-[536px] border rounded-sm">
+                        <BorrowChartContainer />
                     </div>
+                    <BorrowPositions />
                 </div>
-                <div className="border rounded-sm col-span-4">
-
+                <div className="col-span-4 h-[536px]">
+                    <BorrowCardContainer />
                 </div>
             </div>
         </main>
