@@ -374,6 +374,20 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         className={`tradingview-chart ${chartTheme === 'Dark' ? 'theme-dark' : ''} w-full h-full py-2`}
         style={{ backgroundColor: chartTheme === 'Dark' ? "#141519" : "#FFFFFF" }}
       />
+      <div className='border-t p-2 flex justify-end gap-2'>
+        <Button
+          variant={'outline'}
+          className='h-fit text-secondary-foreground text-xs p-1 rounded-sm'
+        >
+          Liquidation
+        </Button>
+        <Button
+          variant={'outline'}
+          className='h-fit text-secondary-foreground text-xs p-1 rounded-sm'
+        >
+          TP/SL
+        </Button>
+      </div>
     </div>
   );
 };

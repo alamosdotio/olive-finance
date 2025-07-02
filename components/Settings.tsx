@@ -15,6 +15,7 @@ import { ArrowDown, GreenCircleIcon, MoonIcon, PurpleCircleIcon, SettingsIcon, S
 export default function Settings(){
     const [explorer, setExplorer] = useState<string>('Solscan')
     const [endpoint, setEndpoint] = useState<string>('Triton')
+    const [fee, setFee] = useState<'medium' | 'high' | 'ultra' | 'custom'>('high')
     const { theme, setTheme } = useTheme()
 
     const handleExplorer = (value:string) => {
@@ -26,6 +27,12 @@ export default function Settings(){
     const handleEndPoint = (value:string) => {
         if(endpoint !== value){
             setEndpoint(value)
+        }
+    }
+
+    const handleFeeType = (value: 'medium' | 'high' | 'ultra' | 'custom') => {
+        if(fee !== value){
+            setFee(value)
         }
     }
 
@@ -85,6 +92,43 @@ export default function Settings(){
                                 <span className="text-xs text-foreground font-normal">Solana FM</span>
                             </Button>
                         </div>
+                    </div>
+                    <div className="w-full flex flex-col space-y-3">
+                        <Label className="text-xs font-medium text-foreground">
+                            Priority Fees
+                        </Label>
+                        <div className="flex space-x-3">
+                            <Button
+                                className={cn((fee === 'medium' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
+                                onClick={()=>handleFeeType('medium')}
+                            >
+                                <span className="text-xs text-foreground font-normal">Medium</span>
+                            </Button>
+                            <Button 
+                                className={cn((fee === 'high' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
+                                onClick={()=>handleFeeType('high')}
+                            >
+                                <span className="text-xs text-foreground font-normal">High</span>
+                            </Button>
+                            <Button 
+                                className={cn((fee === 'ultra' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
+                                onClick={()=>handleFeeType('ultra')}
+                            >
+                                <span className="text-xs text-foreground font-normal">Ultra</span>
+                            </Button>
+                            <Button 
+                                className={cn((fee === 'custom' ? 'border-primary' : 'border-transparent'),"bg-secondary py-2 px-[10px] flex gap-1 items-center h-fit shadow-none rounded-sm border hover:border-primary")}
+                                onClick={()=>handleFeeType('custom')}
+                            >
+                                <span className="text-xs text-foreground font-normal">Custom</span>
+                            </Button>
+                        </div>
+                        <Input
+                            type='string'
+                            placeholder="0.0001"
+                            className="bg-secondary border rounded-sm py-2 px-3 text-xs placeholder:text-muted focus:border-primary"
+                            disabled={fee!=='custom'}
+                        />
                     </div>
                     <div className="w-full flex flex-col space-y-3">
                         <Label className="text-xs font-medium text-foreground">

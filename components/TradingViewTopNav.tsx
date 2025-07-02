@@ -343,6 +343,24 @@ export default function TradingViewTopNav({
                 <div className="px-4 py-1">
                     <Separator orientation="vertical"/>
                 </div>
+                {type === 'options' &&(
+                    <>
+                        <div className="flex flex-col">
+                            <span className="text-secondary-foreground font-normal text-[10px] h-3">Call Volatility</span>
+                            <span className="text-foreground text-xs font-medium"></span>
+                        </div>
+                        <div className="px-4 py-1">
+                            <Separator orientation="vertical"/>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-secondary-foreground font-normal text-[10px] h-3">Put Volatility</span>
+                            <span className="text-foreground text-xs font-medium"></span>
+                        </div>
+                        <div className="px-4 py-1">
+                            <Separator orientation="vertical"/>
+                        </div>
+                    </>
+                )}
                 {/* <div className="flex lg:w-56 xl:w-80 space-x-3 items-center">
                     <span className="text-xs">
                         Call
@@ -361,11 +379,11 @@ export default function TradingViewTopNav({
                 </div> */}
                 <div className="flex gap-1">
                     <div className="flex flex-col items-center bg-green-500/10 px-2 rounded-sm">
-                        <span className="text-green-500 font-normal text-[10px] h-3">Call</span>
+                        <span className="text-green-500 font-normal text-[10px] h-3">{type === 'options' ? 'Call' : 'Long'}</span>
                         <span className="text-green-500 text-xs font-medium">6</span>
                     </div>
                     <div className="flex flex-col bg-red-500/10 px-2 rounded-sm items-center">
-                        <span className="text-red-500 font-normal text-[10px] h-3">Put</span>
+                        <span className="text-red-500 font-normal text-[10px] h-3">{type === 'options' ? 'Put' : 'Short'}</span>
                         <span className="text-red-500 text-xs font-medium">4</span>
                     </div>
                 </div>
