@@ -218,6 +218,7 @@ export default function TradingPositions() {
         <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
           {dummyOrders.length > 0 ? (
             <>
+              <div className="flex flex-col space-y-[10px]">
               {dummyOrders.slice(indexOfFirstItem, indexOfLastItem).map((pos, idx) => (
                 <OpenOptionOrders 
                   key={idx}
@@ -233,6 +234,7 @@ export default function TradingPositions() {
                   orderDate={pos.orderDate}
                 />
               ))}
+              </div>
               <div className="pb-4 w-full">
                   <Pagination
                       currentPage={currentPage}
