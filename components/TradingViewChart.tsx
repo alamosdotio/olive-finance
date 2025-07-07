@@ -94,37 +94,65 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   const [selectedInterval, setSelectedInterval] = useState('D');
   const [chartType, setChartType] = useState(1);
   const [displaySymbol, setDisplaySymbol] = useState(symbol.replace('Crypto.', ''));
-
   const [limitOrders, setLimitOrders] = useState<LimitOrder[]>([]);
+  const [currentSymbol, setCurrentSymbol] = useState(symbol);
 
   const getCurrentSymbol = () => {
-    return symbol.replace('Crypto.', '').replace('/USD', '');
+    return currentSymbol.replace('Crypto.', '').replace('/USD', '');
   };
 
   const getOrdersForCurrentSymbol = () => {
-    const currentSymbol = getCurrentSymbol();
-    return orders.filter(order => order.symbol === currentSymbol);
+    const currentSymbolName = getCurrentSymbol();
+    return orders.filter(order => order.symbol === currentSymbolName);
   };
 
+  // Clear all limit order lines from the chart
+  const clearLimitOrderLines = () => {
+    if (!chartRef.current) return;
+
+    try {
+      limitOrders.forEach(order => {
+        if (order.shapeId) {
+          chartRef.current.removeEntity(order.shapeId);
+        }
+      });
+    } catch (error) {
+      console.error('Error clearing limit order lines:', error);
+    }
+  };
+
+  // Update symbol logo and display name
   useEffect(() => {
     setSymbolLogo(symbol, logo);
     setDisplaySymbol(symbol.replace('Crypto.', '').replace('/USD', ''));
   }, [symbol, logo]);
-  
-  useEffect(() => {
-    const currentSymbolOrders = getOrdersForCurrentSymbol();
-    const convertedOrders: LimitOrder[] = currentSymbolOrders.map(order => ({
-      id: `order-${order.index}`,
-      price: order.limitPrice,
-      type: order.type,
-      transaction: order.transaction as 'buy' | 'sell',
-      quantity: order.size,
-      symbol: order.symbol,
-    }));
 
-    setLimitOrders(convertedOrders);
-  }, [symbol]);
- 
+  // Update current symbol and clear old orders when symbol changes
+  useEffect(() => {
+    if (currentSymbol !== symbol) {
+      // Clear existing limit order lines
+      clearLimitOrderLines();
+      
+      // Update current symbol
+      setCurrentSymbol(symbol);
+      
+      // Get orders for the new symbol
+      const currentSymbolOrders = orders.filter(order => 
+        order.symbol === symbol.replace('Crypto.', '').replace('/USD', '')
+      );
+      
+      const convertedOrders: LimitOrder[] = currentSymbolOrders.map(order => ({
+        id: `order-${order.index}`,
+        price: order.limitPrice,
+        type: order.type,
+        transaction: order.transaction as 'buy' | 'sell',
+        quantity: order.size,
+        symbol: order.symbol,
+      }));
+
+      setLimitOrders(convertedOrders);
+    }
+  }, [symbol, currentSymbol]);
 
   useEffect(() => {
     setChartTheme(resolvedTheme === 'dark-purple' || resolvedTheme === 'dark-green' ? 'Dark' : 'Light');
@@ -189,8 +217,6 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     }
   };
 
-
-
   const handleIntervalChange = (interval: string) => {
     setSelectedInterval(interval);
     if (chartRef.current) {
@@ -224,17 +250,21 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     }
   };
 
+  // Draw limit order lines when chart is ready and orders are available
   useEffect(() => {
     if (isChartReady && limitOrders.length > 0) {
-      setTimeout(() => {
+      // Add a small delay to ensure the chart has finished loading the new symbol
+      const timer = setTimeout(() => {
         limitOrders.forEach(order => {
           if (!order.shapeId) {
             drawLimitOrderLine(order);
           }
         });
-      }, 100);
+      }, 500); // Increased delay to ensure chart is ready
+
+      return () => clearTimeout(timer);
     }
-  }, [isChartReady, symbol]);
+  }, [isChartReady, limitOrders, chartTheme]);
 
   useEffect(() => {
     if (typeof window.TradingView === 'undefined' || !containerRef.current || widgetRef.current) return;
