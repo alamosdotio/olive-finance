@@ -129,6 +129,11 @@ export default function NavBar(){
                                     link:'/options-chain'
                                 },
                                 {
+                                    name:"High Low Options",
+                                    icon: <TableColumnsSplit />,
+                                    link:'/high-low-options'
+                                },
+                                {
                                     name:"Borrow",
                                     icon: <TableColumnsSplit />,
                                     link:'/borrow'
