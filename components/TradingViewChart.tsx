@@ -9,6 +9,7 @@ import { Separator } from './ui/separator';
 import { AreaIcon, BarsIcon, CandleStickIcon, IndicatorsIcon } from '@/public/svgs/icons';
 import { cn } from '@/lib/utils';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { orders } from '@/lib/data/Positions';
 
 declare global {
   interface Window {
@@ -22,6 +23,15 @@ interface TradingViewChartProps {
   logo?: string;
 }
 
+interface LimitOrder {
+  id: string;
+  price: number;
+  type: string
+  transaction: 'buy' | 'sell';
+  quantity?: number;
+  shapeId?: string;
+  symbol: string;
+}
 
 const getFormatConfig = (price: number) => {
   if (price < 0.0001) return { precision: 8, minMove: 0.00000001 };
@@ -84,11 +94,65 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
   const [selectedInterval, setSelectedInterval] = useState('D');
   const [chartType, setChartType] = useState(1);
   const [displaySymbol, setDisplaySymbol] = useState(symbol.replace('Crypto.', ''));
+  const [limitOrders, setLimitOrders] = useState<LimitOrder[]>([]);
+  const [currentSymbol, setCurrentSymbol] = useState(symbol);
 
+  const getCurrentSymbol = () => {
+    return currentSymbol.replace('Crypto.', '').replace('/USD', '');
+  };
+
+  const getOrdersForCurrentSymbol = () => {
+    const currentSymbolName = getCurrentSymbol();
+    return orders.filter(order => order.symbol === currentSymbolName);
+  };
+
+  // Clear all limit order lines from the chart
+  const clearLimitOrderLines = () => {
+    if (!chartRef.current) return;
+
+    try {
+      limitOrders.forEach(order => {
+        if (order.shapeId) {
+          chartRef.current.removeEntity(order.shapeId);
+        }
+      });
+    } catch (error) {
+      console.error('Error clearing limit order lines:', error);
+    }
+  };
+
+  // Update symbol logo and display name
   useEffect(() => {
     setSymbolLogo(symbol, logo);
     setDisplaySymbol(symbol.replace('Crypto.', '').replace('/USD', ''));
   }, [symbol, logo]);
+
+  // Update current symbol and clear old orders when symbol changes
+  useEffect(() => {
+    if (currentSymbol !== symbol) {
+      // Clear existing limit order lines
+      clearLimitOrderLines();
+      
+      // Update current symbol
+      setCurrentSymbol(symbol);
+      
+      // Get orders for the new symbol
+      const currentSymbolOrders = orders.filter(order => 
+        order.symbol === symbol.replace('Crypto.', '').replace('/USD', '')
+      );
+      
+      const convertedOrders: LimitOrder[] = currentSymbolOrders.map(order => ({
+        id: `order-${order.index}`,
+        price: order.limitPrice,
+        type: order.type,
+        transaction: order.transaction as 'buy' | 'sell',
+        quantity: order.size,
+        symbol: order.symbol,
+      }));
+
+      setLimitOrders(convertedOrders);
+    }
+  }, [symbol, currentSymbol]);
 
   useEffect(() => {
     setChartTheme(resolvedTheme === 'dark-purple' || resolvedTheme === 'dark-green' ? 'Dark' : 'Light');
@@ -107,11 +171,57 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
     priceScale.setAutoScale(true);
   };
 
+  const drawLimitOrderLine = (order: LimitOrder) => {
+    if (!chartRef.current) return;
+
+    try {
+      const chart = chartRef.current;
+      const color = order.transaction === 'buy' ? '#53C08D' : '#FF6889';
+
+      const shapeId = chart.createShape(
+        { time: Date.now() / 1000, price: order.price },
+        {
+          shape: 'horizontal_line',
+          lock: false,
+          disableSelection: false,
+          disableSave: false,
+          disableUndo: false,
+          zOrder: 'top',
+          overrides: {
+            linecolor: color,
+            linewidth: 1,
+            linestyle: 2,
+            showLabel: true,
+            horzLabelsAlign: 'right',
+            vertLabelsAlign: 'bottom',
+            text: `${order.type.toUpperCase()} ${order.price.toFixed(getFormatConfig(order.price).precision)}${order.quantity ? ` (${order.quantity} USD)` : ''}`,
+            textcolor: color,
+            fontsize: 10,
+            fontfamily: 'Arial',
+            backgroundColor: chartTheme === 'Dark' ? '#141519' : '#FFFFFF',
+            borderColor: color,
+            borderWidth: 1,
+          }
+        }
+      );
+
+      setLimitOrders(prev => 
+        prev.map(o => 
+          o.id === order.id 
+            ? { ...o, shapeId } 
+            : o
+        )
+      );
+    } catch (error) {
+      console.error('Error drawing limit order line:', error);
+    }
+  };
+
   const handleIntervalChange = (interval: string) => {
     setSelectedInterval(interval);
     if (chartRef.current) {
       chartRef.current.setResolution(interval);
-      resetPriceScale()
+      resetPriceScale();
     }
   };
 
@@ -139,6 +249,22 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
       widgetRef.current.chart().executeActionById('insertIndicator');
     }
   };
+
+  // Draw limit order lines when chart is ready and orders are available
+  useEffect(() => {
+    if (isChartReady && limitOrders.length > 0) {
+      // Add a small delay to ensure the chart has finished loading the new symbol
+      const timer = setTimeout(() => {
+        limitOrders.forEach(order => {
+          if (!order.shapeId) {
+            drawLimitOrderLine(order);
+          }
+        });
+      }, 500); // Increased delay to ensure chart is ready
+
+      return () => clearTimeout(timer);
+    }
+  }, [isChartReady, limitOrders, chartTheme]);
 
   useEffect(() => {
     if (typeof window.TradingView === 'undefined' || !containerRef.current || widgetRef.current) return;
@@ -219,24 +345,10 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
 
         widget.onChartReady(() => {
           const priceScale = widget.activeChart().getPanes()[0].getMainSourcePriceScale();
-          priceScale.setAutoScale(false)
+          priceScale.setAutoScale(false);
           chartRef.current = widget.chart();
           chartRef.current.setChartType(chartType);
           resetPriceScale();
-          // chartRef.current.createStudy(
-          //   'Moving Average',
-          //   true,
-          //   false,
-          //   {
-          //     length: 9,
-          //     source: "close",
-          //     offset: 0,
-          //   },
-          //   {
-          //     "plot.color": primaryColor,
-          //     "plot.linewidth": 2
-          //   }
-          // );
           setIsChartReady(true);
         });
       } catch (error) {
@@ -374,6 +486,20 @@ const TradingViewChart: React.FC<TradingViewChartProps> = ({
         className={`tradingview-chart ${chartTheme === 'Dark' ? 'theme-dark' : ''} w-full h-full py-2`}
         style={{ backgroundColor: chartTheme === 'Dark' ? "#141519" : "#FFFFFF" }}
       />
+      <div className='border-t p-2 flex justify-end gap-2'>
+        <Button
+          variant={'outline'}
+          className='h-fit text-secondary-foreground text-xs p-1 rounded-sm'
+        >
+          Liquidation
+        </Button>
+        <Button
+          variant={'outline'}
+          className='h-fit text-secondary-foreground text-xs p-1 rounded-sm'
+        >
+          TP/SL
+        </Button>
+      </div>
     </div>
   );
 };

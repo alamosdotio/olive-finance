@@ -87,7 +87,6 @@ export default function OpenFutures({
                                     <div className="flex items-center gap-1">
                                         TP/SL <Tpsl />
                                     </div>
-                                    
                                 </TableHead>
                                 <TableHead className="">PNL</TableHead>
                                 <TableHead className=""></TableHead>

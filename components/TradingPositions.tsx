@@ -147,7 +147,7 @@ export default function TradingPositions() {
       </div>
       {activeTab === "Positions" && (
         <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
-          {/* {optioninfos && optioninfos.length > 0 ? (
+          {optioninfos && optioninfos.length > 0 ? (
             <>
               {optioninfos.map((position, index) => (
                 <OpenPositions
@@ -176,9 +176,9 @@ export default function TradingPositions() {
             </>
           ) : (
             <div className="text-sm text-muted-foreground text-center flex  flex-grow justify-center items-center">No Positions Open <br /> Start Trading Now</div>
-          )} */}
+          )}
 
-          {dummyPositions.map((position, index) => (
+          {/* {dummyPositions.map((position, index) => (
             <OpenPositions
               key={index}
               index={position.index}
@@ -201,7 +201,7 @@ export default function TradingPositions() {
               itemsPerPage={itemsPerPage}
               onPageChange={setCurrentPage}
             />
-          </div>
+          </div> */}
         </div>
       )}
       {activeTab === "Expired" && (
@@ -218,6 +218,7 @@ export default function TradingPositions() {
         <div className="px-3 md:px-6 py-4 pb-[10px] space-y-[10px] min-h-[300px] flex flex-col justify-between">
           {dummyOrders.length > 0 ? (
             <>
+              <div className="flex flex-col space-y-[10px]">
               {dummyOrders.slice(indexOfFirstItem, indexOfLastItem).map((pos, idx) => (
                 <OpenOptionOrders 
                   key={idx}
@@ -233,6 +234,7 @@ export default function TradingPositions() {
                   orderDate={pos.orderDate}
                 />
               ))}
+              </div>
               <div className="pb-4 w-full">
                   <Pagination
                       currentPage={currentPage}

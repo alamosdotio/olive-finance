@@ -76,10 +76,10 @@ export default function FuturesPositions(){
                             Orders
                         </TabsTrigger>
                         <TabsTrigger
-                            value="expired" 
+                            value="funding" 
                             className="text-[11px] md:text-sm px-2 py-[2px] border-b rounded-none border-transparent data-[state=active]:border-primary"  
                         >
-                            Expired
+                            Funding
                         </TabsTrigger>
                          <TabsTrigger
                             value="history"
@@ -122,7 +122,7 @@ export default function FuturesPositions(){
                         </div>
                     </>
                 )}
-                {activeTab === 'expired' && (
+                {activeTab === 'funding' && (
                     <>
                         <section className="px-6 py-3 space-y-[10px]">
                             <ExpiredFutures />
