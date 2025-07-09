@@ -184,7 +184,7 @@ export default function TradingPage() {
                             MoonRekt
                         </h1>
                         <div className="text-sm text-foreground max-w-md">
-                            MoonRekt allows you to take a bullish or bearish position on popular coins like Bitcoin in standardized and familiar technical timeframes. There's four easy steps to play:
+                            MoonRekt allows you to take a bullish or bearish position on popular coins like Bitcoin in standardized and familiar technical timeframes. There is four easy steps to play:
                         </div>
                     </div>
                 </div>
