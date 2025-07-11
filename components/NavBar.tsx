@@ -22,7 +22,7 @@ import NavBarMobile from "./NavBarMobile";
 import Notifications from "./Notifications";
 import PointsDropDown from "./PointsDropDown";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { BookOpenText, ChartLine, ExternalLink, FileChartColumn, MessagesSquare, TableColumnsSplit } from "lucide-react";
+import { ArrowUpDown, BookOpenText, ChartLine, ConciergeBell, ExternalLink, FileChartColumn, MessagesSquare, TableColumnsSplit } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 
@@ -129,13 +129,13 @@ export default function NavBar(){
                                     link:'/options-chain'
                                 },
                                 {
-                                    name:"High Low Options",
-                                    icon: <TableColumnsSplit />,
-                                    link:'/high-low-options'
+                                    name:"MoonRekt",
+                                    icon: <ArrowUpDown />,
+                                    link:'/moonrekt'
                                 },
                                 {
                                     name:"Borrow",
-                                    icon: <TableColumnsSplit />,
+                                    icon: <ConciergeBell />,
                                     link:'/borrow'
                                 },
                                 {
